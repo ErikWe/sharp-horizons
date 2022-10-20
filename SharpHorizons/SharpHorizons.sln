@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons", "SharpHorizons\SharpHorizons.csproj", "{DFCBEAA6-EB35-4C0B-815D-7FB3A3E42FFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{53DAD6D7-BF8F-416D-A011-EFCDE120810E}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		..\Directory.Build.props = ..\Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		..\Directory.Build.targets = ..\Directory.Build.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHorizons.Tests", "SharpHorizons.Tests\SharpHorizons.Tests.csproj", "{DFAB5A91-C4F5-4D0D-B269-1B73952C27D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFCBEAA6-EB35-4C0B-815D-7FB3A3E42FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFCBEAA6-EB35-4C0B-815D-7FB3A3E42FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFCBEAA6-EB35-4C0B-815D-7FB3A3E42FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFCBEAA6-EB35-4C0B-815D-7FB3A3E42FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFAB5A91-C4F5-4D0D-B269-1B73952C27D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFAB5A91-C4F5-4D0D-B269-1B73952C27D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFAB5A91-C4F5-4D0D-B269-1B73952C27D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFAB5A91-C4F5-4D0D-B269-1B73952C27D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {716A044B-8EC5-4721-A13C-D3776F20C74D}
+	EndGlobalSection
+EndGlobal

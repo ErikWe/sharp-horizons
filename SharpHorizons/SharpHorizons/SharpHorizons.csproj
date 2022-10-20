@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>SharpHorizons</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Title>SharpHorizons</Title>
+		<Description>
+			Provides an API for JPL Horizons.
+		</Description>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IsPackable>true</IsPackable>
+		<IsPublishable>true</IsPublishable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="SharpMeasures" />
+		<PackageReference Include="SharpMeasures.Base" />
+		<PackageReference Include="SharpMeasures.Generators" PrivateAssets="all" />
+	</ItemGroup>
+
+</Project>
