@@ -41,6 +41,13 @@ public record class GregorianCalendarDate : ICalendarDate<GregorianCalendarDate>
         Second = second;
     }
 
+    /// <summary><inheritdoc cref="GregorianCalendarDate" path="/summary"/></summary>
+    /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
+    /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    /// <remarks>The constructed <see cref="GregorianCalendarDate"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    public GregorianCalendarDate(int year, JulianCalendarMonth month, int day) : this(year, month, day, 0, 0, 0) { }
+
     /// <summary>Verifies that <see langword="this"/> represents a valid <see cref="GregorianCalendarDate"/>.</summary>
     /// <returns><see langword="true"/> if <see langword="this"/> represents a valid <see cref="GregorianCalendarDate"/>, otherwise <see langword="false"/>.</returns>
     public bool IsValid()

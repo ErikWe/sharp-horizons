@@ -41,6 +41,13 @@ public record class JulianCalendarDate : ICalendarDate<JulianCalendarDate>
         Second = second;
     }
 
+    /// <summary><inheritdoc cref="JulianCalendarDate" path="/summary"/></summary>
+    /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
+    /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    /// <remarks>The constructed <see cref="JulianCalendarDate"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    public JulianCalendarDate(int year, JulianCalendarMonth month, int day) : this(year, month, day, 0, 0, 0) { }
+
     /// <summary>Verifies that <see langword="this"/> represents a valid <see cref="JulianCalendarDate"/>.</summary>
     /// <returns><see langword="true"/> if <see langword="this"/> represents a valid <see cref="JulianCalendarDate"/>, otherwise <see langword="false"/>.</returns>
     public bool IsValid()
