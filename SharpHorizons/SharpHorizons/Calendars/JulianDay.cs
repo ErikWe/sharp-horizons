@@ -12,7 +12,7 @@ public readonly record struct JulianDay : ICalendarDate<JulianDay>
     /// <summary>The fractional number of days since { 12:00:00, January 1st, 4713 B.C } according to the Julian calendar ({ November 24th, 4714 B.C } according to the Gregorian calendar).</summary>
     public double Day { get; }
 
-    /// <summary><inheritdoc cref="JulianDay" path="/summary"/></summary>
+    /// <summary>Constructs a new <see cref="JulianDay"/>, representing { <paramref name="day"/> }.</summary>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
     public JulianDay(double day)
     {
