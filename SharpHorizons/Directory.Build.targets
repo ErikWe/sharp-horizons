@@ -1,6 +1,4 @@
-﻿<Project>
-
-	<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+<Project>
 
 	<ItemGroup>
 		<PackageReference Update="coverlet.collector" Version="3.1.2" />
