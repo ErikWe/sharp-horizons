@@ -1,4 +1,4 @@
-<Project>
+﻿<Project>
 
 	<ItemGroup>
 		<PackageReference Update="coverlet.collector" Version="3.1.2" />
@@ -9,9 +9,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Update="SharpMeasures" Version="0.3.59" />
+		<PackageReference Update="SharpMeasures" Version="0.3.63" />
+		<PackageReference Update="SharpMeasures.Astronomy" Version="0.3.62" />
 		<PackageReference Update="SharpMeasures.Base" Version="0.3.58" />
-		<PackageReference Update="SharpMeasures.Generators" Version="0.3.59" />
+		<PackageReference Update="SharpMeasures.Generators" Version="0.3.63" />
 	</ItemGroup>
 
 	<ItemGroup>
