@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Calendars;
+namespace SharpHorizons.Calendars;
 
 using SharpMeasures;
 
@@ -12,7 +12,7 @@ public readonly record struct ModifiedJulianDay : ICalendarDate<ModifiedJulianDa
     /// <summary>The fractional number of days since { 00:00:00, November 17th, 1858 } according to the Gregorian calendar.</summary>
     public double Day { get; }
 
-    /// <summary>Constructs a new <see cref="ModifiedJulianDay"/>, representing { <paramref name="day"/> }.</summary>
+    /// <summary>Represents the <see cref="ModifiedJulianDay"/> { <paramref name="day"/> }.</summary>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
     public ModifiedJulianDay(double day)
     {

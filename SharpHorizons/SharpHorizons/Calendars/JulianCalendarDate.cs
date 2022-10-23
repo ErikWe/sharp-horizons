@@ -22,7 +22,7 @@ public record class JulianCalendarDate : ICalendarDate<JulianCalendarDate>
     /// <summary>The fractional second.</summary>
     public double Second { get; }
 
-    /// <summary>Constructs a new <see cref="JulianCalendarDate"/>, representing the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { <paramref name="hour"/>, <paramref name="minute"/>, <paramref name="second"/> }.</summary>
+    /// <summary>Represents the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { <paramref name="hour"/>, <paramref name="minute"/>, <paramref name="second"/> } in the Julian calendar.</summary>
     /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
     /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
@@ -40,7 +40,7 @@ public record class JulianCalendarDate : ICalendarDate<JulianCalendarDate>
         Minute = minute;
         Second = second;
     }
-    /// <summary>Constructs a new <see cref="JulianCalendarDate"/>, representing the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { 0:00:00 } (first second of the day).</summary>
+    /// <summary>Represents the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { 0:00:00 } (first second of the day) in the Julian calendar.</summary>
     /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
     /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>

@@ -22,7 +22,7 @@ public record class GregorianCalendarDate : ICalendarDate<GregorianCalendarDate>
     /// <summary>The fractional second.</summary>
     public double Second { get; }
 
-    /// <summary>Constructs a new <see cref="GregorianCalendarDate"/>, representing the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { <paramref name="hour"/>, <paramref name="minute"/>, <paramref name="second"/> }.</summary>
+    /// <summary>Represents the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { <paramref name="hour"/>, <paramref name="minute"/>, <paramref name="second"/> } in the Gregorian calendar.</summary>
     /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
     /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
@@ -41,7 +41,7 @@ public record class GregorianCalendarDate : ICalendarDate<GregorianCalendarDate>
         Second = second;
     }
 
-    /// <summary>Constructs a new <see cref="GregorianCalendarDate"/>, representing the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { 0:00:00 } (first second of the day).</summary>
+    /// <summary>Represents the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { 0:00:00 } (first second of the day) in the Gregorian calendar.</summary>
     /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
     /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
