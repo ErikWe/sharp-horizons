@@ -1,4 +1,4 @@
-namespace SharpHorizons.Calendars;
+﻿namespace SharpHorizons.Calendars;
 
 using SharpMeasures;
 
@@ -6,10 +6,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-/// <summary>Represents a point in time, expressed as a Julian day - the fractional number of days since { 12:00:00, January 1st, 4713 B.C } according to the Julian calendar ({ November 24th, 4714 B.C } according to the Gregorian calendar).</summary>
+/// <summary>Represents a point in time, expressed as a Julian day - the fractional number of days since { 12:00:00, January 1st, 4713 BCE } according to the Julian calendar ({ November 24th, 4714 BCE } according to the Gregorian calendar).</summary>
 public readonly record struct JulianDay : ICalendarDate<JulianDay>
 {
-    /// <summary>The fractional number of days since { 12:00:00, January 1st, 4713 B.C } according to the Julian calendar ({ November 24th, 4714 B.C } according to the Gregorian calendar).</summary>
+    /// <summary>The fractional number of days since { 12:00:00, January 1st, 4713 BCE } according to the Julian calendar ({ November 24th, 4714 BCE } according to the Gregorian calendar).</summary>
     public double Day { get; }
 
     /// <summary>Represents the <see cref="JulianDay"/> { <paramref name="day"/> }.</summary>
