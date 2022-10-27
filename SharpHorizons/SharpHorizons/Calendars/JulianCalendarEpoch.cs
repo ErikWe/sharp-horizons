@@ -6,31 +6,31 @@ using System;
 using System.Globalization;
 
 /// <summary>Represents an epoch, an instant in time, expressed according to the Julian calendar.</summary>
-public record class JulianCalendarDate : IEpoch<JulianCalendarDate>
+public record class JulianCalendarEpoch : IEpoch<JulianCalendarEpoch>
 {
-    /// <summary>The year.</summary>
+    /// <summary>The year of the epoch, according to the Julian calendar.</summary>
     public int Year { get; }
-    /// <summary>The month.</summary>
+    /// <summary>The month of the epoch, according to the Julian calendar.</summary>
     public JulianCalendarMonth Month { get; }
-    /// <summary>The one-indexed day-of-the-month.</summary>
+    /// <summary>The one-indexed day-of-the-month of the epoch, according to the Julian calendar.</summary>
     public int Day { get; }
 
-    /// <summary>The hour.</summary>
+    /// <summary>The hour of the epoch.</summary>
     public int Hour { get; }
-    /// <summary>The minute.</summary>
+    /// <summary>The minute of the epoch.</summary>
     public int Minute { get; }
-    /// <summary>The fractional second.</summary>
+    /// <summary>The fractional second of the epoch.</summary>
     public double Second { get; }
 
-    /// <summary>Represents the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { <paramref name="hour"/>, <paramref name="minute"/>, <paramref name="second"/> } in the Julian calendar.</summary>
+    /// <summary>Represents the epoch { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/>, <paramref name="hour"/>, <paramref name="minute"/>, <paramref name="second"/> }, as expressed in the Julian calendar.</summary>
     /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
     /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
     /// <param name="hour"><inheritdoc cref="Hour" path="/summary"/></param>
     /// <param name="minute"><inheritdoc cref="Minute" path="/summary"/></param>
     /// <param name="second"><inheritdoc cref="Second" path="/summary"/></param>
-    /// <remarks>The constructed <see cref="JulianCalendarDate"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
-    public JulianCalendarDate(int year, JulianCalendarMonth month, int day, int hour, int minute, double second)
+    /// <remarks>The constructed <see cref="JulianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    public JulianCalendarEpoch(int year, JulianCalendarMonth month, int day, int hour, int minute, double second)
     {
         Year = year;
         Month = month;
@@ -40,15 +40,16 @@ public record class JulianCalendarDate : IEpoch<JulianCalendarDate>
         Minute = minute;
         Second = second;
     }
-    /// <summary>Represents the date { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/> } and time { 0:00:00 } (first second of the day) in the Julian calendar.</summary>
+
+    /// <summary>Represents the epoch { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/>, 0:00:00 }, as expressed in the Julian calendar. This corresponds to the first second of the specified Gregorian date.</summary>
     /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
     /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
-    /// <remarks>The constructed <see cref="JulianCalendarDate"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
-    public JulianCalendarDate(int year, JulianCalendarMonth month, int day) : this(year, month, day, 0, 0, 0) { }
+    /// <remarks>The constructed <see cref="JulianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    public JulianCalendarEpoch(int year, JulianCalendarMonth month, int day) : this(year, month, day, 0, 0, 0) { }
 
-    /// <summary>Verifies that <see langword="this"/> represents a valid <see cref="JulianCalendarDate"/>.</summary>
-    /// <returns><see langword="true"/> if <see langword="this"/> represents a valid <see cref="JulianCalendarDate"/>, otherwise <see langword="false"/>.</returns>
+    /// <summary>Determines whether <see langword="this"/> represents a valid <see cref="JulianCalendarEpoch"/>.</summary>
+    /// <remarks>For example, a date { February 29th, 2021 CE } or a time { 11:30:72 } would cause the corresponding <see cref="JulianCalendarEpoch"/> to be considered invalid.</remarks>
     public bool IsValid()
     {
         if (Year is 0 || Enum.IsDefined(Month) is false || Day is < 1 or > 31 || Hour is < 0 or > 23 || Minute is < 0 or > 59 || Second is < 0 or > 59)
@@ -69,12 +70,12 @@ public record class JulianCalendarDate : IEpoch<JulianCalendarDate>
         return Month is JulianCalendarMonth.January or JulianCalendarMonth.March or JulianCalendarMonth.May or JulianCalendarMonth.July or JulianCalendarMonth.August or JulianCalendarMonth.October or JulianCalendarMonth.December;
     }
 
-    /// <summary>Checks whether the represented point in time belongs to a leap year.</summary>
+    /// <summary>Determines whether <see langword="this"/> represents an <see cref="IEpoch"/> that belongs to a leap year, according to the Julian calendar.</summary>
     public bool IsLeapYear() => (Year + (Year < 0 ? 1 : 0)) % 4 is 0;
 
-    /// <summary>Converts <see langword="this"/> to the equivalent <typeparamref name="TCalendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate"><see langword="this"/> is converted to the equivalent <see cref="IEpoch"/> of this type.</typeparam>
-    public TCalendarDate ToEpoch<TCalendarDate>() where TCalendarDate : IEpoch<TCalendarDate> => TCalendarDate.FromJulianDay(ToJulianDay());
+    /// <summary>Converts <see langword="this"/> to the <typeparamref name="TEpoch"/> representing the same epoch.</summary>
+    /// <typeparam name="TEpoch"><see langword="this"/> is converted to an <see cref="IEpoch"/> of this type, representing the same epoch.</typeparam>
+    public TEpoch ToEpoch<TEpoch>() where TEpoch : IEpoch<TEpoch> => TEpoch.FromJulianDay(ToJulianDay());
 
     /// <inheritdoc/>
     /// <credit>Astronomical Algorithms, Jean Meeus, chapter 7.</credit>
@@ -104,15 +105,21 @@ public record class JulianCalendarDate : IEpoch<JulianCalendarDate>
     /// <exception cref="ArgumentOutOfRangeException"/>
     public DateTime ToDateTime() => new(Year, (int)Month, Day, Hour, Minute, (int)Second, (int)(Second % 1 * 1000), JulianCalendar);
 
-    /// <summary>Constructs the <see cref="JulianCalendarDate"/> equivalent to <paramref name="calendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate">The constructed <see cref="JulianCalendarDate"/> is equivalent to an <see cref="IEpoch"/> of this type.</typeparam>
-    /// <param name="calendarDate">The constructed <see cref="JulianCalendarDate"/> is equivalent to this <typeparamref name="TCalendarDate"/>.</param>
-    public static JulianCalendarDate FromEpoch<TCalendarDate>(TCalendarDate calendarDate) where TCalendarDate : IEpoch<TCalendarDate> => FromJulianDay(calendarDate.ToJulianDay());
+    /// <summary>Constructs the <see cref="JulianCalendarEpoch"/> representing the same epoch as <paramref name="epoch"/>.</summary>
+    /// <typeparam name="TEpoch">An <see cref="IEpoch"/> of this type is used to construct a <see cref="JulianCalendarEpoch"/> representing the same epoch.</typeparam>
+    /// <param name="epoch">The constructed <see cref="JulianCalendarEpoch"/> represents the same epoch as this <typeparamref name="TEpoch"/>.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public static JulianCalendarEpoch FromEpoch<TEpoch>(TEpoch epoch) where TEpoch : IEpoch<TEpoch>
+    {
+        ArgumentNullException.ThrowIfNull(epoch);
 
-    /// <summary>Constructs the <see cref="JulianCalendarDate"/> equivalent to <paramref name="julianDay"/>.</summary>
-    /// <param name="julianDay">The constructed <see cref="JulianCalendarDate"/> is equivalent to this <see cref="JulianDay"/>.</param>
+        return FromJulianDay(epoch.ToJulianDay());
+    }
+
+    /// <summary>Constructs the <see cref="JulianCalendarEpoch"/> representing the same epoch as <paramref name="julianDay"/>.</summary>
+    /// <param name="julianDay">The constructed <see cref="JulianCalendarEpoch"/> represents the same epoch as this <see cref="JulianDay"/>.</param>
     /// <credit>Astronomical Algorithms, Jean Meeus, chapter 7.</credit>
-    public static JulianCalendarDate FromJulianDay(JulianDay julianDay)
+    public static JulianCalendarEpoch FromJulianDay(JulianDay julianDay)
     {
         var z = (int)Math.Floor(julianDay.Day + 0.5);
         var f = Modulus(julianDay.Day + 0.5, 1);
@@ -143,9 +150,9 @@ public record class JulianCalendarDate : IEpoch<JulianCalendarDate>
         return new(year, (JulianCalendarMonth)month, day, hour, minute, second);
     }
 
-    /// <summary>Constructs the <see cref="JulianCalendarDate"/> equivalent to <paramref name="dateTime"/>.</summary>
-    /// <param name="dateTime">The constructed <see cref="JulianCalendarDate"/> is equivalent to this <see cref="DateTime"/>.</param>
-    public static JulianCalendarDate FromDateTime(DateTime dateTime) => new(JulianCalendar.GetYear(dateTime), (JulianCalendarMonth)(JulianCalendar.GetMonth(dateTime)), JulianCalendar.GetDayOfMonth(dateTime), JulianCalendar.GetHour(dateTime), JulianCalendar.GetMinute(dateTime), JulianCalendar.GetSecond(dateTime) + JulianCalendar.GetMilliseconds(dateTime) / 1000d);
+    /// <summary>Constructs the <see cref="JulianCalendarEpoch"/> representing the same epoch as <paramref name="dateTime"/>.</summary>
+    /// <param name="dateTime">The constructed <see cref="JulianCalendarEpoch"/> represents the same epoch as this <see cref="DateTime"/>.</param>
+    public static JulianCalendarEpoch FromDateTime(DateTime dateTime) => new(JulianCalendar.GetYear(dateTime), (JulianCalendarMonth)(JulianCalendar.GetMonth(dateTime)), JulianCalendar.GetDayOfMonth(dateTime), JulianCalendar.GetHour(dateTime), JulianCalendar.GetMinute(dateTime), JulianCalendar.GetSecond(dateTime) + JulianCalendar.GetMilliseconds(dateTime) / 1000d);
 
     /// <inheritdoc cref="System.Globalization.JulianCalendar"/>
     private static JulianCalendar JulianCalendar { get; } = new();

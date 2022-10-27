@@ -12,32 +12,33 @@ public readonly record struct ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     /// <summary>The fractional number of days since { 00:00:00, November 17th, 1858 CE } according to the Gregorian calendar.</summary>
     public double Day { get; }
 
-    /// <summary>Represents the <see cref="ModifiedJulianDay"/> { <paramref name="day"/> }.</summary>
+    /// <summary><inheritdoc cref="ModifiedJulianDay" path="/summary"/></summary>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
     public ModifiedJulianDay(double day)
     {
         Day = day;
     }
 
-    /// <summary>Converts <see langword="this"/> to the equivalent <typeparamref name="TCalendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate"><see langword="this"/> is converted to the equivalent <see cref="IEpoch"/> of this type.</typeparam>
-    public TCalendarDate ToEpoch<TCalendarDate>() where TCalendarDate : IEpoch<TCalendarDate> => TCalendarDate.FromJulianDay(ToJulianDay());
+    /// <summary>Converts <see langword="this"/> to the <typeparamref name="TEpoch"/> representing the same epoch.</summary>
+    /// <typeparam name="TEpoch"><see langword="this"/> is converted to an <see cref="IEpoch"/> of this type, representing the same epoch.</typeparam>
+    public TEpoch ToEpoch<TEpoch>() where TEpoch : IEpoch<TEpoch> => TEpoch.FromJulianDay(ToJulianDay());
 
     /// <inheritdoc/>
     public JulianDay ToJulianDay() => new(Day + 2400000.5);
 
     /// <inheritdoc/>
-    public DateTime ToDateTime() => JulianCalendarDate.FromJulianDay(ToJulianDay()).ToDateTime();
+    /// <exception cref="ArgumentOutOfRangeException"/>
+    public DateTime ToDateTime() => ToJulianDay().ToDateTime();
 
-    /// <summary>Constructs the <see cref="JulianDay"/> equivalent to <paramref name="calendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate">The constructed <see cref="JulianDay"/> is equivalent to an <see cref="IEpoch"/> of this type.</typeparam>
-    /// <param name="calendarDate">The constructed <see cref="JulianDay"/> is equivalent to this <typeparamref name="TCalendarDate"/>.</param>
+    /// <summary>Constructs the <see cref="ModifiedJulianDay"/> representing the same epoch as <paramref name="epoch"/>.</summary>
+    /// <typeparam name="TEpoch">An <see cref="IEpoch"/> of this type is used to construct a <see cref="ModifiedJulianDay"/> representing the same epoch.</typeparam>
+    /// <param name="epoch">The constructed <see cref="ModifiedJulianDay"/> represents the same epoch as this <typeparamref name="TEpoch"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public static ModifiedJulianDay FromEpoch<TCalendarDate>(TCalendarDate calendarDate) where TCalendarDate : IEpoch<TCalendarDate>
+    public static ModifiedJulianDay FromEpoch<TEpoch>(TEpoch epoch) where TEpoch : IEpoch<TEpoch>
     {
-        ArgumentNullException.ThrowIfNull(calendarDate);
+        ArgumentNullException.ThrowIfNull(epoch);
 
-        return FromJulianDay(calendarDate.ToJulianDay());
+        return FromJulianDay(epoch.ToJulianDay());
     }
 
     /// <inheritdoc/>
@@ -46,30 +47,30 @@ public readonly record struct ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     /// <inheritdoc/>
     public static ModifiedJulianDay FromDateTime(DateTime dateTime) => FromJulianDay(JulianDay.FromDateTime(dateTime));
 
-    /// <summary>Computes the time between <see langword="this"/> and <paramref name="final"/>.</summary>
-    /// <param name="final">The final point in time.</param>
-    public Time Difference(ModifiedJulianDay final) => this - final;
+    /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }.</summary>
+    /// <param name="initial">The initial epoch.</param>
+    public Time Difference(ModifiedJulianDay initial) => this - initial;
 
     /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <see langword="this"/> + <paramref name="difference"/> }.</summary>
-    /// <param name="difference">The difference between <see langword="this"/> and the final point in time.</param>
+    /// <param name="difference">The <see cref="Time"/> between <see langword="this"/> and the resulting epoch.</param>
     public ModifiedJulianDay Add(Time difference) => this + difference;
 
     /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <see langword="this"/> - <paramref name="difference"/> }.</summary>
-    /// <param name="difference">The difference between <see langword="this"/> and the final point in time.</param>
+    /// <param name="difference">The <see cref="Time"/> between the <see langword="this"/> and the resulting epoch.</param>
     public ModifiedJulianDay Subtract(Time difference) => this + difference;
 
-    /// <summary>Computes the time between <paramref name="initial"/> and <paramref name="final"/>.</summary>
-    /// <param name="initial">The initial point in time.</param>
-    /// <param name="final">The final point in time.</param>
-    public static Time operator -(ModifiedJulianDay initial, ModifiedJulianDay final) => (initial.Day - final.Day) * Time.OneDay;
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/>.</summary>
+    /// <param name="initial">The initial epoch.</param>
+    /// <param name="final">The final epoch.</param>
+    public static Time operator -(ModifiedJulianDay final, ModifiedJulianDay initial) => (final.Day - initial.Day) * Time.OneDay;
 
     /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <paramref name="initial"/> + <paramref name="difference"/> }.</summary>
-    /// <param name="initial">The initial point in time.</param>
-    /// <param name="difference">The difference between the initial and the final point in time.</param>
+    /// <param name="initial">The initial epoch.</param>
+    /// <param name="difference">The <see cref="Time"/> between <paramref name="initial"/> and <paramref name="difference"/>.</param>
     public static ModifiedJulianDay operator +(ModifiedJulianDay initial, Time difference) => new(initial.Day + difference.Days);
 
     /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <paramref name="initial"/> - <paramref name="difference"/> }..</summary>
-    /// <param name="initial">The initial point in time.</param>
-    /// <param name="difference">The difference between the initial and the final point in time.</param>
+    /// <param name="initial">The initial epoch.</param>
+    /// <param name="difference">The <see cref="Time"/> between <paramref name="initial"/> and the resulting epoch.</param>
     public static ModifiedJulianDay operator -(ModifiedJulianDay initial, Time difference) => new(initial.Day - difference.Days);
 }
