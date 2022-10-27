@@ -16,8 +16,8 @@ public class CalendarConversions
         ModifiedJulianDay expected = new(modifiedJulianDay);
 
         ModifiedJulianDay x = ModifiedJulianDay.FromJulianDay(new JulianDay(julianDay));
-        ModifiedJulianDay y = ModifiedJulianDay.FromCalendarDate(new JulianDay(julianDay));
-        ModifiedJulianDay z = new JulianDay(julianDay).ToCalendarDate<ModifiedJulianDay>();
+        ModifiedJulianDay y = ModifiedJulianDay.FromEpoch(new JulianDay(julianDay));
+        ModifiedJulianDay z = new JulianDay(julianDay).ToEpoch<ModifiedJulianDay>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -31,8 +31,8 @@ public class CalendarConversions
         JulianCalendarDate expected = new(year, month, day, hour, minute, second);
 
         JulianCalendarDate x = JulianCalendarDate.FromJulianDay(new JulianDay(julianDay));
-        JulianCalendarDate y = JulianCalendarDate.FromCalendarDate(new JulianDay(julianDay));
-        JulianCalendarDate z = new JulianDay(julianDay).ToCalendarDate<JulianCalendarDate>();
+        JulianCalendarDate y = JulianCalendarDate.FromEpoch(new JulianDay(julianDay));
+        JulianCalendarDate z = new JulianDay(julianDay).ToEpoch<JulianCalendarDate>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -46,8 +46,8 @@ public class CalendarConversions
         GregorianCalendarDate expected = new(year, month, day, hour, minute, second);
 
         GregorianCalendarDate x = GregorianCalendarDate.FromJulianDay(new JulianDay(julianDay));
-        GregorianCalendarDate y = GregorianCalendarDate.FromCalendarDate(new JulianDay(julianDay));
-        GregorianCalendarDate z = new JulianDay(julianDay).ToCalendarDate<GregorianCalendarDate>();
+        GregorianCalendarDate y = GregorianCalendarDate.FromEpoch(new JulianDay(julianDay));
+        GregorianCalendarDate z = new JulianDay(julianDay).ToEpoch<GregorianCalendarDate>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -60,8 +60,8 @@ public class CalendarConversions
     {
         JulianDay expected = new(julianDay);
 
-        JulianDay x = JulianDay.FromCalendarDate(new ModifiedJulianDay(modifiedJulianDay));
-        JulianDay y = new ModifiedJulianDay(modifiedJulianDay).ToCalendarDate<JulianDay>();
+        JulianDay x = JulianDay.FromEpoch(new ModifiedJulianDay(modifiedJulianDay));
+        JulianDay y = new ModifiedJulianDay(modifiedJulianDay).ToEpoch<JulianDay>();
         JulianDay z = new ModifiedJulianDay(modifiedJulianDay).ToJulianDay();
 
         AssertApproximatelyEqual(expected, x);
@@ -75,8 +75,8 @@ public class CalendarConversions
     {
         JulianCalendarDate expected = new(year, month, day, hour, minute, second);
 
-        JulianCalendarDate x = JulianCalendarDate.FromCalendarDate(new ModifiedJulianDay(modifiedJulianDay));
-        JulianCalendarDate y = new ModifiedJulianDay(modifiedJulianDay).ToCalendarDate<JulianCalendarDate>();
+        JulianCalendarDate x = JulianCalendarDate.FromEpoch(new ModifiedJulianDay(modifiedJulianDay));
+        JulianCalendarDate y = new ModifiedJulianDay(modifiedJulianDay).ToEpoch<JulianCalendarDate>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -88,8 +88,8 @@ public class CalendarConversions
     {
         GregorianCalendarDate expected = new(year, month, day, hour, minute, second);
 
-        GregorianCalendarDate x = GregorianCalendarDate.FromCalendarDate(new ModifiedJulianDay(modifiedJulianDay));
-        GregorianCalendarDate y = new ModifiedJulianDay(modifiedJulianDay).ToCalendarDate<GregorianCalendarDate>();
+        GregorianCalendarDate x = GregorianCalendarDate.FromEpoch(new ModifiedJulianDay(modifiedJulianDay));
+        GregorianCalendarDate y = new ModifiedJulianDay(modifiedJulianDay).ToEpoch<GregorianCalendarDate>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -102,9 +102,9 @@ public class CalendarConversions
         JulianDay expected = new(julianDay);
         JulianCalendarDate julianDate = new(year, month, day, hour, minute, second);
 
-        JulianDay x = JulianDay.FromCalendarDate(julianDate);
+        JulianDay x = JulianDay.FromEpoch(julianDate);
         JulianDay y = julianDate.ToJulianDay();
-        JulianDay z = julianDate.ToCalendarDate<JulianDay>();
+        JulianDay z = julianDate.ToEpoch<JulianDay>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -118,8 +118,8 @@ public class CalendarConversions
         ModifiedJulianDay expected = new(modifiedJulianDay);
         JulianCalendarDate julianDate = new(year, month, day, hour, minute, second);
 
-        ModifiedJulianDay x = ModifiedJulianDay.FromCalendarDate(julianDate);
-        ModifiedJulianDay y = julianDate.ToCalendarDate<ModifiedJulianDay>();
+        ModifiedJulianDay x = ModifiedJulianDay.FromEpoch(julianDate);
+        ModifiedJulianDay y = julianDate.ToEpoch<ModifiedJulianDay>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -132,8 +132,8 @@ public class CalendarConversions
         GregorianCalendarDate expected = new(gregorianYear, gregorianMonth, gregorianDay, hour, minute, second);
         JulianCalendarDate julianDate = new(julianYear, julianMonth, julianDay, hour, minute, second);
 
-        GregorianCalendarDate x = GregorianCalendarDate.FromCalendarDate(julianDate);
-        GregorianCalendarDate y = julianDate.ToCalendarDate<GregorianCalendarDate>();
+        GregorianCalendarDate x = GregorianCalendarDate.FromEpoch(julianDate);
+        GregorianCalendarDate y = julianDate.ToEpoch<GregorianCalendarDate>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -146,9 +146,9 @@ public class CalendarConversions
         JulianDay expected = new(julianDay);
         GregorianCalendarDate julianDate = new(year, month, day, hour, minute, second);
 
-        JulianDay x = JulianDay.FromCalendarDate(julianDate);
+        JulianDay x = JulianDay.FromEpoch(julianDate);
         JulianDay y = julianDate.ToJulianDay();
-        JulianDay z = julianDate.ToCalendarDate<JulianDay>();
+        JulianDay z = julianDate.ToEpoch<JulianDay>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -162,8 +162,8 @@ public class CalendarConversions
         ModifiedJulianDay expected = new(modifiedJulianDay);
         GregorianCalendarDate julianDate = new(year, month, day, hour, minute, second);
 
-        ModifiedJulianDay x = ModifiedJulianDay.FromCalendarDate(julianDate);
-        ModifiedJulianDay y = julianDate.ToCalendarDate<ModifiedJulianDay>();
+        ModifiedJulianDay x = ModifiedJulianDay.FromEpoch(julianDate);
+        ModifiedJulianDay y = julianDate.ToEpoch<ModifiedJulianDay>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);
@@ -176,8 +176,8 @@ public class CalendarConversions
         JulianCalendarDate expected = new(julianYear, julianMonth, julianDay, hour, minute, second);
         GregorianCalendarDate gregorianDate = new(gregorianYear, gregorianMonth, gregorianDay, hour, minute, second);
 
-        JulianCalendarDate x = JulianCalendarDate.FromCalendarDate(gregorianDate);
-        JulianCalendarDate y = gregorianDate.ToCalendarDate<JulianCalendarDate>();
+        JulianCalendarDate x = JulianCalendarDate.FromEpoch(gregorianDate);
+        JulianCalendarDate y = gregorianDate.ToEpoch<JulianCalendarDate>();
 
         AssertApproximatelyEqual(expected, x);
         AssertApproximatelyEqual(expected, y);

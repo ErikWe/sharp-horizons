@@ -3,12 +3,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Represents a point in time, expressed in some calendar.</summary>
-public interface ICalendarDate
+/// <summary>Represents an epoch, an instant in time, expressed in some calendar.</summary>
+public interface IEpoch
 {
-    /// <summary>Converts <see langword="this"/> to the equivalent <typeparamref name="TCalendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate"><see langword="this"/> is converted to the equivalent <see cref="ICalendarDate"/> of this type.</typeparam>
-    public abstract TCalendarDate ToCalendarDate<TCalendarDate>() where TCalendarDate : ICalendarDate<TCalendarDate>;
+    /// <summary>Converts <see langword="this"/> to the equivalent <typeparamref name="TEpoch"/>.</summary>
+    /// <typeparam name="TEpoch"><see langword="this"/> is converted to the equivalent <see cref="IEpoch"/> of this type.</typeparam>
+    public abstract TEpoch ToEpoch<TEpoch>() where TEpoch : IEpoch<TEpoch>;
 
     /// <summary>Converts <see langword="this"/> to the equivalent <see cref="JulianDay"/>.</summary>
     public abstract JulianDay ToJulianDay();
@@ -17,14 +17,14 @@ public interface ICalendarDate
     public abstract DateTime ToDateTime();
 }
 
-/// <summary>Represents a point in time, expressed in some calendar.</summary>
-public interface ICalendarDate<TSelf> : ICalendarDate where TSelf : ICalendarDate<TSelf>
+/// <inheritdoc/>
+public interface IEpoch<TSelf> : IEpoch where TSelf : IEpoch<TSelf>
 {
     /// <summary>Constructs the <typeparamref name="TSelf"/> equivalent to <paramref name="calendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate">The constructed <typeparamref name="TSelf"/> is equivalent to an <see cref="ICalendarDate"/> of this type.</typeparam>
-    /// <param name="calendarDate">The constructed <typeparamref name="TSelf"/> is equivalent to this <typeparamref name="TCalendarDate"/>.</param>
+    /// <typeparam name="TEpoch">The constructed <typeparamref name="TSelf"/> is equivalent to an <see cref="IEpoch"/> of this type.</typeparam>
+    /// <param name="calendarDate">The constructed <typeparamref name="TSelf"/> is equivalent to this <typeparamref name="TEpoch"/>.</param>
     [SuppressMessage("Design", "CA1000", Justification = "Implementing type is not necessarily generic.")]
-    public abstract static TSelf FromCalendarDate<TCalendarDate>(TCalendarDate calendarDate) where TCalendarDate : ICalendarDate<TCalendarDate>;
+    public abstract static TSelf FromEpoch<TEpoch>(TEpoch calendarDate) where TEpoch : IEpoch<TEpoch>;
 
     /// <summary>Constructs the <typeparamref name="TSelf"/> equivalent to <paramref name="julianDay"/>.</summary>
     /// <param name="julianDay">The constructed <typeparamref name="TSelf"/> is equivalent to this <see cref="JulianDay"/>.</param>

@@ -6,8 +6,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-/// <summary>Represents a point in time, expressed as a modified Julian day - the fractional number of days since { 00:00:00, November 17th, 1858 CE } according to the Gregorian calendar.</summary>
-public readonly record struct ModifiedJulianDay : ICalendarDate<ModifiedJulianDay>
+/// <summary>Represents an epoch, an instant in time, expressed as a modified Julian day - the fractional number of days since { 00:00:00, November 17th, 1858 CE } according to the Gregorian calendar.</summary>
+public readonly record struct ModifiedJulianDay : IEpoch<ModifiedJulianDay>
 {
     /// <summary>The fractional number of days since { 00:00:00, November 17th, 1858 CE } according to the Gregorian calendar.</summary>
     public double Day { get; }
@@ -20,8 +20,8 @@ public readonly record struct ModifiedJulianDay : ICalendarDate<ModifiedJulianDa
     }
 
     /// <summary>Converts <see langword="this"/> to the equivalent <typeparamref name="TCalendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate"><see langword="this"/> is converted to the equivalent <see cref="ICalendarDate"/> of this type.</typeparam>
-    public TCalendarDate ToCalendarDate<TCalendarDate>() where TCalendarDate : ICalendarDate<TCalendarDate> => TCalendarDate.FromJulianDay(ToJulianDay());
+    /// <typeparam name="TCalendarDate"><see langword="this"/> is converted to the equivalent <see cref="IEpoch"/> of this type.</typeparam>
+    public TCalendarDate ToEpoch<TCalendarDate>() where TCalendarDate : IEpoch<TCalendarDate> => TCalendarDate.FromJulianDay(ToJulianDay());
 
     /// <inheritdoc/>
     public JulianDay ToJulianDay() => new(Day + 2400000.5);
@@ -30,10 +30,10 @@ public readonly record struct ModifiedJulianDay : ICalendarDate<ModifiedJulianDa
     public DateTime ToDateTime() => JulianCalendarDate.FromJulianDay(ToJulianDay()).ToDateTime();
 
     /// <summary>Constructs the <see cref="JulianDay"/> equivalent to <paramref name="calendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate">The constructed <see cref="JulianDay"/> is equivalent to an <see cref="ICalendarDate"/> of this type.</typeparam>
+    /// <typeparam name="TCalendarDate">The constructed <see cref="JulianDay"/> is equivalent to an <see cref="IEpoch"/> of this type.</typeparam>
     /// <param name="calendarDate">The constructed <see cref="JulianDay"/> is equivalent to this <typeparamref name="TCalendarDate"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public static ModifiedJulianDay FromCalendarDate<TCalendarDate>(TCalendarDate calendarDate) where TCalendarDate : ICalendarDate<TCalendarDate>
+    public static ModifiedJulianDay FromEpoch<TCalendarDate>(TCalendarDate calendarDate) where TCalendarDate : IEpoch<TCalendarDate>
     {
         ArgumentNullException.ThrowIfNull(calendarDate);
 

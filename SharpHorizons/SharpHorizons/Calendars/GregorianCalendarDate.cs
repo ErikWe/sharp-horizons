@@ -5,8 +5,8 @@ using SharpMeasures;
 using System;
 using System.Globalization;
 
-/// <summary>Represents a point in time, expressed according to the Gregorian calendar.</summary>
-public record class GregorianCalendarDate : ICalendarDate<GregorianCalendarDate>
+/// <summary>Represents an epoch, an instant in time, expressed according to the Gregorian calendar.</summary>
+public record class GregorianCalendarDate : IEpoch<GregorianCalendarDate>
 {
     /// <summary>The year.</summary>
     public int Year { get; }
@@ -87,8 +87,8 @@ public record class GregorianCalendarDate : ICalendarDate<GregorianCalendarDate>
     }
 
     /// <summary>Converts <see langword="this"/> to the equivalent <typeparamref name="TCalendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate"><see langword="this"/> is converted to the equivalent <see cref="ICalendarDate"/> of this type.</typeparam>
-    public TCalendarDate ToCalendarDate<TCalendarDate>() where TCalendarDate : ICalendarDate<TCalendarDate> => TCalendarDate.FromJulianDay(ToJulianDay());
+    /// <typeparam name="TCalendarDate"><see langword="this"/> is converted to the equivalent <see cref="IEpoch"/> of this type.</typeparam>
+    public TCalendarDate ToEpoch<TCalendarDate>() where TCalendarDate : IEpoch<TCalendarDate> => TCalendarDate.FromJulianDay(ToJulianDay());
 
     /// <inheritdoc/>
     /// <credit>Astronomical Algorithms, Jean Meeus, chapter 7.</credit>
@@ -117,9 +117,9 @@ public record class GregorianCalendarDate : ICalendarDate<GregorianCalendarDate>
     public DateTime ToDateTime() => new(Year, (int)Month, Day, Hour, Minute, (int)Second, (int)(Second % 1 * 1000), GregorianCalendar);
 
     /// <summary>Constructs the <see cref="GregorianCalendarDate"/> equivalent to <paramref name="calendarDate"/>.</summary>
-    /// <typeparam name="TCalendarDate">The constructed <see cref="GregorianCalendarDate"/> is equivalent to an <see cref="ICalendarDate"/> of this type.</typeparam>
+    /// <typeparam name="TCalendarDate">The constructed <see cref="GregorianCalendarDate"/> is equivalent to an <see cref="IEpoch"/> of this type.</typeparam>
     /// <param name="calendarDate">The constructed <see cref="GregorianCalendarDate"/> is equivalent to this <typeparamref name="TCalendarDate"/>.</param>
-    public static GregorianCalendarDate FromCalendarDate<TCalendarDate>(TCalendarDate calendarDate) where TCalendarDate : ICalendarDate<TCalendarDate> => FromJulianDay(calendarDate.ToJulianDay());
+    public static GregorianCalendarDate FromEpoch<TCalendarDate>(TCalendarDate calendarDate) where TCalendarDate : IEpoch<TCalendarDate> => FromJulianDay(calendarDate.ToJulianDay());
 
     /// <summary>Constructs the <see cref="GregorianCalendarDate"/> equivalent to <paramref name="julianDay"/>.</summary>
     /// <param name="julianDay">The constructed <see cref="GregorianCalendarDate"/> is equivalent to this <see cref="JulianDay"/>.</param>
