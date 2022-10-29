@@ -16,5 +16,5 @@ internal sealed record class MPCNameTarget : ITarget
         Name = name;
     }
 
-    TargetArgument ITarget.ComposeIdentifier() => Name.Value;
+    ITargetArgument ITarget.ComposeArgument() => new TargetArgument(Name.Value);
 }

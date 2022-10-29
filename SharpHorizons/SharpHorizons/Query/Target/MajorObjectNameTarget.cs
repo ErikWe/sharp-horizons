@@ -16,6 +16,6 @@ internal sealed record class MajorObjectNameTarget : ITarget, ITargetSiteObject
         Name = name;
     }
 
-    TargetArgument ITarget.ComposeIdentifier() => Name.Value;
+    ITargetArgument ITarget.ComposeArgument() => new TargetArgument(Name.Value);
     TargetSiteObjectIdentifier ITargetSiteObject.ComposeIdentifier() => Name.Value;
 }

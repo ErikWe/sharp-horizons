@@ -18,6 +18,6 @@ internal sealed record class MajorObjectIDTarget : ITarget, ITargetSiteObject
         ID = id;
     }
 
-    TargetArgument ITarget.ComposeIdentifier() => ID.Value.ToString(CultureInfo.InvariantCulture);
+    ITargetArgument ITarget.ComposeArgument() => new TargetArgument(ID.Value.ToString(CultureInfo.InvariantCulture));
     TargetSiteObjectIdentifier ITargetSiteObject.ComposeIdentifier() => ID.Value.ToString(CultureInfo.InvariantCulture);
 }

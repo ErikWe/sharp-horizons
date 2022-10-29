@@ -19,5 +19,5 @@ internal sealed record class SiteTarget : ITarget
         TargetSite = targetSite;
     }
 
-    TargetArgument ITarget.ComposeIdentifier() => $"{TargetSite.ComposeIdentifier()}@{TargetSiteObject.ComposeIdentifier()}";
+    ITargetArgument ITarget.ComposeArgument() => new TargetArgument($"{TargetSite.ComposeIdentifier()}@{TargetSiteObject.ComposeIdentifier()}");
 }

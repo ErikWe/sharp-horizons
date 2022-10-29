@@ -16,5 +16,5 @@ internal sealed record class MPCProvisionalDesignationTarget : ITarget
         Designation = designation;
     }
 
-    TargetArgument ITarget.ComposeIdentifier() => Designation.Value;
+    ITargetArgument ITarget.ComposeArgument() => new TargetArgument(Designation.Value);
 }

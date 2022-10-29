@@ -18,5 +18,5 @@ internal sealed record class MPCSequentialNumberTarget : ITarget
         Number = number;
     }
 
-    TargetArgument ITarget.ComposeIdentifier() => Number.Value.ToString(CultureInfo.InvariantCulture);
+    ITargetArgument ITarget.ComposeArgument() => new TargetArgument(Number.Value.ToString(CultureInfo.InvariantCulture));
 }
