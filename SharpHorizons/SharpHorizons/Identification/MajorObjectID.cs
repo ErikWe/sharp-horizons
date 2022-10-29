@@ -4,13 +4,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-/// <summary>Represents the ID of an object marked as a <see cref="HorizonsBodyType.Major"/> body in Horizons - typically a planet, a moon of a planet, a spacecraft, or a few other special cases.</summary>
+/// <summary>Represents the ID of an object classified as a <see cref="HorizonsObjectClass.Major"/> object in Horizons - typically a planet, a moon, or a spacecraft.</summary>
 public readonly record struct MajorObjectID
 {
     /// <summary>The ID of the object in Horizons.</summary>
     public int Value { get; }
 
-    /// <summary>Represents the ID { <paramref name="value"/> } of an object marked as a <see cref="HorizonsBodyType.Major"/> body in Horizons.</summary>
+    /// <summary>Represents the ID { <paramref name="value"/> } of an object classified as a <see cref="HorizonsObjectClass.Major"/> object in Horizons - typically a planet, a moon, or a spacecraft.</summary>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     public MajorObjectID(int value)
     {
