@@ -21,11 +21,11 @@ public static class OriginBuilder
     }
 
     /// <summary>Describes the <see cref="IOrigin"/> in a query as the center of an object identified by <paramref name="majorObjectID"/>.</summary>
-    /// <param name="majorObjectID"><inheritdoc cref="MajorObjectIDOrigin.ID" path="/summary"/></param>
+    /// <param name="majorObjectID">The <see cref="MajorObjectID"/> of an object, the center of which represents the <see cref="IOrigin"/> in a query.</param>
     public static IOrigin Represent(MajorObjectID majorObjectID) => new BodyCentricOrigin(new MajorObjectIDOrigin(majorObjectID));
 
     /// <summary>Describes the <see cref="IOrigin"/> in a query as the center of an object identified by <paramref name="majorObjectName"/>.</summary>
-    /// <param name="majorObjectName"><inheritdoc cref="MajorObjectNameOrigin.Name" path="/summary"/></param>
+    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of an object, the center of which represents the <see cref="IOrigin"/> in a query.</param>
     /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the object, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
     public static IOrigin Represent(MajorObjectName majorObjectName) => new BodyCentricOrigin(new MajorObjectNameOrigin(majorObjectName));
 
