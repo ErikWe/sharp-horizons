@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Query;
+﻿namespace SharpHorizons.Query.Epoch;
 
 /// <summary>Describes the unit used when defining a calendar-based, non-uniform <see cref="IStepSize"/>.</summary>
 public enum CalendarStepSizeUnit

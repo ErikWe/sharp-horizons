@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Query.Epoch;
 
 using System.ComponentModel;
 

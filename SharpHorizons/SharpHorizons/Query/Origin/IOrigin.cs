@@ -1,6 +1,7 @@
-﻿namespace SharpHorizons.Query;
+﻿namespace SharpHorizons.Query.Origin;
 
 using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Target;
 
 /// <summary>Represents an origin in a query, relative to which a <see cref="ITarget"/> is described.</summary>
 public interface IOrigin

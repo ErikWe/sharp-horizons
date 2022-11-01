@@ -1,7 +1,8 @@
 ﻿namespace SharpHorizons.Vectors.Fluency;
 
 using SharpHorizons.Identification;
-using SharpHorizons.Query;
+using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Target;
 
 using SharpMeasures.Astronomy;
 

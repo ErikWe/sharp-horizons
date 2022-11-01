@@ -1,6 +1,8 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Target;
 
 using SharpMeasures;
 

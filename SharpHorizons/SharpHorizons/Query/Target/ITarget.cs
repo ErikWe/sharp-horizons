@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Query;
+﻿namespace SharpHorizons.Query.Target;
 
 using SharpHorizons.Query.Arguments;
 

@@ -1,7 +1,9 @@
 ﻿namespace SharpHorizons.Vectors;
 
 using SharpHorizons.Calendars;
-using SharpHorizons.Query;
+using SharpHorizons.Query.Epoch;
+using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Target;
 using SharpHorizons.Vectors.Fluency;
 
 using System;

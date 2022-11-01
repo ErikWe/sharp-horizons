@@ -1,7 +1,6 @@
-﻿namespace SharpHorizons.Query;
+﻿namespace SharpHorizons.Query.Origin;
 
 using SharpHorizons.Identification;
-using SharpHorizons.Query.Origin;
 
 using SharpMeasures.Astronomy;
 

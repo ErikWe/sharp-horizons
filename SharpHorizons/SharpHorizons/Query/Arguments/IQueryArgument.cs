@@ -1,6 +1,10 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
 using SharpHorizons.Calendars;
+using SharpHorizons.Query.Epoch;
+using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Target;
+using SharpHorizons.Query.VectorTable;
 
 /// <summary>Represents the value of a parameter in a query.</summary>
 public interface IQueryArgument

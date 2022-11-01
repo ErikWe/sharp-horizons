@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
-using SharpHorizons.Query;
-
+using SharpHorizons.Query.VectorTable;
 using System.Globalization;
 using System.Text;
 

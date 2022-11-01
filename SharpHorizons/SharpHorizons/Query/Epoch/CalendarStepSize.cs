@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Query;
 using SharpHorizons.Query.Arguments;
 
 using System;
