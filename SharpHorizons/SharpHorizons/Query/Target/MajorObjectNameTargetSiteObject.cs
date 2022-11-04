@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Target;
+using SharpHorizons.Composers.Arguments.Target;
 using SharpHorizons.Identification;
 
 /// <summary>Describes the <see cref="ITargetSiteObject"/> as an object identified by a <see cref="MajorObjectName"/>.</summary>

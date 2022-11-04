@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers;
+using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Identification;
 
 using System.Globalization;

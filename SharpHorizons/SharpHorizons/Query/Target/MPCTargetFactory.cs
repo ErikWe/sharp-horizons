@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers;
-using SharpHorizons.Composers.Target;
+using SharpHorizons.Composers.Arguments;
+using SharpHorizons.Composers.Arguments.Target;
 using SharpHorizons.Identification;
 
 using System;

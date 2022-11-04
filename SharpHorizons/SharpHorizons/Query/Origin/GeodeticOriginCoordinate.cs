@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Composers;
-
+using SharpHorizons.Composers.Arguments;
 using SharpMeasures.Astronomy;
 
 /// <inheritdoc cref="IGeodeticOriginCoordinate"/>

@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Composers;
-
+using SharpHorizons.Composers.Arguments;
 using SharpMeasures;
 
 /// <inheritdoc cref="IFixedStepSize"/>

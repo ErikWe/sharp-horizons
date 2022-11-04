@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Target;
+using SharpHorizons.Composers.Arguments.Target;
 
 using SharpMeasures.Astronomy;
 

@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers;
+using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Identification;
 
 /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an object identified by a <see cref="MPCProvisionalDesignation"/>.</summary>

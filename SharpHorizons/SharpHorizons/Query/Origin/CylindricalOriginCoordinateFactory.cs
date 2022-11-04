@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Composers;
-using SharpHorizons.Composers.Origin;
+using SharpHorizons.Composers.Arguments;
+using SharpHorizons.Composers.Arguments.Origin;
 
 using SharpMeasures.Astronomy;
 

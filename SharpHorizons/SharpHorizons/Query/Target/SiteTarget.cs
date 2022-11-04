@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers;
+using SharpHorizons.Composers.Arguments;
 
 /// <inheritdoc cref="ISiteTarget"/>
 internal sealed record class SiteTarget : ISiteTarget

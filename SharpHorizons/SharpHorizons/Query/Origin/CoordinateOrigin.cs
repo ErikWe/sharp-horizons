@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Composers;
+using SharpHorizons.Composers.Arguments;
 
 /// <inheritdoc cref="ICoordinateOrigin"/>
 internal sealed record class CoordinateOrigin : ICoordinateOrigin
