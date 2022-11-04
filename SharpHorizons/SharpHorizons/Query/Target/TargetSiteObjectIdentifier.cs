@@ -1,14 +1,15 @@
 ﻿namespace SharpHorizons.Query.Target;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>An identifier describing an <see cref="ITargetSiteObject"/> associated with some <see cref="ITargetSite"/>.</summary>
-internal readonly record struct TargetSiteObjectIdentifier
+public readonly record struct TargetSiteObjectIdentifier
 {
-    /// <summary>The identifier, describing an <see cref="ITargetSiteObject"/> associated with some <see cref="ITargetSite"/>.</summary>
+    /// <summary>The identifier.</summary>
     public string Value { get; }
 
-    /// <summary>Uses { <paramref name="value"/> } to describe an <see cref="ITargetSiteObject"/> associated with some <see cref="ITargetSite"/>.</summary>
+    /// <summary><inheritdoc cref="TargetSiteObjectIdentifier" path="/summary"/></summary>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     public TargetSiteObjectIdentifier(string value)
     {
@@ -22,6 +23,7 @@ internal readonly record struct TargetSiteObjectIdentifier
     public string ToString(IFormatProvider? provider) => Value.ToString(provider);
 
     /// <inheritdoc cref="TargetSiteObjectIdentifier(string)"/>
+    [SuppressMessage("Usage", "CA2225", Justification = "Available through a constructor")]
     public static implicit operator TargetSiteObjectIdentifier(string value) => new(value);
 
     /// <summary>Retrieves the identifier represented by <paramref name="targetSite"/>.</summary>

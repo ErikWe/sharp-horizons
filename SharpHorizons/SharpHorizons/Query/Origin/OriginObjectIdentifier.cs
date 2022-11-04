@@ -1,17 +1,21 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
-/// <summary>An identifier describing the <see cref="IOriginObject"/> in a query.</summary>
-internal readonly record struct OriginObjectIdentifier
+/// <summary>An identifier describing an <see cref="IOriginObject"/>.</summary>
+public readonly record struct OriginObjectIdentifier
 {
     /// <summary>The identifier.</summary>
     public string Value { get; }
 
-    /// <summary>Uses { <paramref name="value"/> } to describe the <see cref="IOriginObject"/> in a query.</summary>
+    /// <summary><inheritdoc cref="OriginObjectIdentifier" path="/summary"/></summary>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    /// <exception cref="ArgumentNullException"/>
     public OriginObjectIdentifier(string value)
     {
+        ArgumentNullException.ThrowIfNull(value);
+
         Value = value;
     }
 
@@ -22,6 +26,8 @@ internal readonly record struct OriginObjectIdentifier
     public string ToString(IFormatProvider? provider) => Value.ToString(provider);
 
     /// <inheritdoc cref="OriginObjectIdentifier(string)"/>
+    /// <exception cref="ArgumentNullException"/>
+    [SuppressMessage("Usage", "CA2225", Justification = "Available through a constructor")]
     public static implicit operator OriginObjectIdentifier(string value) => new(value);
 
     /// <summary>Retrieves the identifier represented by <paramref name="originObject"/>.</summary>
