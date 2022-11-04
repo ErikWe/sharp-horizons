@@ -1,7 +1,8 @@
 ﻿namespace SharpHorizons.Query.Target;
 
+using SharpHorizons.Composers;
+using SharpHorizons.Composers.Target;
 using SharpHorizons.Identification;
-using SharpHorizons.Query.Arguments;
 
 using SharpMeasures.Astronomy;
 

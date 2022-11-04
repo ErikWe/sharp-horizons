@@ -3,13 +3,15 @@
 using Microsoft.Extensions.DependencyInjection;
 
 using SharpHorizons.Calendars;
+using SharpHorizons.Composers;
+using SharpHorizons.Composers.Epoch;
+using SharpHorizons.Composers.Origin;
+using SharpHorizons.Composers.Target;
+using SharpHorizons.Composers.VectorTable;
 using SharpHorizons.Identification;
-using SharpHorizons.Query;
-using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
-using SharpHorizons.Query.VectorTable;
 using SharpHorizons.Vectors;
 using SharpHorizons.Vectors.Fluency;
 
@@ -43,12 +45,12 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<ITargetSiteFactory, TargetSiteFactory>();
         services.AddSingleton<ITargetSiteObjectFactory, TargetSiteObjectFactory>();
 
-        services.AddSingleton<ITargetSiteComposer<CylindricalCoordinate>, Query.Target.CylindricalCoordinateComposer>();
-        services.AddSingleton<ITargetSiteComposer<GeodeticCoordinate>, Query.Target.GeodeticCoordinateComposer>();
+        services.AddSingleton<ITargetSiteComposer<CylindricalCoordinate>, Composers.Target.CylindricalCoordinateComposer>();
+        services.AddSingleton<ITargetSiteComposer<GeodeticCoordinate>, Composers.Target.GeodeticCoordinateComposer>();
 
-        services.AddSingleton<ITargetSiteObjectComposer<MajorObject>, Query.Target.MajorObjectComposer>();
-        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectID>, Query.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectName>, Query.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetSiteObjectComposer<MajorObject>, Composers.Target.MajorObjectComposer>();
+        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectID>, Composers.Target.MajorObjectIDComposer>();
+        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectName>, Composers.Target.MajorObjectNameComposer>();
 
         services.AddSingleton(VectorsQuery.Instantiation);
 
@@ -65,9 +67,9 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<IOriginCoordinateFactory<CylindricalCoordinate>, CylindricalOriginCoordinateFactory>();
         services.AddSingleton<IOriginCoordinateFactory<GeodeticCoordinate>, GeodeticOriginCoordinateFactory>();
 
-        services.AddSingleton<IOriginObjectComposer<MajorObject>, Query.Origin.MajorObjectComposer>();
-        services.AddSingleton<IOriginObjectComposer<MajorObjectID>, Query.Origin.MajorObjectIDComposer>();
-        services.AddSingleton<IOriginObjectComposer<MajorObjectName>, Query.Origin.MajorObjectNameComposer>();
+        services.AddSingleton<IOriginObjectComposer<MajorObject>, Composers.Origin.MajorObjectComposer>();
+        services.AddSingleton<IOriginObjectComposer<MajorObjectID>, Composers.Origin.MajorObjectIDComposer>();
+        services.AddSingleton<IOriginObjectComposer<MajorObjectName>, Composers.Origin.MajorObjectNameComposer>();
 
         return services;
     }
@@ -108,9 +110,9 @@ public static class DependencyInjectionExtensions
     /// <param name="services"><see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsComposers(this IServiceCollection services)
     {
-        services.AddSingleton<ITargetComposer<MajorObject>, Query.Target.MajorObjectComposer>();
-        services.AddSingleton<ITargetComposer<MajorObjectID>, Query.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetComposer<MajorObjectName>, Query.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetComposer<MajorObject>, Composers.Target.MajorObjectComposer>();
+        services.AddSingleton<ITargetComposer<MajorObjectID>, Composers.Target.MajorObjectIDComposer>();
+        services.AddSingleton<ITargetComposer<MajorObjectName>, Composers.Target.MajorObjectNameComposer>();
 
         services.AddSingleton<ITargetComposer<MPCObject>, MPCObjectTargetComposer>();
         services.AddSingleton<ITargetComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
@@ -124,11 +126,11 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<IOriginComposer<ICoordinateOrigin>, CoordinateOriginComposer>();
         services.AddSingleton<IOriginComposer<IObservationSiteOrigin>, ObservationSiteOriginComposer>();
 
-        services.AddSingleton<IOriginCoordinateComposer<CylindricalCoordinate>, Query.Origin.CylindricalCoordinateComposer>();
-        services.AddSingleton<IOriginCoordinateComposer<GeodeticCoordinate>, Query.Origin.GeodeticCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateComposer<CylindricalCoordinate>, Composers.Origin.CylindricalCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateComposer<GeodeticCoordinate>, Composers.Origin.GeodeticCoordinateComposer>();
 
-        services.AddSingleton<IOriginCoordinateTypeComposer<CylindricalCoordinate>, Query.Origin.CylindricalCoordinateComposer>();
-        services.AddSingleton<IOriginCoordinateTypeComposer<GeodeticCoordinate>, Query.Origin.GeodeticCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateTypeComposer<CylindricalCoordinate>, Composers.Origin.CylindricalCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateTypeComposer<GeodeticCoordinate>, Composers.Origin.GeodeticCoordinateComposer>();
 
         services.AddSingleton<IEpochCollectionComposer<IEpochCollection>, EpochCollectionComposer>();
         services.AddSingleton<IEpochCollectionFormatComposer, EpochCollectionFormatComposer>();

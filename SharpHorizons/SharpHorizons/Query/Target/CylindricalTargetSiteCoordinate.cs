@@ -1,8 +1,8 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpMeasures.Astronomy;
+using SharpHorizons.Composers.Target;
 
-using System.Globalization;
+using SharpMeasures.Astronomy;
 
 /// <summary>Describes a <see cref="ITargetSite"/> using a <see cref="CylindricalCoordinate"/>.</summary>
 internal sealed record class CylindricalTargetSiteCoordinate : ITargetSite

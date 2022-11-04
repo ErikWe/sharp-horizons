@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Query.Target;
 
+using SharpHorizons.Composers;
 using SharpHorizons.Identification;
-using SharpHorizons.Query.Arguments;
 
 /// <summary>Describes the <see cref="ITarget"/> in a query as the center of <see cref="MPCProvisionalObject"/>.</summary>
 internal sealed record class MPCProvisionalObjectTarget : ITarget

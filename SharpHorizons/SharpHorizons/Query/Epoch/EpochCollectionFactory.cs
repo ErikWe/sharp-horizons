@@ -1,7 +1,8 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Calendars;
-using SharpHorizons.Query.Arguments;
+using SharpHorizons.Composers;
+using SharpHorizons.Composers.Epoch;
 
 using System;
 using System.Collections.Generic;

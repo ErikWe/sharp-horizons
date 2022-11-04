@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Query.Arguments;
+using SharpHorizons.Composers;
 
 /// <inheritdoc cref="IBodyCentricOrigin"/>
 internal sealed record class BodyCentricOrigin : IBodyCentricOrigin

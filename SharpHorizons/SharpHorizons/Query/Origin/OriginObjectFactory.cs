@@ -1,5 +1,6 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
+using SharpHorizons.Composers.Origin;
 using SharpHorizons.Identification;
 
 /// <inheritdoc cref="IOriginObjectFactory"/>
