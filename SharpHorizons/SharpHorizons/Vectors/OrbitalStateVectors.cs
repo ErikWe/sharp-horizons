@@ -7,7 +7,7 @@ using SharpMeasures;
 /// <summary>Represents the orbital state vectors, the <see cref="Position3"/> and <see cref="Velocity3"/>, of an object at an <see cref="IEpoch"/>.</summary>
 public sealed record class OrbitalStateVectors
 {
-    /// <summary>The epoch of the orbital state vectors.</summary>
+    /// <summary>The epoch of <see cref="OrbitalStateVectors"/>.</summary>
     public IEpoch Epoch { get; }
 
     /// <summary>The <see cref="Position3"/> of the object.</summary>

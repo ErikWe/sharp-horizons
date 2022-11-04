@@ -1,10 +1,12 @@
 ﻿namespace SharpHorizons.Composers.Parameters;
 
+using SharpHorizons.Elements;
 using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.VectorTable;
+using SharpHorizons.Vectors;
 
 /// <summary>Represents the identifier of a parameter in a query.</summary>
 public interface IQueryParameterIdentifier
@@ -12,6 +14,9 @@ public interface IQueryParameterIdentifier
     /// <summary>The identifier of the parameter in a query.</summary>
     public abstract string Identifier { get; }
 }
+
+/// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputLabels"/> in an <see cref="IElementsQuery"/>.</summary>
+public interface IElementLabelsParameterIdentifier : IQueryParameterIdentifier { }
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="EphemerisType"/>.</summary>
 public interface IEphemerisTypeParameterIdentifier : IQueryParameterIdentifier { }
@@ -39,9 +44,6 @@ public interface IOriginCoordinateTypeParameterIdentifier : IQueryParameterIdent
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputFormat"/>.</summary>
 public interface IOutputFormatParameterIdentifier : IQueryParameterIdentifier { }
-
-/// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputLabels"/>.</summary>
-public interface IOutputLabelsParameterIdentifier : IQueryParameterIdentifier { }
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputUnits"/>.</summary>
 public interface IOutputUnitsParameterIdentifier : IQueryParameterIdentifier { }
@@ -75,6 +77,9 @@ public interface IValueSeparationParameterIdentifier : IQueryParameterIdentifier
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="VectorCorrection"/>.</summary>
 public interface IVectorCorrectionParameterIdentifier : IQueryParameterIdentifier { }
+
+/// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputLabels"/> in a <see cref="IVectorsQuery"/>.</summary>
+public interface IVectorLabelsParameterIdentifier : IQueryParameterIdentifier { }
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="VectorTableContent"/>.</summary>
 public interface IVectorTableContentParameterIdentifier : IQueryParameterIdentifier { }
