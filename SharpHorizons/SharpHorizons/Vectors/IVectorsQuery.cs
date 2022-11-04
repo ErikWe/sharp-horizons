@@ -21,6 +21,9 @@ public interface IVectorsQuery
     /// <summary>Determines the <see cref="IEpoch"/> of the <see cref="OrbitalStateVectors"/>.</summary>
     public abstract IEpochSelection Epochs { get; }
 
+    /// <summary>Determines how the result of the query is formatted.</summary>
+    public abstract OutputFormat OutputFormat { get; }
+
     /// <summary>Determines whether object data is included in the result of the query.</summary>
     public abstract ObjectDataInclusion ObjectDataInclusion { get; }
 
@@ -50,6 +53,10 @@ public interface IVectorsQuery
 
     /// <summary>Determines whether the difference between Barycentric Dynamical Time (TDB) and Universal Time (UT) is included in the result of the query.</summary>
     public abstract TimeDeltaInclusion TimeDeltaInclusion { get; }
+
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with an updated <see cref="OutputFormat"/>.</summary>
+    /// <param name="outputFormat"><inheritdoc cref="OutputFormat" path="/summary"/></param>
+    public abstract IVectorsQuery WithConfiguration(OutputFormat outputFormat);
 
     /// <summary>Constructs a new <see cref="IVectorsQuery"/> with an updated <see cref="ObjectDataInclusion"/>.</summary>
     /// <param name="objectDataInclusion"><inheritdoc cref="ObjectDataInclusion" path="/summary"/></param>
@@ -92,6 +99,7 @@ public interface IVectorsQuery
     public abstract IVectorsQuery WithConfiguration(TimeDeltaInclusion timeDeltaInclusion);
 
     /// <summary>Constructs a new <see cref="IVectorsQuery"/> with the new configuration. Properties that correspond to a <see langword="null"/> parameter are not modified.</summary>
+    /// <param name="outputFormat"><inheritdoc cref="OutputFormat" path="/summary"/></param>
     /// <param name="objectDataInclusion"><inheritdoc cref="ObjectDataInclusion" path="/summary"/></param>
     /// <param name="referencePlane"><inheritdoc cref="ReferencePlane" path="/summary"/></param>
     /// <param name="referenceSystem"><inheritdoc cref="ReferenceSystem" path="/summary"/></param>
@@ -102,6 +110,6 @@ public interface IVectorsQuery
     /// <param name="valueSeparation"><inheritdoc cref="ValueSeparation" path="/summary"/></param>
     /// <param name="outputLabels"><inheritdoc cref="OutputLabels" path="/summary"/></param>
     /// <param name="timeDeltaInclusion"><inheritdoc cref="TimeDeltaInclusion" path="/summary"/></param>
-    public abstract IVectorsQuery WithConfiguration(ObjectDataInclusion? objectDataInclusion = null, ReferencePlane? referencePlane = null, ReferenceSystem? referenceSystem = null, OutputUnits? outputUnits = null,
+    public abstract IVectorsQuery WithConfiguration(OutputFormat? outputFormat = null, ObjectDataInclusion? objectDataInclusion = null, ReferencePlane? referencePlane = null, ReferenceSystem? referenceSystem = null, OutputUnits? outputUnits = null,
         VectorTableContent? tableContent = null, VectorCorrection? correction = null, TimePrecision? timePrecision = null, ValueSeparation? valueSeparation = null, OutputLabels? outputLabels = null, TimeDeltaInclusion? timeDeltaInclusion = null);
 }

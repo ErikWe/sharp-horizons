@@ -21,6 +21,9 @@ internal sealed record class VectorsQuery : IVectorsQuery
     public IEpochSelection Epochs { get; }
 
     /// <inheritdoc/>
+    public OutputFormat OutputFormat { get; init; } = OutputFormat.JSON;
+
+    /// <inheritdoc/>
     public ObjectDataInclusion ObjectDataInclusion { get; init; } = ObjectDataInclusion.Disable;
 
     /// <inheritdoc/>
@@ -65,6 +68,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <summary><inheritdoc cref="VectorsQueryInstantiation" path="/summary"/></summary>
     public static VectorsQueryInstantiation Instantiation => (target, origin, epochs) => new VectorsQuery(target, origin, epochs);
 
+    IVectorsQuery IVectorsQuery.WithConfiguration(OutputFormat outputFormat) => this with { OutputFormat = outputFormat };
     IVectorsQuery IVectorsQuery.WithConfiguration(ObjectDataInclusion objectDataInclusion) => this with { ObjectDataInclusion = objectDataInclusion };
     IVectorsQuery IVectorsQuery.WithConfiguration(ReferencePlane referencePlane) => this with { ReferencePlane = referencePlane };
     IVectorsQuery IVectorsQuery.WithConfiguration(ReferenceSystem referenceSystem) => this with { ReferenceSystem = referenceSystem };
@@ -75,8 +79,9 @@ internal sealed record class VectorsQuery : IVectorsQuery
     IVectorsQuery IVectorsQuery.WithConfiguration(ValueSeparation valueSeparation) => this with { ValueSeparation = valueSeparation };
     IVectorsQuery IVectorsQuery.WithConfiguration(OutputLabels outputLabels) => this with { OutputLabels = outputLabels };
     IVectorsQuery IVectorsQuery.WithConfiguration(TimeDeltaInclusion timeDeltaInclusion) => this with { TimeDeltaInclusion = timeDeltaInclusion };
-    IVectorsQuery IVectorsQuery.WithConfiguration(ObjectDataInclusion? objectDataInclusion, ReferencePlane? referencePlane, ReferenceSystem? referenceSystem, OutputUnits? outputUnits, VectorTableContent? tableContent, VectorCorrection? correction, TimePrecision? timePrecision, ValueSeparation? valueSeparation, OutputLabels? outputLabels, TimeDeltaInclusion? timeDeltaInclusion) => this with
+    IVectorsQuery IVectorsQuery.WithConfiguration(OutputFormat? outputFormat, ObjectDataInclusion? objectDataInclusion, ReferencePlane? referencePlane, ReferenceSystem? referenceSystem, OutputUnits? outputUnits, VectorTableContent? tableContent, VectorCorrection? correction, TimePrecision? timePrecision, ValueSeparation? valueSeparation, OutputLabels? outputLabels, TimeDeltaInclusion? timeDeltaInclusion) => this with
     {
+        OutputFormat = outputFormat ?? OutputFormat,
         ObjectDataInclusion = objectDataInclusion ?? ObjectDataInclusion,
         ReferencePlane = referencePlane ?? ReferencePlane,
         ReferenceSystem = referenceSystem ?? ReferenceSystem,

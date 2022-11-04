@@ -45,6 +45,9 @@ public interface IOriginCoordinateComposer<T> : IArgumentComposer<IOriginCoordin
 /// <typeparam name="T">The composed <see cref="IOriginCoordinateTypeArgument"/> describe instances of this type.</typeparam>
 public interface IOriginCoordinateTypeComposer<T> : IArgumentComposer<IOriginCoordinateTypeArgument, T> { }
 
+/// <summary>Composes <see cref="IOutputFormatArgument"/> that describe <see cref="OutputFormat"/>.</summary>
+public interface IOutputFormatComposer : IArgumentComposer<IOutputFormatArgument, OutputFormat> { }
+
 /// <summary>Composes <see cref="IOutputLabelsArgument"/> that describe <see cref="OutputLabels"/>.</summary>
 public interface IOutputLabelsComposer : IArgumentComposer<IOutputLabelsArgument, OutputLabels> { }
 

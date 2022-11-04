@@ -38,6 +38,9 @@ public interface IOriginCoordinateArgument : IQueryArgument { }
 /// <summary>A <see cref="IQueryArgument"/> describing the type of the <see cref="IOriginCoordinate"/>.</summary>
 public interface IOriginCoordinateTypeArgument : IQueryArgument { }
 
+/// <summary>A <see cref="IQueryArgument"/> describing <see cref="OutputFormat"/>.</summary>
+public interface IOutputFormatArgument : IQueryArgument { }
+
 /// <summary>A <see cref="IQueryArgument"/> describing <see cref="OutputLabels"/>.</summary>
 public interface IOutputLabelsArgument : IQueryArgument { }
 

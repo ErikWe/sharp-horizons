@@ -2,7 +2,7 @@
 
 /// <inheritdoc cref="IQueryArgument"/>
 internal sealed record class QueryArgument : IQueryArgument, IEphemerisTypeArgument, IEpochCollectionArgument, IEpochCollectionFormatArgument, IGenerateEphemeridesArgument, IObjectDataInclusionArgument, IOriginArgument,
-    IOriginCoordinateArgument, IOriginCoordinateTypeArgument, IOutputLabelsArgument, IOutputUnitsArgument, IReferencePlaneArgument, IReferenceSystemArgument, IStartEpochArgument, IStepSizeArgument,
+    IOriginCoordinateArgument, IOriginCoordinateTypeArgument, IOutputFormatArgument, IOutputLabelsArgument, IOutputUnitsArgument, IReferencePlaneArgument, IReferenceSystemArgument, IStartEpochArgument, IStepSizeArgument,
     IStopEpochArgument, ITargetArgument, ITimeDeltaInclusionArgument, ITimePrecisionArgument, IValueSeparationArgument, IVectorCorrectionArgument, IVectorTableContentArgument
 {
     /// <inheritdoc/>

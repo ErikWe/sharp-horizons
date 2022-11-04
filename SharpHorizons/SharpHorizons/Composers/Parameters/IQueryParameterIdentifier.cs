@@ -37,6 +37,9 @@ public interface IOriginCoordinateParameterIdentifier : IQueryParameterIdentifie
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing the type of the <see cref="IOriginCoordinate"/>.</summary>
 public interface IOriginCoordinateTypeParameterIdentifier : IQueryParameterIdentifier { }
 
+/// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputFormat"/>.</summary>
+public interface IOutputFormatParameterIdentifier : IQueryParameterIdentifier { }
+
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputLabels"/>.</summary>
 public interface IOutputLabelsParameterIdentifier : IQueryParameterIdentifier { }
 
