@@ -1,23 +1,30 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Target;
 
 using SharpMeasures;
 
-using System.Globalization;
-
-/// <summary>Describes the <see cref="IStepSize"/> in a query as the variable amount of time it takes for the position of a <see cref="ITarget"/> to change by a certain <see cref="Angle"/>, as seen from an <see cref="IOrigin"/>.</summary>
-internal readonly record struct AngularStepSize : IStepSize
+/// <inheritdoc cref="IAngularStepSize"/>
+internal sealed record class AngularStepSize : IAngularStepSize
 {
-    /// <summary>The change in position of a <see cref="ITarget"/> between each step. The value is rounded to an integer number of <see cref="UnitOfAngle.Arcsecond"/>.</summary>
-    private Angle DeltaAngle { get; }
+    /// <inheritdoc/>
+    public Angle DeltaAngle { get; }
 
-    /// <summary>Describes the <see cref="IStepSize"/> in a query as the variable amount of time it takes for the position of a <see cref="ITarget"/> to change by <paramref name="deltaAngle"/>, as seen from an <see cref="IOrigin"/>.</summary>
+    /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
+    private IStepSizeComposer<IAngularStepSize> Composer { get; }
+
+    /// <summary>Describes the <see cref="IStepSize"/> in a query as the variable amount of time it takes for the position of the <see cref="ITarget"/> to change by <paramref name="deltaAngle"/>, as seen from the <see cref="IOrigin"/>.</summary>
     /// <param name="deltaAngle"><inheritdoc cref="DeltaAngle" path="/summary"/></param>
-    public AngularStepSize(Angle deltaAngle)
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    /// <remarks><inheritdoc cref="IAngularStepSize" path="/remarks"/></remarks>
+    public AngularStepSize(Angle deltaAngle, IStepSizeComposer<IAngularStepSize> composer)
     {
         DeltaAngle = deltaAngle;
+
+        Composer = composer;
     }
 
-    IStepSizeArgument IStepSize.ComposeArgument() => new StepSizeArgument($"VAR{DeltaAngle.Arcseconds.Round().ToString("F0", CultureInfo.InvariantCulture)}");
+    IStepSizeArgument IStepSize.ComposeArgument() => Composer.Compose(this);
 }

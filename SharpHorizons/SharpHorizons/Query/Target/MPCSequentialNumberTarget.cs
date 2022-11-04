@@ -11,12 +11,18 @@ internal sealed record class MPCSequentialNumberTarget : ITarget
     /// <summary>The <see cref="MPCSequentialNumber"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</summary>
     private MPCSequentialNumber Number { get; }
 
+    /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
+    private ITargetComposer<MPCSequentialNumber> Composer { get; }
+
     /// <summary>Describes the <see cref="ITarget"/> in a query as an object identified by <paramref name="number"/>.</summary>
     /// <param name="number"><inheritdoc cref="Number" path="/summary"/></param>
-    public MPCSequentialNumberTarget(MPCSequentialNumber number)
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public MPCSequentialNumberTarget(MPCSequentialNumber number, ITargetComposer<MPCSequentialNumber> composer)
     {
         Number = number;
+    
+        Composer = composer;
     }
 
-    ITargetArgument ITarget.ComposeArgument() => new TargetArgument(Number.Value.ToString(CultureInfo.InvariantCulture));
+    ITargetArgument ITarget.ComposeArgument() => Composer.Compose(Number);
 }

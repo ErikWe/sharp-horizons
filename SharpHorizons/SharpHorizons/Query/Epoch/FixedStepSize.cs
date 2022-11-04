@@ -4,20 +4,24 @@ using SharpHorizons.Query.Arguments;
 
 using SharpMeasures;
 
-using System.Globalization;
-
-/// <summary>Describes the <see cref="IStepSize"/> in a query using a fixed <see cref="Time"/> difference.</summary>
-internal readonly record struct FixedStepSize : IStepSize
+/// <inheritdoc cref="IFixedStepSize"/>
+internal sealed record class FixedStepSize : IFixedStepSize
 {
-    /// <summary>The <see cref="Time"/> between each step. The value is rounded to an integer number of <see cref="UnitOfTime.Minute"/>.</summary>
-    private Time DeltaTime { get; }
+    /// <inheritdoc/>
+    public Time DeltaTime { get; }
+
+    /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
+    private IStepSizeComposer<IFixedStepSize> Composer { get; }
 
     /// <summary>Describes the <see cref="IStepSize"/> in a query using a fixed <see cref="Time"/> difference <paramref name="deltaTime"/>.</summary>
     /// <param name="deltaTime"><inheritdoc cref="DeltaTime" path="/summary"/></param>
-    public FixedStepSize(Time deltaTime)
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public FixedStepSize(Time deltaTime, IStepSizeComposer<IFixedStepSize> composer)
     {
         DeltaTime = deltaTime;
+
+        Composer = composer;
     }
 
-    IStepSizeArgument IStepSize.ComposeArgument() => new StepSizeArgument($"{DeltaTime.Minutes.Round().ToString("F0", CultureInfo.InvariantCulture)}m");
+    IStepSizeArgument IStepSize.ComposeArgument() => Composer.Compose(this);
 }

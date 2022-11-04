@@ -1,12 +1,16 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
 using SharpHorizons.Calendars;
+using SharpHorizons.Query.Epoch;
+using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Target;
+using SharpHorizons.Query.VectorTable;
 
 /// <summary>Represents the value of a parameter in a query.</summary>
 public interface IQueryArgument
 {
     /// <summary>The value of the parameter in a query.</summary>
-    public abstract QueryArgument Value { get; }
+    public abstract string Value { get; }
 }
 
 /// <summary>A <see cref="IQueryArgument"/> describing the <see cref="EphemerisType"/>.</summary>
@@ -49,13 +53,13 @@ public interface IReferencePlaneArgument : IQueryArgument { }
 public interface IReferenceSystemArgument : IQueryArgument { }
 
 /// <summary>A <see cref="IQueryArgument"/> describing the start <see cref="IEpoch"/> of the <see cref="IEpochSelection"/> when using <see cref="EpochSelectionMode.Range"/>.</summary>
-public interface IStartTimeArgument : IQueryArgument { }
+public interface IStartEpochArgument : IQueryArgument { }
 
 /// <summary>A <see cref="IQueryArgument"/> describing the <see cref="IStepSize"/> of the <see cref="IEpochSelection"/> when using <see cref="EpochSelectionMode.Range"/>.</summary>
 public interface IStepSizeArgument : IQueryArgument { }
 
 /// <summary>A <see cref="IQueryArgument"/> describing the stop <see cref="IEpoch"/> of the <see cref="IEpochSelection"/> when using <see cref="EpochSelectionMode.Range"/>.</summary>
-public interface IStopTimeArgument : IQueryArgument { }
+public interface IStopEpochArgument : IQueryArgument { }
 
 /// <summary>A <see cref="IQueryArgument"/> describing the <see cref="ITarget"/>.</summary>
 public interface ITargetArgument : IQueryArgument { }

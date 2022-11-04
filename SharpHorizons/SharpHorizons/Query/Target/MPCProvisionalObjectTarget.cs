@@ -3,18 +3,24 @@
 using SharpHorizons.Identification;
 using SharpHorizons.Query.Arguments;
 
-/// <summary>Describes the <see cref="ITarget"/> in a query as an object identified by an <see cref="MPCProvisionalDesignation"/>.</summary>
-internal sealed record class MPCProvisionalDesignationTarget : ITarget
+/// <summary>Describes the <see cref="ITarget"/> in a query as the center of <see cref="MPCProvisionalObject"/>.</summary>
+internal sealed record class MPCProvisionalObjectTarget : ITarget
 {
-    /// <summary>The <see cref="MPCProvisionalDesignation"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</summary>
-    private MPCProvisionalDesignation Designation { get; }
+    /// <summary>The <see cref="MPCProvisionalObject"/>, the center of which represents the <see cref="ITarget"/> in a query.</summary>
+    private MPCProvisionalObject MPCObject { get; }
 
-    /// <summary>Describes the <see cref="ITarget"/> in a query as an object identified by <paramref name="designation"/>.</summary>
-    /// <param name="designation"><inheritdoc cref="Designation" path="/summary"/></param>
-    public MPCProvisionalDesignationTarget(MPCProvisionalDesignation designation)
+    /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
+    private ITargetComposer<MPCProvisionalObject> Composer { get; }
+
+    /// <summary>Describes the <see cref="ITarget"/> in a query as the center of <paramref name="mpcObject"/>.</summary>
+    /// <param name="mpcObject"><inheritdoc cref="MPCObject" path="/summary"/></param>
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public MPCProvisionalObjectTarget(MPCProvisionalObject mpcObject, ITargetComposer<MPCProvisionalObject> composer)
     {
-        Designation = designation;
+        MPCObject = mpcObject;
+
+        Composer = composer;
     }
 
-    ITargetArgument ITarget.ComposeArgument() => new TargetArgument(Designation.Value);
+    ITargetArgument ITarget.ComposeArgument() => Composer.Compose(MPCObject);
 }

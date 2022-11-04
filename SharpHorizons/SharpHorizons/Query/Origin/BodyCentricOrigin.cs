@@ -2,21 +2,27 @@
 
 using SharpHorizons.Query.Arguments;
 
-/// <summary>Describes the <see cref="IOrigin"/> in a query as a the center of some <see cref="IOriginObject"/>.</summary>
-internal sealed record class BodyCentricOrigin : IOrigin
+/// <inheritdoc cref="IBodyCentricOrigin"/>
+internal sealed record class BodyCentricOrigin : IBodyCentricOrigin
 {
-    /// <summary>The <see cref="IOriginObject"/>, the center of which represents the <see cref="IOrigin"/> in a query.</summary>
-    private IOriginObject OriginObject { get; }
+    /// <inheritdoc/>
+    public IOriginObject OriginObject { get; }
+
+    /// <summary>Used to compose a <see cref="IOriginArgument"/> describing <see langword="this"/>.</summary>
+    private IOriginComposer<IBodyCentricOrigin> Composer { get; }
 
     /// <summary>Describes the <see cref="IOrigin"/> in a query as a the center of <paramref name="originObject"/>.</summary>
     /// <param name="originObject"><inheritdoc cref="OriginObject" path="/summary"/></param>
-    public BodyCentricOrigin(IOriginObject originObject)
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public BodyCentricOrigin(IOriginObject originObject, IOriginComposer<IBodyCentricOrigin> composer)
     {
         OriginObject = originObject;
+
+        Composer = composer;
     }
 
     bool IOrigin.UsesCoordinate => false;
-    IOriginArgument IOrigin.ComposeArgument() => new OriginArgument($"g@{OriginObject.ComposeIdentifier()}");
+    IOriginArgument IOrigin.ComposeArgument() => Composer.Compose(this);
     IOriginCoordinateArgument IOrigin.ComposeCoordinateArgument() => throw new OriginNotUsingCoordinateException();
     IOriginCoordinateTypeArgument IOrigin.ComposeCoordinateTypeArgument() => throw new OriginNotUsingCoordinateException();
 }
