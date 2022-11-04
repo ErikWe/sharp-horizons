@@ -2,22 +2,24 @@
 
 using SharpHorizons.Query.Arguments;
 
-using SharpMeasures;
-
-using System.Globalization;
-
-/// <summary>Describes the <see cref="IStepSize"/> in a query using a total number of steps, uniformly distributed between the start and end epoch.</summary>
-internal readonly record struct UniformStepSize : IStepSize
+/// <inheritdoc cref="IUniformStepSize"/>
+internal sealed record class UniformStepSize : IUniformStepSize
 {
-    /// <summary>The total number of steps.</summary>
-    private int StepCount { get; }
+    /// <inheritdoc/>
+    public int StepCount { get; }
 
-    /// <summary>Describes the <see cref="IStepSize"/> in a query using a total of <paramref name="stepCount"/> steps, uniformly distributed between the start and end epoch.</summary>
+    /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
+    private IStepSizeComposer<IUniformStepSize> Composer { get; }
+
+    /// <summary>Describes the <see cref="IStepSize"/> in a query using <paramref name="stepCount"/> uniformly distributed steps.</summary>
     /// <param name="stepCount"><inheritdoc cref="StepCount" path="/summary"/></param>
-    public UniformStepSize(int stepCount)
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public UniformStepSize(int stepCount, IStepSizeComposer<IUniformStepSize> composer)
     {
         StepCount = stepCount;
+
+        Composer = composer;
     }
 
-    IStepSizeArgument IStepSize.ComposeArgument() => new StepSizeArgument(StepCount.ToString(CultureInfo.InvariantCulture));
+    IStepSizeArgument IStepSize.ComposeArgument() => Composer.Compose(this);
 }

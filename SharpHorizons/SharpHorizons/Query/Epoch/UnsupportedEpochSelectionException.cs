@@ -19,5 +19,11 @@ public sealed class UnsupportedEpochSelectionException : Exception
 
     /// <inheritdoc cref="UnsupportedEpochSelectionException"/>
     /// <param name="expectedType">The expected <see cref="EpochSelectionMode"/>.</param>
-    public UnsupportedEpochSelectionException(EpochSelectionMode expectedType) : base($"The {typeof(IEpochSelection).FullName} was not selected according to {typeof(EpochSelectionMode).FullName}.{expectedType}.") { }
+    private UnsupportedEpochSelectionException(EpochSelectionMode expectedType) : base($"The {typeof(IEpochSelection).FullName} was not selected according to {typeof(EpochSelectionMode).FullName}.{expectedType}.") { }
+
+    /// <summary>Represents an error relating to a <see cref="IEpochSelection"/> that does not support <see cref="EpochSelectionMode.Collection"/>.</summary>
+    public static UnsupportedEpochSelectionException EpochSelectionNotCollection => new(EpochSelectionMode.Collection);
+
+    /// <summary>Represents an error relating to a <see cref="IEpochSelection"/> that does not support <see cref="EpochSelectionMode.Range"/>.</summary>
+    public static UnsupportedEpochSelectionException EpochSelectionNotRange => new(EpochSelectionMode.Range);
 }

@@ -1,8 +1,8 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-/// <summary>Represents the origin object in a query.</summary>
-internal interface IOriginObject
+/// <summary>Represents an object, relative to which an <see cref="IOrigin"/> is expressed.</summary>
+public interface IOriginObject
 {
-    /// <summary>Composes a <see cref="OriginObjectIdentifier"/> describing the origin object in a query.</summary>
-    internal abstract OriginObjectIdentifier ComposeIdentifier();
+    /// <summary>Composes a <see cref="OriginObjectIdentifier"/> describing the <see cref="IOriginObject"/>.</summary>
+    public abstract OriginObjectIdentifier ComposeIdentifier();
 }

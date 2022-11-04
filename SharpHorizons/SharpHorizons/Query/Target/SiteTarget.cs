@@ -2,22 +2,29 @@
 
 using SharpHorizons.Query.Arguments;
 
-/// <summary>Describes the <see cref="ITarget"/> in a query as a <see cref="ITargetSite"/> associated with a <see cref="ITargetSiteObject"/>.</summary>
-internal sealed record class SiteTarget : ITarget
+/// <inheritdoc cref="ISiteTarget"/>
+internal sealed record class SiteTarget : ISiteTarget
 {
-    /// <summary>Represents the <see cref="ITargetSiteObject"/> associated with <see cref="TargetSite"/>.</summary>
-    private ITargetSiteObject TargetSiteObject { get; }
-    /// <summary>Represents the <see cref="ITargetSite"/> associated with <see cref="TargetSiteObject"/>.</summary>
-    private ITargetSite TargetSite { get; }
+    /// <inheritdoc/>
+    public ITargetSiteObject TargetSiteObject { get; }
+
+    /// <inheritdoc/>
+    public ITargetSite TargetSite { get; }
+
+    /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
+    private ITargetComposer<ISiteTarget> Composer { get; }
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as <paramref name="targetSite"/> associated with <paramref name="targetSiteObject"/>.</summary>
     /// <param name="targetSiteObject">Describes the <see cref="ITargetSiteObject"/> associated with <paramref name="targetSite"/>.</param>
     /// <param name="targetSite">Describes the <see cref="ITargetSite"/> associated with <paramref name="targetSiteObject"/>.</param>
-    public SiteTarget(ITargetSiteObject targetSiteObject, ITargetSite targetSite)
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public SiteTarget(ITargetSiteObject targetSiteObject, ITargetSite targetSite, ITargetComposer<ISiteTarget> composer)
     {
         TargetSiteObject = targetSiteObject;
         TargetSite = targetSite;
+
+        Composer = composer;
     }
 
-    ITargetArgument ITarget.ComposeArgument() => new TargetArgument($"{TargetSite.ComposeIdentifier()}@{TargetSiteObject.ComposeIdentifier()}");
+    ITargetArgument ITarget.ComposeArgument() => Composer.Compose(this);
 }

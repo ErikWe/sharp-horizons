@@ -17,13 +17,13 @@ public interface IEpochSelection
     /// <exception cref="UnsupportedEpochSelectionException"/>
     public abstract IEpochCollectionFormatArgument ComposeCollectionFormatArgument();
 
-    /// <summary>Composes a <see cref="IStartTimeArgument"/> describing the start <see cref="IEpoch"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
+    /// <summary>Composes a <see cref="IStartEpochArgument"/> describing the start <see cref="IEpoch"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
     /// <exception cref="UnsupportedEpochSelectionException"/>
-    public abstract IStartTimeArgument ComposeStartTimeArgument();
+    public abstract IStartEpochArgument ComposeStartTimeArgument();
 
-    /// <summary>Composes a <see cref="IStopTimeArgument"/> describing the stop <see cref="IEpoch"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
+    /// <summary>Composes a <see cref="IStopEpochArgument"/> describing the stop <see cref="IEpoch"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
     /// <exception cref="UnsupportedEpochSelectionException"/>
-    public abstract IStopTimeArgument ComposeStopTimeArgument();
+    public abstract IStopEpochArgument ComposeStopTimeArgument();
 
     /// <summary>Composes a <see cref="IStepSizeArgument"/> describing the <see cref="IStepSize"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
     /// <exception cref="UnsupportedEpochSelectionException"/>

@@ -54,13 +54,16 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
     /// <param name="epochs"><inheritdoc cref="Epochs" path="/summary"/></param>
-    public VectorsQuery(ITarget target, IOrigin origin, IEpochSelection epochs)
+    private VectorsQuery(ITarget target, IOrigin origin, IEpochSelection epochs)
     {
         Target = target;
         Origin = origin;
 
         Epochs = epochs;
     }
+
+    /// <summary><inheritdoc cref="VectorsQueryInstantiation" path="/summary"/></summary>
+    public static VectorsQueryInstantiation Instantiation => (target, origin, epochs) => new VectorsQuery(target, origin, epochs);
 
     IVectorsQuery IVectorsQuery.WithConfiguration(ObjectDataInclusion objectDataInclusion) => this with { ObjectDataInclusion = objectDataInclusion };
     IVectorsQuery IVectorsQuery.WithConfiguration(ReferencePlane referencePlane) => this with { ReferencePlane = referencePlane };

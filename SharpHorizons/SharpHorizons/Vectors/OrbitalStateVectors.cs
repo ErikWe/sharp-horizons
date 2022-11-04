@@ -12,6 +12,7 @@ public sealed record class OrbitalStateVectors
 
     /// <summary>The <see cref="Position3"/> of the object.</summary>
     public Position3 Position { get; }
+
     /// <summary>The <see cref="Velocity3"/> of the object.</summary>
     public Velocity3 Velocity { get; }
 

@@ -9,70 +9,51 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-/// <summary>Uses a collection of individual <see cref="IEpoch"/> to describe the selection of <see cref="IEpoch"/> in a query.</summary>
-public sealed record class EpochCollection : IEnumerable<IEpoch>, IEpochSelection
+/// <inheritdoc cref="IEpochCollection"/>
+internal sealed record class EpochCollection : IEpochCollection
 {
-    /// <summary>The selected <see cref="IEpoch"/> in a query.</summary>
-    private IEnumerable<IEpoch> Epochs { get; }
+    /// <inheritdoc/>
+    public IEnumerable<IEpoch> Epochs { get; }
 
-    /// <summary>Determines the <see cref="EpochCollectionFormat"/> of the individual <see cref="IEpoch"/> in a query.</summary>
-    public EpochCollectionFormat Format { get; init; }
+    /// <inheritdoc/>
+    public EpochCollectionFormat Format { get; }
 
-    EpochSelectionMode IEpochSelection.Selection => EpochSelectionMode.Collection;
+    /// <summary>Used to compose <see cref="IEpochCollectionArgument"/> that describe <see langword="this"/>.</summary>
+    private IEpochCollectionComposer<IEpochCollection> Composer { get; }
+
+    /// <summary>Used to compose <see cref="IEpochCollectionFormatArgument"/> that describe <see cref="Format"/>.</summary>
+    private IEpochCollectionFormatComposer FormatComposer { get; }
 
     /// <summary>Uses a collection of individual <see cref="IEpoch"/>, <paramref name="epochs"/>, to describe the selection of <see cref="IEpoch"/> in a query - each formatted according to <paramref name="format"/>.</summary>
     /// <param name="epochs"><inheritdoc cref="Epochs" path="/summary"/></param>
-    /// <param name="format">Determines the <see cref="EpochCollectionFormat"/> of the individual <see cref="IEpoch"/> in a query.</param>
+    /// <param name="format"><inheritdoc cref="Format" path="/summary"/></param>
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    /// <param name="formatComposer"><inheritdoc cref="FormatComposer" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
-    public EpochCollection(IEnumerable<IEpoch> epochs, EpochCollectionFormat format)
+    public EpochCollection(IEnumerable<IEpoch> epochs, EpochCollectionFormat format, IEpochCollectionComposer<IEpochCollection> composer, IEpochCollectionFormatComposer formatComposer)
     {
-        ArgumentNullException.ThrowIfNull(epochs);
-
-        if (Enum.IsDefined(typeof(EpochCollectionFormat), format) is false)
-        {
-            throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(EpochCollectionFormat));
-        }
-
         Epochs = epochs;
 
         Format = format;
+
+        Composer = composer;
+        FormatComposer = formatComposer;
     }
 
-    /// <summary>Uses a collection of individual <see cref="IEpoch"/>, <paramref name="epochs"/>, to describe the selection of <see cref="IEpoch"/> in a query - each formatted according to <see cref="EpochCollectionFormat.JulianDays"/>.</summary>
-    /// <param name="epochs"><inheritdoc cref="Epochs" path="/summary"/></param>
-    /// <exception cref="ArgumentNullException"/>
-    public EpochCollection(IEnumerable<IEpoch> epochs) : this(epochs, EpochCollectionFormat.JulianDays) { }
+    EpochSelectionMode IEpochSelection.Selection => EpochSelectionMode.Collection;
+    IEpochCollectionArgument IEpochSelection.ComposeCollectionArgument() => Composer.Compose(this);
+    IEpochCollectionFormatArgument IEpochSelection.ComposeCollectionFormatArgument() => FormatComposer.Compose(Format);
+    IStartEpochArgument IEpochSelection.ComposeStartTimeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
+    IStopEpochArgument IEpochSelection.ComposeStopTimeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
+    IStepSizeArgument IEpochSelection.ComposeStepSizeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
 
-    /// <summary>Uses a collection of individual <see cref="IEpoch"/>, with a single entry <paramref name="epoch"/>, to describe the selection of <see cref="IEpoch"/> in a query - formatted according to <paramref name="format"/>.</summary>
-    /// <param name="epoch">The single epoch.</param>
-    /// <param name="format">Determines the <see cref="EpochCollectionFormat"/> of <paramref name="epoch"/> in a query.</param>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="InvalidEnumArgumentException"/>
-    public EpochCollection(IEpoch epoch, EpochCollectionFormat format) : this(new[] { epoch ?? throw new ArgumentNullException(nameof(epoch)) }, format) { }
-
-    /// <summary>Uses a collection of individual <see cref="IEpoch"/>, with a single entry <paramref name="epoch"/>, to describe the selection of <see cref="IEpoch"/> in a query - formatted according to <see cref="EpochCollectionFormat.JulianDays"/>.</summary>
-    /// <param name="epoch">The single epoch.</param>
-    /// <exception cref="ArgumentNullException"/>
-    public EpochCollection(IEpoch epoch) : this(epoch, EpochCollectionFormat.JulianDays) { }
-
-    /// <summary>Uses an empty collection to describe the selection of <see cref="IEpoch"/> in a query</summary>
-    public EpochCollection() : this(Array.Empty<IEpoch>()) { }
-
-    IEpochCollectionArgument IEpochSelection.ComposeCollectionArgument() => EpochCollectionArgument.Compose(this, Format);
-    IEpochCollectionFormatArgument IEpochSelection.ComposeCollectionFormatArgument() => EpochCollectionFormatArgument.Compose(EpochCollectionFormat.JulianDays);
-    IStartTimeArgument IEpochSelection.ComposeStartTimeArgument() => throw new UnsupportedEpochSelectionException(EpochSelectionMode.Range);
-    IStopTimeArgument IEpochSelection.ComposeStopTimeArgument() => throw new UnsupportedEpochSelectionException(EpochSelectionMode.Range);
-    IStepSizeArgument IEpochSelection.ComposeStepSizeArgument() => throw new UnsupportedEpochSelectionException(EpochSelectionMode.Range);
-
-    /// <summary>Constructs a new <see cref="EpochCollection"/>, with <paramref name="epochs"/> added to the <see cref="EpochCollection"/>.</summary>
-    /// <param name="epochs">These <see cref="IEpoch"/> are added to the <see cref="EpochCollection"/>.</param>
-    /// <exception cref="ArgumentNullException"/>
-    public EpochCollection Concat(IEnumerable<IEpoch> epochs)
+    /// <inheritdoc/>
+    public IEpochCollection Concat(IEnumerable<IEpoch> epochs)
     {
         ArgumentNullException.ThrowIfNull(epochs);
 
-        return new(Epochs.Concat(epochs), Format);
+        return new EpochCollection(Epochs.Concat(epochs), Format, Composer, FormatComposer);
     }
 
     /// <inheritdoc/>
