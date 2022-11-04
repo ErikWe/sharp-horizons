@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Query;
+using SharpHorizons.Composers.Arguments;
 
 /// <summary>Represents the target in a query.</summary>
 public interface ITarget

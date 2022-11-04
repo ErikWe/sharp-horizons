@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Query;
+﻿namespace SharpHorizons.Composers.Arguments;
 
 using System;
 
