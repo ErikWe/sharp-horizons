@@ -37,9 +37,6 @@ public interface IOriginCoordinateParameterIdentifier : IQueryParameterIdentifie
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing the type of the <see cref="IOriginCoordinate"/>.</summary>
 public interface IOriginCoordinateTypeParameterIdentifier : IQueryParameterIdentifier { }
 
-/// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputFormat"/>.</summary>
-public interface IOutputFormatParameterIdentifier : IQueryParameterIdentifier { }
-
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputLabels"/>.</summary>
 public interface IOutputLabelsParameterIdentifier : IQueryParameterIdentifier { }
 
@@ -69,6 +66,9 @@ public interface ITimeDeltaInclusionParameterIdentifier : IQueryParameterIdentif
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="TimePrecision"/>.</summary>
 public interface ITimePrecisionParameterIdentifier : IQueryParameterIdentifier { }
+
+/// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="ValueSeparation"/>.</summary>
+public interface IValueSeparationParameterIdentifier : IQueryParameterIdentifier { }
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="VectorCorrection"/>.</summary>
 public interface IVectorCorrectionParameterIdentifier : IQueryParameterIdentifier { }

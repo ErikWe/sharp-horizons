@@ -142,19 +142,18 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<IStepSizeComposer<ICalendarStepSize>, CalendarStepSizeComposer>();
         services.AddSingleton<IStepSizeComposer<IAngularStepSize>, AngularStepSizeComposer>();
 
-        services.AddSingleton<IVectorTableContentComposer, VectorTableContentComposer>();
-
         services.AddSingleton<IEphemerisTypeComposer, EphemerisTypeComposer>();
         services.AddSingleton<IGenerateEphemeridesComposer, GenerateEphemeridesComposer>();
         services.AddSingleton<IObjectDataInclusionComposer, ObjectDataInclusionComposer>();
-        services.AddSingleton<IOutputFormatComposer, OutputFormatComposer>();
         services.AddSingleton<IOutputLabelsComposer, OutputLabelsComposer>();
         services.AddSingleton<IOutputUnitsComposer, OutputUnitsComposer>();
         services.AddSingleton<IReferencePlaneComposer, ReferencePlaneComposer>();
         services.AddSingleton<IReferenceSystemComposer, ReferenceSystemComposer>();
         services.AddSingleton<ITimeDeltaInclusionComposer, TimeDeltaInclusionComposer>();
         services.AddSingleton<ITimePrecisionComposer, TimePrecisionComposer>();
+        services.AddSingleton<IValueSeparationComposer, ValueSeperationComposer>();
         services.AddSingleton<IVectorCorrectionComposer, VectorCorrectionComposer>();
+        services.AddSingleton<IVectorTableContentComposer, VectorTableContentComposer>();
 
         return services;
     }

@@ -42,7 +42,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     public TimePrecision TimePrecision { get; init; } = TimePrecision.Second;
 
     /// <inheritdoc/>
-    public OutputFormat OutputFormat { get; init; } = OutputFormat.WhitespaceSeparation;
+    public ValueSeparation ValueSeparation { get; init; } = ValueSeparation.WhitespaceSeparation;
 
     /// <inheritdoc/>
     public OutputLabels OutputLabels { get; init; } = OutputLabels.Disable;
@@ -72,10 +72,10 @@ internal sealed record class VectorsQuery : IVectorsQuery
     IVectorsQuery IVectorsQuery.WithConfiguration(VectorTableContent tableContent) => this with { TableContent = tableContent };
     IVectorsQuery IVectorsQuery.WithConfiguration(VectorCorrection correction) => this with { Correction = correction };
     IVectorsQuery IVectorsQuery.WithConfiguration(TimePrecision timePrecision) => this with { TimePrecision = timePrecision };
-    IVectorsQuery IVectorsQuery.WithConfiguration(OutputFormat outputFormat) => this with { OutputFormat = outputFormat };
+    IVectorsQuery IVectorsQuery.WithConfiguration(ValueSeparation valueSeparation) => this with { ValueSeparation = valueSeparation };
     IVectorsQuery IVectorsQuery.WithConfiguration(OutputLabels outputLabels) => this with { OutputLabels = outputLabels };
     IVectorsQuery IVectorsQuery.WithConfiguration(TimeDeltaInclusion timeDeltaInclusion) => this with { TimeDeltaInclusion = timeDeltaInclusion };
-    IVectorsQuery IVectorsQuery.WithConfiguration(ObjectDataInclusion? objectDataInclusion, ReferencePlane? referencePlane, ReferenceSystem? referenceSystem, OutputUnits? outputUnits, VectorTableContent? tableContent, VectorCorrection? correction, TimePrecision? timePrecision, OutputFormat? outputFormat, OutputLabels? outputLabels, TimeDeltaInclusion? timeDeltaInclusion) => this with
+    IVectorsQuery IVectorsQuery.WithConfiguration(ObjectDataInclusion? objectDataInclusion, ReferencePlane? referencePlane, ReferenceSystem? referenceSystem, OutputUnits? outputUnits, VectorTableContent? tableContent, VectorCorrection? correction, TimePrecision? timePrecision, ValueSeparation? valueSeparation, OutputLabels? outputLabels, TimeDeltaInclusion? timeDeltaInclusion) => this with
     {
         ObjectDataInclusion = objectDataInclusion ?? ObjectDataInclusion,
         ReferencePlane = referencePlane ?? ReferencePlane,
@@ -84,7 +84,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         TableContent = tableContent ?? TableContent,
         Correction = correction ?? Correction,
         TimePrecision = timePrecision ?? TimePrecision,
-        OutputFormat = outputFormat ?? OutputFormat,
+        ValueSeparation = valueSeparation ?? ValueSeparation,
         OutputLabels = outputLabels ?? OutputLabels,
         TimeDeltaInclusion = timeDeltaInclusion ?? TimeDeltaInclusion
     };

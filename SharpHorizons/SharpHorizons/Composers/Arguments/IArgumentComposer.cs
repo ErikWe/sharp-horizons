@@ -45,9 +45,6 @@ public interface IOriginCoordinateComposer<T> : IArgumentComposer<IOriginCoordin
 /// <typeparam name="T">The composed <see cref="IOriginCoordinateTypeArgument"/> describe instances of this type.</typeparam>
 public interface IOriginCoordinateTypeComposer<T> : IArgumentComposer<IOriginCoordinateTypeArgument, T> { }
 
-/// <summary>Composes <see cref="IOutputFormatArgument"/> that describe <see cref="OutputFormat"/>.</summary>
-public interface IOutputFormatComposer : IArgumentComposer<IOutputFormatArgument, OutputFormat> { }
-
 /// <summary>Composes <see cref="IOutputLabelsArgument"/> that describe <see cref="OutputLabels"/>.</summary>
 public interface IOutputLabelsComposer : IArgumentComposer<IOutputLabelsArgument, OutputLabels> { }
 
@@ -81,6 +78,9 @@ public interface ITimeDeltaInclusionComposer : IArgumentComposer<ITimeDeltaInclu
 
 /// <summary>Composes <see cref="ITimePrecisionArgument"/> that describe <see cref="TimePrecision"/>.</summary>
 public interface ITimePrecisionComposer : IArgumentComposer<ITimePrecisionArgument, TimePrecision> { }
+
+/// <summary>Composes <see cref="IValueSeparationArgument"/> that describe <see cref="ValueSeparation"/>.</summary>
+public interface IValueSeparationComposer : IArgumentComposer<IValueSeparationArgument, ValueSeparation> { }
 
 /// <summary>Composes <see cref="IVectorCorrectionArgument"/> that describe <see cref="VectorCorrection"/>.</summary>
 public interface IVectorCorrectionComposer : IArgumentComposer<IVectorCorrectionArgument, VectorCorrection> { }

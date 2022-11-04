@@ -42,8 +42,8 @@ public interface IVectorsQuery
     /// <summary>Determines with what precision time is expressed in the query and in the result of the query.</summary>
     public abstract TimePrecision TimePrecision { get; }
 
-    /// <summary>Determines how values are formatted in the result of the query.</summary>
-    public abstract OutputFormat OutputFormat { get; }
+    /// <summary>Determines how values are separated in the result of the query.</summary>
+    public abstract ValueSeparation ValueSeparation { get; }
 
     /// <summary>Determines whether the individual values in the result of the query are labelled.</summary>
     public abstract OutputLabels OutputLabels { get; }
@@ -79,9 +79,9 @@ public interface IVectorsQuery
     /// <param name="timePrecision"><inheritdoc cref="TimePrecision" path="/summary"/></param>
     public abstract IVectorsQuery WithConfiguration(TimePrecision timePrecision);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with an updated <see cref="OutputFormat"/>.</summary>
-    /// <param name="outputFormat"><inheritdoc cref="OutputFormat" path="/summary"/></param>
-    public abstract IVectorsQuery WithConfiguration(OutputFormat outputFormat);
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with an updated <see cref="ValueSeparation"/>.</summary>
+    /// <param name="valueSeparation"><inheritdoc cref="ValueSeparation" path="/summary"/></param>
+    public abstract IVectorsQuery WithConfiguration(ValueSeparation valueSeparation);
 
     /// <summary>Constructs a new <see cref="IVectorsQuery"/> with an updated <see cref="OutputLabels"/>.</summary>
     /// <param name="outputLabels"><inheritdoc cref="OutputLabels" path="/summary"/></param>
@@ -99,9 +99,9 @@ public interface IVectorsQuery
     /// <param name="tableContent"><inheritdoc cref="TableContent" path="/summary"/></param>
     /// <param name="correction"><inheritdoc cref="Correction" path="/summary"/></param>
     /// <param name="timePrecision"><inheritdoc cref="TimePrecision" path="/summary"/></param>
-    /// <param name="outputFormat"><inheritdoc cref="OutputFormat" path="/summary"/></param>
+    /// <param name="valueSeparation"><inheritdoc cref="ValueSeparation" path="/summary"/></param>
     /// <param name="outputLabels"><inheritdoc cref="OutputLabels" path="/summary"/></param>
     /// <param name="timeDeltaInclusion"><inheritdoc cref="TimeDeltaInclusion" path="/summary"/></param>
     public abstract IVectorsQuery WithConfiguration(ObjectDataInclusion? objectDataInclusion = null, ReferencePlane? referencePlane = null, ReferenceSystem? referenceSystem = null, OutputUnits? outputUnits = null,
-        VectorTableContent? tableContent = null, VectorCorrection? correction = null, TimePrecision? timePrecision = null, OutputFormat? outputFormat = null, OutputLabels? outputLabels = null, TimeDeltaInclusion? timeDeltaInclusion = null);
+        VectorTableContent? tableContent = null, VectorCorrection? correction = null, TimePrecision? timePrecision = null, ValueSeparation? valueSeparation = null, OutputLabels? outputLabels = null, TimeDeltaInclusion? timeDeltaInclusion = null);
 }

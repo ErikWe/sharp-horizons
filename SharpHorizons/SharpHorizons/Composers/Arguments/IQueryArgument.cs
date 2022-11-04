@@ -38,9 +38,6 @@ public interface IOriginCoordinateArgument : IQueryArgument { }
 /// <summary>A <see cref="IQueryArgument"/> describing the type of the <see cref="IOriginCoordinate"/>.</summary>
 public interface IOriginCoordinateTypeArgument : IQueryArgument { }
 
-/// <summary>A <see cref="IQueryArgument"/> describing the <see cref="OutputFormat"/>.</summary>
-public interface IOutputFormatArgument : IQueryArgument { }
-
 /// <summary>A <see cref="IQueryArgument"/> describing <see cref="OutputLabels"/>.</summary>
 public interface IOutputLabelsArgument : IQueryArgument { }
 
@@ -70,6 +67,9 @@ public interface ITimeDeltaInclusionArgument : IQueryArgument { }
 
 /// <summary>A <see cref="IQueryArgument"/> describing the <see cref="TimePrecision"/>.</summary>
 public interface ITimePrecisionArgument : IQueryArgument { }
+
+/// <summary>A <see cref="IQueryArgument"/> describing the <see cref="ValueSeparation"/>.</summary>
+public interface IValueSeparationArgument : IQueryArgument { }
 
 /// <summary>A <see cref="IQueryArgument"/> describing the <see cref="VectorCorrection"/>.</summary>
 public interface IVectorCorrectionArgument : IQueryArgument { }
