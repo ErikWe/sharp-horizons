@@ -3,8 +3,6 @@
 using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Identification;
 
-using System.Globalization;
-
 /// <summary>Describes the <see cref="ITarget"/> in a query as an object identified by an <see cref="MPCSequentialNumber"/>.</summary>
 internal sealed record class MPCSequentialNumberTarget : ITarget
 {

@@ -3,8 +3,6 @@
 using SharpMeasures;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 
 /// <summary>Represents an epoch, an instant in time, expressed as a Julian day - the fractional number of days since { 12:00:00, January 1st, 4713 BCE } according to the Julian calendar.</summary>
 public readonly record struct JulianDay : IEpoch<JulianDay>

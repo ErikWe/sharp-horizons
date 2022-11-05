@@ -1,7 +1,4 @@
 ﻿namespace SharpHorizons.Identification;
-
-using System.Diagnostics.CodeAnalysis;
-
 /// <summary>Represents a provisional object in the MPC catalogue of minor planets.</summary>
 public readonly record struct MPCProvisionalObject
 {

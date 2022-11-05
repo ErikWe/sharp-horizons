@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Calendars;
 
-using SharpMeasures;
-
 using System;
 using System.Globalization;
 

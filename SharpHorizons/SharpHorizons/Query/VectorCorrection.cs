@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Query;
 
-using System;
-
 /// <summary>Specifies what corrections to apply to the result of a query for orbital state vectors.</summary>
 public enum VectorCorrection
 {

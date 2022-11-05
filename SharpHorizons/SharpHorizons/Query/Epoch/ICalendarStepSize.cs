@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpMeasures;
-
 /// <summary>Describes the <see cref="IStepSize"/> in a query using some calendar-based unit.</summary>
 public interface ICalendarStepSize : IStepSize
 {
