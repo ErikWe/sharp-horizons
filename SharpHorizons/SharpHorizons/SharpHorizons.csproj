@@ -27,4 +27,8 @@
 		<PackageReference Include="SharpMeasures.Generators" PrivateAssets="all" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" />
+	</ItemGroup>
+
 </Project>
