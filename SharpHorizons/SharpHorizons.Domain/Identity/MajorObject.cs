@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Identification;
+﻿namespace SharpHorizons.Identity;
 
 /// <summary>Represents an object classified as a <see cref="HorizonsObjectClass.Major"/> object in Horizons - typically a planet, a moon, or a spacecraft.</summary>
 public sealed record class MajorObject

@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Identification;
+﻿namespace SharpHorizons.Identity;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
