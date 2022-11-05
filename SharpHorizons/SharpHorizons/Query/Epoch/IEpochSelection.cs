@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Calendars;
-using SharpHorizons.Composers.Arguments;
 
 /// <summary>Represents the selection of <see cref="IEpoch"/> in a query.</summary>
 public interface IEpochSelection

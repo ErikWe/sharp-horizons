@@ -1,7 +1,6 @@
-﻿namespace SharpHorizons.Composers.Arguments;
+﻿namespace SharpHorizons.Query;
 
 using SharpHorizons.Calendars;
-using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;

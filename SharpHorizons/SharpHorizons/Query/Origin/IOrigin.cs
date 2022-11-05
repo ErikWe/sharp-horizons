@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Query.Target;
 
 /// <summary>Represents an origin in a query, relative to which a <see cref="ITarget"/> is described.</summary>

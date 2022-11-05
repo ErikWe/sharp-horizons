@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Target;
 
 using SharpHorizons.Identification;
+using SharpHorizons.Query;
 
 /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalObject"/>.</summary>
 internal sealed class MPCProvisionalObjectTargetComposer : ITargetComposer<MPCProvisionalObject>

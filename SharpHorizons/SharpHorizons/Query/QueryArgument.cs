@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Composers.Arguments;
+﻿namespace SharpHorizons.Query;
 
 /// <inheritdoc cref="IQueryArgument"/>
 internal sealed record class QueryArgument : IQueryArgument, IEphemerisTypeArgument, IEpochCollectionArgument, IEpochCollectionFormatArgument, IGenerateEphemeridesArgument, IObjectDataInclusionArgument, IOriginArgument,

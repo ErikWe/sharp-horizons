@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Calendars;
-using SharpHorizons.Composers.Arguments;
 
 /// <summary>Represents the <see cref="IEpoch"/> marking the stop-point of an <see cref="IEpochRange"/>.</summary>
 internal interface IStopEpoch

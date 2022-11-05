@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Target;
 
 using SharpHorizons.Identification;
+using SharpHorizons.Query;
 
 using System;
 
