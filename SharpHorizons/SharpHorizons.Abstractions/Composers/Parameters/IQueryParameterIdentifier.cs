@@ -1,12 +1,12 @@
 ﻿namespace SharpHorizons.Composers.Parameters;
 
-using SharpHorizons.Elements;
 using SharpHorizons.Query;
+using SharpHorizons.Query.Elements;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
+using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.VectorTable;
-using SharpHorizons.Vectors;
 
 /// <summary>Represents the identifier of a parameter in a query.</summary>
 public interface IQueryParameterIdentifier

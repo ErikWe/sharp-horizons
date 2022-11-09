@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Vectors.Fluency;
+﻿namespace SharpHorizons.Query.Vectors.Fluency;
 
 using SharpHorizons.Calendars;
 using SharpHorizons.Query.Epoch;
@@ -30,14 +30,14 @@ public interface IEpochStage
     /// <summary>Uses the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/> with a fixed <see cref="IStepSize"/> <paramref name="deltaTime"/> to describe the selection of <see cref="IEpoch"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="startEpoch">The start-point of the timespan, with <paramref name="stopEpoch"/> representing the stop-point.</param>
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
-    /// <param name="deltaTime"><inheritdoc cref="FixedStepSize.DeltaTime" path="/summary"/></param>
+    /// <param name="deltaTime"><inheritdoc cref="IFixedStepSize.DeltaTime" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IVectorsQuery WithFixedEpochRange(IEpoch startEpoch, IEpoch stopEpoch, Time deltaTime);
 
     /// <summary>Uses the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/> with a total of <paramref name="stepCount"/> uniformly distributed steps to describe the selection of <see cref="IEpoch"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="startEpoch">The start-point of the timespan, with <paramref name="stopEpoch"/> representing the stop-point.</param>
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
-    /// <param name="stepCount"><inheritdoc cref="UniformStepSize.StepCount" path="/summary"/></param>
+    /// <param name="stepCount"><inheritdoc cref="IUniformStepSize.StepCount" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IVectorsQuery WithUniformEpochRange(IEpoch startEpoch, IEpoch stopEpoch, int stepCount);
 

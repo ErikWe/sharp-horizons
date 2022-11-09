@@ -1,6 +1,6 @@
-﻿namespace SharpHorizons.Vectors.Fluency;
+﻿namespace SharpHorizons.Query.Vectors.Fluency;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query.Target;
 
 using SharpMeasures.Astronomy;

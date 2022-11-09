@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 
 using SharpMeasures.Astronomy;
 
@@ -15,11 +15,11 @@ public interface IMajorObjectTargetFactory
     public abstract ITarget Create(MajorObject majorObject);
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an object identified by <paramref name="majorObjectID"/>.</summary>
-    /// <param name="majorObjectID"><inheritdoc cref="MajorObjectIDTarget.ID" path="/summary"/></param>
+    /// <param name="majorObjectID">The <see cref="MajorObjectID"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</param>
     public abstract ITarget Create(MajorObjectID majorObjectID);
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an object identified by <paramref name="majorObjectName"/>.</summary>
-    /// <param name="majorObjectName"><inheritdoc cref="MajorObjectNameTarget.Name" path="/summary"/></param>
+    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</param>
     /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the object, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
     public abstract ITarget Create(MajorObjectName majorObjectName);
 

@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 
 /// <summary>Handles construction of <see cref="IOriginObject"/>.</summary>
 public interface IOriginObjectFactory

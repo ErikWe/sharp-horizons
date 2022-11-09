@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Vectors;
+﻿namespace SharpHorizons.Query.Vectors;
 
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;

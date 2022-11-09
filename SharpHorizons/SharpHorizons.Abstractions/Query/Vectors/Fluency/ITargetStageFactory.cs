@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Vectors.Fluency;
+﻿namespace SharpHorizons.Query.Vectors.Fluency;
 
 using SharpHorizons.Query.Target;
 

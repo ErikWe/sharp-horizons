@@ -15,7 +15,7 @@ public interface IFixedEpochRangeFactory
     /// <summary>Constructs a <see cref="IEpochRange"/> using the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/>, and a fixed <see cref="IStepSize"/> <paramref name="deltaTime"/>.</summary>
     /// <param name="startEpoch">The start-point of the timespan, with <paramref name="stopEpoch"/> representing the stop-point.</param>
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
-    /// <param name="deltaTime"><inheritdoc cref="FixedStepSize.DeltaTime" path="/summary"/></param>
+    /// <param name="deltaTime"><inheritdoc cref="IFixedStepSize.DeltaTime" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, Time deltaTime);
 }
@@ -26,7 +26,7 @@ public interface IUniformEpochRangeFactory
     /// <summary>Constructs a <see cref="IEpochRange"/> using the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/>, with <paramref name="stepCount"/> uniformly distributed steps.</summary>
     /// <param name="startEpoch">The start-point of the timespan, with <paramref name="stopEpoch"/> representing the stop-point.</param>
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
-    /// <param name="stepCount"><inheritdoc cref="UniformStepSize.StepCount" path="/summary"/></param>
+    /// <param name="stepCount"><inheritdoc cref="IUniformStepSize.StepCount" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, int stepCount);
 }
@@ -52,7 +52,7 @@ public interface IAngularEpochRangeFactory
     /// <summary>Constructs a <see cref="IEpochRange"/> using the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/>, with the <see cref="IStepSize"/> represented by the variable amount of time it takes for the position of the <see cref="ITarget"/> to change by <paramref name="deltaAngle"/>, as seen from the <see cref="IOrigin"/>.</summary>
     /// <param name="startEpoch">The start-point of the timespan, with <paramref name="stopEpoch"/> representing the stop-point.</param>
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
-    /// <param name="deltaAngle"><inheritdoc cref="AngularStepSize.DeltaAngle" path="/summary"/></param>
+    /// <param name="deltaAngle"><inheritdoc cref="IAngularStepSize.DeltaAngle" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, Angle deltaAngle);
 }

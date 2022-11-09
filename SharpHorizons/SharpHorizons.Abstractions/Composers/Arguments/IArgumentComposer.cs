@@ -17,6 +17,13 @@ public interface IArgumentComposer<TArgument, T> where TArgument : IQueryArgumen
     public abstract TArgument Compose(T obj);
 }
 
+/// <summary>Composes <see cref="ICommandArgument"/> that describe <typeparamref name="T"/>.</summary>
+/// <typeparam name="T">The composed <see cref="ICommandArgument"/> describe instances of this type.</typeparam>
+public interface ICommandComposer<T> : IArgumentComposer<ICommandArgument, T> { }
+
+/// <summary>Composes <see cref="IElementLabelsArgument"/> that describe <see cref="OutputLabels"/>.</summary>
+public interface IElementLabelsComposer : IArgumentComposer<IElementLabelsArgument, OutputLabels> { }
+
 /// <summary>Composes <see cref="IEphemerisTypeArgument"/> that describe <see cref="EphemerisType"/>.</summary>
 public interface IEphemerisTypeComposer : IArgumentComposer<IEphemerisTypeArgument, EphemerisType> { }
 
@@ -48,9 +55,6 @@ public interface IOriginCoordinateTypeComposer<T> : IArgumentComposer<IOriginCoo
 /// <summary>Composes <see cref="IOutputFormatArgument"/> that describe <see cref="OutputFormat"/>.</summary>
 public interface IOutputFormatComposer : IArgumentComposer<IOutputFormatArgument, OutputFormat> { }
 
-/// <summary>Composes <see cref="IOutputLabelsArgument"/> that describe <see cref="OutputLabels"/>.</summary>
-public interface IOutputLabelsComposer : IArgumentComposer<IOutputLabelsArgument, OutputLabels> { }
-
 /// <summary>Composes <see cref="IOutputUnitsArgument"/> that describe <see cref="OutputUnits"/>.</summary>
 public interface IOutputUnitsComposer : IArgumentComposer<IOutputUnitsArgument, OutputUnits> { }
 
@@ -72,10 +76,6 @@ public interface IStepSizeComposer<T> : IArgumentComposer<IStepSizeArgument, T> 
 /// <typeparam name="T">The composed <see cref="IStopEpochArgument"/> describe instances of this type.</typeparam>
 public interface IStopEpochComposer<T> : IArgumentComposer<IStopEpochArgument, T> { }
 
-/// <summary>Composes <see cref="ITargetArgument"/> that describe <typeparamref name="T"/>.</summary>
-/// <typeparam name="T">The composed <see cref="ITargetArgument"/> describe instances of this type.</typeparam>
-public interface ITargetComposer<T> : IArgumentComposer<ITargetArgument, T> { }
-
 /// <summary>Composes <see cref="ITimeDeltaInclusionArgument"/> that describe <see cref="TimeDeltaInclusion"/>.</summary>
 public interface ITimeDeltaInclusionComposer : IArgumentComposer<ITimeDeltaInclusionArgument, TimeDeltaInclusion> { }
 
@@ -87,6 +87,9 @@ public interface IValueSeparationComposer : IArgumentComposer<IValueSeparationAr
 
 /// <summary>Composes <see cref="IVectorCorrectionArgument"/> that describe <see cref="VectorCorrection"/>.</summary>
 public interface IVectorCorrectionComposer : IArgumentComposer<IVectorCorrectionArgument, VectorCorrection> { }
+
+/// <summary>Composes <see cref="IVectorLabelsArgument"/> that describe <see cref="OutputLabels"/>.</summary>
+public interface IVectorLabelsComposer : IArgumentComposer<IVectorLabelsArgument, OutputLabels> { }
 
 /// <summary>Composes <see cref="IVectorTableContentArgument"/> that describe <see cref="VectorTableContent"/>.</summary>
 public interface IVectorTableContentComposer : IArgumentComposer<IVectorTableContentArgument, VectorTableContent> { }
