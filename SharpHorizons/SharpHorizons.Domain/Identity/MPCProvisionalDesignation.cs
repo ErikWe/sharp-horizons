@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Identity;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Represents the provisional designation of an object in the MPC catalogue of minor planets.</summary>
 /// <remarks>The provisional designation may be used also for non-provisional objects - especially if they are not given a <see cref="MPCName"/>.</remarks>
@@ -24,7 +23,6 @@ public readonly partial record struct MPCProvisionalDesignation
     public string ToString(IFormatProvider? provider) => Value.ToString(provider);
 
     /// <inheritdoc cref="MPCProvisionalDesignation(string)"/>
-    [SuppressMessage("Usage", "CA2225", Justification = "Available through a constructor")]
     public static implicit operator MPCProvisionalDesignation(string value) => new(value);
 
     /// <summary>Retrieves the provisional designation represented by <paramref name="provisionalDesignation"/>.</summary>

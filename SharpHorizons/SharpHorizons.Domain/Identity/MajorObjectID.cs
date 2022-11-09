@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Identity;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Represents the ID of an object classified as a <see cref="HorizonsObjectClass.Major"/> object in Horizons - typically a planet, a moon, or a spacecraft.</summary>
@@ -31,11 +30,9 @@ public readonly record struct MajorObjectID
     public string ToString(string format, IFormatProvider? provider) => Value.ToString(format, provider);
 
     /// <inheritdoc cref="MajorObjectID(int)"/>
-    [SuppressMessage("Usage", "CA2225", Justification = "Available through a constructor")]
     public static implicit operator MajorObjectID(int value) => new(value);
 
     /// <summary>Retrieves the ID represented by <paramref name="majorBodyID"/>.</summary>
     /// <param name="majorBodyID"><inheritdoc cref="MajorObjectID" path="/summary"/></param>
-    [SuppressMessage("Usage", "CA2225", Justification = "Available through 'Value'")]
     public static implicit operator int(MajorObjectID majorBodyID) => majorBodyID.Value;
 }

@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Identity;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Represents the ID of a pre-defined observation site in Horizons.</summary>
@@ -31,11 +30,9 @@ public readonly record struct ObservationSiteID
     public string ToString(string format, IFormatProvider? provider) => Value.ToString(format, provider);
 
     /// <inheritdoc cref="ObservationSiteID(int)"/>
-    [SuppressMessage("Usage", "CA2225", Justification = "Available through a constructor")]
     public static implicit operator ObservationSiteID(int value) => new(value);
 
     /// <summary>Retrieves the ID represented by <paramref name="observationSiteID"/>.</summary>
     /// <param name="observationSiteID"><inheritdoc cref="ObservationSiteID" path="/summary"/></param>
-    [SuppressMessage("Usage", "CA2225", Justification = "Available through 'Value'")]
     public static implicit operator int(ObservationSiteID observationSiteID) => observationSiteID.Value;
 }

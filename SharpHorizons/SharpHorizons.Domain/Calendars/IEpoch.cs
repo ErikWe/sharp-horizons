@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Calendars;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Represents an epoch, an instant in time.</summary>
 public interface IEpoch
@@ -23,16 +22,13 @@ public interface IEpoch<TSelf> : IEpoch where TSelf : IEpoch<TSelf>
     /// <summary>Constructs the <typeparamref name="TSelf"/> representing the same epoch as <paramref name="epoch"/>.</summary>
     /// <typeparam name="TEpoch">An <see cref="IEpoch"/> of this type is used to construct a <typeparamref name="TSelf"/> representing the same epoch.</typeparam>
     /// <param name="epoch">The constructed <typeparamref name="TSelf"/> represents the same epoch as this <typeparamref name="TEpoch"/>.</param>
-    [SuppressMessage("Design", "CA1000", Justification = "Implementing type is not necessarily generic.")]
     public abstract static TSelf FromEpoch<TEpoch>(TEpoch epoch) where TEpoch : IEpoch<TEpoch>;
 
     /// <summary>Constructs the <typeparamref name="TSelf"/> representing the same epoch as <paramref name="julianDay"/>.</summary>
     /// <param name="julianDay">The constructed <typeparamref name="TSelf"/> represents the same epoch as this <see cref="JulianDay"/>.</param>
-    [SuppressMessage("Design", "CA1000", Justification = "Implementing type is not necessarily generic.")]
     public abstract static TSelf FromJulianDay(JulianDay julianDay);
 
     /// <summary>Constructs the <typeparamref name="TSelf"/> representing the same epoch as <paramref name="dateTime"/>.</summary>
     /// <param name="dateTime">The constructed <typeparamref name="TSelf"/> represents the same epoch as this <see cref="DateTime"/>.</param>
-    [SuppressMessage("Design", "CA1000", Justification = "Implementing type is not necessarily generic.")]
     public abstract static TSelf FromDateTime(DateTime dateTime);
 }
