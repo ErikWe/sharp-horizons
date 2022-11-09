@@ -5,10 +5,10 @@ using SharpHorizons.Query.Target;
 
 using System;
 
-/// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="ISiteTarget"/>.</summary>
-internal sealed class SiteTargetComposer : ITargetComposer<ISiteTarget>
+/// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="ISiteTarget"/>.</summary>
+internal sealed class SiteTargetComposer : ICommandComposer<ISiteTarget>
 {
-    ITargetArgument IArgumentComposer<ITargetArgument, ISiteTarget>.Compose(ISiteTarget obj)
+    ICommandArgument IArgumentComposer<ICommandArgument, ISiteTarget>.Compose(ISiteTarget obj)
     {
         ArgumentNullException.ThrowIfNull(obj);
 

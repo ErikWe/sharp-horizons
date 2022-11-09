@@ -1,12 +1,12 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Target;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query;
 
 using System.Globalization;
 
-/// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCSequentialNumber"/>.</summary>
-internal sealed class MPCSequentialNumberTargetComposer : ITargetComposer<MPCSequentialNumber>
+/// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCSequentialNumber"/>.</summary>
+internal sealed class MPCSequentialNumberTargetComposer : ICommandComposer<MPCSequentialNumber>
 {
-    ITargetArgument IArgumentComposer<ITargetArgument, MPCSequentialNumber>.Compose(MPCSequentialNumber obj) => new QueryArgument($"{obj.Value.ToString(CultureInfo.InvariantCulture)};");
+    ICommandArgument IArgumentComposer<ICommandArgument, MPCSequentialNumber>.Compose(MPCSequentialNumber obj) => new QueryArgument($"{obj.Value.ToString(CultureInfo.InvariantCulture)};");
 }

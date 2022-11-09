@@ -1,13 +1,13 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Target;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query;
 using SharpHorizons.Query.Target;
 
-/// <summary>Composes <see cref="ITargetArgument"/> and <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
-internal sealed class MajorObjectNameComposer : ITargetComposer<MajorObjectName>, ITargetSiteObjectComposer<MajorObjectName>
+/// <summary>Composes <see cref="ICommandArgument"/> and <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
+internal sealed class MajorObjectNameComposer : ICommandComposer<MajorObjectName>, ITargetSiteObjectComposer<MajorObjectName>
 {
-    ITargetArgument IArgumentComposer<ITargetArgument, MajorObjectName>.Compose(MajorObjectName obj) => new QueryArgument(Compose(obj));
+    ICommandArgument IArgumentComposer<ICommandArgument, MajorObjectName>.Compose(MajorObjectName obj) => new QueryArgument(Compose(obj));
     TargetSiteObjectIdentifier ITargetSiteObjectComposer<MajorObjectName>.Compose(MajorObjectName obj) => Compose(obj);
 
     /// <summary>Composes a <see cref="string"/> describing <paramref name="name"/>.</summary>

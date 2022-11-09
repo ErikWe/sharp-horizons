@@ -1,15 +1,15 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Target;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query;
 using SharpHorizons.Query.Target;
 
 using System.Globalization;
 
-/// <summary>Composes <see cref="ITargetArgument"/> and <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObjectID"/>.</summary>
-internal sealed class MajorObjectIDComposer : ITargetComposer<MajorObjectID>, ITargetSiteObjectComposer<MajorObjectID>
+/// <summary>Composes <see cref="ICommandArgument"/> and <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObjectID"/>.</summary>
+internal sealed class MajorObjectIDComposer : ICommandComposer<MajorObjectID>, ITargetSiteObjectComposer<MajorObjectID>
 {
-    ITargetArgument IArgumentComposer<ITargetArgument, MajorObjectID>.Compose(MajorObjectID obj) => new QueryArgument(Compose(obj));
+    ICommandArgument IArgumentComposer<ICommandArgument, MajorObjectID>.Compose(MajorObjectID obj) => new QueryArgument(Compose(obj));
     TargetSiteObjectIdentifier ITargetSiteObjectComposer<MajorObjectID>.Compose(MajorObjectID obj) => Compose(obj);
 
     /// <summary>Composes a <see cref="string"/> describing <paramref name="ID"/>.</summary>
