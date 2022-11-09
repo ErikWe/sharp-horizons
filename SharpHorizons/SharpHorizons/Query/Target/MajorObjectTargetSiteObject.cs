@@ -1,12 +1,12 @@
 ﻿namespace SharpHorizons.Query.Target;
 
 using SharpHorizons.Composers.Arguments.Target;
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 
-/// <summary>Describes the <see cref="ITargetSiteObject"/> as a <see cref="Identification.MajorObject"/>.</summary>
+/// <summary>Describes the <see cref="ITargetSiteObject"/> as a <see cref="Identity.MajorObject"/>.</summary>
 internal sealed record class MajorObjectTargetSiteObject : ITargetSiteObject
 {
-    /// <summary>The <see cref="Identification.MajorObject"/> which represents the <see cref="ITargetSiteObject"/>.</summary>
+    /// <summary>The <see cref="Identity.MajorObject"/> which represents the <see cref="ITargetSiteObject"/>.</summary>
     private MajorObject MajorObject { get; }
 
     /// <summary>Used to compose a <see cref="TargetSiteObjectIdentifier"/> describing <see langword="this"/>.</summary>

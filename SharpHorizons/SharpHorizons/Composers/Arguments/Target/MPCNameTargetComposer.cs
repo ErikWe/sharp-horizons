@@ -1,10 +1,10 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Target;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query;
 
-/// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCName"/>.</summary>
-internal sealed class MPCNameTargetComposer : ITargetComposer<MPCName>
+/// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCName"/>.</summary>
+internal sealed class MPCNameTargetComposer : ICommandComposer<MPCName>
 {
-    ITargetArgument IArgumentComposer<ITargetArgument, MPCName>.Compose(MPCName obj) => new QueryArgument($"{obj.Value};");
+    ICommandArgument IArgumentComposer<ICommandArgument, MPCName>.Compose(MPCName obj) => new QueryArgument($"{obj.Value};");
 }

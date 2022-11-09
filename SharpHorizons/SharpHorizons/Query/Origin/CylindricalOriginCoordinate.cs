@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
 using SharpHorizons.Composers.Arguments;
+
 using SharpMeasures.Astronomy;
 
 /// <inheritdoc cref="ICylindricalOriginCoordinate"/>

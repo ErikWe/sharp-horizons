@@ -1,10 +1,10 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Target;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query;
 
-/// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalDesignation"/>.</summary>
-internal sealed class MPCProvisionalDesignationTargetComposer : ITargetComposer<MPCProvisionalDesignation>
+/// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCProvisionalDesignation"/>.</summary>
+internal sealed class MPCProvisionalDesignationTargetComposer : ICommandComposer<MPCProvisionalDesignation>
 {
-    ITargetArgument IArgumentComposer<ITargetArgument, MPCProvisionalDesignation>.Compose(MPCProvisionalDesignation obj) => new QueryArgument($"{obj.Value};");
+    ICommandArgument IArgumentComposer<ICommandArgument, MPCProvisionalDesignation>.Compose(MPCProvisionalDesignation obj) => new QueryArgument($"{obj.Value};");
 }

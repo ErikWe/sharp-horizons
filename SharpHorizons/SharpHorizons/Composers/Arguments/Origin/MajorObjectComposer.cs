@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Composers.Arguments.Origin;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query.Origin;
 
 using System;

@@ -2,7 +2,7 @@
 
 using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Composers.Arguments.Origin;
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 
 using SharpMeasures.Astronomy;
 

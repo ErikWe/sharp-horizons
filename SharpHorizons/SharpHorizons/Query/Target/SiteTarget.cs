@@ -11,14 +11,14 @@ internal sealed record class SiteTarget : ISiteTarget
     /// <inheritdoc/>
     public ITargetSite TargetSite { get; }
 
-    /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
-    private ITargetComposer<ISiteTarget> Composer { get; }
+    /// <summary>Used to compose a <see cref="ICommandArgument"/> describing <see langword="this"/>.</summary>
+    private ICommandComposer<ISiteTarget> Composer { get; }
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as <paramref name="targetSite"/> associated with <paramref name="targetSiteObject"/>.</summary>
     /// <param name="targetSiteObject">Describes the <see cref="ITargetSiteObject"/> associated with <paramref name="targetSite"/>.</param>
     /// <param name="targetSite">Describes the <see cref="ITargetSite"/> associated with <paramref name="targetSiteObject"/>.</param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
-    public SiteTarget(ITargetSiteObject targetSiteObject, ITargetSite targetSite, ITargetComposer<ISiteTarget> composer)
+    public SiteTarget(ITargetSiteObject targetSiteObject, ITargetSite targetSite, ICommandComposer<ISiteTarget> composer)
     {
         TargetSiteObject = targetSiteObject;
         TargetSite = targetSite;
@@ -26,5 +26,5 @@ internal sealed record class SiteTarget : ISiteTarget
         Composer = composer;
     }
 
-    ITargetArgument ITarget.ComposeArgument() => Composer.Compose(this);
+    ICommandArgument ITarget.ComposeArgument() => Composer.Compose(this);
 }

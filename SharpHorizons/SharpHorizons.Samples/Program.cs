@@ -4,13 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using SharpHorizons;
-using SharpHorizons.Vectors;
+using SharpHorizons.Query.Vectors;
 
 using System;
 
 internal class Program
 {
-    public static void Main()
+    private static void Main()
     {
         var host = Host.CreateDefaultBuilder().ConfigureServices(ConfigureServices).Build();
 

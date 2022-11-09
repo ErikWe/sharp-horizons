@@ -7,12 +7,12 @@ using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Composers.Arguments.Epoch;
 using SharpHorizons.Composers.Arguments.Origin;
 using SharpHorizons.Composers.Arguments.Target;
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
-using SharpHorizons.Vectors;
-using SharpHorizons.Vectors.Fluency;
+using SharpHorizons.Query.Vectors;
+using SharpHorizons.Query.Vectors.Fluency;
 
 using SharpMeasures.Astronomy;
 
@@ -109,17 +109,17 @@ public static class DependencyInjectionExtensions
     /// <param name="services"><see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsComposers(this IServiceCollection services)
     {
-        services.AddSingleton<ITargetComposer<MajorObject>, Composers.Arguments.Target.MajorObjectComposer>();
-        services.AddSingleton<ITargetComposer<MajorObjectID>, Composers.Arguments.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetComposer<MajorObjectName>, Composers.Arguments.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ICommandComposer<MajorObject>, Composers.Arguments.Target.MajorObjectComposer>();
+        services.AddSingleton<ICommandComposer<MajorObjectID>, Composers.Arguments.Target.MajorObjectIDComposer>();
+        services.AddSingleton<ICommandComposer<MajorObjectName>, Composers.Arguments.Target.MajorObjectNameComposer>();
 
-        services.AddSingleton<ITargetComposer<MPCObject>, MPCObjectTargetComposer>();
-        services.AddSingleton<ITargetComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
-        services.AddSingleton<ITargetComposer<MPCName>, MPCNameTargetComposer>();
-        services.AddSingleton<ITargetComposer<MPCProvisionalDesignation>, MPCProvisionalDesignationTargetComposer>();
-        services.AddSingleton<ITargetComposer<MPCSequentialNumber>, MPCSequentialNumberTargetComposer>();
+        services.AddSingleton<ICommandComposer<MPCObject>, MPCObjectTargetComposer>();
+        services.AddSingleton<ICommandComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
+        services.AddSingleton<ICommandComposer<MPCName>, MPCNameTargetComposer>();
+        services.AddSingleton<ICommandComposer<MPCProvisionalDesignation>, MPCProvisionalDesignationTargetComposer>();
+        services.AddSingleton<ICommandComposer<MPCSequentialNumber>, MPCSequentialNumberTargetComposer>();
 
-        services.AddSingleton<ITargetComposer<ISiteTarget>, SiteTargetComposer>();
+        services.AddSingleton<ICommandComposer<ISiteTarget>, SiteTargetComposer>();
 
         services.AddSingleton<IOriginComposer<IBodyCentricOrigin>, BodyCentricOriginComposer>();
         services.AddSingleton<IOriginComposer<ICoordinateOrigin>, CoordinateOriginComposer>();
@@ -142,19 +142,18 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<IStepSizeComposer<ICalendarStepSize>, CalendarStepSizeComposer>();
         services.AddSingleton<IStepSizeComposer<IAngularStepSize>, AngularStepSizeComposer>();
 
-        services.AddSingleton<IVectorTableContentComposer, VectorTableContentComposer>();
-
         services.AddSingleton<IEphemerisTypeComposer, EphemerisTypeComposer>();
         services.AddSingleton<IGenerateEphemeridesComposer, GenerateEphemeridesComposer>();
         services.AddSingleton<IObjectDataInclusionComposer, ObjectDataInclusionComposer>();
-        services.AddSingleton<IOutputFormatComposer, OutputFormatComposer>();
-        services.AddSingleton<IOutputLabelsComposer, OutputLabelsComposer>();
+        services.AddSingleton<IVectorLabelsComposer, OutputLabelsComposer>();
         services.AddSingleton<IOutputUnitsComposer, OutputUnitsComposer>();
         services.AddSingleton<IReferencePlaneComposer, ReferencePlaneComposer>();
         services.AddSingleton<IReferenceSystemComposer, ReferenceSystemComposer>();
         services.AddSingleton<ITimeDeltaInclusionComposer, TimeDeltaInclusionComposer>();
         services.AddSingleton<ITimePrecisionComposer, TimePrecisionComposer>();
+        services.AddSingleton<IValueSeparationComposer, ValueSeperationComposer>();
         services.AddSingleton<IVectorCorrectionComposer, VectorCorrectionComposer>();
+        services.AddSingleton<IVectorTableContentComposer, VectorTableContentComposer>();
 
         return services;
     }
