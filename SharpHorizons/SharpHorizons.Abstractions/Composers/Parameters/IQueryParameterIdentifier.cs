@@ -15,7 +15,7 @@ public interface IQueryParameterIdentifier
     public abstract string Identifier { get; }
 }
 
-/// <summary>The <see cref="IQueryParameterIdentifier"/> representing the command, or the <see cref="ITarget"/> for epehemris generation..</summary>
+/// <summary>The <see cref="IQueryParameterIdentifier"/> representing the command, or the <see cref="ITarget"/> for ephemeris generation..</summary>
 public interface ICommandParameterIdentifier : IQueryParameterIdentifier { }
 
 /// <summary>The <see cref="IQueryParameterIdentifier"/> representing <see cref="OutputLabels"/> in an <see cref="IElementsQuery"/>.</summary>
