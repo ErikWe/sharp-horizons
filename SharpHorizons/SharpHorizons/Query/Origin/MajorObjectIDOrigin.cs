@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
 using SharpHorizons.Composers.Arguments.Origin;
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 
 /// <summary>Describes the <see cref="IOriginObject"/> in a query as an object identified by a <see cref="MajorObjectID"/>.</summary>
 internal sealed record class MajorObjectIDOrigin : IOriginObject

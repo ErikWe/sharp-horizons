@@ -1,9 +1,9 @@
 ﻿namespace SharpHorizons.Query;
 
 /// <inheritdoc cref="IQueryArgument"/>
-internal sealed record class QueryArgument : IQueryArgument, IEphemerisTypeArgument, IEpochCollectionArgument, IEpochCollectionFormatArgument, IGenerateEphemeridesArgument, IObjectDataInclusionArgument, IOriginArgument,
-    IOriginCoordinateArgument, IOriginCoordinateTypeArgument, IOutputFormatArgument, IOutputLabelsArgument, IOutputUnitsArgument, IReferencePlaneArgument, IReferenceSystemArgument, IStartEpochArgument, IStepSizeArgument,
-    IStopEpochArgument, ITargetArgument, ITimeDeltaInclusionArgument, ITimePrecisionArgument, IValueSeparationArgument, IVectorCorrectionArgument, IVectorTableContentArgument
+internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, IElementLabelsArgument, IEphemerisTypeArgument, IEpochCollectionArgument, IEpochCollectionFormatArgument, IGenerateEphemeridesArgument,
+    IObjectDataInclusionArgument, IOriginArgument, IOriginCoordinateArgument, IOriginCoordinateTypeArgument, IOutputFormatArgument, IOutputUnitsArgument, IReferencePlaneArgument, IReferenceSystemArgument,
+    IStartEpochArgument, IStepSizeArgument, IStopEpochArgument, ITimeDeltaInclusionArgument, ITimePrecisionArgument, IValueSeparationArgument, IVectorCorrectionArgument, IVectorLabelsArgument, IVectorTableContentArgument
 {
     /// <inheritdoc/>
     public string Value { get; }

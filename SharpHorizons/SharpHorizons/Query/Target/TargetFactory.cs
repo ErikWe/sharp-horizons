@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identification;
+using SharpHorizons.Identity;
 
 using SharpMeasures.Astronomy;
 

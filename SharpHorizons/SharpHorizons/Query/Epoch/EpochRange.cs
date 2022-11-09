@@ -29,9 +29,6 @@ internal sealed record class EpochRange : IEpochRange
         StepSize = stepSize;
     }
 
-    IEpoch IEpochRange.StartEpoch => StartEpoch.Epoch;
-    IEpoch IEpochRange.StopEpoch => StopEpoch.Epoch;
-
     EpochSelectionMode IEpochSelection.Selection => EpochSelectionMode.Range;
     IEpochCollectionArgument IEpochSelection.ComposeCollectionArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotCollection;
     IEpochCollectionFormatArgument IEpochSelection.ComposeCollectionFormatArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotCollection;
