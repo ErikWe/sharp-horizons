@@ -1,11 +1,11 @@
-﻿namespace SharpHorizons.Elements;
+﻿namespace SharpHorizons;
 
 using SharpHorizons.Calendars;
 
-/// <summary>Represents the osculating orbital elements of an object at an <see cref="IEpoch"/>.</summary>
-public sealed record class OsculatingOrbitalElements
+/// <inheritdoc cref="IOsculatingOrbitalElements"/>
+internal sealed record class OsculatingOrbitalElements : IOsculatingOrbitalElements
 {
-    /// <summary>The epoch of the <see cref="OsculatingOrbitalElements"/>.</summary>
+    /// <inheritdoc/>
     public IEpoch Epoch { get; }
 
     /// <summary>Constructs a new <see cref="OsculatingOrbitalElements"/> representing an object at <paramref name="epoch"/>.</summary>

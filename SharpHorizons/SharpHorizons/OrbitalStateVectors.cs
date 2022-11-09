@@ -1,19 +1,19 @@
-﻿namespace SharpHorizons.Vectors;
+﻿namespace SharpHorizons;
 
 using SharpHorizons.Calendars;
 
 using SharpMeasures;
 
-/// <summary>Represents the orbital state vectors, the <see cref="Position3"/> and <see cref="Velocity3"/>, of an object at an <see cref="IEpoch"/>.</summary>
-public sealed record class OrbitalStateVectors
+/// <inheritdoc cref="IOrbitalStateVectors"/>
+internal sealed record class OrbitalStateVectors : IOrbitalStateVectors
 {
-    /// <summary>The epoch of <see cref="OrbitalStateVectors"/>.</summary>
+    /// <inheritdoc/>
     public IEpoch Epoch { get; }
 
-    /// <summary>The <see cref="Position3"/> of the object.</summary>
+    /// <inheritdoc/>
     public Position3 Position { get; }
 
-    /// <summary>The <see cref="Velocity3"/> of the object.</summary>
+    /// <inheritdoc/>
     public Velocity3 Velocity { get; }
 
     /// <summary>Constructs a new <see cref="OrbitalStateVectors"/> representing an object { <paramref name="position"/>, <paramref name="velocity"/> } at <paramref name="epoch"/>.</summary>
