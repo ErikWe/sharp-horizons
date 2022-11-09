@@ -1,8 +1,7 @@
 <Project>
 
     <PropertyGroup>
-        <LangVersion>preview</LangVersion>
-        <EnablePreviewFeatures>True</EnablePreviewFeatures>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -27,6 +26,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
         <IsPackable>false</IsPackable>
         <IsPublishable>false</IsPublishable>
     </PropertyGroup>

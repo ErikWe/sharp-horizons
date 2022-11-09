@@ -1,9 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-   <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
         <RootNamespace>SharpHorizons.Tests</RootNamespace>
     </PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+	</PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" PrivateAssets="all" />
@@ -20,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
+      <ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" PrivateAssets="all" />
     </ItemGroup>
 
 </Project>
