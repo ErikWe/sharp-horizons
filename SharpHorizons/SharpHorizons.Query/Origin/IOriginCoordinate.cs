@@ -1,4 +1,6 @@
-﻿namespace SharpHorizons.Query.Origin;
+﻿using SharpHorizons.Query.Arguments;
+
+namespace SharpHorizons.Query.Origin;
 
 /// <summary>Represents the coordinate, relative to some <see cref="IOriginObject"/>, in a query.</summary>
 public interface IOriginCoordinate

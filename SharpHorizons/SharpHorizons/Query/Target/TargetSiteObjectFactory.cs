@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Arguments.Target;
 using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments.Composers.Target;
 
 /// <inheritdoc cref="ITargetSiteObjectFactory"/>
 internal sealed class TargetSiteObjectFactory : ITargetSiteObjectFactory

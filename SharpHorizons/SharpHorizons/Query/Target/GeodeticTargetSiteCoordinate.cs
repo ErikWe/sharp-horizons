@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Arguments.Target;
-
 using SharpMeasures.Astronomy;
 
 /// <summary>Describes a <see cref="ITargetSite"/> using a <see cref="GeodeticCoordinate"/>.</summary>

@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Composers.Arguments.Origin;
 using SharpHorizons.Identity;
 
 /// <summary>Describes the <see cref="IOriginObject"/> in a query as <see cref="Identity.MajorObject"/>.</summary>

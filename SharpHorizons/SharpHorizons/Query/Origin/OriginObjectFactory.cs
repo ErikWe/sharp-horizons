@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Composers.Arguments.Origin;
 using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments.Composers.Origin;
 
 /// <inheritdoc cref="IOriginObjectFactory"/>
 internal sealed class OriginObjectFactory : IOriginObjectFactory

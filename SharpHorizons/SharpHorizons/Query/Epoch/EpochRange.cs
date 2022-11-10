@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Calendars;
-
+using SharpHorizons.Query.Arguments;
 using System;
 
 /// <inheritdoc cref="IEpochRange"/>

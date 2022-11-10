@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Composers.Arguments;
+using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Arguments.Composers;
 
 /// <inheritdoc cref="IUniformStepSize"/>
 internal sealed record class UniformStepSize : IUniformStepSize

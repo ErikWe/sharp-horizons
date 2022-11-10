@@ -1,8 +1,9 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Arguments;
-using SharpHorizons.Composers.Arguments.Target;
 using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Arguments.Composers;
+using SharpHorizons.Query.Arguments.Composers.Target;
 
 using SharpMeasures.Astronomy;
 
@@ -11,17 +12,17 @@ using System;
 /// <inheritdoc cref="IMajorObjectTargetFactory"/>
 internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
 {
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MajorObject"/>.</summary>
-    private ICommandComposer<MajorObject> MajorObjectComposer { get; }
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MajorObject"/>.</summary>
+    private ITargetComposer<MajorObject> MajorObjectComposer { get; }
 
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MajorObjectID"/>.</summary>
-    private ICommandComposer<MajorObjectID> MajorObjectIDComposer { get; }
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MajorObjectID"/>.</summary>
+    private ITargetComposer<MajorObjectID> MajorObjectIDComposer { get; }
 
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MajorObjectName"/>.</summary>
-    private ICommandComposer<MajorObjectName> MajorObjectNameComposer { get; }
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MajorObjectName"/>.</summary>
+    private ITargetComposer<MajorObjectName> MajorObjectNameComposer { get; }
 
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="ISiteTarget"/>.</summary>
-    private ICommandComposer<ISiteTarget> SiteComposer { get; }
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="ISiteTarget"/>.</summary>
+    private ITargetComposer<ISiteTarget> SiteComposer { get; }
 
     /// <inheritdoc cref="ITargetSiteObjectFactory"/>
     private ITargetSiteObjectFactory SiteObjectFactory { get; }
@@ -36,7 +37,7 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     /// <param name="siteComposer"><inheritdoc cref="SiteComposer" path="/summary"/></param>
     /// <param name="siteObjectFactory"><inheritdoc cref="SiteObjectFactory" path="/summary"/></param>
     /// <param name="siteFactory"><inheritdoc cref="SiteFactory" path="/summary"/></param>
-    public MajorObjectTargetFactory(ICommandComposer<MajorObject>? majorObjectComposer = null, ICommandComposer<MajorObjectID>? majorObjectIDComposer = null, ICommandComposer<MajorObjectName>? majorObjectNameComposer = null, ICommandComposer<ISiteTarget>? siteComposer = null, ITargetSiteObjectFactory? siteObjectFactory = null, ITargetSiteFactory? siteFactory = null)
+    public MajorObjectTargetFactory(ITargetComposer<MajorObject>? majorObjectComposer = null, ITargetComposer<MajorObjectID>? majorObjectIDComposer = null, ITargetComposer<MajorObjectName>? majorObjectNameComposer = null, ITargetComposer<ISiteTarget>? siteComposer = null, ITargetSiteObjectFactory? siteObjectFactory = null, ITargetSiteFactory? siteFactory = null)
     {
         MajorObjectIDComposer? defaultMajorObjectIDComposer = null;
 

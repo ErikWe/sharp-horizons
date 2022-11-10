@@ -1,27 +1,28 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Arguments;
-using SharpHorizons.Composers.Arguments.Target;
 using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Arguments.Composers;
+using SharpHorizons.Query.Arguments.Composers.Target;
 
 using System;
 
 /// <inheritdoc cref="IMPCTargetFactory"/>
 internal sealed class MPCTargetFactory : IMPCTargetFactory
 {
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCObject"/>.</summary>
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCObject"/>.</summary>
     private ICommandComposer<MPCObject> ObjectComposer { get; }
 
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCProvisionalObject"/>.</summary>
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalObject"/>.</summary>
     private ICommandComposer<MPCProvisionalObject> ProvisionalObjectComposer { get; }
 
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCName"/>.</summary>
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCName"/>.</summary>
     private ICommandComposer<MPCName> NameComposer { get; }
 
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCProvisionalDesignation"/>.</summary>
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalDesignation"/>.</summary>
     private ICommandComposer<MPCProvisionalDesignation> ProvisionalDesignationComposer { get; }
 
-    /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="MPCSequentialNumber"/>.</summary>
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCSequentialNumber"/>.</summary>
     private ICommandComposer<MPCSequentialNumber> SequentialNumberComposer { get; }
 
     /// <summary><inheritdoc cref="MPCTargetFactory" path="/summary"/></summary>
@@ -30,7 +31,7 @@ internal sealed class MPCTargetFactory : IMPCTargetFactory
     /// <param name="nameComposer"><inheritdoc cref="NameComposer" path="/summary"/></param>
     /// <param name="provisionalDesignationComposer"><inheritdoc cref="ProvisionalDesignationComposer" path="/summary"/></param>
     /// <param name="sequentialNumberComposer"><inheritdoc cref="SequentialNumberComposer" path="/summary"/></param>
-    public MPCTargetFactory(ICommandComposer<MPCObject>? objectComposer = null, ICommandComposer<MPCProvisionalObject>? provisionalObjectComposer = null, ICommandComposer<MPCName>? nameComposer = null, ICommandComposer<MPCProvisionalDesignation>? provisionalDesignationComposer = null, ICommandComposer<MPCSequentialNumber>? sequentialNumberComposer = null)
+    public MPCTargetFactory(ITargetComposer<MPCObject>? objectComposer = null, ITargetComposer<MPCProvisionalObject>? provisionalObjectComposer = null, ITargetComposer<MPCName>? nameComposer = null, ITargetComposer<MPCProvisionalDesignation>? provisionalDesignationComposer = null, ITargetComposer<MPCSequentialNumber>? sequentialNumberComposer = null)
     {
         sequentialNumberComposer ??= new MPCSequentialNumberTargetComposer();
         provisionalDesignationComposer ??= new MPCProvisionalDesignationTargetComposer();

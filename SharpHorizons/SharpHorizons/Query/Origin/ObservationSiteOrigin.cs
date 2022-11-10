@@ -1,7 +1,8 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Arguments.Composers;
 
 /// <summary>Describes the <see cref="IOrigin"/> in a query as an <see cref="Identity.ObservationSiteID"/> associated with an <see cref="IOriginObject"/>.</summary>
 internal sealed record class ObservationSiteOrigin : IObservationSiteOrigin

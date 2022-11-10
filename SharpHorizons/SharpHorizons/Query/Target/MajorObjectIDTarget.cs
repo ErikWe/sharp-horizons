@@ -1,7 +1,8 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Arguments;
 using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Arguments.Composers;
 
 /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an object identified by a <see cref="MajorObjectID"/>.</summary>
 internal sealed record class MajorObjectIDTarget : ITarget

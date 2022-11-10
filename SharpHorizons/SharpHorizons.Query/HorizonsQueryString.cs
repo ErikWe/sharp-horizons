@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Query;
 
+using SharpHorizons.Query.Arguments;
+
 using System;
 
 /// <summary>Describes the <see cref="string"/>-representation of a <see cref="IQueryArgumentSet"/>, used to perform a Horizons query.</summary>

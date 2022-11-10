@@ -1,7 +1,8 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Calendars;
-using SharpHorizons.Composers.Arguments;
+using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Arguments.Composers;
 
 /// <inheritdoc cref="IStopEpoch"/>
 internal sealed class StopEpoch : IStopEpoch

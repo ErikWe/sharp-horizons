@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Composers.Arguments.Target;
+using SharpHorizons.Query.Arguments.Composers.Target;
+
 using SharpMeasures.Astronomy;
 
 internal sealed class TargetSiteFactory : ITargetSiteFactory
