@@ -6,7 +6,7 @@ using SharpHorizons.Query.Arguments;
 using System.ComponentModel;
 
 /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="QueryCommand"/>.</summary>
-internal sealed class CommandComposer : ICommandComposer<QueryCommand>
+internal sealed class QueryCommandComposer : ICommandComposer<QueryCommand>
 {
     ICommandArgument IArgumentComposer<ICommandArgument, QueryCommand>.Compose(QueryCommand obj) => new QueryArgument(obj switch
     {

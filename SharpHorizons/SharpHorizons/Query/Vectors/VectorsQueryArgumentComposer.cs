@@ -6,8 +6,8 @@ using SharpHorizons.Query.Arguments.Composers;
 /// <inheritdoc cref="IVectorsQueryArgumentComposer"/>
 internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentComposer
 {
-    /// <summary><inheritdoc cref="IQueryArgumentsBuilderFactory" path="/summary"/></summary>
-    private IQueryArgumentsBuilderFactory BuilderFactory { get; }
+    /// <summary><inheritdoc cref="IQueryArgumentSetBuilderFactory" path="/summary"/></summary>
+    private IQueryArgumentSetBuilderFactory BuilderFactory { get; }
 
     /// <summary><inheritdoc cref="IOutputFormatComposer" path="/summary"/></summary>
     private IOutputFormatComposer OutputFormatComposer { get; }
@@ -59,7 +59,7 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
     /// <param name="outputUnitsComposer"><inheritdoc cref="OutputUnitsComposer" path="/summary"/></param>
     /// <param name="outputLabelsComposer"><inheritdoc cref="OutputLabelsComposer" path="/summary"/></param>
     /// <param name="valueSeparationComposer"><inheritdoc cref="ValueSeparationComposer" path="/summary"/></param>
-    public VectorsQueryArgumentComposer(IQueryArgumentsBuilderFactory builderFactory, IEphemerisTypeComposer ephemerisTypeComposer, IOutputFormatComposer outputFormatComposer, IObjectDataInclusionComposer objectDataInclusionComposer, IReferencePlaneComposer referencePlaneComposer, IReferenceSystemComposer referenceSystemComposer,
+    public VectorsQueryArgumentComposer(IQueryArgumentSetBuilderFactory builderFactory, IEphemerisTypeComposer ephemerisTypeComposer, IOutputFormatComposer outputFormatComposer, IObjectDataInclusionComposer objectDataInclusionComposer, IReferencePlaneComposer referencePlaneComposer, IReferenceSystemComposer referenceSystemComposer,
         ITimePrecisionComposer timePrecisionComposer, IVectorCorrectionComposer correctionComposer, ITimeDeltaInclusionComposer timeDeltaInclusionComposer, IVectorTableContentComposer tableContentComposer, IOutputUnitsComposer outputUnitsComposer, IVectorLabelsComposer outputLabelsComposer, IValueSeparationComposer valueSeparationComposer)
     {
         BuilderFactory = builderFactory;
