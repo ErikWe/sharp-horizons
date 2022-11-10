@@ -58,6 +58,9 @@ public interface IQueryArgumentSet
     /// <summary>The optional <see cref="ITimePrecisionArgument"/>, describing the <see cref="Query.TimePrecision"/>.</summary>
     public abstract OptionalQueryArgument<ITimePrecisionArgument> TimePrecision { get; }
 
+    /// <summary>The optional <see cref="IOutputUnitsArgument"/>, describing the <see cref="Query.OutputUnits"/>.</summary>
+    public abstract OptionalQueryArgument<IOutputUnitsArgument> OutputUnits { get; }
+
     /// <summary>The optional <see cref="IVectorCorrectionArgument"/>, describing the <see cref="Query.VectorCorrection"/>.</summary>
     public abstract OptionalQueryArgument<IVectorCorrectionArgument> VectorCorrection { get; }
 
@@ -66,9 +69,6 @@ public interface IQueryArgumentSet
 
     /// <summary>The optional <see cref="IVectorTableContentArgument"/>, describing the <see cref="VectorTable.VectorTableContent"/>.</summary>
     public abstract OptionalQueryArgument<IVectorTableContentArgument> VectorTableContent { get; }
-
-    /// <summary>The optional <see cref="IOutputUnitsArgument"/>, describing the <see cref="Query.OutputUnits"/>.</summary>
-    public abstract OptionalQueryArgument<IOutputUnitsArgument> OutputUnits { get; }
 
     /// <summary>The optional <see cref="IElementLabelsArgument"/>, describing the <see cref="OutputLabels"/> in an <see cref="IElementsQuery"/>.</summary>
     public abstract OptionalQueryArgument<IElementLabelsArgument> ElementLabels { get; }

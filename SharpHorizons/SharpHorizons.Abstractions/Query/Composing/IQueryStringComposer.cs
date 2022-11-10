@@ -1,11 +1,11 @@
 ﻿namespace SharpHorizons.Query.Composing;
 
-using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Parameters;
 
-/// <summary>Composes <see cref="HorizonsQueryString"/> describing <see cref="IQueryArgumentSet"/>.</summary>
+/// <summary>Composes <see cref="HorizonsQueryString"/> describing <see cref="IQueryParameterSet"/>.</summary>
 public interface IQueryStringComposer
 {
-    /// <summary>Composes a <see cref="HorizonsQueryString"/> describing <paramref name="queryArguments"/>.</summary>
-    /// <param name="queryArguments">The composed <see cref="HorizonsQueryString"/> describes these <see cref="IQueryArgumentSet"/>.</param>
-    public abstract HorizonsQueryString Compose(IQueryArgumentSet queryArguments);
+    /// <summary>Composes a <see cref="HorizonsQueryString"/> describing <paramref name="queryParameters"/>.</summary>
+    /// <param name="queryParameters">The composed <see cref="HorizonsQueryString"/> describes this <see cref="IQueryParameterSet"/>.</param>
+    public abstract HorizonsQueryString Compose(IQueryParameterSet queryParameters);
 }

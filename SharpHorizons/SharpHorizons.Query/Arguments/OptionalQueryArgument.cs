@@ -16,8 +16,11 @@ public readonly record struct OptionalQueryArgument<TArgument> where TArgument :
 
     /// <summary>Represents the <typeparamref name="TArgument"/> <paramref name="argument"/> in a query.</summary>
     /// <param name="argument">The <typeparamref name="TArgument"/> in a query.</param>
+    /// <exception cref="ArgumentNullException"/>
     public OptionalQueryArgument(TArgument argument)
     {
+        ArgumentNullException.ThrowIfNull(argument);
+
         Argument = argument;
     }
 
