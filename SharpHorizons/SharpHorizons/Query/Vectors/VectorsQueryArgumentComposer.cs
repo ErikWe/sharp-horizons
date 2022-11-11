@@ -81,13 +81,12 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
 
     IQueryArgumentSet IVectorsQueryArgumentComposer.Compose(IVectorsQuery query)
     {
-        var builder = BuilderFactory.Create();
+        var builder = BuilderFactory.Create(query.Target.ComposeArgument());
 
         builder.Specify(EphemerisTypeArgument);
         builder.Specify(OutputFormatComposer.Compose(query.OutputFormat));
         builder.Specify(ObjectDataInclusionComposer.Compose(query.ObjectDataInclusion));
 
-        builder.Specify(query.Target.ComposeArgument());
         builder.Specify(query.Origin.ComposeArgument());
         builder.Specify(query.Origin.ComposeCoordinateArgument());
         builder.Specify(query.Origin.ComposeCoordinateTypeArgument());
