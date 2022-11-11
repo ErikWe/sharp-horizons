@@ -41,4 +41,11 @@ public static class OptionalQueryParameter
     /// <typeparam name="TIdentifier">The type of the <see cref="IQueryParameterIdentifier"/>.</typeparam>
     /// <typeparam name="TArgument">The type of the <see cref="IQueryArgument"/>.</typeparam>
     public static OptionalQueryParameter<TParameter, TIdentifier, TArgument> Empty<TParameter, TIdentifier, TArgument>() where TParameter : IQueryParameter<TIdentifier, TArgument> where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument => new();
+
+    /// <summary>Constructs a <see cref="OptionalQueryParameter{TParameter, TIdentifier, TArgument}"/> representing <paramref name="parameter"/>.</summary>
+    /// <typeparam name="TParameter">The type of the <see cref="IQueryParameter{TIdentifier, TArgument}"/>.</typeparam>
+    /// <typeparam name="TIdentifier">The type of the <see cref="IQueryParameterIdentifier"/>.</typeparam>
+    /// <typeparam name="TArgument">The type of the <see cref="IQueryArgument"/>.</typeparam>
+    /// <param name="parameter">The constructed <see cref="OptionalQueryParameter{TParameter, TIdentifier, TArgument}"/> represents this <typeparamref name="TParameter"/>.</param>
+    public static OptionalQueryParameter<TParameter, TIdentifier, TArgument> Construct<TParameter, TIdentifier, TArgument>(TParameter parameter) where TParameter : IQueryParameter<TIdentifier, TArgument> where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument => new(parameter);
 }

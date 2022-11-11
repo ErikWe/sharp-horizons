@@ -36,4 +36,9 @@ public static class OptionalQueryArgument
     /// <summary>Constructs an empty <see cref="OptionalQueryArgument{TArgument}"/>.</summary>
     /// <typeparam name="TArgument">The type of the constructed <see cref="OptionalQueryArgument{TArgument}"/>.</typeparam>
     public static OptionalQueryArgument<TArgument> Empty<TArgument>() where TArgument : IQueryArgument => new();
+
+    /// <summary>Constructs a <see cref="OptionalQueryArgument{TArgument}"/> representing <paramref name="argument"/>.</summary>
+    /// <typeparam name="TArgument">The type of the constructed <see cref="OptionalQueryArgument{TArgument}"/>.</typeparam>
+    /// <param name="argument">The constructed <see cref="OptionalQueryArgument{TArgument}"/> represents this <typeparamref name="TArgument"/>.</param>
+    public static OptionalQueryArgument<TArgument> Construct<TArgument>(TArgument argument) where TArgument : IQueryArgument => new(argument);
 }
