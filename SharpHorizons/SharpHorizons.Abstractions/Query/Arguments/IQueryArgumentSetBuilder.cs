@@ -3,7 +3,7 @@
 /// <summary>Handles iterative construction of <see cref="IQueryArgumentSet"/>.</summary>
 public interface IQueryArgumentSetBuilder
 {
-    /// <summary>Constructs the <see cref="IQueryArgumentSet"/> of the <see cref="IQueryArgumentSet"/>.</summary>
+    /// <summary>Constructs the <see cref="IQueryArgumentSet"/>.</summary>
     public abstract IQueryArgumentSet Build();
 
     /// <summary>Specifies the <see cref="ICommandArgument"/> of the <see cref="IQueryArgumentSet"/>.</summary>
