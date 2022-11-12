@@ -7,13 +7,8 @@ using SharpMeasures;
 /// <inheritdoc cref="IOrbitalStateVectors"/>
 internal sealed record class OrbitalStateVectors : IOrbitalStateVectors
 {
-    /// <inheritdoc/>
     public IEpoch Epoch { get; }
-
-    /// <inheritdoc/>
     public Position3 Position { get; }
-
-    /// <inheritdoc/>
     public Velocity3 Velocity { get; }
 
     /// <summary>Constructs a new <see cref="OrbitalStateVectors"/> representing an object { <paramref name="position"/>, <paramref name="velocity"/> } at <paramref name="epoch"/>.</summary>

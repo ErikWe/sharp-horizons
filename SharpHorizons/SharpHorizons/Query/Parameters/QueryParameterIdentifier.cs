@@ -6,7 +6,6 @@ internal sealed class QueryParameterIdentifier : IQueryParameterIdentifier, ICom
     IReferencePlaneParameterIdentifier, IReferenceSystemParameterIdentifier, IStartEpochParameterIdentifier, IStepSizeParameterIdentifier, IStopEpochParameterIdentifier, ITimeDeltaInclusionParameterIdentifier, ITimePrecisionParameterIdentifier, IValueSeparationParameterIdentifier,
     IVectorCorrectionParameterIdentifier, IVectorLabelsParameterIdentifier, IVectorTableContentParameterIdentifier
 {
-    /// <inheritdoc/>
     public string Identifier { get; }
 
     /// <summary><inheritdoc cref="QueryParameterIdentifier" path="/summary"/></summary>

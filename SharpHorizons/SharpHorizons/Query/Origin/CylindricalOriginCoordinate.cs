@@ -8,7 +8,6 @@ using SharpMeasures.Astronomy;
 /// <inheritdoc cref="ICylindricalOriginCoordinate"/>
 internal sealed record class CylindricalOriginCoordinate : ICylindricalOriginCoordinate
 {
-    /// <inheritdoc/>
     public CylindricalCoordinate Coordinate { get; }
 
     /// <summary>Used to compose a <see cref="IOriginCoordinateArgument"/> describing <see langword="this"/>.</summary>

@@ -6,10 +6,7 @@ using SharpHorizons.Query.Arguments.Composers;
 /// <inheritdoc cref="ISiteTarget"/>
 internal sealed record class SiteTarget : ISiteTarget
 {
-    /// <inheritdoc/>
     public ITargetSiteObject TargetSiteObject { get; }
-
-    /// <inheritdoc/>
     public ITargetSite TargetSite { get; }
 
     /// <summary>Used to compose a <see cref="ICommandArgument"/> describing <see langword="this"/>.</summary>

@@ -6,7 +6,6 @@ using SharpHorizons.Query.Arguments.Composers;
 /// <inheritdoc cref="IUniformStepSize"/>
 internal sealed record class UniformStepSize : IUniformStepSize
 {
-    /// <inheritdoc/>
     public int StepCount { get; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>

@@ -6,7 +6,6 @@ using SharpHorizons.Query.Arguments.Composers;
 /// <inheritdoc cref="IBodyCentricOrigin"/>
 internal sealed record class BodyCentricOrigin : IBodyCentricOrigin
 {
-    /// <inheritdoc/>
     public IOriginObject OriginObject { get; }
 
     /// <summary>Used to compose a <see cref="IOriginArgument"/> describing <see langword="this"/>.</summary>

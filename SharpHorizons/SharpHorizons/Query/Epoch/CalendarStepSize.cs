@@ -8,10 +8,7 @@ using System.ComponentModel;
 /// <inheritdoc cref="ICalendarStepSize"/>
 internal sealed record class CalendarStepSize : ICalendarStepSize
 {
-    /// <inheritdoc/>
     public int Count { get; }
-
-    /// <inheritdoc/>
     public CalendarStepSizeUnit Unit { get; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>

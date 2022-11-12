@@ -8,7 +8,6 @@ using SharpMeasures.Astronomy;
 /// <inheritdoc cref="IGeodeticOriginCoordinate"/>
 internal sealed record class GeodeticOriginCoordinate : IGeodeticOriginCoordinate
 {
-    /// <inheritdoc/>
     public GeodeticCoordinate Coordinate { get; }
 
     /// <summary>Used to compose a <see cref="IOriginCoordinateArgument"/> describing <see langword="this"/>.</summary>

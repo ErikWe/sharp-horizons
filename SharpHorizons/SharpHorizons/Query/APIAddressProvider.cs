@@ -7,7 +7,6 @@ using System;
 /// <inheritdoc cref="IAPIAddressProvider"/>
 internal sealed class APIAddressProvider : IAPIAddressProvider
 {
-    /// <inheritdoc/>
     public Uri Address { get; }
 
     /// <summary><inheritdoc cref="APIAddressProvider" path="/summary"/></summary>

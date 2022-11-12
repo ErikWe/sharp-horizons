@@ -7,7 +7,6 @@ using SharpHorizons.Query.Arguments.Composers;
 /// <inheritdoc cref="IStopEpoch"/>
 internal sealed class StopEpoch : IStopEpoch
 {
-    /// <inheritdoc/>
     public IEpoch Epoch { get; }
 
     /// <summary>Used to compose a <see cref="IStopEpochArgument"/> describing <see langword="this"/>.</summary>

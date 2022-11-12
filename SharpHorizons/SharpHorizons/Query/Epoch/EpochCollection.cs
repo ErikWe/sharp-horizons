@@ -3,6 +3,7 @@
 using SharpHorizons.Calendars;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,10 +13,7 @@ using System.Linq;
 /// <inheritdoc cref="IEpochCollection"/>
 internal sealed record class EpochCollection : IEpochCollection
 {
-    /// <inheritdoc/>
     public IEnumerable<IEpoch> Epochs { get; }
-
-    /// <inheritdoc/>
     public EpochCollectionFormat Format { get; }
 
     /// <summary>Used to compose <see cref="IEpochCollectionArgument"/> that describe <see langword="this"/>.</summary>
@@ -48,7 +46,6 @@ internal sealed record class EpochCollection : IEpochCollection
     IStopEpochArgument IEpochSelection.ComposeStopTimeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
     IStepSizeArgument IEpochSelection.ComposeStepSizeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
 
-    /// <inheritdoc/>
     public IEpochCollection Concat(IEnumerable<IEpoch> epochs)
     {
         ArgumentNullException.ThrowIfNull(epochs);
@@ -56,7 +53,6 @@ internal sealed record class EpochCollection : IEpochCollection
         return new EpochCollection(Epochs.Concat(epochs), Format, Composer, FormatComposer);
     }
 
-    /// <inheritdoc/>
     public IEnumerator<IEpoch> GetEnumerator() => Epochs.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

@@ -5,7 +5,6 @@ internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, I
     IObjectDataInclusionArgument, IOriginArgument, IOriginCoordinateArgument, IOriginCoordinateTypeArgument, IOutputFormatArgument, IOutputUnitsArgument, IReferencePlaneArgument, IReferenceSystemArgument,
     IStartEpochArgument, IStepSizeArgument, IStopEpochArgument, ITargetArgument, ITimeDeltaInclusionArgument, ITimePrecisionArgument, IValueSeparationArgument, IVectorCorrectionArgument, IVectorLabelsArgument, IVectorTableContentArgument
 {
-    /// <inheritdoc/>
     public string Value { get; }
 
     /// <summary><inheritdoc cref="QueryArgument" path="/summary"/></summary>

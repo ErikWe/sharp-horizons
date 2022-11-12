@@ -5,73 +5,28 @@ using Microsoft.Extensions.Options;
 /// <summary><inheritdoc cref="IQueryParameterProvider" path="/summary"/></summary>
 internal sealed class QueryParameterProvider : IQueryParameterProvider
 {
-    /// <inheritdoc/>
     public ICommandParameterIdentifier Command { get; }
-
-    /// <inheritdoc/>
     public IElementLabelsParameterIdentifier ElementLabels { get; }
-
-    /// <inheritdoc/>
     public IEphemerisTypeParameterIdentifier EphemerisType { get; }
-
-    /// <inheritdoc/>
     public IEpochCollectionParameterIdentifier EpochCollection { get; }
-
-    /// <inheritdoc/>
     public IEpochCollectionFormatParameterIdentifier EpochCollectionFormat { get; }
-
-    /// <inheritdoc/>
     public IGenerateEphemeridesParameterIdentifier GenerateEphemerides { get; }
-
-    /// <inheritdoc/>
     public IObjectDataInclusionParameterIdentifier ObjectDataInclusion { get; }
-
-    /// <inheritdoc/>
     public IOriginParameterIdentifier Origin { get; }
-
-    /// <inheritdoc/>
     public IOriginCoordinateParameterIdentifier OriginCoordinate { get; }
-
-    /// <inheritdoc/>
     public IOriginCoordinateTypeParameterIdentifier OriginCoordinateType { get; }
-
-    /// <inheritdoc/>
     public IOutputFormatParameterIdentifier OutputFormat { get; }
-
-    /// <inheritdoc/>
     public IOutputUnitsParameterIdentifier OutputUnits { get; }
-
-    /// <inheritdoc/>
     public IReferencePlaneParameterIdentifier ReferencePlane { get; }
-
-    /// <inheritdoc/>
     public IReferenceSystemParameterIdentifier ReferenceSystem { get; }
-
-    /// <inheritdoc/>
     public IStartEpochParameterIdentifier StartEpoch { get; }
-
-    /// <inheritdoc/>
     public IStepSizeParameterIdentifier StepSize { get; }
-
-    /// <inheritdoc/>
     public IStopEpochParameterIdentifier StopEpoch { get; }
-
-    /// <inheritdoc/>
     public ITimeDeltaInclusionParameterIdentifier TimeDeltaInclusion { get; }
-
-    /// <inheritdoc/>
     public ITimePrecisionParameterIdentifier TimePrecision { get; }
-
-    /// <inheritdoc/>
     public IValueSeparationParameterIdentifier ValueSeparation { get; }
-
-    /// <inheritdoc/>
     public IVectorCorrectionParameterIdentifier VectorCorrection { get; }
-
-    /// <inheritdoc/>
     public IVectorLabelsParameterIdentifier VectorLabels { get; }
-
-    /// <inheritdoc/>
     public IVectorTableContentParameterIdentifier VectorTableContent { get; }
 
     /// <summary><inheritdoc cref="QueryParameterProvider" path="/summary"/></summary>

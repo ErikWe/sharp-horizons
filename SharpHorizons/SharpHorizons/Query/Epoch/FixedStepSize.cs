@@ -7,7 +7,6 @@ using SharpMeasures;
 /// <inheritdoc cref="IFixedStepSize"/>
 internal sealed record class FixedStepSize : IFixedStepSize
 {
-    /// <inheritdoc/>
     public Time DeltaTime { get; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>

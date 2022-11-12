@@ -2,18 +2,15 @@
 
 using SharpHorizons.Calendars;
 using SharpHorizons.Query.Arguments;
+
 using System;
+using System.Collections.Generic;
 
 /// <inheritdoc cref="IEpochRange"/>
 internal sealed record class EpochRange : IEpochRange
 {
-    /// <inheritdoc cref="IEpochRange.StartEpoch"/>
     public IStartEpoch StartEpoch { get; }
-
-    /// <inheritdoc cref="IEpochRange.StopEpoch"/>
     public IStopEpoch StopEpoch { get; }
-
-    /// <inheritdoc/>
     public IStepSize StepSize { get; }
 
     /// <summary>Uses the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/> with the associated <paramref name="stepSize"/> to describe the selection of <see cref="IEpoch"/> in a query.</summary>

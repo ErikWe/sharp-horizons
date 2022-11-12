@@ -10,7 +10,6 @@ using SharpMeasures;
 /// <inheritdoc cref="IAngularStepSize"/>
 internal sealed record class AngularStepSize : IAngularStepSize
 {
-    /// <inheritdoc/>
     public Angle DeltaAngle { get; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
