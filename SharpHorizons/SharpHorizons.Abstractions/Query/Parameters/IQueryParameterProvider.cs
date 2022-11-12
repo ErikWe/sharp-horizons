@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Parameters;
 
-/// <summary>Provides the <see cref="IQueryParameterIdentifier"/> corresponding to the available parameters.</summary>
+/// <summary>Provides the <see cref="IQueryParameterIdentifier"/> associated with the available parameters.</summary>
 public interface IQueryParameterProvider
 {
     /// <summary><inheritdoc cref="ICommandParameterIdentifier" path="/summary"/></summary>

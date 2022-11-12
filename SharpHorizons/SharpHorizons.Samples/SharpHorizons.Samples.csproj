@@ -17,6 +17,12 @@
 	<ItemGroup>
 		<ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\SharpHorizons.Abstractions\SharpHorizons.Abstractions.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 </Project>

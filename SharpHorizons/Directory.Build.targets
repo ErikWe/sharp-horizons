@@ -5,9 +5,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-		<PackageReference Update="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+		<PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Hosting" Version="7.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Options" Version="7.0.0" />
+		<PackageReference Update="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
 		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.1.0" />
 	</ItemGroup>
 
@@ -16,6 +19,10 @@
 		<PackageReference Update="SharpMeasures.Astronomy" Version="0.3.67" />
 		<PackageReference Update="SharpMeasures.Base" Version="0.3.67" />
 		<PackageReference Update="SharpMeasures.Generators" Version="0.3.67" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Update="System.Configuration.ConfigurationManager" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

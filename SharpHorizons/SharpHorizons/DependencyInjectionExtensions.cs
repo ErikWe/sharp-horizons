@@ -1,15 +1,20 @@
 ﻿namespace SharpHorizons;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using SharpHorizons.Calendars;
 using SharpHorizons.Identity;
+using SharpHorizons.Query;
+using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Arguments.Composers.Epoch;
 using SharpHorizons.Query.Arguments.Composers.Origin;
 using SharpHorizons.Query.Arguments.Composers.Target;
+using SharpHorizons.Query.Composing;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Parameters;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.Vectors.Fluency;
@@ -23,11 +28,32 @@ public static class DependencyInjectionExtensions
     /// <param name="services">Services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     public static IServiceCollection AddSharpHorizons(this IServiceCollection services)
     {
+        services.AddOptions<QueryOptions>().Configure(QueryOptions.ApplyDefaults);
+        services.AddOptions<ParameterIdentifierOptions>().Configure(ParameterIdentifierOptions.ApplyDefaults);
+
+        services.AddSingleton<IQueryParameterProvider, QueryParameterProvider>();
+        services.AddSingleton<IQueryArgumentSetBuilderFactory, QueryArgumentSetBuilderFactory>();
+
+        services.AddSingleton<IAPIAddressProvider, APIAddressProvider>();
+
         services.AddSharpHorizonsTarget();
         services.AddSharpHorizonsOrigin();
         services.AddSharpHorizonsEpoch();
         services.AddSharpHorizonsVectors();
         services.AddSharpHorizonsComposers();
+
+        return services;
+    }
+
+    /// <summary>Adds services required by SharpHorizons to <paramref name="services"/>, with configuration provided by <paramref name="configuration"/>.</summary>
+    /// <param name="services">Services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    /// <param name="configuration">Provides configuration of the SharpHorizons services.</param>
+    public static IServiceCollection AddSharpHorizons(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSharpHorizons();
+
+        services.Configure<QueryOptions>(configuration.GetSection(QueryOptions.Section));
+        services.Configure<ParameterIdentifierOptions>(configuration.GetSection(ParameterIdentifierOptions.Section));
 
         return services;
     }
@@ -92,11 +118,14 @@ public static class DependencyInjectionExtensions
         return services;
     }
 
-    /// <summary>Adds <see cref="OrbitalStateVectors"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
-    /// <param name="services"><see cref="OrbitalStateVectors"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    /// <summary>Adds <see cref="IOrbitalStateVectors"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
+    /// <param name="services"><see cref="IOrbitalStateVectors"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsVectors(this IServiceCollection services)
     {
         services.AddSingleton<IVectorsQueryFactory, VectorsQueryFactory>();
+
+        services.AddSingleton<IVectorsQueryArgumentComposer, VectorsQueryArgumentComposer>();
+        services.AddSingleton<IVectorsQueryComposer, VectorsQueryComposer>();
 
         services.AddSingleton<ITargetStageFactory, TargetStageFactory>();
         services.AddSingleton<IOriginStageFactory, OriginStageFactory>();
@@ -106,20 +135,34 @@ public static class DependencyInjectionExtensions
     }
 
     /// <summary>Adds <see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
-    /// <param name="services"><see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsComposers(this IServiceCollection services)
     {
-        services.AddSingleton<ICommandComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
-        services.AddSingleton<ICommandComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ICommandComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<IQueryStringComposer, QueryStringComposer>();
+        services.AddSingleton<IURIComposer, URIComposer>();
 
-        services.AddSingleton<ICommandComposer<MPCObject>, MPCObjectTargetComposer>();
-        services.AddSingleton<ICommandComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
-        services.AddSingleton<ICommandComposer<MPCName>, MPCNameTargetComposer>();
-        services.AddSingleton<ICommandComposer<MPCProvisionalDesignation>, MPCProvisionalDesignationTargetComposer>();
-        services.AddSingleton<ICommandComposer<MPCSequentialNumber>, MPCSequentialNumberTargetComposer>();
+        services.AddSharpHorizonsArgumentComposers();
 
-        services.AddSingleton<ICommandComposer<ISiteTarget>, SiteTargetComposer>();
+        return services;
+    }
+
+    /// <summary>Adds <see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
+    /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    private static IServiceCollection AddSharpHorizonsArgumentComposers(this IServiceCollection services)
+    {
+        services.AddSingleton<ICommandComposer<QueryCommand>, QueryCommandComposer>();
+
+        services.AddSingleton<ITargetComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
+        services.AddSingleton<ITargetComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
+        services.AddSingleton<ITargetComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+
+        services.AddSingleton<ITargetComposer<MPCObject>, MPCObjectTargetComposer>();
+        services.AddSingleton<ITargetComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
+        services.AddSingleton<ITargetComposer<MPCName>, MPCNameTargetComposer>();
+        services.AddSingleton<ITargetComposer<MPCProvisionalDesignation>, MPCProvisionalDesignationTargetComposer>();
+        services.AddSingleton<ITargetComposer<MPCSequentialNumber>, MPCSequentialNumberTargetComposer>();
+
+        services.AddSingleton<ITargetComposer<ISiteTarget>, SiteTargetComposer>();
 
         services.AddSingleton<IOriginComposer<IBodyCentricOrigin>, BodyCentricOriginComposer>();
         services.AddSingleton<IOriginComposer<ICoordinateOrigin>, CoordinateOriginComposer>();
@@ -142,10 +185,11 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<IStepSizeComposer<ICalendarStepSize>, CalendarStepSizeComposer>();
         services.AddSingleton<IStepSizeComposer<IAngularStepSize>, AngularStepSizeComposer>();
 
+        services.AddSingleton<IElementLabelsComposer, OutputLabelsComposer>();
         services.AddSingleton<IEphemerisTypeComposer, EphemerisTypeComposer>();
         services.AddSingleton<IGenerateEphemeridesComposer, GenerateEphemeridesComposer>();
         services.AddSingleton<IObjectDataInclusionComposer, ObjectDataInclusionComposer>();
-        services.AddSingleton<IVectorLabelsComposer, OutputLabelsComposer>();
+        services.AddSingleton<IOutputFormatComposer, OutputFormatComposer>();
         services.AddSingleton<IOutputUnitsComposer, OutputUnitsComposer>();
         services.AddSingleton<IReferencePlaneComposer, ReferencePlaneComposer>();
         services.AddSingleton<IReferenceSystemComposer, ReferenceSystemComposer>();
@@ -153,6 +197,7 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<ITimePrecisionComposer, TimePrecisionComposer>();
         services.AddSingleton<IValueSeparationComposer, ValueSeperationComposer>();
         services.AddSingleton<IVectorCorrectionComposer, VectorCorrectionComposer>();
+        services.AddSingleton<IVectorLabelsComposer, OutputLabelsComposer>();
         services.AddSingleton<IVectorTableContentComposer, VectorTableContentComposer>();
 
         return services;

@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Query.Parameters;
 
+using Microsoft.Extensions.Options;
+
 /// <summary><inheritdoc cref="IQueryParameterProvider" path="/summary"/></summary>
 internal sealed class QueryParameterProvider : IQueryParameterProvider
 {
@@ -72,34 +74,32 @@ internal sealed class QueryParameterProvider : IQueryParameterProvider
     /// <inheritdoc/>
     public IVectorTableContentParameterIdentifier VectorTableContent { get; }
 
-    public QueryParameterProvider(ICommandParameterIdentifier command, IElementLabelsParameterIdentifier elementLabels, IEphemerisTypeParameterIdentifier ephemerisType, IEpochCollectionParameterIdentifier epochCollection, IEpochCollectionFormatParameterIdentifier epochCollectionFormat,
-        IGenerateEphemeridesParameterIdentifier generateEphemerides, IObjectDataInclusionParameterIdentifier objectDataInclusion, IOriginParameterIdentifier origin, IOriginCoordinateParameterIdentifier originCoordinate, IOriginCoordinateTypeParameterIdentifier originCoordinateType,
-        IOutputFormatParameterIdentifier outputFormat, IOutputUnitsParameterIdentifier outputUnits, IReferencePlaneParameterIdentifier referencePlane, IReferenceSystemParameterIdentifier referenceSystem, IStartEpochParameterIdentifier startEpoch,
-        IStepSizeParameterIdentifier stepSize, IStopEpochParameterIdentifier stopEpoch, ITimeDeltaInclusionParameterIdentifier timeDeltaInclusion, ITimePrecisionParameterIdentifier timePrecision, IValueSeparationParameterIdentifier valueSeparation,
-        IVectorCorrectionParameterIdentifier vectorCorrection, IVectorLabelsParameterIdentifier vectorLabels, IVectorTableContentParameterIdentifier vectorTableContent)
+    /// <summary><inheritdoc cref="QueryParameterProvider" path="/summary"/></summary>
+    /// <param name="parameterIdentifierOptions">Provides the <see cref="ParameterIdentifierOptions"/>.</param>
+    public QueryParameterProvider(IOptions<ParameterIdentifierOptions> parameterIdentifierOptions)
     {
-        Command = command;
-        ElementLabels = elementLabels;
-        EphemerisType = ephemerisType;
-        EpochCollection = epochCollection;
-        EpochCollectionFormat = epochCollectionFormat;
-        GenerateEphemerides = generateEphemerides;
-        ObjectDataInclusion = objectDataInclusion;
-        Origin = origin;
-        OriginCoordinate = originCoordinate;
-        OriginCoordinateType = originCoordinateType;
-        OutputFormat = outputFormat;
-        OutputUnits = outputUnits;
-        ReferencePlane = referencePlane;
-        ReferenceSystem = referenceSystem;
-        StartEpoch = startEpoch;
-        StepSize = stepSize;
-        StopEpoch = stopEpoch;
-        TimeDeltaInclusion = timeDeltaInclusion;
-        TimePrecision = timePrecision;
-        ValueSeparation = valueSeparation;
-        VectorCorrection = vectorCorrection;
-        VectorLabels = vectorLabels;
-        VectorTableContent = vectorTableContent;
+        Command = new QueryParameterIdentifier(parameterIdentifierOptions.Value.Command);
+        ElementLabels = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ElementLabels);
+        EphemerisType = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EphemerisType);
+        EpochCollection = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCollection);
+        EpochCollectionFormat = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCollectionFormat);
+        GenerateEphemerides = new QueryParameterIdentifier(parameterIdentifierOptions.Value.GenerateEphemerides);
+        ObjectDataInclusion = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ObjectDataInclusion);
+        Origin = new QueryParameterIdentifier(parameterIdentifierOptions.Value.Origin);
+        OriginCoordinate = new QueryParameterIdentifier(parameterIdentifierOptions.Value.OriginCoordinate);
+        OriginCoordinateType = new QueryParameterIdentifier(parameterIdentifierOptions.Value.OriginCoordinateType);
+        OutputFormat = new QueryParameterIdentifier(parameterIdentifierOptions.Value.OutputFormat);
+        OutputUnits = new QueryParameterIdentifier(parameterIdentifierOptions.Value.OutputUnits);
+        ReferencePlane = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ReferencePlane);
+        ReferenceSystem = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ReferenceSystem);
+        StartEpoch = new QueryParameterIdentifier(parameterIdentifierOptions.Value.StartEpoch);
+        StepSize = new QueryParameterIdentifier(parameterIdentifierOptions.Value.StepSize);
+        StopEpoch = new QueryParameterIdentifier(parameterIdentifierOptions.Value.StopEpoch);
+        TimeDeltaInclusion = new QueryParameterIdentifier(parameterIdentifierOptions.Value.TimeDeltaInclusion);
+        TimePrecision = new QueryParameterIdentifier(parameterIdentifierOptions.Value.TimePrecision);
+        ValueSeparation = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ValueSeparation);
+        VectorCorrection = new QueryParameterIdentifier(parameterIdentifierOptions.Value.VectorCorrection);
+        VectorLabels = new QueryParameterIdentifier(parameterIdentifierOptions.Value.VectorLabels);
+        VectorTableContent = new QueryParameterIdentifier(parameterIdentifierOptions.Value.VectorTableContent);
     }
 }

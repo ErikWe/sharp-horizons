@@ -88,8 +88,12 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
         builder.Specify(ObjectDataInclusionComposer.Compose(query.ObjectDataInclusion));
 
         builder.Specify(query.Origin.ComposeArgument());
-        builder.Specify(query.Origin.ComposeCoordinateArgument());
-        builder.Specify(query.Origin.ComposeCoordinateTypeArgument());
+
+        if (query.Origin.UsesCoordinate)
+        {
+            builder.Specify(query.Origin.ComposeCoordinateArgument());
+            builder.Specify(query.Origin.ComposeCoordinateTypeArgument());
+        }
 
         if (query.Epochs.Selection is Epoch.EpochSelectionMode.Collection)
         {

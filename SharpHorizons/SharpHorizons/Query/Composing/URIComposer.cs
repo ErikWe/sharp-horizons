@@ -7,8 +7,15 @@ using System;
 /// <inheritdoc cref="IURIComposer"/>
 internal sealed class URIComposer : IURIComposer
 {
-    /// <summary>The URI of the Horizons API.</summary>
-    private Uri HorizonsAPIAddress { get; } = new("""https://ssd.jpl.nasa.gov/api/horizons.api?""");
+    /// <summary><inheritdoc cref="IAPIAddressProvider" path="/summary"/></summary>
+    private IAPIAddressProvider APIAddressProvider { get; }
 
-    Uri IURIComposer.Compose(HorizonsQueryString query) => new(HorizonsAPIAddress, $"?{query}");
+    /// <summary><inheritdoc cref="URIComposer" path="/summary"/></summary>
+    /// <param name="apiAddressProvider"><inheritdoc cref="IAPIAddressProvider" path="/summary"/></param>
+    public URIComposer(IAPIAddressProvider apiAddressProvider)
+    {
+        APIAddressProvider = apiAddressProvider;
+    }
+
+    Uri IURIComposer.Compose(HorizonsQueryString query) => new(APIAddressProvider.Address, $"?{query}");
 }

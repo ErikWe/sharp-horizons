@@ -8,41 +8,51 @@ using System.Text;
 /// <inheritdoc cref="IQueryStringComposer"/>
 internal sealed class QueryStringComposer : IQueryStringComposer
 {
-    HorizonsQueryString IQueryStringComposer.Compose(IQueryParameterSet queryParameters)
+    /// <summary><inheritdoc cref="IQueryParameterProvider" path="/summary"/></summary>
+    private IQueryParameterProvider ParameterProvider { get; }
+
+    /// <summary><inheritdoc cref="QueryStringComposer" path="/summary"/></summary>
+    /// <param name="parameterProvider"><inheritdoc cref="ParameterProvider" path="/summary"/></param>
+    public QueryStringComposer(IQueryParameterProvider parameterProvider)
+    {
+        ParameterProvider = parameterProvider;
+    }
+
+    HorizonsQueryString IQueryStringComposer.Compose(IQueryArgumentSet queryParameters)
     {
         QueryBuilder builder = new();
 
-        builder.AppendParameter(queryParameters.Command, initialSeparator: false);
+        builder.AppendParameter(ParameterProvider.Command, queryParameters.Command, initialSeparator: false);
 
-        builder.AppendParameterIfProvided(queryParameters.EphemerisType);
-        builder.AppendParameterIfProvided(queryParameters.GenerateEphemerides);
+        builder.AppendParameterIfProvided(ParameterProvider.EphemerisType, queryParameters.EphemerisType);
+        builder.AppendParameterIfProvided(ParameterProvider.GenerateEphemerides, queryParameters.GenerateEphemerides);
 
-        builder.AppendParameterIfProvided(queryParameters.OutputFormat);
-        builder.AppendParameterIfProvided(queryParameters.ObjectDataInclusion);
+        builder.AppendParameterIfProvided(ParameterProvider.OutputFormat, queryParameters.OutputFormat);
+        builder.AppendParameterIfProvided(ParameterProvider.ObjectDataInclusion, queryParameters.ObjectDataInclusion);
 
-        builder.AppendParameterIfProvided(queryParameters.Origin);
-        builder.AppendParameterIfProvided(queryParameters.OriginCoordinate);
-        builder.AppendParameterIfProvided(queryParameters.OriginCoordinateType);
+        builder.AppendParameterIfProvided(ParameterProvider.Origin, queryParameters.Origin);
+        builder.AppendParameterIfProvided(ParameterProvider.OriginCoordinate, queryParameters.OriginCoordinate);
+        builder.AppendParameterIfProvided(ParameterProvider.OriginCoordinateType, queryParameters.OriginCoordinateType);
 
-        builder.AppendParameterIfProvided(queryParameters.EpochCollection);
-        builder.AppendParameterIfProvided(queryParameters.EpochCollectionFormat);
+        builder.AppendParameterIfProvided(ParameterProvider.EpochCollection, queryParameters.EpochCollection);
+        builder.AppendParameterIfProvided(ParameterProvider.EpochCollectionFormat, queryParameters.EpochCollectionFormat);
 
-        builder.AppendParameterIfProvided(queryParameters.StartEpoch);
-        builder.AppendParameterIfProvided(queryParameters.StopEpoch);
-        builder.AppendParameterIfProvided(queryParameters.StepSize);
+        builder.AppendParameterIfProvided(ParameterProvider.StartEpoch, queryParameters.StartEpoch);
+        builder.AppendParameterIfProvided(ParameterProvider.StopEpoch, queryParameters.StopEpoch);
+        builder.AppendParameterIfProvided(ParameterProvider.StepSize, queryParameters.StepSize);
 
-        builder.AppendParameterIfProvided(queryParameters.ReferencePlane);
-        builder.AppendParameterIfProvided(queryParameters.ReferenceSystem);
-        builder.AppendParameterIfProvided(queryParameters.TimePrecision);
-        builder.AppendParameterIfProvided(queryParameters.OutputUnits);
+        builder.AppendParameterIfProvided(ParameterProvider.ReferencePlane, queryParameters.ReferencePlane);
+        builder.AppendParameterIfProvided(ParameterProvider.ReferenceSystem, queryParameters.ReferenceSystem);
+        builder.AppendParameterIfProvided(ParameterProvider.TimePrecision, queryParameters.TimePrecision);
+        builder.AppendParameterIfProvided(ParameterProvider.OutputUnits, queryParameters.OutputUnits);
 
-        builder.AppendParameterIfProvided(queryParameters.VectorCorrection);
-        builder.AppendParameterIfProvided(queryParameters.TimeDeltaInclusion);
-        builder.AppendParameterIfProvided(queryParameters.VectorTableContent);
+        builder.AppendParameterIfProvided(ParameterProvider.VectorCorrection, queryParameters.VectorCorrection);
+        builder.AppendParameterIfProvided(ParameterProvider.TimeDeltaInclusion, queryParameters.TimeDeltaInclusion);
+        builder.AppendParameterIfProvided(ParameterProvider.VectorTableContent, queryParameters.VectorTableContent);
 
-        builder.AppendParameterIfProvided(queryParameters.ElementLabels);
-        builder.AppendParameterIfProvided(queryParameters.VectorLabels);
-        builder.AppendParameterIfProvided(queryParameters.ValueSeparation);
+        builder.AppendParameterIfProvided(ParameterProvider.ElementLabels, queryParameters.ElementLabels);
+        builder.AppendParameterIfProvided(ParameterProvider.VectorLabels, queryParameters.VectorLabels);
+        builder.AppendParameterIfProvided(ParameterProvider.ValueSeparation, queryParameters.ValueSeparation);
 
         return builder.Extract();
     }
@@ -53,20 +63,21 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         /// <summary>The <see cref="StringBuilder"/> responsible for iteratively construction the <see cref="string"/>.</summary>
         private StringBuilder StringBuilder { get; } = new();
 
-        /// <summary>Appends a <see cref="IQueryParameter{TIdentifier, TArgument}"/> to the <see cref="string"/>.</summary>
+        /// <summary>Appends a <see cref="IQueryParameterIdentifier"/> and an associated <see cref="IQueryArgument"/> to the <see cref="string"/>.</summary>
         /// <typeparam name="TIdentifier">The type of the <see cref="IQueryParameterIdentifier"/>.</typeparam>
         /// <typeparam name="TArgument">The type of the <see cref="IQueryArgument"/>.</typeparam>
-        /// <param name="parameter">The <see cref="IQueryParameter{TIdentifier, TArgument}"/> of the argument.</param>
-        /// <param name="initialSeparator">Dictates whether a separator is inserted before the <see cref="IQueryParameter{TIdentifier, TArgument}"/>.</param>
-        /// <param name="finalSeparator">Dictates whether a separator is inserted after the <see cref="IQueryParameter{TIdentifier, TArgument}"/>.</param>
-        public void AppendParameter<TIdentifier, TArgument>(IQueryParameter<TIdentifier, TArgument> parameter, bool initialSeparator = true, bool finalSeparator = false) where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument
+        /// <param name="identifier">The <see cref="IQueryParameterIdentifier"/>, identifying <paramref name="argument"/>.</param>
+        /// <param name="argument">The <see cref="IQueryArgument"/>, identified by <paramref name="identifier"/>.</param>
+        /// <param name="initialSeparator">Dictates whether a separator is inserted before the parameter.</param>
+        /// <param name="finalSeparator">Dictates whether a separator is inserted after the parameter>.</param>
+        public void AppendParameter<TIdentifier, TArgument>(TIdentifier identifier, TArgument argument, bool initialSeparator = true, bool finalSeparator = false) where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument
         {
             if (initialSeparator)
             {
                 AppendSeparator();
             }
 
-            StringBuilder.Append($"{parameter.ParameterIdentifier.Identifier}='{parameter.Argument.Value}'");
+            StringBuilder.Append($"{identifier.Identifier}='{argument.Value}'");
 
             if (finalSeparator)
             {
@@ -74,18 +85,18 @@ internal sealed class QueryStringComposer : IQueryStringComposer
             }
         }
 
-        /// <summary>Appends a <see cref="IQueryParameter{TIdentifier, TArgument}"/> to the <see cref="string"/> if it is provided.</summary>
-        /// <typeparam name="TParameter">The type of the <see cref="IQueryParameter{TIdentifier, TArgument}"/>.</typeparam>
+        /// <summary>Appends a <see cref="IQueryParameterIdentifier"/> and an associated <see cref="IQueryArgument"/> to the <see cref="string"/> if the <see cref="IQueryArgument"/> is provided.</summary>
         /// <typeparam name="TIdentifier">The type of the <see cref="IQueryParameterIdentifier"/>.</typeparam>
         /// <typeparam name="TArgument">The type of the <see cref="IQueryArgument"/>.</typeparam>
-        /// <param name="optionalParameter">The optional <see cref="IQueryParameterIdentifier"/> of the argument.</param>
-        /// <param name="initialSeparator">Dictates whether a separator is inserted before the <see cref="IQueryParameter{TIdentifier, TArgument}"/>. No separator is inserted if the <see cref="IQueryArgument"/> is not provided.</param>
-        /// <param name="finalSeparator">Dictates whether a separator is inserted after the <see cref="IQueryParameter{TIdentifier, TArgument}"/>. No separator is inserted if the <see cref="IQueryArgument"/> is not provided.</param>
-        public void AppendParameterIfProvided<TParameter, TIdentifier, TArgument>(OptionalQueryParameter<TParameter, TIdentifier, TArgument> optionalParameter, bool initialSeparator = true, bool finalSeparator = false) where TParameter : IQueryParameter<TIdentifier, TArgument> where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument
+        /// <param name="identifier">The <see cref="IQueryParameterIdentifier"/>, identifying <paramref name="optionalArgument"/>.</param>
+        /// <param name="optionalArgument">The optional <see cref="IQueryArgument"/>, identified by <paramref name="identifier"/>.</param>
+        /// <param name="initialSeparator">Dictates whether a separator is inserted before the parameter. No separator is inserted if the <see cref="IQueryArgument"/> is not provided.</param>
+        /// <param name="finalSeparator">Dictates whether a separator is inserted after the parameter. No separator is inserted if the <see cref="IQueryArgument"/> is not provided.</param>
+        public void AppendParameterIfProvided<TIdentifier, TArgument>(TIdentifier identifier, OptionalQueryArgument<TArgument> optionalArgument, bool initialSeparator = true, bool finalSeparator = false) where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument
         {
-            if (optionalParameter.IsProvided)
+            if (optionalArgument.IsProvided)
             {
-                AppendParameter(optionalParameter.Parameter, initialSeparator, finalSeparator);
+                AppendParameter(identifier, optionalArgument.Argument, initialSeparator, finalSeparator);
             }
         }
 
