@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -34,9 +34,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SharpHorizons.Abstractions\SharpHorizons.Abstractions.csproj" PrivateAssets="all" />
-		<ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" PrivateAssets="all" />
-		<ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\SharpHorizons.Abstractions\SharpHorizons.Abstractions.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" />
+		<ProjectReference Include="..\SharpHorizons.InternalAbstractions\SharpHorizons.InternalAbstractions.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
