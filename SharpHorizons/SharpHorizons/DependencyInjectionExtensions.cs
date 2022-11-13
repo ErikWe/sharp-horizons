@@ -30,6 +30,8 @@ public static class DependencyInjectionExtensions
     {
         services.AddHttpClient();
 
+        services.AddSingleton<IHTTPQueryHandler, HTTPQueryHandler>();
+
         services.AddOptions<QueryOptions>().Configure(QueryOptions.ApplyDefaults);
         services.AddOptions<ParameterIdentifierOptions>().Configure(ParameterIdentifierOptions.ApplyDefaults);
 

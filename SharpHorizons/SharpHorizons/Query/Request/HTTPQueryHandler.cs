@@ -1,6 +1,4 @@
-﻿namespace SharpHorizons.Networking;
-
-using SharpHorizons.Query.Request;
+﻿namespace SharpHorizons.Query.Request;
 
 using System.Net.Http;
 using System.Threading;
