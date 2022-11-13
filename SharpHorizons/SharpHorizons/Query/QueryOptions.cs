@@ -8,13 +8,13 @@ internal sealed class QueryOptions
     /// <summary>Describes the name of the <see cref="IConfigurationSection"/> describing <see cref="QueryOptions"/>.</summary>
     internal static string Section { get; } = "Query";
 
-    /// <summary>The address of the Horizons API.</summary>
-    public string APIAddress { get; set; } = null!;
+    /// <summary>The HTTP address of the Horizons API.</summary>
+    public string HorizonsHTTPAddress { get; set; } = null!;
 
     /// <summary>Applies the default values to <paramref name="options"/>.</summary>
     /// <param name="options">The default values are applied to these <see cref="QueryOptions"/>.</param>
     internal static void ApplyDefaults(QueryOptions options)
     {
-        options.APIAddress = DefaultQuerySettings.Default.APIAddress;
+        options.HorizonsHTTPAddress = DefaultQuerySettings.Default.HorizonsHTTPAddress;
     }
 }

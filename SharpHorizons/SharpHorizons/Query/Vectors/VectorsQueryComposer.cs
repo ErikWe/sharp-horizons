@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Query.Vectors;
 
-using SharpHorizons.Query.Composing;
-
+using SharpHorizons.Query.Request;
 using System;
 
 /// <inheritdoc cref="IVectorsQueryComposer"/>

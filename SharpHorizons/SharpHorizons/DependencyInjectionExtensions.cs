@@ -1,4 +1,4 @@
-namespace SharpHorizons;
+﻿namespace SharpHorizons;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,10 +11,10 @@ using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Arguments.Composers.Epoch;
 using SharpHorizons.Query.Arguments.Composers.Origin;
 using SharpHorizons.Query.Arguments.Composers.Target;
-using SharpHorizons.Query.Composing;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Parameters;
+using SharpHorizons.Query.Request;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.Vectors.Fluency;
@@ -28,6 +28,8 @@ public static class DependencyInjectionExtensions
     /// <param name="services">Services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     public static IServiceCollection AddSharpHorizons(this IServiceCollection services)
     {
+        services.AddHttpClient();
+
         services.AddOptions<QueryOptions>().Configure(QueryOptions.ApplyDefaults);
         services.AddOptions<ParameterIdentifierOptions>().Configure(ParameterIdentifierOptions.ApplyDefaults);
 
@@ -36,7 +38,7 @@ public static class DependencyInjectionExtensions
         services.AddTransient<IQueryArgumentSetBuilder, QueryArgumentSetBuilder>();
         services.AddSingleton<IQueryArgumentSetBuilderFactory, QueryArgumentSetBuilderFactory>();
 
-        services.AddSingleton<IAPIAddressProvider, APIAddressProvider>();
+        services.AddSingleton<IHorizonsHTTPAddressProvider, HorizonsHTTPAddressProvider>();
 
         services.AddSharpHorizonsTarget();
         services.AddSharpHorizonsOrigin();
@@ -140,7 +142,7 @@ public static class DependencyInjectionExtensions
     /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsComposers(this IServiceCollection services)
     {
-        services.AddSingleton<IQueryStringComposer, QueryStringComposer>();
+        services.AddSingleton<IQueryStringComposer, URLQueryStringComposer>();
         services.AddSingleton<IURIComposer, URIComposer>();
 
         services.AddSharpHorizonsArgumentComposers();

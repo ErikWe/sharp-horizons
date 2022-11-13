@@ -1,13 +1,13 @@
-﻿namespace SharpHorizons.Query;
+﻿namespace SharpHorizons.Query.Request;
 
 using SharpHorizons.Query.Arguments;
 
 using System;
 
-/// <summary>Describes the <see cref="string"/>-representation of a <see cref="IQueryArgumentSet"/>, used to perform a Horizons query.</summary>
+/// <summary>Describes the <see cref="string"/>-representation of a <see cref="IQueryArgumentSet"/>.</summary>
 public readonly record struct HorizonsQueryString
 {
-    /// <summary>The <see cref="string"/> composed from the query.</summary>
+    /// <summary>The <see cref="string"/> composed from a <see cref="IQueryArgumentSet"/>.</summary>
     public string Value { get; }
 
     /// <summary><inheritdoc cref="HorizonsQueryString" path="/summary"/></summary>

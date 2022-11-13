@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Query.Composing;
+﻿namespace SharpHorizons.Query.Request;
 
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Parameters;
@@ -6,14 +6,14 @@ using SharpHorizons.Query.Parameters;
 using System.Text;
 
 /// <inheritdoc cref="IQueryStringComposer"/>
-internal sealed class QueryStringComposer : IQueryStringComposer
+internal sealed class URLQueryStringComposer : IQueryStringComposer
 {
     /// <summary><inheritdoc cref="IQueryParameterProvider" path="/summary"/></summary>
     private IQueryParameterProvider ParameterProvider { get; }
 
-    /// <summary><inheritdoc cref="QueryStringComposer" path="/summary"/></summary>
+    /// <summary><inheritdoc cref="URLQueryStringComposer" path="/summary"/></summary>
     /// <param name="parameterProvider"><inheritdoc cref="ParameterProvider" path="/summary"/></param>
-    public QueryStringComposer(IQueryParameterProvider parameterProvider)
+    public URLQueryStringComposer(IQueryParameterProvider parameterProvider)
     {
         ParameterProvider = parameterProvider;
     }
@@ -54,7 +54,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         builder.AppendParameterIfProvided(ParameterProvider.VectorLabels, queryParameters.VectorLabels);
         builder.AppendParameterIfProvided(ParameterProvider.ValueSeparation, queryParameters.ValueSeparation);
 
-        return builder.Extract();
+        return URLEncoder.Encode(builder.Extract());
     }
 
     /// <summary>Handles iterative construction of the <see cref="string"/> described by the composed <see cref="HorizonsQueryString"/>.</summary>

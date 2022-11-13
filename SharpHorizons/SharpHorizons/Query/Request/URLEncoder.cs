@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Query.Composing;
+﻿namespace SharpHorizons.Query.Request;
 
 using System.Net;
 

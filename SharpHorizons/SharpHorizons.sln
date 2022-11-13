@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
@@ -21,6 +21,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Abstractions", "SharpHorizons.Abstractions\SharpHorizons.Abstractions.csproj", "{0DD85802-2055-4053-9233-0EE03BFB2560}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Query", "SharpHorizons.Query\SharpHorizons.Query.csproj", "{5115FAB3-BF66-428D-9512-A7F7CDF67177}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Networking", "SharpHorizons.Networking\SharpHorizons.Networking.csproj", "{F46BECCB-8A97-4141-B64A-4CD5408A0DAD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHorizons.InternalAbstractions", "SharpHorizons.InternalAbstractions\SharpHorizons.InternalAbstractions.csproj", "{1D929F6D-5BB0-4D2C-A256-DE289C649953}"
 EndProject
@@ -54,6 +56,10 @@ Global
 		{5115FAB3-BF66-428D-9512-A7F7CDF67177}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5115FAB3-BF66-428D-9512-A7F7CDF67177}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5115FAB3-BF66-428D-9512-A7F7CDF67177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F46BECCB-8A97-4141-B64A-4CD5408A0DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F46BECCB-8A97-4141-B64A-4CD5408A0DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F46BECCB-8A97-4141-B64A-4CD5408A0DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F46BECCB-8A97-4141-B64A-4CD5408A0DAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D929F6D-5BB0-4D2C-A256-DE289C649953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D929F6D-5BB0-4D2C-A256-DE289C649953}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D929F6D-5BB0-4D2C-A256-DE289C649953}.Release|Any CPU.ActiveCfg = Release|Any CPU

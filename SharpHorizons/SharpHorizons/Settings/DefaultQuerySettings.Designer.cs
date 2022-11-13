@@ -26,9 +26,9 @@ namespace SharpHorizons.Query {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://ssd.jpl.nasa.gov/api/horizons.api")]
-        public string APIAddress {
+        public string HorizonsHTTPAddress {
             get {
-                return ((string)(this["APIAddress"]));
+                return ((string)(this["HorizonsHTTPAddress"]));
             }
         }
     }
