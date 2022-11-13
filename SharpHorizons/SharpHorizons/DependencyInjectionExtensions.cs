@@ -144,7 +144,7 @@ public static class DependencyInjectionExtensions
     /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsComposers(this IServiceCollection services)
     {
-        services.AddSingleton<IQueryStringComposer, URLQueryStringComposer>();
+        services.AddSingleton<IQueryStringComposer, QueryStringComposer>();
         services.AddSingleton<IURIComposer, URIComposer>();
 
         services.AddSharpHorizonsArgumentComposers();
