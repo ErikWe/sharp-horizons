@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons;
+namespace SharpHorizons;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +32,8 @@ public static class DependencyInjectionExtensions
         services.AddOptions<ParameterIdentifierOptions>().Configure(ParameterIdentifierOptions.ApplyDefaults);
 
         services.AddSingleton<IQueryParameterProvider, QueryParameterProvider>();
+
+        services.AddTransient<IQueryArgumentSetBuilder, QueryArgumentSetBuilder>();
         services.AddSingleton<IQueryArgumentSetBuilderFactory, QueryArgumentSetBuilderFactory>();
 
         services.AddSingleton<IAPIAddressProvider, APIAddressProvider>();

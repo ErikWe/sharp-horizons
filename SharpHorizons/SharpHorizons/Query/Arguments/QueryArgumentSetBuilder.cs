@@ -4,40 +4,41 @@
 internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 {
     /// <summary><inheritdoc cref="QueryArgumentSet" path="/summary"/></summary>
-    private MutableQueryArgumentSet ArgumentSet { get; set; }
+    private MutableQueryArgumentSet ArgumentSet { get; set; } = new();
 
-    /// <summary><inheritdoc cref="QueryArgumentSetBuilder" path="/summary"/></summary>
-    /// <param name="command"><inheritdoc cref="ArgumentSet" path="/summary"/></param>
-    public QueryArgumentSetBuilder(ICommandArgument command)
+    IQueryArgumentSet IQueryArgumentSetBuilder.Build()
     {
-        ArgumentSet = new(command);
+        if (ArgumentSet.Command is null)
+        {
+            throw new QueryArgumentRequireCommandException();
+        }
+
+        return new QueryArgumentSet(ArgumentSet.Command)
+        {
+            EphemerisType = ArgumentSet.EphemerisType,
+            GenerateEphemerides = ArgumentSet.GenerateEphemerides,
+            OutputFormat = ArgumentSet.OutputFormat,
+            ObjectDataInclusion = ArgumentSet.ObjectDataInclusion,
+            Origin = ArgumentSet.Origin,
+            OriginCoordinate = ArgumentSet.OriginCoordinate,
+            OriginCoordinateType = ArgumentSet.OriginCoordinateType,
+            EpochCollection = ArgumentSet.EpochCollection,
+            EpochCollectionFormat = ArgumentSet.EpochCollectionFormat,
+            StartEpoch = ArgumentSet.StartEpoch,
+            StopEpoch = ArgumentSet.StopEpoch,
+            StepSize = ArgumentSet.StepSize,
+            ReferencePlane = ArgumentSet.ReferencePlane,
+            ReferenceSystem = ArgumentSet.ReferenceSystem,
+            TimePrecision = ArgumentSet.TimePrecision,
+            VectorCorrection = ArgumentSet.VectorCorrection,
+            TimeDeltaInclusion = ArgumentSet.TimeDeltaInclusion,
+            VectorTableContent = ArgumentSet.VectorTableContent,
+            OutputUnits = ArgumentSet.OutputUnits,
+            ElementLabels = ArgumentSet.ElementLabels,
+            VectorLabels = ArgumentSet.VectorLabels,
+            ValueSeparation = ArgumentSet.ValueSeparation
+        };
     }
-
-    IQueryArgumentSet IQueryArgumentSetBuilder.Build() => new QueryArgumentSet(ArgumentSet.Command)
-    {
-        EphemerisType = ArgumentSet.EphemerisType,
-        GenerateEphemerides = ArgumentSet.GenerateEphemerides,
-        OutputFormat = ArgumentSet.OutputFormat,
-        ObjectDataInclusion = ArgumentSet.ObjectDataInclusion,
-        Origin = ArgumentSet.Origin,
-        OriginCoordinate = ArgumentSet.OriginCoordinate,
-        OriginCoordinateType = ArgumentSet.OriginCoordinateType,
-        EpochCollection = ArgumentSet.EpochCollection,
-        EpochCollectionFormat = ArgumentSet.EpochCollectionFormat,
-        StartEpoch = ArgumentSet.StartEpoch,
-        StopEpoch = ArgumentSet.StopEpoch,
-        StepSize = ArgumentSet.StepSize,
-        ReferencePlane = ArgumentSet.ReferencePlane,
-        ReferenceSystem = ArgumentSet.ReferenceSystem,
-        TimePrecision = ArgumentSet.TimePrecision,
-        VectorCorrection = ArgumentSet.VectorCorrection,
-        TimeDeltaInclusion = ArgumentSet.TimeDeltaInclusion,
-        VectorTableContent = ArgumentSet.VectorTableContent,
-        OutputUnits = ArgumentSet.OutputUnits,
-        ElementLabels = ArgumentSet.ElementLabels,
-        VectorLabels = ArgumentSet.VectorLabels,
-        ValueSeparation = ArgumentSet.ValueSeparation
-    };
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ICommandArgument command)
     {
@@ -204,7 +205,7 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
     internal sealed class MutableQueryArgumentSet
     {
         /// <inheritdoc cref="IQueryArgumentSet.Command"/>
-        public ICommandArgument Command { get; set; }
+        public ICommandArgument? Command { get; set; }
 
         /// <inheritdoc cref="IQueryArgumentSet.EphemerisType"/>
         public OptionalQueryArgument<IEphemerisTypeArgument> EphemerisType { get; set; }
@@ -271,12 +272,5 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
         /// <inheritdoc cref="IQueryArgumentSet.ValueSeparation"/>
         public OptionalQueryArgument<IValueSeparationArgument> ValueSeparation { get; set; }
-
-        /// <summary><inheritdoc cref="MutableQueryArgumentSet" path="/summary"/></summary>
-        /// <param name="command"><inheritdoc cref="Command" path="/summary"/></param>
-        public MutableQueryArgumentSet(ICommandArgument command)
-        {
-            Command = command;
-        }
     }
 }

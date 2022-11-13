@@ -4,6 +4,7 @@
 public interface IQueryArgumentSetBuilder
 {
     /// <summary>Constructs the <see cref="IQueryArgumentSet"/>.</summary>
+    /// <exception cref="QueryArgumentRequireCommandException"/>
     public abstract IQueryArgumentSet Build();
 
     /// <summary>Specifies the <see cref="ICommandArgument"/> of the <see cref="IQueryArgumentSet"/>.</summary>
