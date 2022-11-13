@@ -37,7 +37,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\SharpHorizons.Abstractions\SharpHorizons.Abstractions.csproj" />
 		<ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" />
-		<ProjectReference Include="..\SharpHorizons.InternalAbstractions\SharpHorizons.InternalAbstractions.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\SharpHorizons.OptionsProviders\SharpHorizons.OptionsProviders.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" />
 	</ItemGroup>
 

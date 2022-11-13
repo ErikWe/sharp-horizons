@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Abstractions"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Query", "SharpHorizons.Query\SharpHorizons.Query.csproj", "{5115FAB3-BF66-428D-9512-A7F7CDF67177}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHorizons.InternalAbstractions", "SharpHorizons.InternalAbstractions\SharpHorizons.InternalAbstractions.csproj", "{1D929F6D-5BB0-4D2C-A256-DE289C649953}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.OptionsProviders", "SharpHorizons.OptionsProviders\SharpHorizons.OptionsProviders.csproj", "{987504C3-F47F-4B3A-BE88-22B06B13EC74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,10 +54,10 @@ Global
 		{5115FAB3-BF66-428D-9512-A7F7CDF67177}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5115FAB3-BF66-428D-9512-A7F7CDF67177}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5115FAB3-BF66-428D-9512-A7F7CDF67177}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D929F6D-5BB0-4D2C-A256-DE289C649953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D929F6D-5BB0-4D2C-A256-DE289C649953}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D929F6D-5BB0-4D2C-A256-DE289C649953}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D929F6D-5BB0-4D2C-A256-DE289C649953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{987504C3-F47F-4B3A-BE88-22B06B13EC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987504C3-F47F-4B3A-BE88-22B06B13EC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987504C3-F47F-4B3A-BE88-22B06B13EC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{987504C3-F47F-4B3A-BE88-22B06B13EC74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
