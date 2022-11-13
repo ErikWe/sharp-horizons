@@ -9,6 +9,7 @@ using SharpHorizons.Calendars;
 using SharpHorizons.Identity;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
+using SharpHorizons.Query.Request;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 
@@ -33,14 +34,14 @@ internal class Program
         var epochSelection = epochRangeFactory.Create(new JulianDay(3), new JulianDay(4), Time.OneHour);
 
         var queryFactory = host.Services.GetRequiredService<IVectorsQueryFactory>();
+        var composer = host.Services.GetRequiredService<IVectorsQueryComposer>();
+        var queryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
 
         var query = queryFactory.Build(target, origin, epochSelection);
-
-        var composer = host.Services.GetRequiredService<IVectorsQueryComposer>();
-
         var uri = composer.Compose(query);
+        var result = queryHandler.RequestAsync(uri).Result;
 
-        Console.WriteLine(uri);
+        Console.WriteLine(result);
     }
 
     private static void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configuration)
