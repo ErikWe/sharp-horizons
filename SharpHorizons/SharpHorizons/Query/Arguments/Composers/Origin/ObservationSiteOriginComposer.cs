@@ -3,7 +3,6 @@
 using SharpHorizons.Query.Origin;
 
 using System;
-using System.Globalization;
 
 /// <summary>Composes <see cref="IOriginArgument"/> that describe <see cref="IObservationSiteOrigin"/>.</summary>
 internal sealed class ObservationSiteOriginComposer : IOriginComposer<IObservationSiteOrigin>
@@ -12,6 +11,6 @@ internal sealed class ObservationSiteOriginComposer : IOriginComposer<IObservati
     {
         ArgumentNullException.ThrowIfNull(obj);
 
-        return new QueryArgument($"{obj.ObservationSiteID.ToString(CultureInfo.CurrentCulture)}@{obj.OriginObject.ComposeIdentifier()}");
+        return new QueryArgument($"{obj.ObservationSiteID}@{obj.OriginObject.ComposeIdentifier()}");
     }
 }

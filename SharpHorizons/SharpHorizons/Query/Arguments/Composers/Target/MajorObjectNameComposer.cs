@@ -12,5 +12,5 @@ internal sealed class MajorObjectNameComposer : ITargetComposer<MajorObjectName>
 
     /// <summary>Composes a <see cref="string"/> describing <paramref name="name"/>.</summary>
     /// <param name="name">The composed <see cref="string"/> describes this <see cref="MajorObjectName"/>.</param>
-    private static string Compose(MajorObjectName name) => name.Value;
+    private static string Compose(MajorObjectName name) => name.Name;
 }

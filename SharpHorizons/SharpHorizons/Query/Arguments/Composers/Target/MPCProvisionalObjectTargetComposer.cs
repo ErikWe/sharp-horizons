@@ -8,7 +8,7 @@ internal sealed class MPCProvisionalObjectTargetComposer : ITargetComposer<MPCPr
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalDesignation"/>.</summary>
     private ITargetComposer<MPCProvisionalDesignation> DesignationComposer { get; }
 
-    /// <summary><inheritdoc cref="MPCObjectTargetComposer" path="/summary"/></summary>
+    /// <inheritdoc cref="MPCObjectTargetComposer"/>
     /// <param name="designationComposer"><inheritdoc cref="DesignationComposer" path="/summary"/></param>
     public MPCProvisionalObjectTargetComposer(ITargetComposer<MPCProvisionalDesignation> designationComposer)
     {

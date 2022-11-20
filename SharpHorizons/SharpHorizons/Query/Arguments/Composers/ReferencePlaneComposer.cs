@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
-using SharpHorizons.Query;
-using SharpHorizons.Query.Arguments;
 using System.ComponentModel;
 
 /// <inheritdoc cref="IReferencePlaneComposer"/>

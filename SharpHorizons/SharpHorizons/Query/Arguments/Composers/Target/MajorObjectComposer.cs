@@ -13,7 +13,7 @@ internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITarge
     /// <summary>Used to compose a <see cref="TargetSiteObjectIdentifier"/> that describe the <see cref="MajorObjectID"/> associated with a <see cref="MajorObject"/>.</summary>
     private ITargetSiteObjectComposer<MajorObjectID> IDSiteObjectComposer { get; }
 
-    /// <summary><inheritdoc cref="MajorObjectComposer" path="/summary"/></summary>
+    /// <inheritdoc cref="MajorObjectComposer"/>
     /// <param name="idComposer"><inheritdoc cref="IDComposer" path="/summary"/></param>
     /// <param name="idSiteObjectComposer"><inheritdoc cref="IDSiteObjectComposer" path="/summary"/></param>
     public MajorObjectComposer(ITargetComposer<MajorObjectID> idComposer, ITargetSiteObjectComposer<MajorObjectID> idSiteObjectComposer)

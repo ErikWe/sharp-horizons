@@ -1,8 +1,5 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Epoch;
 
-using SharpHorizons.Query;
-using SharpHorizons.Query.Arguments;
-using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Epoch;
 
 using System;

@@ -14,5 +14,5 @@ internal sealed class MajorObjectIDComposer : ITargetComposer<MajorObjectID>, IT
 
     /// <summary>Composes a <see cref="string"/> describing <paramref name="ID"/>.</summary>
     /// <param name="ID">The composed <see cref="string"/> describes this <see cref="MajorObjectID"/>.</param>
-    private static string Compose(MajorObjectID ID) => ID.Value.ToString(CultureInfo.InvariantCulture);
+    private static string Compose(MajorObjectID ID) => ID.ToString(CultureInfo.InvariantCulture);
 }
