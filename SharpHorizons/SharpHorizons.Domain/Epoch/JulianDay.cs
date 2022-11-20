@@ -1,4 +1,4 @@
-namespace SharpHorizons.Calendars;
+namespace SharpHorizons.Epoch;
 
 using SharpMeasures;
 

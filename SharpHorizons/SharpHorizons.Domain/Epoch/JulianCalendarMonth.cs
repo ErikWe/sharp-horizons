@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Calendars;
+﻿namespace SharpHorizons.Epoch;
 
 /// <summary>Represents a month in the Julian and Gregorian calendars.</summary>
 public enum JulianCalendarMonth
