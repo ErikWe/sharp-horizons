@@ -1,5 +1,6 @@
 ﻿namespace SharpHorizons.Query.VectorTable;
 
+using SharpHorizons.Ephemeris.Vectors;
 using SharpMeasures;
 
 using System;
