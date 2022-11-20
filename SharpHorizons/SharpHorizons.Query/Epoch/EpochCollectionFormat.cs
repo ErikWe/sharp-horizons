@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 
 /// <summary>Determines the format of the individual <see cref="IEpoch"/> when selected according to <see cref="EpochSelectionMode.Collection"/>.</summary>
 public enum EpochCollectionFormat

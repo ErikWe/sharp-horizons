@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 
 /// <summary>Describes how <see cref="IEpoch"/> are selected in a query.</summary>
 public enum EpochSelectionMode

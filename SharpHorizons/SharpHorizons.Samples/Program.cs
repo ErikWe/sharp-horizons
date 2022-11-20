@@ -1,11 +1,11 @@
-﻿namespace ConsoleApp1;
+namespace ConsoleApp1;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using SharpHorizons;
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 using SharpHorizons.Identity;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;

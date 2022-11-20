@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 

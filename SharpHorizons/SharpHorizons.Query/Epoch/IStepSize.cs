@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 using SharpHorizons.Query.Arguments;
 
 /// <summary>Represents the step size in a query when the <see cref="IEpoch"/> are selected according to <see cref="EpochSelectionMode.Range"/>.</summary>

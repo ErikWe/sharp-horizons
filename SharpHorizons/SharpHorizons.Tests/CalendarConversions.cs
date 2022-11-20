@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Test;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 
 using System.Collections.Generic;
 

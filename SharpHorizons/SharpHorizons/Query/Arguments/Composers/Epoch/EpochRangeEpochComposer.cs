@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Epoch;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 
 using System;
 using System.Globalization;

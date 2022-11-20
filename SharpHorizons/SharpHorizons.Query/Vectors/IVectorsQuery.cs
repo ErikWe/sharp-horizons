@@ -1,6 +1,6 @@
-﻿namespace SharpHorizons.Query.Vectors;
+namespace SharpHorizons.Query.Vectors;
 
-using SharpHorizons;
+using SharpHorizons.Epoch;
 using SharpHorizons.Calendars;
 using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;

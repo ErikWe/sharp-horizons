@@ -1,13 +1,13 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
-using SharpHorizons.Calendars;
+using SharpHorizons.Epoch;
 using SharpHorizons.Query.Elements;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 
-/// <summary>Represents the set of <see cref="IQueryArgument"/> that comprise a query.</summary>
+/// <summary>Represents the set of <see cref="IQueryArgument"/> that describes a query.</summary>
 public interface IQueryArgumentSet
 {
     /// <summary>The <see cref="ICommandArgument"/>, describing the <see cref="QueryCommand"/> or the <see cref="ITarget"/> for ephemeris generation.</summary>
