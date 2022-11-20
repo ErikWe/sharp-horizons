@@ -3,7 +3,7 @@
 /// <inheritdoc cref="IQueryArgumentSetBuilder"/>
 internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 {
-    /// <summary><inheritdoc cref="QueryArgumentSet" path="/summary"/></summary>
+    /// <summary><inheritdoc cref="IQueryArgumentSet" path="/summary"/></summary>
     private MutableQueryArgumentSet ArgumentSet { get; set; } = new();
 
     IQueryArgumentSet IQueryArgumentSetBuilder.Build()
@@ -13,31 +13,7 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
             throw new QueryArgumentRequireCommandException();
         }
 
-        return new QueryArgumentSet(ArgumentSet.Command)
-        {
-            EphemerisType = ArgumentSet.EphemerisType,
-            GenerateEphemerides = ArgumentSet.GenerateEphemerides,
-            OutputFormat = ArgumentSet.OutputFormat,
-            ObjectDataInclusion = ArgumentSet.ObjectDataInclusion,
-            Origin = ArgumentSet.Origin,
-            OriginCoordinate = ArgumentSet.OriginCoordinate,
-            OriginCoordinateType = ArgumentSet.OriginCoordinateType,
-            EpochCollection = ArgumentSet.EpochCollection,
-            EpochCollectionFormat = ArgumentSet.EpochCollectionFormat,
-            StartEpoch = ArgumentSet.StartEpoch,
-            StopEpoch = ArgumentSet.StopEpoch,
-            StepSize = ArgumentSet.StepSize,
-            ReferencePlane = ArgumentSet.ReferencePlane,
-            ReferenceSystem = ArgumentSet.ReferenceSystem,
-            TimePrecision = ArgumentSet.TimePrecision,
-            VectorCorrection = ArgumentSet.VectorCorrection,
-            TimeDeltaInclusion = ArgumentSet.TimeDeltaInclusion,
-            VectorTableContent = ArgumentSet.VectorTableContent,
-            OutputUnits = ArgumentSet.OutputUnits,
-            ElementLabels = ArgumentSet.ElementLabels,
-            VectorLabels = ArgumentSet.VectorLabels,
-            ValueSeparation = ArgumentSet.ValueSeparation
-        };
+        return ArgumentSet;
     }
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ICommandArgument command)
@@ -202,75 +178,30 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
     }
 
     /// <summary>A mutable <see cref="IQueryArgumentSet"/>.</summary>
-    internal sealed class MutableQueryArgumentSet
+    internal sealed class MutableQueryArgumentSet : IQueryArgumentSet
     {
-        /// <inheritdoc cref="IQueryArgumentSet.Command"/>
-        public ICommandArgument? Command { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.EphemerisType"/>
+        public ICommandArgument Command { get; set; } = null!;
         public OptionalQueryArgument<IEphemerisTypeArgument> EphemerisType { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.GenerateEphemerides"/>
         public OptionalQueryArgument<IGenerateEphemeridesArgument> GenerateEphemerides { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.OutputFormat"/>
         public OptionalQueryArgument<IOutputFormatArgument> OutputFormat { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.ObjectDataInclusion"/>
         public OptionalQueryArgument<IObjectDataInclusionArgument> ObjectDataInclusion { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.Origin"/>
         public OptionalQueryArgument<IOriginArgument> Origin { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.OriginCoordinate"/>
         public OptionalQueryArgument<IOriginCoordinateArgument> OriginCoordinate { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.OriginCoordinateType"/>
         public OptionalQueryArgument<IOriginCoordinateTypeArgument> OriginCoordinateType { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.EpochCollection"/>
         public OptionalQueryArgument<IEpochCollectionArgument> EpochCollection { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.EpochCollectionFormat"/>
         public OptionalQueryArgument<IEpochCollectionFormatArgument> EpochCollectionFormat { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.StartEpoch"/>
         public OptionalQueryArgument<IStartEpochArgument> StartEpoch { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.StopEpoch"/>
         public OptionalQueryArgument<IStopEpochArgument> StopEpoch { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.StepSize"/>
         public OptionalQueryArgument<IStepSizeArgument> StepSize { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.ReferencePlane"/>
         public OptionalQueryArgument<IReferencePlaneArgument> ReferencePlane { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.ReferenceSystem"/>
         public OptionalQueryArgument<IReferenceSystemArgument> ReferenceSystem { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.TimePrecision"/>
         public OptionalQueryArgument<ITimePrecisionArgument> TimePrecision { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.OutputUnits"/>
         public OptionalQueryArgument<IOutputUnitsArgument> OutputUnits { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.VectorCorrection"/>
         public OptionalQueryArgument<IVectorCorrectionArgument> VectorCorrection { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.TimeDeltaInclusion"/>
         public OptionalQueryArgument<ITimeDeltaInclusionArgument> TimeDeltaInclusion { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.VectorTableContent"/>
         public OptionalQueryArgument<IVectorTableContentArgument> VectorTableContent { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.ElementLabels"/>
         public OptionalQueryArgument<IElementLabelsArgument> ElementLabels { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.VectorLabels"/>
         public OptionalQueryArgument<IVectorLabelsArgument> VectorLabels { get; set; }
-
-        /// <inheritdoc cref="IQueryArgumentSet.ValueSeparation"/>
         public OptionalQueryArgument<IValueSeparationArgument> ValueSeparation { get; set; }
     }
 }

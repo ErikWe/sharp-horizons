@@ -7,7 +7,7 @@ internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, I
 {
     public string Value { get; }
 
-    /// <summary><inheritdoc cref="QueryArgument" path="/summary"/></summary>
+    /// <inheritdoc cref="QueryArgument"/>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     public QueryArgument(string value)
     {
