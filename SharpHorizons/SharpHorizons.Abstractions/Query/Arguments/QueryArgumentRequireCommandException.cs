@@ -6,7 +6,7 @@ using System;
 public sealed class QueryArgumentRequireCommandException : Exception
 {
     /// <inheritdoc cref="QueryArgumentRequireCommandException"/>
-    public QueryArgumentRequireCommandException() : base($"The {typeof(ICommandArgument).FullName} was never specified by the {typeof(IQueryArgumentSetBuilder).FullName}.") { }
+    public QueryArgumentRequireCommandException() : base($"The {typeof(ICommandArgument).Name} was never specified by the {typeof(IQueryArgumentSetBuilder).Name}.") { }
 
     /// <inheritdoc cref="QueryArgumentRequireCommandException"/>
     /// <param name="message">The message that describes the error.</param>

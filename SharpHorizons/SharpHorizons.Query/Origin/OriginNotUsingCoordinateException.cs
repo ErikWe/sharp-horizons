@@ -6,7 +6,7 @@ using System;
 public sealed class OriginNotUsingCoordinateException : Exception
 {
     /// <inheritdoc cref="OriginNotUsingCoordinateException"/>
-    public OriginNotUsingCoordinateException() : base($"The {typeof(IOrigin).FullName} does not apply a coordinate.") { }
+    public OriginNotUsingCoordinateException() : base($"The {typeof(IOrigin).Name} does not apply a coordinate.") { }
 
     /// <inheritdoc cref="OriginNotUsingCoordinateException"/>
     /// <param name="message">The message that describes the error.</param>

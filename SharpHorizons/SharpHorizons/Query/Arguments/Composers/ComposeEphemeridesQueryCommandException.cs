@@ -8,7 +8,7 @@ using System;
 public sealed class ComposeEphemeridesQueryCommandException : Exception
 {
     /// <inheritdoc cref="ComposeEphemeridesQueryCommandException"/>
-    public ComposeEphemeridesQueryCommandException() : base($"{QueryCommand.Ephemerides} cannot be used to compose a {typeof(ICommandArgument).FullName}. Instead use the {typeof(ITarget).FullName}.") { }
+    public ComposeEphemeridesQueryCommandException() : base($"A {typeof(ICommandArgument).Name} cannot describe {QueryCommand.Ephemerides}. Instead compse a {typeof(ICommandArgument).Name} based on the {typeof(ITarget).Name}.") { }
 
     /// <inheritdoc cref="ComposeEphemeridesQueryCommandException"/>
     /// <param name="message">The message that describes the error.</param>

@@ -6,7 +6,7 @@ using System;
 public sealed class UnsupportedVectorTableException : Exception
 {
     /// <inheritdoc cref="UnsupportedVectorTableException"/>
-    public UnsupportedVectorTableException() : base($"The {typeof(VectorTableContent).FullName} does not represent a configuration supported by Horizons.") { }
+    public UnsupportedVectorTableException() : base($"The {typeof(VectorTableContent).Name} does not represent a configuration supported by Horizons.") { }
 
     /// <inheritdoc cref="UnsupportedVectorTableException"/>
     /// <param name="message">The message that describes the error.</param>
