@@ -1,26 +1,78 @@
 ﻿namespace SharpHorizons.Calendars;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Represents an epoch, an instant in time, expressed according to the Gregorian calendar.</summary>
-public record class GregorianCalendarEpoch : IEpoch<GregorianCalendarEpoch>
+public sealed record class GregorianCalendarEpoch : IEpoch<GregorianCalendarEpoch>
 {
-    /// <summary>The year of the epoch, according to the Gregorian calendar.</summary>
-    public int Year { get; }
-    /// <summary>The month of the epoch, according to the Gregorian calendar..</summary>
-    public JulianCalendarMonth Month { get; }
-    /// <summary>The one-indexed day-of-the-month of the epoch, according to the Gregorian calendar.</summary>
-    public int Day { get; }
+    /// <summary>The year of the <see cref="GregorianCalendarEpoch"/>.</summary>
+    public required int Year { get; init; }
+    /// <summary>The month of the <see cref="GregorianCalendarEpoch"/>.</summary>
+    public required JulianCalendarMonth Month { get; init; }
+    /// <summary>The one-indexed day-of-the-month of the <see cref="GregorianCalendarEpoch"/>.</summary>
+    public required int Day { get; init; }
 
-    /// <summary>The hour of the epoch.</summary>
-    public int Hour { get; }
-    /// <summary>The minute of the epoch.</summary>
-    public int Minute { get; }
-    /// <summary>The fractional second of the epoch.</summary>
-    public double Second { get; }
+    /// <summary>The hour of the <see cref="GregorianCalendarEpoch"/>.</summary>
+    public int Hour { get; init; }
+    /// <summary>The minute of the <see cref="GregorianCalendarEpoch"/>.</summary>
+    public int Minute { get; init; }
+    /// <summary>The fractional second of the <see cref="GregorianCalendarEpoch"/>.</summary>
+    public double Second { get; init; }
 
-    /// <summary>Represents the epoch { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/>, <paramref name="hour"/>, <paramref name="minute"/>, <paramref name="second"/> }, as expressed in the Gregorian calendar.</summary>
+    /// <inheritdoc cref="GregorianCalendarEpoch"/>
+    /// <remarks>The constructed <see cref="GregorianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    public GregorianCalendarEpoch() { }
+
+    /// <inheritdoc cref="GregorianCalendarEpoch"/>
+    /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
+    /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    /// <remarks>The constructed <see cref="GregorianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    [SetsRequiredMembers]
+    public GregorianCalendarEpoch(int year, JulianCalendarMonth month, int day)
+    {
+        Year = year;
+        Month = month;
+        Day = day;
+    }
+
+    /// <inheritdoc cref="GregorianCalendarEpoch"/>
+    /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
+    /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    /// <param name="hour"><inheritdoc cref="Hour" path="/summary"/></param>
+    /// <remarks>The constructed <see cref="GregorianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    [SetsRequiredMembers]
+    public GregorianCalendarEpoch(int year, JulianCalendarMonth month, int day, int hour)
+    {
+        Year = year;
+        Month = month;
+        Day = day;
+
+        Hour = hour;
+    }
+
+    /// <inheritdoc cref="GregorianCalendarEpoch"/>
+    /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
+    /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    /// <param name="hour"><inheritdoc cref="Hour" path="/summary"/></param>
+    /// <param name="minute"><inheritdoc cref="Minute" path="/summary"/></param>
+    /// <remarks>The constructed <see cref="GregorianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    [SetsRequiredMembers]
+    public GregorianCalendarEpoch(int year, JulianCalendarMonth month, int day, int hour, int minute)
+    {
+        Year = year;
+        Month = month;
+        Day = day;
+
+        Hour = hour;
+        Minute = minute;
+    }
+
+    /// <inheritdoc cref="GregorianCalendarEpoch"/>
     /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
     /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
@@ -28,6 +80,7 @@ public record class GregorianCalendarEpoch : IEpoch<GregorianCalendarEpoch>
     /// <param name="minute"><inheritdoc cref="Minute" path="/summary"/></param>
     /// <param name="second"><inheritdoc cref="Second" path="/summary"/></param>
     /// <remarks>The constructed <see cref="GregorianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
+    [SetsRequiredMembers]
     public GregorianCalendarEpoch(int year, JulianCalendarMonth month, int day, int hour, int minute, double second)
     {
         Year = year;
@@ -38,13 +91,6 @@ public record class GregorianCalendarEpoch : IEpoch<GregorianCalendarEpoch>
         Minute = minute;
         Second = second;
     }
-
-    /// <summary>Represents the epoch { <paramref name="year"/>, <paramref name="month"/>, <paramref name="day"/>, 0:00:00 }, as expressed in the Gregorian calendar. This corresponds to the first second of the specified Gregorian date.</summary>
-    /// <param name="year"><inheritdoc cref="Year" path="/summary"/></param>
-    /// <param name="month"><inheritdoc cref="Month" path="/summary"/></param>
-    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
-    /// <remarks>The constructed <see cref="GregorianCalendarEpoch"/> is not validated. This can be done post-construction through <see cref="IsValid"/>.</remarks>
-    public GregorianCalendarEpoch(int year, JulianCalendarMonth month, int day) : this(year, month, day, 0, 0, 0) { }
 
     /// <summary>Determines whether <see langword="this"/> represents a valid <see cref="GregorianCalendarEpoch"/>.</summary>
     /// <remarks>For example, a date { February 29th, 2021 CE } or a time { 11:30:72 } would cause the corresponding <see cref="GregorianCalendarEpoch"/> to be considered invalid.</remarks>
@@ -105,9 +151,9 @@ public record class GregorianCalendarEpoch : IEpoch<GregorianCalendarEpoch>
         var b = 2 - a + (int)Math.Floor(a / 4d);
 
         var julianDay = Math.Floor(365.25 * (year + 4716)) + Math.Floor(30.6001 * (month + 1)) + Day + b - 1524.5;
-        var fractionalJulianDay = Hour / 24d + Minute / (24d * 60) + Second / (24d * 60 * 60);
+        var fractionalDay = Hour / 24d + Minute / (24d * 60) + Second / (24d * 60 * 60);
 
-        return new(julianDay + fractionalJulianDay);
+        return new(julianDay + fractionalDay);
     }
 
     /// <inheritdoc/>
@@ -157,7 +203,15 @@ public record class GregorianCalendarEpoch : IEpoch<GregorianCalendarEpoch>
 
     /// <summary>Constructs the <see cref="GregorianCalendarEpoch"/> representing the same epoch as <paramref name="dateTime"/>.</summary>
     /// <param name="dateTime">The constructed <see cref="GregorianCalendarEpoch"/> represents the same epoch as this <see cref="DateTime"/>.</param>
-    public static GregorianCalendarEpoch FromDateTime(DateTime dateTime) => new(GregorianCalendar.GetYear(dateTime), (JulianCalendarMonth)(GregorianCalendar.GetMonth(dateTime)), GregorianCalendar.GetDayOfMonth(dateTime), GregorianCalendar.GetHour(dateTime), GregorianCalendar.GetMinute(dateTime), GregorianCalendar.GetSecond(dateTime) + GregorianCalendar.GetMilliseconds(dateTime) / 1000d);
+    public static GregorianCalendarEpoch FromDateTime(DateTime dateTime) => new()
+    {
+        Year = GregorianCalendar.GetYear(dateTime),
+        Month = (JulianCalendarMonth)(GregorianCalendar.GetMonth(dateTime)),
+        Day = GregorianCalendar.GetDayOfMonth(dateTime),
+        Hour = GregorianCalendar.GetHour(dateTime),
+        Minute = GregorianCalendar.GetMinute(dateTime),
+        Second = GregorianCalendar.GetSecond(dateTime) + GregorianCalendar.GetMilliseconds(dateTime) / 1000d
+    };
 
     /// <inheritdoc cref="System.Globalization.GregorianCalendar"/>
     private static GregorianCalendar GregorianCalendar { get; } = new();

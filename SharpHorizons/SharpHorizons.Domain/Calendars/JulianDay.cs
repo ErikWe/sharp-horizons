@@ -1,17 +1,22 @@
-﻿namespace SharpHorizons.Calendars;
+namespace SharpHorizons.Calendars;
 
 using SharpMeasures;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Represents an epoch, an instant in time, expressed as a Julian day - the fractional number of days since { 12:00:00, January 1st, 4713 BCE } according to the Julian calendar.</summary>
-public readonly record struct JulianDay : IEpoch<JulianDay>
+public sealed record class JulianDay : IEpoch<JulianDay>
 {
     /// <summary>The fractional number of days since { 12:00:00, January 1st, 4713 BCE } according to the Julian calendar.</summary>
-    public double Day { get; }
+    public required double Day { get; init; }
 
-    /// <summary><inheritdoc cref="JulianDay" path="/summary"/></summary>
+    /// <inheritdoc cref="JulianDay"/>
+    public JulianDay() { }
+
+    /// <inheritdoc cref="JulianDay"/>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    [SetsRequiredMembers]
     public JulianDay(double day)
     {
         Day = day;
@@ -67,7 +72,7 @@ public readonly record struct JulianDay : IEpoch<JulianDay>
     /// <param name="difference">The <see cref="Time"/> between <paramref name="initial"/> and <paramref name="difference"/>.</param>
     public static JulianDay operator +(JulianDay initial, Time difference) => new(initial.Day + difference.Days);
 
-    /// <summary>Computes the <see cref="JulianDay"/> representing { <paramref name="initial"/> - <paramref name="difference"/> }..</summary>
+    /// <summary>Computes the <see cref="JulianDay"/> representing { <paramref name="initial"/> - <paramref name="difference"/> }.</summary>
     /// <param name="initial">The initial epoch.</param>
     /// <param name="difference">The <see cref="Time"/> between <paramref name="initial"/> and the resulting epoch.</param>
     public static JulianDay operator -(JulianDay initial, Time difference) => new(initial.Day - difference.Days);

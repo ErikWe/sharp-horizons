@@ -3,15 +3,23 @@
 using SharpMeasures;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Represents an epoch, an instant in time, expressed as a modified Julian day - the fractional number of days since { 00:00:00, November 17th, 1858 CE } according to the Gregorian calendar.</summary>
-public readonly record struct ModifiedJulianDay : IEpoch<ModifiedJulianDay>
+public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
 {
-    /// <summary>The fractional number of days since { 00:00:00, November 17th, 1858 CE } according to the Gregorian calendar.</summary>
-    public double Day { get; }
+    /// <summary>The offset between <see cref="ModifiedJulianDay"/> and <see cref="JulianDay"/>.</summary>
+    private static double JulianDayOffset { get; } = 2400000.5;
 
-    /// <summary><inheritdoc cref="ModifiedJulianDay" path="/summary"/></summary>
+    /// <summary>The fractional number of days since { 00:00:00, November 17th, 1858 CE } according to the Gregorian calendar.</summary>
+    public required double Day { get; init; }
+
+    /// <inheritdoc cref="ModifiedJulianDay"/>
+    public ModifiedJulianDay() { }
+
+    /// <inheritdoc cref="ModifiedJulianDay"/>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    [SetsRequiredMembers]
     public ModifiedJulianDay(double day)
     {
         Day = day;
@@ -22,7 +30,7 @@ public readonly record struct ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     public TEpoch ToEpoch<TEpoch>() where TEpoch : IEpoch<TEpoch> => TEpoch.FromJulianDay(ToJulianDay());
 
     /// <inheritdoc/>
-    public JulianDay ToJulianDay() => new(Day + 2400000.5);
+    public JulianDay ToJulianDay() => new(Day + JulianDayOffset);
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentOutOfRangeException"/>
@@ -40,7 +48,7 @@ public readonly record struct ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     }
 
     /// <inheritdoc/>
-    public static ModifiedJulianDay FromJulianDay(JulianDay julianDay) => new(julianDay.Day - 2400000.5);
+    public static ModifiedJulianDay FromJulianDay(JulianDay julianDay) => new(julianDay.Day - JulianDayOffset);
 
     /// <inheritdoc/>
     public static ModifiedJulianDay FromDateTime(DateTime dateTime) => FromJulianDay(JulianDay.FromDateTime(dateTime));
@@ -67,7 +75,7 @@ public readonly record struct ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     /// <param name="difference">The <see cref="Time"/> between <paramref name="initial"/> and <paramref name="difference"/>.</param>
     public static ModifiedJulianDay operator +(ModifiedJulianDay initial, Time difference) => new(initial.Day + difference.Days);
 
-    /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <paramref name="initial"/> - <paramref name="difference"/> }..</summary>
+    /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <paramref name="initial"/> - <paramref name="difference"/> }.</summary>
     /// <param name="initial">The initial epoch.</param>
     /// <param name="difference">The <see cref="Time"/> between <paramref name="initial"/> and the resulting epoch.</param>
     public static ModifiedJulianDay operator -(ModifiedJulianDay initial, Time difference) => new(initial.Day - difference.Days);
