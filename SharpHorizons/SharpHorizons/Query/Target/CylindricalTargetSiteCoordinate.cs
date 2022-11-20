@@ -2,18 +2,24 @@
 
 using SharpMeasures.Astronomy;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Describes a <see cref="ITargetSite"/> using a <see cref="CylindricalCoordinate"/>.</summary>
 internal sealed record class CylindricalTargetSiteCoordinate : ITargetSite
 {
     /// <summary>The <see cref="CylindricalCoordinate"/>, describing a <see cref="ITargetSite"/>.</summary>
-    private CylindricalCoordinate Coordinate { get; }
+    public required CylindricalCoordinate Coordinate { private get; init; }
 
     /// <summary>Used to compose a <see cref="TargetSiteIdentifier"/> describing <see langword="this"/>.</summary>
-    private ITargetSiteComposer<CylindricalCoordinate> Composer { get; }
+    public required ITargetSiteComposer<CylindricalCoordinate> Composer { private get; init; }
 
-    /// <summary>Describes a <see cref="ITargetSite"/> using <paramref name="coordinate"/>.</summary>
+    /// <inheritdoc cref="CylindricalTargetSiteCoordinate"/>
+    public CylindricalTargetSiteCoordinate() { }
+
+    /// <inheritdoc cref="CylindricalTargetSiteCoordinate"/>
     /// <param name="coordinate"><inheritdoc cref="Coordinate" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    [SetsRequiredMembers]
     public CylindricalTargetSiteCoordinate(CylindricalCoordinate coordinate, ITargetSiteComposer<CylindricalCoordinate> composer)
     {
         Coordinate = coordinate;

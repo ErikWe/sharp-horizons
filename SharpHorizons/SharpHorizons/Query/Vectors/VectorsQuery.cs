@@ -7,6 +7,8 @@ using SharpHorizons.Query.VectorTable;
 
 using SharpMeasures;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IVectorsQuery"/>
 internal sealed record class VectorsQuery : IVectorsQuery
 {
@@ -26,7 +28,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     public OutputLabels OutputLabels { get; init; } = OutputLabels.Disable;
     public TimeDeltaInclusion TimeDeltaInclusion { get; init; } = TimeDeltaInclusion.Disable;
 
-    /// <summary>Describes a query to retrieve the orbital state vectors, the <see cref="Position3"/> and <see cref="Velocity3"/>, of <paramref name="target"/>.</summary>
+    /// <inheritdoc cref="VectorsQuery"/>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
     /// <param name="epochs"><inheritdoc cref="Epochs" path="/summary"/></param>

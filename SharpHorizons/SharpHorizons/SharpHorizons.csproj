@@ -37,11 +37,22 @@
 	<ItemGroup>
 		<ProjectReference Include="..\SharpHorizons.Abstractions\SharpHorizons.Abstractions.csproj" />
 		<ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" />
-		<ProjectReference Include="..\SharpHorizons.OptionsProviders\SharpHorizons.OptionsProviders.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\SharpHorizons.Interpretation\SharpHorizons.Interpretation.csproj" />
 		<ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="Settings\DefaultEphemerisInterpretation.Designer.cs">
+		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DefaultEphemerisInterpretation.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Settings\DefaultInterpretation.Designer.cs">
+		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DefaultInterpretation.settings</DependentUpon>
+		</Compile>
+		
 		<Compile Update="Settings\DefaultParameterIdentifiers.Designer.cs">
 			<DesignTimeSharedInput>True</DesignTimeSharedInput>
 			<AutoGen>True</AutoGen>
@@ -53,9 +64,32 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>DefaultQuerySettings.settings</DependentUpon>
 		</Compile>
+
+		<Compile Update="Settings\DefaultOriginInterpretationKeys.Designer.cs">
+		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		  <DependentUpon>DefaultOriginInterpretationKeys.settings</DependentUpon>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+
+		<Compile Update="Settings\DefaultTargetInterpretationKeys.Designer.cs">
+		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DefaultTargetInterpretationKeys.settings</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Settings\DefaultEphemerisInterpretation.settings">
+		  <Generator>SettingsSingleFileGenerator</Generator>
+		  <LastGenOutput>DefaultEphemerisInterpretation.Designer.cs</LastGenOutput>
+		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris</CustomToolNamespace>
+		</None>
+		<None Update="Settings\DefaultInterpretation.settings">
+		  <Generator>SettingsSingleFileGenerator</Generator>
+		  <LastGenOutput>DefaultInterpretation.Designer.cs</LastGenOutput>
+		  <CustomToolNamespace>SharpHorizons.Interpretation</CustomToolNamespace>
+		</None>
+		
 		<None Update="Settings\DefaultParameterIdentifiers.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>DefaultParameterIdentifiers.Designer.cs</LastGenOutput>
@@ -68,6 +102,18 @@
 			<LastGenOutput>DefaultQuerySettings.Designer.cs</LastGenOutput>
 			<CustomToolNamespace>SharpHorizons.Query</CustomToolNamespace>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+
+		<None Update="Settings\DefaultOriginInterpretationKeys.settings">
+		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Origin</CustomToolNamespace>
+		  <LastGenOutput>DefaultOriginInterpretationKeys.Designer.cs</LastGenOutput>
+		  <Generator>SettingsSingleFileGenerator</Generator>
+		</None>
+
+		<None Update="Settings\DefaultTargetInterpretationKeys.settings">
+		  <Generator>SettingsSingleFileGenerator</Generator>
+		  <LastGenOutput>DefaultTargetInterpretationKeys.Designer.cs</LastGenOutput>
+		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Target</CustomToolNamespace>
 		</None>
 	</ItemGroup>
 

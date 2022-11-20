@@ -4,24 +4,30 @@ using SharpHorizons.Identity;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an object identified by a <see cref="MPCProvisionalDesignation"/>.</summary>
 internal sealed record class MPCProvisionalDesignationTarget : ITarget
 {
     /// <summary>The <see cref="MPCProvisionalDesignation"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</summary>
-    private MPCProvisionalDesignation Designation { get; }
+    public required MPCProvisionalDesignation Designation { private get; init; }
 
-    /// <summary>Used to compose a <see cref="ICommandArgument"/> describing <see langword="this"/>.</summary>
-    private ICommandComposer<MPCProvisionalDesignation> Composer { get; }
+    /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
+    public required ITargetComposer<MPCProvisionalDesignation> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an object identified by <paramref name="designation"/>.</summary>
+    /// <inheritdoc cref="MPCProvisionalDesignationTarget"/>
+    public MPCProvisionalDesignationTarget() { }
+
+    /// <inheritdoc cref="MPCProvisionalDesignationTarget"/>
     /// <param name="designation"><inheritdoc cref="Designation" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
-    public MPCProvisionalDesignationTarget(MPCProvisionalDesignation designation, ICommandComposer<MPCProvisionalDesignation> composer)
+    [SetsRequiredMembers]
+    public MPCProvisionalDesignationTarget(MPCProvisionalDesignation designation, ITargetComposer<MPCProvisionalDesignation> composer)
     {
         Designation = designation;
 
         Composer = composer;
     }
 
-    ICommandArgument ITarget.ComposeArgument() => Composer.Compose(Designation);
+    ITargetArgument ITarget.ComposeArgument() => ((IArgumentComposer<ITargetArgument, MPCProvisionalDesignation>)Composer).Compose(Designation);
 }

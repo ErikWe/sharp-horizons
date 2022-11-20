@@ -3,17 +3,23 @@
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IBodyCentricOrigin"/>
 internal sealed record class BodyCentricOrigin : IBodyCentricOrigin
 {
-    public IOriginObject OriginObject { get; }
+    public required IOriginObject OriginObject { get; init; }
 
     /// <summary>Used to compose a <see cref="IOriginArgument"/> describing <see langword="this"/>.</summary>
-    private IOriginComposer<IBodyCentricOrigin> Composer { get; }
+    public required IOriginComposer<IBodyCentricOrigin> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="IOrigin"/> in a query as a the center of <paramref name="originObject"/>.</summary>
+    /// <inheritdoc cref="BodyCentricOrigin"/>
+    public BodyCentricOrigin() { }
+
+    /// <inheritdoc cref="BodyCentricOrigin"/>
     /// <param name="originObject"><inheritdoc cref="OriginObject" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    [SetsRequiredMembers]
     public BodyCentricOrigin(IOriginObject originObject, IOriginComposer<IBodyCentricOrigin> composer)
     {
         OriginObject = originObject;

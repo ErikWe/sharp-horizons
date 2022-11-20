@@ -7,23 +7,28 @@ using SharpHorizons.Query.Target;
 using SharpMeasures.Astronomy;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IOriginStage"/>
 internal sealed class OriginStage : IOriginStage
 {
     /// <summary>The <see cref="ITarget"/> selected for the <see cref="IVectorsQuery"/>.</summary>
-    private ITarget Target { get; }
+    public required ITarget Target { private get; init; }
 
     /// <summary><inheritdoc cref="IOriginFactory" path="/summary"/></summary>
-    private IOriginFactory OriginFactory { get; }
+    public required IOriginFactory OriginFactory { private get; init; }
 
     /// <summary><inheritdoc cref="IEpochStageFactory" path="/summary"/></summary>
-    private IEpochStageFactory EpochStageFactory { get; }
+    public required IEpochStageFactory EpochStageFactory { private get; init; }
 
-    /// <summary>Uses <paramref name="target"/> as the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>, and provides means of selecting the <see cref="IOrigin"/>.</summary>
+    /// <inheritdoc cref="OriginStage"/>
+    public OriginStage() { }
+
+    /// <inheritdoc cref="OriginStage"/>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="originFactory"><inheritdoc cref="OriginFactory" path="/summary"/></param>
     /// <param name="epochStageFactory"><inheritdoc cref="EpochStageFactory" path="/summary"/></param>
+    [SetsRequiredMembers]
     public OriginStage(ITarget target, IOriginFactory originFactory, IEpochStageFactory epochStageFactory)
     {
         Target = target;

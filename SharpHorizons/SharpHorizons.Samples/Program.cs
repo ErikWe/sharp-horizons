@@ -1,4 +1,4 @@
-namespace ConsoleApp1;
+﻿namespace ConsoleApp1;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,19 +7,23 @@ using Microsoft.Extensions.Hosting;
 using SharpHorizons;
 using SharpHorizons.Epoch;
 using SharpHorizons.Identity;
+using SharpHorizons.Interpretation.Ephemeris.Origin;
+using SharpHorizons.Interpretation.Ephemeris.Target;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
-using SharpHorizons.Query.Request;
+using SharpHorizons.Query.Request.HTTP;
+using SharpHorizons.Query.Result.HTTP;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 
 using SharpMeasures;
 
 using System;
+using System.Threading.Tasks;
 
 internal class Program
 {
-    private static void Main()
+    private async static Task Main()
     {
         var host = Host.CreateDefaultBuilder().ConfigureAppConfiguration(ConfigureConfiguration).ConfigureServices(ConfigureServices).Build();
 
@@ -34,14 +38,21 @@ internal class Program
         var epochSelection = epochRangeFactory.Create(new JulianDay(3), new JulianDay(4), Time.OneHour);
 
         var queryFactory = host.Services.GetRequiredService<IVectorsQueryFactory>();
-        var composer = host.Services.GetRequiredService<IVectorsQueryComposer>();
-        var queryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
+        var vectorsComposer = host.Services.GetRequiredService<IVectorsQueryComposer>();
+        var httpQueryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
+        var httpTextExtractor = host.Services.GetRequiredService<IHTTPResultExtractor>();
+        var targetInterpreter = host.Services.GetRequiredService<ITargetDataInterpreter>();
+        var originInterpreter = host.Services.GetRequiredService<IOriginDataInterpreter>();
 
-        var query = queryFactory.Build(target, origin, epochSelection);
-        var uri = composer.Compose(query);
-        var result = queryHandler.RequestAsync(uri).Result;
+        var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: SharpHorizons.Query.OutputFormat.JSON);
+        var uri = vectorsComposer.Compose(query);
+        var httpResult = httpQueryHandler.RequestAsync(uri).Result;
+        var textResult = await httpTextExtractor.ExtractAsync(httpResult);
+        var targetInterpretation = targetInterpreter.Interpret(textResult);
+        var originInterpretation = originInterpreter.Interpret(textResult);
 
-        Console.WriteLine(result);
+        Console.WriteLine(targetInterpretation.Target.ComposeArgument());
+        Console.WriteLine(originInterpretation.Origin.ComposeArgument());
     }
 
     private static void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configuration)

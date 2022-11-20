@@ -1,4 +1,4 @@
-namespace SharpHorizons.Query.Vectors.Fluency;
+﻿namespace SharpHorizons.Query.Vectors.Fluency;
 
 using SharpHorizons.Epoch;
 using SharpHorizons.Query.Epoch;
@@ -9,32 +9,36 @@ using SharpMeasures;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IEpochStage"/>
 internal sealed class EpochStage : IEpochStage
 {
     /// <summary>The <see cref="ITarget"/> selected for the <see cref="IVectorsQuery"/>.</summary>
-    private ITarget Target { get; }
+    public required ITarget Target { private get; init; }
 
     /// <summary>The <see cref="IOrigin"/> selected for the <see cref="IVectorsQuery"/>.</summary>
-    private IOrigin Origin { get; }
+    public required IOrigin Origin { private get; init; }
 
     /// <inheritdoc cref="Vectors.VectorsQueryInstantiation"/>
-    private VectorsQueryInstantiation VectorsQueryInstantiation { get; }
+    public required VectorsQueryInstantiation VectorsQueryInstantiation { private get; init; }
 
     /// <summary><inheritdoc cref="IFixedEpochRangeFactory" path="/summary"/></summary>
-    private IFixedEpochRangeFactory FixedRangeFactory { get; }
+    public required IFixedEpochRangeFactory FixedRangeFactory { private get; init; }
 
     /// <summary><inheritdoc cref="IUniformEpochRangeFactory" path="/summary"/></summary>
-    private IUniformEpochRangeFactory UniformRangeFactory { get; }
+    public required IUniformEpochRangeFactory UniformRangeFactory { private get; init; }
 
     /// <summary><inheritdoc cref="ICalendarEpochRangeFactory" path="/summary"/></summary>
-    private ICalendarEpochRangeFactory CalendarRangeFactory { get; }
+    public required ICalendarEpochRangeFactory CalendarRangeFactory { private get; init; }
 
     /// <summary><inheritdoc cref="IEpochCollectionFactory" path="/summary"/></summary>
-    private IEpochCollectionFactory CollectionFactory { get; }
+    public required IEpochCollectionFactory CollectionFactory { private get; init; }
 
-    /// <summary>Uses <paramref name="target"/> and <paramref name="origin"/> as the <see cref="ITarget"/> and <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>, and provides means of selecting the <see cref="IEpoch"/>.</summary>
+    /// <inheritdoc cref="EpochStage"/>
+    public EpochStage() { }
+
+    /// <inheritdoc cref="EpochStage"/>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
     /// <param name="vectorsQueryInstantiation"><inheritdoc cref="VectorsQueryInstantiation" path="/summary"/></param>
@@ -42,6 +46,7 @@ internal sealed class EpochStage : IEpochStage
     /// <param name="uniformRangeFactory"><inheritdoc cref="UniformRangeFactory" path="/summary"/></param>
     /// <param name="calendarRangeFactory"><inheritdoc cref="CalendarRangeFactory" path="/summary"/></param>
     /// <param name="collectionFactory"><inheritdoc cref="CollectionFactory" path="/summary"/></param>
+    [SetsRequiredMembers]
     public EpochStage(ITarget target, IOrigin origin, VectorsQueryInstantiation vectorsQueryInstantiation, IFixedEpochRangeFactory fixedRangeFactory, IUniformEpochRangeFactory uniformRangeFactory, ICalendarEpochRangeFactory calendarRangeFactory, IEpochCollectionFactory collectionFactory)
     {
         Target = target;

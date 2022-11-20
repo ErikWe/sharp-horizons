@@ -30,7 +30,7 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     /// <inheritdoc cref="ITargetSiteFactory"/>
     private ITargetSiteFactory SiteFactory { get; }
 
-    /// <summary><inheritdoc cref="MajorObjectTargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="MajorObjectTargetFactory"/>
     /// <param name="majorObjectComposer"><inheritdoc cref="MajorObjectComposer" path="/summary"/></param>
     /// <param name="majorObjectIDComposer"><inheritdoc cref="MajorObjectIDComposer" path="/summary"/></param>
     /// <param name="majorObjectNameComposer"><inheritdoc cref="MajorObjectNameComposer" path="/summary"/></param>

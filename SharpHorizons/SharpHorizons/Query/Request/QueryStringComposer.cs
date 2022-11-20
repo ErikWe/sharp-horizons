@@ -8,14 +8,14 @@ using System.Text;
 /// <inheritdoc cref="IQueryStringComposer"/>
 internal sealed class QueryStringComposer : IQueryStringComposer
 {
-    /// <summary><inheritdoc cref="IQueryParameterProvider" path="/summary"/></summary>
-    private IQueryParameterProvider ParameterProvider { get; }
+    /// <summary><inheritdoc cref="IQueryParameterIdentifierProvider" path="/summary"/></summary>
+    private IQueryParameterIdentifierProvider ParameterProvider { get; }
 
-    /// <summary><inheritdoc cref="QueryStringComposer" path="/summary"/></summary>
-    /// <param name="parameterProvider"><inheritdoc cref="ParameterProvider" path="/summary"/></param>
-    public QueryStringComposer(IQueryParameterProvider parameterProvider)
+    /// <inheritdoc cref="QueryStringComposer"/>
+    /// <param name="parameterIdentifierProvider"><inheritdoc cref="ParameterProvider" path="/summary"/></param>
+    public QueryStringComposer(IQueryParameterIdentifierProvider parameterIdentifierProvider)
     {
-        ParameterProvider = parameterProvider;
+        ParameterProvider = parameterIdentifierProvider;
     }
 
     HorizonsQueryString IQueryStringComposer.Compose(IQueryArgumentSet queryParameters)

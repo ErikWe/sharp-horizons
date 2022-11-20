@@ -3,49 +3,54 @@
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IVectorsQueryArgumentComposer"/>
 internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentComposer
 {
     /// <summary><inheritdoc cref="IQueryArgumentSetBuilderFactory" path="/summary"/></summary>
-    private IQueryArgumentSetBuilderFactory BuilderFactory { get; }
+    public required IQueryArgumentSetBuilderFactory BuilderFactory { private get; init; }
 
     /// <summary><inheritdoc cref="IOutputFormatComposer" path="/summary"/></summary>
-    private IOutputFormatComposer OutputFormatComposer { get; }
+    public required IOutputFormatComposer OutputFormatComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IObjectDataInclusionComposer" path="/summary"/></summary>
-    private IObjectDataInclusionComposer ObjectDataInclusionComposer { get; }
+    public required IObjectDataInclusionComposer ObjectDataInclusionComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IReferencePlaneComposer" path="/summary"/></summary>
-    private IReferencePlaneComposer ReferencePlaneComposer { get; }
+    public required IReferencePlaneComposer ReferencePlaneComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IReferenceSystemComposer" path="/summary"/></summary>
-    private IReferenceSystemComposer ReferenceSystemComposer { get; }
+    public required IReferenceSystemComposer ReferenceSystemComposer { private get; init; }
 
     /// <summary><inheritdoc cref="ITimePrecisionComposer" path="/summary"/></summary>
-    private ITimePrecisionComposer TimePrecisionComposer { get; }
+    public required ITimePrecisionComposer TimePrecisionComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IVectorCorrectionComposer" path="/summary"/></summary>
-    private IVectorCorrectionComposer CorrectionComposer { get; }
+    public required IVectorCorrectionComposer CorrectionComposer { private get; init; }
 
     /// <summary><inheritdoc cref="ITimeDeltaInclusionComposer" path="/summary"/></summary>
-    private ITimeDeltaInclusionComposer TimeDeltaInclusionComposer { get; }
+    public required ITimeDeltaInclusionComposer TimeDeltaInclusionComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IVectorTableContentComposer" path="/summary"/></summary>
-    private IVectorTableContentComposer TableContentComposer { get; }
+    public required IVectorTableContentComposer TableContentComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IOutputUnitsComposer" path="/summary"/></summary>
-    private IOutputUnitsComposer OutputUnitsComposer { get; }
+    public required IOutputUnitsComposer OutputUnitsComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IVectorLabelsComposer" path="/summary"/></summary>
-    private IVectorLabelsComposer OutputLabelsComposer { get; }
+    public required IVectorLabelsComposer OutputLabelsComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IValueSeparationComposer" path="/summary"/></summary>
-    private IValueSeparationComposer ValueSeparationComposer { get; }
+    public required IValueSeparationComposer ValueSeparationComposer { private get; init; }
 
     /// <summary><inheritdoc cref="IEphemerisTypeArgument" path="/summary"/></summary>
-    private IEphemerisTypeArgument EphemerisTypeArgument { get; }
+    public required IEphemerisTypeArgument EphemerisTypeArgument { private get; init; }
 
-    /// <summary><inheritdoc cref="VectorsQueryArgumentComposer" path="/summary"/></summary>
+    /// <inheritdoc cref="VectorsQueryArgumentComposer"/>
+    public VectorsQueryArgumentComposer() { }
+
+    /// <inheritdoc cref="VectorsQueryArgumentComposer"/>
     /// <param name="builderFactory"><inheritdoc cref="BuilderFactory" path="/summary"/></param>
     /// <param name="ephemerisTypeComposer"><inheritdoc cref="IEphemerisTypeComposer" path="/summary"/></param>
     /// <param name="outputFormatComposer"><inheritdoc cref="OutputFormatComposer" path="/summary"/></param>
@@ -59,6 +64,7 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
     /// <param name="outputUnitsComposer"><inheritdoc cref="OutputUnitsComposer" path="/summary"/></param>
     /// <param name="outputLabelsComposer"><inheritdoc cref="OutputLabelsComposer" path="/summary"/></param>
     /// <param name="valueSeparationComposer"><inheritdoc cref="ValueSeparationComposer" path="/summary"/></param>
+    [SetsRequiredMembers]
     public VectorsQueryArgumentComposer(IQueryArgumentSetBuilderFactory builderFactory, IEphemerisTypeComposer ephemerisTypeComposer, IOutputFormatComposer outputFormatComposer, IObjectDataInclusionComposer objectDataInclusionComposer, IReferencePlaneComposer referencePlaneComposer, IReferenceSystemComposer referenceSystemComposer,
         ITimePrecisionComposer timePrecisionComposer, IVectorCorrectionComposer correctionComposer, ITimeDeltaInclusionComposer timeDeltaInclusionComposer, IVectorTableContentComposer tableContentComposer, IOutputUnitsComposer outputUnitsComposer, IVectorLabelsComposer outputLabelsComposer, IValueSeparationComposer valueSeparationComposer)
     {

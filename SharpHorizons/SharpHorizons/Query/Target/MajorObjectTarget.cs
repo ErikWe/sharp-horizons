@@ -4,24 +4,30 @@ using SharpHorizons.Identity;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Describes the <see cref="ITarget"/> in a query as the center of a <see cref="Identity.MajorObject"/>.</summary>
 internal sealed record class MajorObjectTarget : ITarget
 {
     /// <summary>The center of this <see cref="Identity.MajorObject"/> represents the <see cref="ITarget"/> in a query.</summary>
-    private MajorObject MajorObject { get; }
+    public required MajorObject MajorObject { private get; init; }
 
-    /// <summary>Used to compose a <see cref="ICommandArgument"/> describing <see langword="this"/>.</summary>
-    private ICommandComposer<MajorObject> Composer { get; }
+    /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
+    public required ITargetComposer<MajorObject> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="ITarget"/> in a query as the center of <paramref name="majorObject"/>.</summary>
+    /// <inheritdoc cref="MajorObjectTarget"/>
+    public MajorObjectTarget() { }
+
+    /// <inheritdoc cref="MajorObjectTarget"/>
     /// <param name="majorObject"><inheritdoc cref="MajorObject" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
-    public MajorObjectTarget(MajorObject majorObject, ICommandComposer<MajorObject> composer)
+    [SetsRequiredMembers]
+    public MajorObjectTarget(MajorObject majorObject, ITargetComposer<MajorObject> composer)
     {
         MajorObject = majorObject;
 
         Composer = composer;
     }
 
-    ICommandArgument ITarget.ComposeArgument() => Composer.Compose(MajorObject);
+    ITargetArgument ITarget.ComposeArgument() => ((IArgumentComposer<ITargetArgument, MajorObject>)Composer).Compose(MajorObject);
 }

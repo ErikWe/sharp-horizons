@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Interpretation.Ephemeris.Origin" GeneratedClassName="DefaultOriginInterpretationKeys">
+  <Profiles />
+  <Settings>
+    <Setting Name="BodyName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Center body name</Value>
+    </Setting>
+    <Setting Name="GeodeticCoordinate" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Center geodetic</Value>
+    </Setting>
+    <Setting Name="CylindricalCoordinate" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Center cylindric</Value>
+    </Setting>
+    <Setting Name="ReferenceEllipsoid" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Center pole/equ</Value>
+    </Setting>
+    <Setting Name="Radii" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Center radii</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

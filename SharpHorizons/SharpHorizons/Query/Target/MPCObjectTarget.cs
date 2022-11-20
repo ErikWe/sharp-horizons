@@ -4,24 +4,30 @@ using SharpHorizons.Identity;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an <see cref="Identity.MPCObject"/>.</summary>
 internal sealed record class MPCObjectTarget : ITarget
 {
     /// <summary>The <see cref="Identity.MPCObject"/>, the center of which represents the <see cref="ITarget"/> in a query.</summary>
-    private MPCObject MPCObject { get; }
+    public required MPCObject MPCObject { private get; init; }
 
-    /// <summary>Used to compose a <see cref="ICommandArgument"/> describing <see langword="this"/>.</summary>
-    private ICommandComposer<MPCObject> Composer { get; }
+    /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
+    public required ITargetComposer<MPCObject> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="ITarget"/> in a query as the center of <paramref name="mpcObject"/>.</summary>
+    /// <inheritdoc cref="MPCObjectTarget"/>
+    public MPCObjectTarget() { }
+
+    /// <inheritdoc cref="MPCObjectTarget"/>
     /// <param name="mpcObject"><inheritdoc cref="MPCObject" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
-    public MPCObjectTarget(MPCObject mpcObject, ICommandComposer<MPCObject> composer)
+    [SetsRequiredMembers]
+    public MPCObjectTarget(MPCObject mpcObject, ITargetComposer<MPCObject> composer)
     {
         MPCObject = mpcObject;
 
         Composer = composer;
     }
 
-    ICommandArgument ITarget.ComposeArgument() => Composer.Compose(MPCObject);
+    ITargetArgument ITarget.ComposeArgument() => ((IArgumentComposer<ITargetArgument, MPCObject>)Composer).Compose(MPCObject);
 }

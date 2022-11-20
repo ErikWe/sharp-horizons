@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Query.Request;
 
 using System;
+using SharpHorizons.Query.Request.HTTP;
 
 /// <inheritdoc cref="IURIComposer"/>
 internal sealed class URIComposer : IURIComposer
@@ -8,7 +9,7 @@ internal sealed class URIComposer : IURIComposer
     /// <summary><inheritdoc cref="IHorizonsHTTPAddressProvider" path="/summary"/></summary>
     private IHorizonsHTTPAddressProvider APIAddressProvider { get; }
 
-    /// <summary><inheritdoc cref="URIComposer" path="/summary"/></summary>
+    /// <inheritdoc cref="URIComposer"/>
     /// <param name="apiAddressProvider"><inheritdoc cref="IHorizonsHTTPAddressProvider" path="/summary"/></param>
     public URIComposer(IHorizonsHTTPAddressProvider apiAddressProvider)
     {

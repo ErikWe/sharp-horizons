@@ -2,18 +2,24 @@
 
 using SharpHorizons.Identity;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Describes the <see cref="IOriginObject"/> in a query as <see cref="Identity.MajorObject"/>.</summary>
 internal sealed record class MajorObjectOrigin : IOriginObject
 {
     /// <summary>The <see cref="Identity.MajorObject"/> which represents the <see cref="IOriginObject"/> in a query.</summary>
-    private MajorObject MajorObject { get; }
+    public required MajorObject MajorObject { private get; init; }
 
     /// <summary>Used to compose a <see cref="OriginObjectIdentifier"/> describing <see langword="this"/>.</summary>
-    private IOriginObjectComposer<MajorObject> Composer { get; }
+    public required IOriginObjectComposer<MajorObject> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="IOriginObject"/> in a query as an object identified by <paramref name="majorObject"/>.</summary>
+    /// <inheritdoc cref="MajorObjectOrigin"/>
+    public MajorObjectOrigin() { }
+
+    /// <inheritdoc cref="MajorObjectOrigin"/>
     /// <param name="majorObject"><inheritdoc cref="MajorObject" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    [SetsRequiredMembers]
     public MajorObjectOrigin(MajorObject majorObject, IOriginObjectComposer<MajorObject> composer)
     {
         MajorObject = majorObject;

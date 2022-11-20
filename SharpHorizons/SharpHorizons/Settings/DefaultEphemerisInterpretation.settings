@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Interpretation.Ephemeris" GeneratedClassName="DefaultEphemerisInterpretation">
+  <Profiles />
+  <Settings>
+    <Setting Name="EphemerisDataStart" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Ephemeris</Value>
+    </Setting>
+    <Setting Name="EphemerisDataBlockCount" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="WestPositiveLongitude" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">West-longitude positive</Value>
+    </Setting>
+    <Setting Name="EastPositiveLongitude" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">East-longitude positive</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

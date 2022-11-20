@@ -1,22 +1,26 @@
-namespace SharpHorizons.Query.Epoch;
+﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Query.Arguments;
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IEpochRange"/>
 internal sealed record class EpochRange : IEpochRange
 {
-    public IStartEpoch StartEpoch { get; }
-    public IStopEpoch StopEpoch { get; }
-    public IStepSize StepSize { get; }
+    public required IStartEpoch StartEpoch { get; init; }
+    public required IStopEpoch StopEpoch { get; init; }
+    public required IStepSize StepSize { get; init; }
 
-    /// <summary>Uses the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/> with the associated <paramref name="stepSize"/> to describe the selection of <see cref="IEpoch"/> in a query.</summary>
+    /// <inheritdoc cref="EpochRange"/>
+    public EpochRange() { }
+
+    /// <inheritdoc cref="EpochRange"/>
     /// <param name="startEpoch"><inheritdoc cref="StartEpoch" path="/summary"/></param>
     /// <param name="stopEpoch"><inheritdoc cref="StopEpoch" path="/summary"/></param>
     /// <param name="stepSize"><inheritdoc cref="StepSize" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
+    [SetsRequiredMembers]
     public EpochRange(IStartEpoch startEpoch, IStopEpoch stopEpoch, IStepSize stepSize)
     {
         StartEpoch = startEpoch;

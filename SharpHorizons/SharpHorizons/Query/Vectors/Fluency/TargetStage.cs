@@ -6,19 +6,24 @@ using SharpHorizons.Query.Target;
 using SharpMeasures.Astronomy;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="ITargetStage"/>
 internal sealed class TargetStage : ITargetStage
 {
     /// <summary><inheritdoc cref="ITargetFactory" path="/summary"/></summary>
-    private ITargetFactory TargetFactory { get; }
+    public required ITargetFactory TargetFactory { private get; init; }
 
     /// <summary><inheritdoc cref="IOriginStageFactory" path="/summary"/></summary>
-    private IOriginStageFactory OriginStageFactory { get; }
+    public required IOriginStageFactory OriginStageFactory { private get; init; }
 
-    /// <summary><inheritdoc cref="TargetStage" path="/summary"/></summary>
+    /// <inheritdoc cref="TargetStage"/>
+    public TargetStage() { }
+
+    /// <inheritdoc cref="TargetStage"/>
     /// <param name="targetFactory"><inheritdoc cref="TargetFactory" path="/summary"/></param>
     /// <param name="originStageFactory"><inheritdoc cref="OriginStageFactory" path="/summary"/></param>
+    [SetsRequiredMembers]
     public TargetStage(ITargetFactory targetFactory, IOriginStageFactory originStageFactory)
     {
         TargetFactory = targetFactory;

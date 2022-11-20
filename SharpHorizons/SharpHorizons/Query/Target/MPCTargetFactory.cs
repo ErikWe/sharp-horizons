@@ -11,21 +11,21 @@ using System;
 internal sealed class MPCTargetFactory : IMPCTargetFactory
 {
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCObject"/>.</summary>
-    private ICommandComposer<MPCObject> ObjectComposer { get; }
+    private ITargetComposer<MPCObject> ObjectComposer { get; }
 
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalObject"/>.</summary>
-    private ICommandComposer<MPCProvisionalObject> ProvisionalObjectComposer { get; }
+    private ITargetComposer<MPCProvisionalObject> ProvisionalObjectComposer { get; }
 
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCName"/>.</summary>
-    private ICommandComposer<MPCName> NameComposer { get; }
+    private ITargetComposer<MPCName> NameComposer { get; }
 
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalDesignation"/>.</summary>
-    private ICommandComposer<MPCProvisionalDesignation> ProvisionalDesignationComposer { get; }
+    private ITargetComposer<MPCProvisionalDesignation> ProvisionalDesignationComposer { get; }
 
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCSequentialNumber"/>.</summary>
-    private ICommandComposer<MPCSequentialNumber> SequentialNumberComposer { get; }
+    private ITargetComposer<MPCSequentialNumber> SequentialNumberComposer { get; }
 
-    /// <summary><inheritdoc cref="MPCTargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="MPCTargetFactory"/>
     /// <param name="objectComposer"><inheritdoc cref="ObjectComposer" path="/summary"/></param>
     /// <param name="provisionalObjectComposer"><inheritdoc cref="ProvisionalObjectComposer" path="/summary"/></param>
     /// <param name="nameComposer"><inheritdoc cref="NameComposer" path="/summary"/></param>

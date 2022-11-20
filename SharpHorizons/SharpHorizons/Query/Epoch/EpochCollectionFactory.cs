@@ -1,4 +1,4 @@
-namespace SharpHorizons.Query.Epoch;
+﻿namespace SharpHorizons.Query.Epoch;
 
 using SharpHorizons.Epoch;
 using SharpHorizons.Query.Arguments;
@@ -20,7 +20,7 @@ public sealed class EpochCollectionFactory : IEpochCollectionFactory
     /// <summary>Used to compose <see cref="IEpochCollectionFormatArgument"/> that describe the <see cref="EpochCollectionFormat"/> of <see cref="IEpochCollection"/>.</summary>
     private IEpochCollectionFormatComposer FormatComposer { get; }
 
-    /// <summary><inheritdoc cref="EpochCollectionFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="EpochCollectionFactory"/>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     /// <param name="formatComposer"><inheritdoc cref="FormatComposer" path="/summary"/></param>
     public EpochCollectionFactory(IEpochCollectionComposer<IEpochCollection>? composer = null, IEpochCollectionFormatComposer? formatComposer = null)

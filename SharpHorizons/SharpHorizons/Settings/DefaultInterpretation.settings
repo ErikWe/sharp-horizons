@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Interpretation" GeneratedClassName="DefaultInterpretation">
+  <Profiles />
+  <Settings>
+    <Setting Name="UnavailableText" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">unavailable</Value>
+    </Setting>
+    <Setting Name="RawTextSource" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">API SOURCE</Value>
+    </Setting>
+    <Setting Name="RawTextVersion" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">API VERSION</Value>
+    </Setting>
+    <Setting Name="BlockSeparator" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">*****</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

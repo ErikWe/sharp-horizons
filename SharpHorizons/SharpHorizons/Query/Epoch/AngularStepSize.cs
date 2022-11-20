@@ -2,23 +2,26 @@
 
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
-using SharpHorizons.Query.Origin;
-using SharpHorizons.Query.Target;
 
 using SharpMeasures;
+
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IAngularStepSize"/>
 internal sealed record class AngularStepSize : IAngularStepSize
 {
-    public Angle DeltaAngle { get; }
+    public required Angle DeltaAngle { get; init; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
-    private IStepSizeComposer<IAngularStepSize> Composer { get; }
+    public required IStepSizeComposer<IAngularStepSize> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="IStepSize"/> in a query as the variable amount of time it takes for the position of the <see cref="ITarget"/> to change by <paramref name="deltaAngle"/>, as seen from the <see cref="IOrigin"/>.</summary>
+    /// <inheritdoc cref="AngularStepSize"/>
+    public AngularStepSize() { }
+
+    /// <inheritdoc cref="AngularStepSize"/>
     /// <param name="deltaAngle"><inheritdoc cref="DeltaAngle" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
-    /// <remarks><inheritdoc cref="IAngularStepSize" path="/remarks"/></remarks>
+    [SetsRequiredMembers]
     public AngularStepSize(Angle deltaAngle, IStepSizeComposer<IAngularStepSize> composer)
     {
         DeltaAngle = deltaAngle;

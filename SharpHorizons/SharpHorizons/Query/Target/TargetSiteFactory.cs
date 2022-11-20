@@ -12,7 +12,7 @@ internal sealed class TargetSiteFactory : ITargetSiteFactory
     /// <summary>Composes <see cref="TargetSiteIdentifier"/> that describe <see cref="GeodeticCoordinate"/>.</summary>
     private ITargetSiteComposer<GeodeticCoordinate> GeodeticCoordinateComposer { get; }
 
-    /// <summary><inheritdoc cref="TargetSiteFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="TargetSiteFactory"/>
     /// <param name="cylindricalCoordinateComposer"><inheritdoc cref="CylindricalCoordinateComposer" path="/summary"/></param>
     /// <param name="geodeticCoordinateComposer"><inheritdoc cref="GeodeticCoordinateComposer" path="/summary"/></param>
     public TargetSiteFactory(ITargetSiteComposer<CylindricalCoordinate>? cylindricalCoordinateComposer = null, ITargetSiteComposer<GeodeticCoordinate>? geodeticCoordinateComposer = null)

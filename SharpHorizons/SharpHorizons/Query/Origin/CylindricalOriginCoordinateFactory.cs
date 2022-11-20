@@ -15,7 +15,7 @@ internal sealed class CylindricalOriginCoordinateFactory : IOriginCoordinateFact
     /// <summary>Composes <see cref="IOriginCoordinateTypeArgument"/> that describe <see cref="ICylindricalOriginCoordinate"/>.</summary>
     private IOriginCoordinateTypeComposer<CylindricalCoordinate> OriginCoordinateTypeComposer { get; }
 
-    /// <summary><inheritdoc cref="CylindricalOriginCoordinateFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="CylindricalOriginCoordinateFactory"/>
     /// <param name="originCoordinateComposer"><inheritdoc cref="OriginCoordinateComposer" path="/summary"/></param>
     /// <param name="originCoordinateTypeComposer"><inheritdoc cref="OriginCoordinateTypeComposer" path="/summary"/></param>
     public CylindricalOriginCoordinateFactory(IOriginCoordinateComposer<CylindricalCoordinate>? originCoordinateComposer = null, IOriginCoordinateTypeComposer<CylindricalCoordinate>? originCoordinateTypeComposer = null)

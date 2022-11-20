@@ -2,19 +2,26 @@
 
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
+
 using SharpMeasures;
+
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IFixedStepSize"/>
 internal sealed record class FixedStepSize : IFixedStepSize
 {
-    public Time DeltaTime { get; }
+    public required Time DeltaTime { get; init; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
-    private IStepSizeComposer<IFixedStepSize> Composer { get; }
+    public required IStepSizeComposer<IFixedStepSize> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="IStepSize"/> in a query using a fixed <see cref="Time"/> difference <paramref name="deltaTime"/>.</summary>
+    /// <inheritdoc cref="FixedStepSize"/>
+    public FixedStepSize() { }
+
+    /// <inheritdoc cref="FixedStepSize"/>
     /// <param name="deltaTime"><inheritdoc cref="DeltaTime" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    [SetsRequiredMembers]
     public FixedStepSize(Time deltaTime, IStepSizeComposer<IFixedStepSize> composer)
     {
         DeltaTime = deltaTime;

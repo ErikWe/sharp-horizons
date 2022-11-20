@@ -22,7 +22,7 @@ internal sealed class EpochStageFactory : IEpochStageFactory
     /// <summary><inheritdoc cref="IEpochCollectionFactory" path="/summary"/></summary>
     private IEpochCollectionFactory CollectionFactory { get; }
 
-    /// <summary><inheritdoc cref="EpochStageFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="EpochStageFactory"/>
     /// <param name="vectorsQueryInstantiation"><inheritdoc cref="VectorsQueryInstantiation" path="/summary"/></param>
     /// <param name="fixedRangeFactory"><inheritdoc cref="FixedRangeFactory" path="/summary"/></param>
     /// <param name="uniformRangeFactory"><inheritdoc cref="UniformRangeFactory" path="/summary"/></param>

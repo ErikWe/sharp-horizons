@@ -1,10 +1,11 @@
-﻿<Project>
+<Project>
 
 	<ItemGroup>
 		<PackageReference Update="coverlet.collector" Version="3.1.2" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Update="Microsoft.CodeAnalysis.Common" Version="4.4.0" />
 		<PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
 		<PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
 		<PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />

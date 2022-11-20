@@ -16,7 +16,7 @@ public sealed class VectorsQueryFactory : IVectorsQueryFactory
     /// <inheritdoc cref="Vectors.VectorsQueryInstantiation"/>
     private VectorsQueryInstantiation VectorsQueryInstantiation { get; }
 
-    /// <summary><inheritdoc cref="VectorsQueryFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="VectorsQueryFactory"/>
     /// <param name="targetStageFactory"><inheritdoc cref="TargetStageFactory" path="/summary"/></param>
     /// <param name="vectorsQueryInstantiation"><inheritdoc cref="VectorsQueryInstantiation" path="/summary"/></param>
     public VectorsQueryFactory(ITargetStageFactory? targetStageFactory = null, VectorsQueryInstantiation? vectorsQueryInstantiation = null)

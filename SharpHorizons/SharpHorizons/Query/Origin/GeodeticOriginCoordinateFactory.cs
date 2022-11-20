@@ -15,7 +15,7 @@ internal sealed class GeodeticOriginCoordinateFactory : IOriginCoordinateFactory
     /// <summary>Composes <see cref="IOriginCoordinateTypeArgument"/> that describe <see cref="GeodeticCoordinate"/>.</summary>
     private IOriginCoordinateTypeComposer<GeodeticCoordinate> OriginCoordinateTypeComposer { get; }
 
-    /// <summary><inheritdoc cref="CylindricalOriginCoordinateFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="CylindricalOriginCoordinateFactory"/>
     /// <param name="originCoordinateComposer"><inheritdoc cref="OriginCoordinateComposer" path="/summary"/></param>
     /// <param name="originCoordinateTypeComposer"><inheritdoc cref="OriginCoordinateTypeComposer" path="/summary"/></param>
     public GeodeticOriginCoordinateFactory(IOriginCoordinateComposer<GeodeticCoordinate>? originCoordinateComposer = null, IOriginCoordinateTypeComposer<GeodeticCoordinate>? originCoordinateTypeComposer = null)

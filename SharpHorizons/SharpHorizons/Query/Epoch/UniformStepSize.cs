@@ -3,17 +3,23 @@
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IUniformStepSize"/>
 internal sealed record class UniformStepSize : IUniformStepSize
 {
-    public int StepCount { get; }
+    public required int StepCount { get; init; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
-    private IStepSizeComposer<IUniformStepSize> Composer { get; }
+    public required IStepSizeComposer<IUniformStepSize> Composer { private get; init; }
 
-    /// <summary>Describes the <see cref="IStepSize"/> in a query using <paramref name="stepCount"/> uniformly distributed steps.</summary>
+    /// <inheritdoc cref="UniformStepSize"/>
+    public UniformStepSize() { }
+
+    /// <inheritdoc cref="UniformStepSize"/>
     /// <param name="stepCount"><inheritdoc cref="StepCount" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    [SetsRequiredMembers]
     public UniformStepSize(int stepCount, IStepSizeComposer<IUniformStepSize> composer)
     {
         StepCount = stepCount;

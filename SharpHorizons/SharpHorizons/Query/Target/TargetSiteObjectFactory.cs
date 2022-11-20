@@ -15,7 +15,7 @@ internal sealed class TargetSiteObjectFactory : ITargetSiteObjectFactory
     /// <summary>Composes <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
     private ITargetSiteObjectComposer<MajorObjectName> MajorObjectNameComposer { get; }
 
-    /// <summary><inheritdoc cref="TargetSiteObjectFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="TargetSiteObjectFactory"/>
     /// <param name="majorObjectComposer"><inheritdoc cref="MajorObjectComposer" path="/summary"/></param>
     /// <param name="majorObjectIDComposer"><inheritdoc cref="MajorObjectIDComposer" path="/summary"/></param>
     /// <param name="majorObjectNameComposer"><inheritdoc cref="MajorObjectNameComposer" path="/summary"/></param>

@@ -11,16 +11,22 @@ public sealed class TargetFactory : ITargetFactory
 {
     /// <summary><inheritdoc cref="IMajorObjectTargetFactory" path="/summary"/></summary>
     private IMajorObjectTargetFactory MajorObjectFactory { get; }
+
     /// <summary><inheritdoc cref="IMPCTargetFactory" path="/summary"/></summary>
     private IMPCTargetFactory MPCFactory { get; }
 
-    /// <summary><inheritdoc cref="TargetFactory" path="/summary"/></summary>
+    /// <summary><inheritdoc cref="IMPCCometTargetFactory" path="/summary"/></summary>
+    private IMPCCometTargetFactory MPCCometFactory { get; }
+
+    /// <inheritdoc cref="TargetFactory"/>
     /// <param name="majorObjectFactory"><inheritdoc cref="MajorObjectFactory" path="/summary"/></param>
     /// <param name="mpcFactory"><inheritdoc cref="MPCFactory" path="/summary"/></param>
-    public TargetFactory(IMajorObjectTargetFactory? majorObjectFactory = null, IMPCTargetFactory? mpcFactory = null)
+    /// <param name="mpcCometFactory"><inheritdoc cref="MPCCometFactory" path="/summary"/></param>
+    public TargetFactory(IMajorObjectTargetFactory? majorObjectFactory = null, IMPCTargetFactory? mpcFactory = null, IMPCCometTargetFactory? mpcCometFactory = null)
     {
         MajorObjectFactory = majorObjectFactory ?? new MajorObjectTargetFactory();
         MPCFactory = mpcFactory ?? new MPCTargetFactory();
+        MPCCometFactory = mpcCometFactory ?? new MPCCometTargetFactory();
     }
 
     /// <inheritdoc/>
@@ -84,4 +90,18 @@ public sealed class TargetFactory : ITargetFactory
 
     /// <inheritdoc/>
     public ITarget Create(MPCSequentialNumber mpcNumber) => MPCFactory.Create(mpcNumber);
+
+    /// <inheritdoc/>
+    public ITarget Create(MPCComet mpcComet)
+    {
+        ArgumentNullException.ThrowIfNull(mpcComet);
+
+        return MPCCometFactory.Create(mpcComet);
+    }
+
+    /// <inheritdoc/>
+    public ITarget Create(MPCCometName mpcCometName) => MPCCometFactory.Create(mpcCometName);
+
+    /// <inheritdoc/>
+    public ITarget Create(MPCCometDesignation mpcCometDesignation) => MPCCometFactory.Create(mpcCometDesignation);
 }

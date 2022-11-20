@@ -7,6 +7,6 @@ public enum VectorCorrection
     None,
     /// <summary>Applies corrections for the time required for light to travel from the target to the origin - the astrometric vectors.</summary>
     LightTime,
-    /// <summary>Applies corrections for the time required for light to travel from the target to the origin and for the effects of aberration - the apparent vectors.</summary>
+    /// <summary>Applies corrections for the time required for light to travel from the target to the origin and for the effects of stellar aberration - the apparent vectors.</summary>
     LightTimeAndAberration
 }

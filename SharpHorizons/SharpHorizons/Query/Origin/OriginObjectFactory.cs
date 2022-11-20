@@ -15,7 +15,7 @@ internal sealed class OriginObjectFactory : IOriginObjectFactory
     /// <summary>Used to compose <see cref="OriginObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
     private IOriginObjectComposer<MajorObjectName> MajorObjectNameComposer { get; }
 
-    /// <summary><inheritdoc cref="OriginObjectFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="OriginObjectFactory"/>
     /// <param name="majorObjectComposer"><inheritdoc cref="MajorObjectComposer" path="/summary"/></param>
     /// <param name="majorObjectIDComposer"><inheritdoc cref="MajorObjectIDComposer" path="/summary"/></param>
     /// <param name="majorObjectNameComposer"><inheritdoc cref="MajorObjectNameComposer" path="/summary"/></param>

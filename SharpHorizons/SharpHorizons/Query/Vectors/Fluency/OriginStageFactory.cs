@@ -12,7 +12,7 @@ internal sealed class OriginStageFactory : IOriginStageFactory
     /// <summary><inheritdoc cref="IEpochStageFactory" path="/summary"/></summary>
     private IEpochStageFactory EpochStageFactory { get; }
 
-    /// <summary><inheritdoc cref="TargetStageFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="OriginStageFactory"/>
     /// <param name="originFactory"><inheritdoc cref="OriginFactory" path="/summary"/></param>
     /// <param name="epochStageFactory"><inheritdoc cref="EpochStageFactory" path="/summary"/></param>
     public OriginStageFactory(IOriginFactory? originFactory = null, IEpochStageFactory? epochStageFactory = null)

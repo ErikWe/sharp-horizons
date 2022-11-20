@@ -11,7 +11,7 @@ internal sealed class TargetStageFactory : ITargetStageFactory
     /// <summary><inheritdoc cref="IOriginStageFactory" path="/summary"/></summary>
     private IOriginStageFactory OriginStageFactory { get; }
 
-    /// <summary><inheritdoc cref="TargetStageFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="TargetStageFactory"/>
     /// <param name="targetFactory"><inheritdoc cref="TargetFactory" path="/summary"/></param>
     /// <param name="originStageFactory"><inheritdoc cref="OriginStageFactory" path="/summary"/></param>
     public TargetStageFactory(ITargetFactory? targetFactory = null, IOriginStageFactory? originStageFactory = null)

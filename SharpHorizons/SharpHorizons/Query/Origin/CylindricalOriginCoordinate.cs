@@ -5,21 +5,27 @@ using SharpHorizons.Query.Arguments.Composers;
 
 using SharpMeasures.Astronomy;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="ICylindricalOriginCoordinate"/>
 internal sealed record class CylindricalOriginCoordinate : ICylindricalOriginCoordinate
 {
-    public CylindricalCoordinate Coordinate { get; }
+    public required CylindricalCoordinate Coordinate { get; init; }
 
     /// <summary>Used to compose a <see cref="IOriginCoordinateArgument"/> describing <see langword="this"/>.</summary>
-    private IOriginCoordinateComposer<CylindricalCoordinate> CoordinateComposer { get; }
+    public required IOriginCoordinateComposer<CylindricalCoordinate> CoordinateComposer { private get; init; }
 
     /// <summary>Used to compose a <see cref="IOriginCoordinateTypeArgument"/> describing <see langword="this"/>.</summary>
-    private IOriginCoordinateTypeComposer<CylindricalCoordinate> CoordinateTypeComposer { get; }
+    public required IOriginCoordinateTypeComposer<CylindricalCoordinate> CoordinateTypeComposer { private get; init; }
 
-    /// <summary>Describes a <see cref="IOriginCoordinate"/> using <paramref name="coordinate"/>.</summary>
+    /// <inheritdoc cref="CylindricalOriginCoordinate"/>
+    public CylindricalOriginCoordinate() { }
+
+    /// <inheritdoc cref="CylindricalOriginCoordinate"/>
     /// <param name="coordinate"><inheritdoc cref="Coordinate" path="/summary"/></param>
     /// <param name="coordinateComposer"><inheritdoc cref="CoordinateComposer" path="/summary"/></param>
     /// <param name="coordinateTypeComposer"><inheritdoc cref="CoordinateTypeComposer" path="/summary"/></param>
+    [SetsRequiredMembers]
     public CylindricalOriginCoordinate(CylindricalCoordinate coordinate, IOriginCoordinateComposer<CylindricalCoordinate> coordinateComposer, IOriginCoordinateTypeComposer<CylindricalCoordinate> coordinateTypeComposer)
     {
         Coordinate = coordinate;

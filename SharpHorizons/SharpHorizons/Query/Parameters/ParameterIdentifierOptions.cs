@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using SharpHorizons.Query.Arguments;
 
 /// <summary>Specifies the identifiers associated with the available parameters.</summary>
-/// <remarks><see cref="IQueryParameterProvider"/> should be used to access the identifiers once specified.</remarks>
+/// <remarks><see cref="IQueryParameterIdentifierProvider"/> should be used to access the identifiers once specified.</remarks>
 internal sealed class ParameterIdentifierOptions
 {
-    /// <summary>Describes the name of the <see cref="IConfigurationSection"/> describing <see cref="ParameterIdentifierOptions"/>.</summary>
+    /// <summary>Describes the name of the <see cref="IConfigurationSection"/> which describes <see cref="ParameterIdentifierOptions"/>.</summary>
     internal static string Section { get; } = "Query:ParameterIdentifiers";
 
     /// <summary>The identifier associated the <see cref="ICommandArgument"/>.</summary>
@@ -82,7 +82,7 @@ internal sealed class ParameterIdentifierOptions
 
     /// <summary>Applies the default values to <paramref name="options"/>.</summary>
     /// <param name="options">The default values are applied to these <see cref="ParameterIdentifierOptions"/>.</param>
-    internal static void ApplyDefaults(ParameterIdentifierOptions options)
+    public static void ApplyDefaults(ParameterIdentifierOptions options)
     {
         options.Command = DefaultParameterIdentifiers.Default.Command;
         options.ElementLabels = DefaultParameterIdentifiers.Default.ElementLabels;

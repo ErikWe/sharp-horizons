@@ -30,7 +30,7 @@ public sealed class OriginFactory : IOriginFactory
     /// <summary>Handles construction of <see cref="IOriginCoordinate"/> describing <see cref="GeodeticCoordinate"/>.</summary>
     private IOriginCoordinateFactory<GeodeticCoordinate> GeodeticCoordinateFactory { get; }
 
-    /// <summary><inheritdoc cref="OriginFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="OriginFactory"/>
     /// <param name="bodyCentricComposer"><inheritdoc cref="BodyCentricComposer" path="/summary"/></param>
     /// <param name="coordinateComposer"><inheritdoc cref="CoordinateComposer" path="/summary"/></param>
     /// <param name="observationSiteComoser"><inheritdoc cref="ObservationSiteComposer" path="/summary"/></param>
@@ -104,6 +104,31 @@ public sealed class OriginFactory : IOriginFactory
 
     /// <inheritdoc/>
     public IOrigin Create(MajorObjectName majorObjectName, ObservationSiteID observationSiteID) => CreateOrigin(CreateOriginObject(majorObjectName), observationSiteID);
+
+    /// <inheritdoc/>
+    public IOrigin Create(MajorObject majorObject, ObservationSite observationSite)
+    {
+        ArgumentNullException.ThrowIfNull(majorObject);
+        ArgumentNullException.ThrowIfNull(observationSite);
+
+        return Create(majorObject, observationSite.ID);
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(MajorObjectID majorObjectID, ObservationSite observationSite)
+    {
+        ArgumentNullException.ThrowIfNull(observationSite);
+
+        return Create(majorObjectID, observationSite.ID);
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(MajorObjectName majorObjectName, ObservationSite observationSite)
+    {
+        ArgumentNullException.ThrowIfNull(observationSite);
+
+        return Create(majorObjectName, observationSite.ID);
+    }
 
     /// <summary>Describes the <see cref="IOrigin"/> in a query as the center of <paramref name="originObject"/>.</summary>
     /// <param name="originObject">The center of this <see cref="IOriginObject"/> represents the <see cref="IOrigin"/> in a query.</param>

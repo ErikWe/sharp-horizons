@@ -1,5 +1,6 @@
 ﻿namespace SharpHorizons.Query.Vectors;
 
+using SharpHorizons.Ephemeris.Vectors;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
