@@ -25,10 +25,10 @@ public interface ITargetStage
     public abstract IOriginStage WithTarget(MajorObjectID majorObjectID);
 
     /// <summary>Describes the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/> as the center of a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>.</summary>
-    /// <param name="majorObjectName">The <see cref="ObjectRadiiInterpretation"/> of a <see cref="MajorObject"/>, the center of which represents the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>
-    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="ObjectRadiiInterpretation"/> can result in multiple matches.</remarks>
+    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of a <see cref="MajorObject"/>, the center of which represents the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>
+    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
     /// <exception cref="ArgumentException"/>
-    public abstract IOriginStage WithTarget(ObjectRadiiInterpretation majorObjectName);
+    public abstract IOriginStage WithTarget(MajorObjectName majorObjectName);
 
     /// <summary>Describes the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/> as a custom <paramref name="coordinate"/> relative to <paramref name="majorObject"/>.</summary>
     /// <param name="majorObject">The <see cref="MajorObject"/>, relative to which <paramref name="coordinate"/> is expressed.</param>
@@ -57,18 +57,18 @@ public interface ITargetStage
     public abstract IOriginStage WithTarget(MajorObjectID majorObjectID, GeodeticCoordinate coordinate);
 
     /// <summary>Describes the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/> as <paramref name="coordinate"/> relative to the center of a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>.</summary>
-    /// <param name="majorObjectName">The <see cref="ObjectRadiiInterpretation"/> of a <see cref="MajorObject"/>, relative to which <paramref name="coordinate"/> is expressed.</param>
+    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of a <see cref="MajorObject"/>, relative to which <paramref name="coordinate"/> is expressed.</param>
     /// <param name="coordinate">The custom <see cref="CylindricalCoordinate"/>, relative to a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>, which represents the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>
-    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="ObjectRadiiInterpretation"/> can result in multiple matches.</remarks>
+    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
     /// <exception cref="ArgumentException"/>
-    public abstract IOriginStage WithTarget(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate);
+    public abstract IOriginStage WithTarget(MajorObjectName majorObjectName, CylindricalCoordinate coordinate);
 
     /// <summary>Describes the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/> as <paramref name="coordinate"/> relative to the center of a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>.</summary>
-    /// <param name="majorObjectName">The <see cref="ObjectRadiiInterpretation"/> of a <see cref="MajorObject"/>, relative to which <paramref name="coordinate"/> is expressed.</param>
+    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of a <see cref="MajorObject"/>, relative to which <paramref name="coordinate"/> is expressed.</param>
     /// <param name="coordinate">The custom <see cref="GeodeticCoordinate"/>, relative to a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>, which represents the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>
-    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="ObjectRadiiInterpretation"/> can result in multiple matches.</remarks>
+    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
     /// <exception cref="ArgumentException"/>
-    public abstract IOriginStage WithTarget(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate);
+    public abstract IOriginStage WithTarget(MajorObjectName majorObjectName, GeodeticCoordinate coordinate);
 
     /// <summary>Describes the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/> as the center of <paramref name="mpcObject"/>.</summary>
     /// <param name="mpcObject">The center of this <see cref="MPCObject"/> represents the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>

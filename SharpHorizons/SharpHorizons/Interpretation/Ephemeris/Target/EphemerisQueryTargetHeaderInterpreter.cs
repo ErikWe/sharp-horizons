@@ -53,18 +53,16 @@ internal sealed class EphemerisQueryTargetHeaderInterpreter : ALineIterativeEphe
 
     protected override bool ValidateHeader(MutableTargetDataInterpretation header) => header.Target is not null;
 
-    Optional<IEphemerisQueryTargetHeader> IInterpreter<IEphemerisQueryTargetHeader>.TryInterpret(IQueryResult queryResult)
+    Optional<IEphemerisQueryTargetHeader> IInterpreter<IEphemerisQueryTargetHeader>.Interpret(IQueryResult queryResult)
     {
         ArgumentNullException.ThrowIfNull(queryResult);
 
-        var result = TryInterpret(queryResult);
-
-        if (result.HasValue is false)
+        if (Interpret(queryResult) is not { HasValue: true, Value: var interpretation })
         {
             return new();
         }
 
-        return result.Value;
+        return interpretation;
     }
 
     /// <summary>A mutable <see cref="IEphemerisQueryTargetHeader"/>.</summary>

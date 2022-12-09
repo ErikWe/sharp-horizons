@@ -24,7 +24,7 @@ internal sealed class ReferenceEllipsoidInterpreter : ITargetReferenceEllipsoidI
         EastPositiveLongitude = FormatLongitudeKey(interpretationOptionsProvider.EastPositiveLongitude);
     }
 
-    Optional<ReferenceEllipsoidInterpretation> IPartInterpreter<ReferenceEllipsoidInterpretation>.TryInterpret(string queryPart)
+    Optional<ReferenceEllipsoidInterpretation> IPartInterpreter<ReferenceEllipsoidInterpretation>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 

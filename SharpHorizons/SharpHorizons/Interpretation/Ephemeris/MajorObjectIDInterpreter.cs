@@ -9,7 +9,7 @@ using System;
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MajorObjectID"/>.</summary>
 internal sealed class MajorObjectIDInterpreter : IPartInterpreter<MajorObjectID>
 {
-    Optional<MajorObjectID> IPartInterpreter<MajorObjectID>.TryInterpret(string queryPart)
+    Optional<MajorObjectID> IPartInterpreter<MajorObjectID>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 

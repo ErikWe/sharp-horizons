@@ -17,7 +17,7 @@ internal sealed class SiteNameInterpreter : IOriginSiteNameInterpreter
         OriginInterpretationOptionsProvider = originInterpretationOptionsProvider;
     }
 
-    Optional<ObservationSiteName> IPartInterpreter<ObservationSiteName>.TryInterpret(string queryPart)
+    Optional<ObservationSiteName> IPartInterpreter<ObservationSiteName>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 

@@ -41,7 +41,7 @@ internal sealed class TargetInterpreter : ITargetInterpreter
         MPCCometInterpreter = mpcCometInterpreter;
     }
 
-    Optional<ITarget> IPartInterpreter<ITarget>.TryInterpret(string queryPart)
+    Optional<ITarget> IPartInterpreter<ITarget>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
@@ -52,22 +52,22 @@ internal sealed class TargetInterpreter : ITargetInterpreter
 
         var identifier = bracketSplit[0].Trim();
 
-        if (MajorObjectInterpreter.TryInterpret(identifier) is { HasValue: true, Value: var majorObject })
+        if (MajorObjectInterpreter.Interpret(identifier) is { HasValue: true, Value: var majorObject })
         {
             return new(TargetFactory.Create(majorObject));
         }
 
-        if (MPCProvisionalObjectInterpreter.TryInterpret(identifier) is { HasValue: true, Value: var mpcProvisionalObject })
+        if (MPCProvisionalObjectInterpreter.Interpret(identifier) is { HasValue: true, Value: var mpcProvisionalObject })
         {
             return new(TargetFactory.Create(mpcProvisionalObject));
         }
 
-        if (MPCObjectInterpreter.TryInterpret(identifier) is { HasValue: true, Value: var mpcObject })
+        if (MPCObjectInterpreter.Interpret(identifier) is { HasValue: true, Value: var mpcObject })
         {
             return new(TargetFactory.Create(mpcObject));
         }
 
-        if (MPCCometInterpreter.TryInterpret(identifier) is { HasValue: true, Value: var mpcComet })
+        if (MPCCometInterpreter.Interpret(identifier) is { HasValue: true, Value: var mpcComet })
         {
             return new(TargetFactory.Create(mpcComet));
         }

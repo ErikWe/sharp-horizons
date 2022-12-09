@@ -15,8 +15,8 @@ public interface IOriginObjectFactory
     public abstract IOriginObject Create(MajorObjectID majorObjectID);
 
     /// <summary>Describes the <see cref="IOriginObject"/> in a query as a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>.</summary>
-    /// <param name="majorObjectName">The <see cref="ObjectRadiiInterpretation"/> of a <see cref="MajorObject"/> which represents the <see cref="IOriginObject"/> in a query.</param>
-    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="ObjectRadiiInterpretation"/> can result in multiple matches.</remarks>
+    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of a <see cref="MajorObject"/> which represents the <see cref="IOriginObject"/> in a query.</param>
+    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
     /// <exception cref="ArgumentException"/>
-    public abstract IOriginObject Create(ObjectRadiiInterpretation majorObjectName);
+    public abstract IOriginObject Create(MajorObjectName majorObjectName);
 }

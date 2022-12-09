@@ -45,19 +45,19 @@ internal sealed class OriginStage : IOriginStage
 
     IEpochStage IOriginStage.WithOrigin(MajorObject majorObject) => Create(OriginFactory.Create(majorObject));
     IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID) => Create(OriginFactory.Create(majorObjectID));
-    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName) => Create(OriginFactory.Create(majorObjectName));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName) => Create(OriginFactory.Create(majorObjectName));
 
     IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObject, coordinate));
     IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObject, coordinate));
 
     IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObjectID, coordinate));
     IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObjectID, coordinate));
-    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
-    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
 
     IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObject, observationSiteID));
     IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObjectID, observationSiteID));
-    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObjectName, observationSiteID));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObjectName, observationSiteID));
 
     /// <summary>Selects <paramref name="origin"/> as the <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="origin">The <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</param>

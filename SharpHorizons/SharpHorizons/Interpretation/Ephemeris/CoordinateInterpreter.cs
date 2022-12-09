@@ -15,7 +15,7 @@ using System.Globalization;
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="GeodeticCoordinate"/> or <see cref="CylindricalCoordinate"/>.</summary>
 internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpreter, ITargetCylindricalCoordinateInterpreter, IOriginGeodeticCoordinateInterpreter, IOriginCylindricalCoordinateInterpreter
 {
-    Optional<GeodeticCoordinate> IPartInterpreter<GeodeticCoordinate>.TryInterpret(string queryPart)
+    Optional<GeodeticCoordinate> IPartInterpreter<GeodeticCoordinate>.Interpret(string queryPart)
     {
         if (Interpret(queryPart) is not (double longitude, double latitude, double altitude))
         {
@@ -25,7 +25,7 @@ internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpret
         return new GeodeticCoordinate(longitude * Longitude.OneDegree, latitude * Latitude.OneDegree, altitude * Height.OneKilometre);
     }
 
-    Optional<CylindricalCoordinate> IPartInterpreter<CylindricalCoordinate>.TryInterpret(string queryPart)
+    Optional<CylindricalCoordinate> IPartInterpreter<CylindricalCoordinate>.Interpret(string queryPart)
     {
         if (Interpret(queryPart) is not (double azimuth, double distance, double height))
         {

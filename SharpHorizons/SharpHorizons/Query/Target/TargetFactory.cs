@@ -41,9 +41,9 @@ public sealed class TargetFactory : ITargetFactory
     public ITarget Create(MajorObjectID majorObjectID) => MajorObjectFactory.Create(majorObjectID);
 
     /// <inheritdoc/>
-    public ITarget Create(ObjectRadiiInterpretation majorObjectName)
+    public ITarget Create(MajorObjectName majorObjectName)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
 
         return MajorObjectFactory.Create(majorObjectName);
     }
@@ -83,18 +83,18 @@ public sealed class TargetFactory : ITargetFactory
     }
 
     /// <inheritdoc/>
-    public ITarget Create(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate)
+    public ITarget Create(MajorObjectName majorObjectName, CylindricalCoordinate coordinate)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
         SharpMeasuresValidation.Validate(coordinate);
 
         return MajorObjectFactory.Create(majorObjectName, coordinate);
     }
 
     /// <inheritdoc/>
-    public ITarget Create(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate)
+    public ITarget Create(MajorObjectName majorObjectName, GeodeticCoordinate coordinate)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
         SharpMeasuresValidation.Validate(coordinate);
 
         return MajorObjectFactory.Create(majorObjectName, coordinate);

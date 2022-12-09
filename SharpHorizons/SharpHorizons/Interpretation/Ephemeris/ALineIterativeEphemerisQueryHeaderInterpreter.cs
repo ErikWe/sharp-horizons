@@ -43,7 +43,7 @@ internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
 
         THeader wrapper(string line, THeader header)
         {
-            if (interpreter.TryInterpret(line) is not { HasValue: true } optionalHeader)
+            if (interpreter.Interpret(line) is not { HasValue: true } optionalHeader)
             {
                 return header;
             }
@@ -72,7 +72,7 @@ internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
 
         THeader wrapper(string line, THeader header)
         {
-            if (interpreter.TryInterpret(line) is not { HasValue: true } optionalHeader)
+            if (interpreter.Interpret(line) is not { HasValue: true } optionalHeader)
             {
                 return header;
             }
@@ -83,7 +83,7 @@ internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
 
     /// <summary>Attempts to interpret <paramref name="queryResult"/>, resulting in an instance of <typeparamref name="THeader"/>.</summary>
     /// <param name="queryResult">This <see cref="IQueryResult"/> is interpreted as an instance of <typeparamref name="THeader"/>, if possible.</param>
-    protected Optional<THeader> TryInterpret(IQueryResult queryResult)
+    protected Optional<THeader> Interpret(IQueryResult queryResult)
     {
         if (ConstructHeader(queryResult) is not { HasValue: true, Value: var header })
         {

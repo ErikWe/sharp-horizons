@@ -10,7 +10,7 @@ using System;
 /// <inheritdoc cref="IOrbitalStateVectorsInterpreter"/>
 internal sealed class OrbitalStateVectorsInterpreter : IOrbitalStateVectorsInterpreter
 {
-    Optional<IOrbitalStateVectorsEphemeris> IInterpreter<IOrbitalStateVectorsEphemeris>.TryInterpret(IQueryResult queryResult)
+    Optional<IOrbitalStateVectorsEphemeris> IInterpreter<IOrbitalStateVectorsEphemeris>.Interpret(IQueryResult queryResult)
     {
         ArgumentNullException.ThrowIfNull(queryResult);
 

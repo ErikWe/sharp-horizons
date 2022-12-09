@@ -60,9 +60,9 @@ public sealed class OriginFactory : IOriginFactory
     public IOrigin Create(MajorObjectID majorObjectID) => CreateOrigin(CreateOriginObject(majorObjectID));
 
     /// <inheritdoc/>
-    public IOrigin Create(ObjectRadiiInterpretation majorObjectName)
+    public IOrigin Create(MajorObjectName majorObjectName)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
 
         return CreateOrigin(CreateOriginObject(majorObjectName));
     }
@@ -101,18 +101,18 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate)
+    public IOrigin Create(MajorObjectName majorObjectName, CylindricalCoordinate coordinate)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
         SharpMeasuresValidation.Validate(coordinate);
 
         return CreateOrigin(CreateOriginObject(majorObjectName), CreateOriginCoordinate(coordinate));
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate)
+    public IOrigin Create(MajorObjectName majorObjectName, GeodeticCoordinate coordinate)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
         SharpMeasuresValidation.Validate(coordinate);
 
         return CreateOrigin(CreateOriginObject(majorObjectName), CreateOriginCoordinate(coordinate));
@@ -136,9 +136,9 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, ObservationSiteID observationSiteID)
+    public IOrigin Create(MajorObjectName majorObjectName, ObservationSiteID observationSiteID)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
         ObservationSiteID.Validate(observationSiteID);
 
         return CreateOrigin(CreateOriginObject(majorObjectName), observationSiteID);
@@ -162,9 +162,9 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, ObservationSite observationSite)
+    public IOrigin Create(MajorObjectName majorObjectName, ObservationSite observationSite)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
         ArgumentNullException.ThrowIfNull(observationSite);
 
         return Create(majorObjectName, observationSite.ID);
@@ -190,8 +190,8 @@ public sealed class OriginFactory : IOriginFactory
     /// <inheritdoc cref="IOriginObjectFactory.Create(MajorObjectID)"/>
     private IOriginObject CreateOriginObject(MajorObjectID majorObjectID) => OriginObjectFactory.Create(majorObjectID);
 
-    /// <inheritdoc cref="IOriginObjectFactory.Create(ObjectRadiiInterpretation)"/>
-    private IOriginObject CreateOriginObject(ObjectRadiiInterpretation majorObjectName) => OriginObjectFactory.Create(majorObjectName);
+    /// <inheritdoc cref="IOriginObjectFactory.Create(MajorObjectName)"/>
+    private IOriginObject CreateOriginObject(MajorObjectName majorObjectName) => OriginObjectFactory.Create(majorObjectName);
 
     /// <summary>Describes the <see cref="IOriginCoordinate"/> in a query as <paramref name="coordinate"/>.</summary>
     /// <param name="coordinate">This <see cref="CylindricalCoordinate"/> represents the <see cref="IOriginCoordinate"/> in a query.</param>

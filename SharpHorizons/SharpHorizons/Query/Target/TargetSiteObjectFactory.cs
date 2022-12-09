@@ -13,14 +13,14 @@ internal sealed class TargetSiteObjectFactory : ITargetSiteObjectFactory
     /// <summary>Composes <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObjectID"/>.</summary>
     private ITargetSiteObjectComposer<MajorObjectID> MajorObjectIDComposer { get; }
 
-    /// <summary>Composes <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="ObjectRadiiInterpretation"/>.</summary>
-    private ITargetSiteObjectComposer<ObjectRadiiInterpretation> MajorObjectNameComposer { get; }
+    /// <summary>Composes <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
+    private ITargetSiteObjectComposer<MajorObjectName> MajorObjectNameComposer { get; }
 
     /// <inheritdoc cref="TargetSiteObjectFactory"/>
     /// <param name="majorObjectComposer"><inheritdoc cref="MajorObjectComposer" path="/summary"/></param>
     /// <param name="majorObjectIDComposer"><inheritdoc cref="MajorObjectIDComposer" path="/summary"/></param>
     /// <param name="majorObjectNameComposer"><inheritdoc cref="MajorObjectNameComposer" path="/summary"/></param>
-    public TargetSiteObjectFactory(ITargetSiteObjectComposer<MajorObject>? majorObjectComposer = null, ITargetSiteObjectComposer<MajorObjectID>? majorObjectIDComposer = null, ITargetSiteObjectComposer<ObjectRadiiInterpretation>? majorObjectNameComposer = null)
+    public TargetSiteObjectFactory(ITargetSiteObjectComposer<MajorObject>? majorObjectComposer = null, ITargetSiteObjectComposer<MajorObjectID>? majorObjectIDComposer = null, ITargetSiteObjectComposer<MajorObjectName>? majorObjectNameComposer = null)
     {
         MajorObjectIDComposer? defaultMajorObjectIDComposer = null;
 
@@ -43,9 +43,9 @@ internal sealed class TargetSiteObjectFactory : ITargetSiteObjectFactory
 
     ITargetSiteObject ITargetSiteObjectFactory.Create(MajorObjectID majorObjectID) => new MajorObjectIDTargetSiteObject(majorObjectID, MajorObjectIDComposer);
 
-    ITargetSiteObject ITargetSiteObjectFactory.Create(ObjectRadiiInterpretation majorObjectName)
+    ITargetSiteObject ITargetSiteObjectFactory.Create(MajorObjectName majorObjectName)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
 
         return new MajorObjectNameTargetSiteObject(majorObjectName, MajorObjectNameComposer);
     }

@@ -40,15 +40,15 @@ internal sealed class TargetStage : ITargetStage
     IOriginStage ITargetStage.WithTarget(MajorObject majorObject) => Create(TargetFactory.Create(majorObject));
 
     IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID) => Create(TargetFactory.Create(majorObjectID));
-    IOriginStage ITargetStage.WithTarget(ObjectRadiiInterpretation majorObjectName) => Create(TargetFactory.Create(majorObjectName));
+    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName) => Create(TargetFactory.Create(majorObjectName));
 
     IOriginStage ITargetStage.WithTarget(MajorObject majorObject, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObject, coordinate));
     IOriginStage ITargetStage.WithTarget(MajorObject majorObject, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObject, coordinate));
 
     IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObjectID, coordinate));
     IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObjectID, coordinate));
-    IOriginStage ITargetStage.WithTarget(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
-    IOriginStage ITargetStage.WithTarget(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
+    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
+    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
 
     IOriginStage ITargetStage.WithTarget(MPCObject mpcObject) => Create(TargetFactory.Create(mpcObject));
     IOriginStage ITargetStage.WithTarget(MPCProvisionalObject mpcObject) => Create(TargetFactory.Create(mpcObject));

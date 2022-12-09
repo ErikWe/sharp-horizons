@@ -10,7 +10,7 @@ using System;
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCProvisionalDesignation"/>.</summary>
 internal sealed class MPCProvisionalDesignationInterpreter : IPartInterpreter<MPCProvisionalDesignation>
 {
-    Optional<MPCProvisionalDesignation> IPartInterpreter<MPCProvisionalDesignation>.TryInterpret(string queryPart)
+    Optional<MPCProvisionalDesignation> IPartInterpreter<MPCProvisionalDesignation>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 

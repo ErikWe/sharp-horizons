@@ -25,7 +25,7 @@ internal sealed class OriginInterpreter : IOriginInterpreter
         MajorObjectInterpreter = majorObjectInterpreter;
     }
 
-    Optional<IOrigin> IPartInterpreter<IOrigin>.TryInterpret(string queryPart)
+    Optional<IOrigin> IPartInterpreter<IOrigin>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
@@ -36,7 +36,7 @@ internal sealed class OriginInterpreter : IOriginInterpreter
 
         var identifier = bracketSplit[0].Trim();
 
-        if (MajorObjectInterpreter.TryInterpret(identifier) is { HasValue: true, Value: var majorObject })
+        if (MajorObjectInterpreter.Interpret(identifier) is { HasValue: true, Value: var majorObject })
         {
             return new(OriginFactory.Create(majorObject));
         }

@@ -4,14 +4,14 @@ using SharpHorizons.Query.Arguments.Composers.Origin;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Describes the <see cref="IOriginObject"/> in a query as an object identified by a <see cref="ObjectRadiiInterpretation"/>.</summary>
+/// <summary>Describes the <see cref="IOriginObject"/> in a query as an object identified by a <see cref="MajorObjectName"/>.</summary>
 internal sealed record class MajorObjectNameOrigin : IOriginObject
 {
-    /// <summary>The <see cref="ObjectRadiiInterpretation"/> of an object which represents the <see cref="IOriginObject"/> in a query.</summary>
-    public required ObjectRadiiInterpretation Name { private get; init; }
+    /// <summary>The <see cref="MajorObjectName"/> of an object which represents the <see cref="IOriginObject"/> in a query.</summary>
+    public required MajorObjectName Name { private get; init; }
 
     /// <summary>Used to compose a <see cref="OriginObjectIdentifier"/> describing <see langword="this"/>.</summary>
-    public required IOriginObjectComposer<ObjectRadiiInterpretation> Composer { private get; init; }
+    public required IOriginObjectComposer<MajorObjectName> Composer { private get; init; }
 
     /// <inheritdoc cref="MajorObjectNameOrigin"/>
     public MajorObjectNameOrigin() { }
@@ -20,7 +20,7 @@ internal sealed record class MajorObjectNameOrigin : IOriginObject
     /// <param name="name"><inheritdoc cref="Name" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public MajorObjectNameOrigin(ObjectRadiiInterpretation name, IOriginObjectComposer<ObjectRadiiInterpretation> composer)
+    public MajorObjectNameOrigin(MajorObjectName name, IOriginObjectComposer<MajorObjectName> composer)
     {
         Name = name;
 

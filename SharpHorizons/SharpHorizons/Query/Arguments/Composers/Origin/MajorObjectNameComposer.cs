@@ -2,12 +2,12 @@
 
 using SharpHorizons.Query.Origin;
 
-/// <summary>Composes <see cref="OriginObjectIdentifier"/> that describe <see cref="ObjectRadiiInterpretation"/>.</summary>
-internal sealed class MajorObjectNameComposer : IOriginObjectComposer<ObjectRadiiInterpretation>
+/// <summary>Composes <see cref="OriginObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
+internal sealed class MajorObjectNameComposer : IOriginObjectComposer<MajorObjectName>
 {
-    OriginObjectIdentifier IOriginObjectComposer<ObjectRadiiInterpretation>.Compose(ObjectRadiiInterpretation obj)
+    OriginObjectIdentifier IOriginObjectComposer<MajorObjectName>.Compose(MajorObjectName obj)
     {
-        ObjectRadiiInterpretation.Validate(obj);
+        MajorObjectName.Validate(obj);
 
         return new(obj.Value);
     }

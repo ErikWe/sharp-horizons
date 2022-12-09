@@ -20,7 +20,7 @@ internal sealed class MPCProvisionalObjectInterpreter : IPartInterpreter<MPCProv
         MPCProvisionalDesignationInterpreter = mpcProvisionalDesignationInterpreter;
     }
 
-    Optional<MPCProvisionalObject> IPartInterpreter<MPCProvisionalObject>.TryInterpret(string queryPart)
+    Optional<MPCProvisionalObject> IPartInterpreter<MPCProvisionalObject>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
@@ -29,7 +29,7 @@ internal sealed class MPCProvisionalObjectInterpreter : IPartInterpreter<MPCProv
             return new();
         }
 
-        if (MPCProvisionalDesignationInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var designation })
+        if (MPCProvisionalDesignationInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var designation })
         {
             return new();
         }

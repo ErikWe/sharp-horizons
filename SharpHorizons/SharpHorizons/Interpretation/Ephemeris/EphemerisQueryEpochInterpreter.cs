@@ -24,7 +24,7 @@ internal sealed class EphemerisQueryEpochInterpreter : IEphemerisQueryEpochInter
         JPLTimeZone = timeZoneProvider[interpretationsOptionsProvider.HorizonsTimeZoneID];
     }
 
-    Optional<IEpoch> IPartInterpreter<IEpoch>.TryInterpret(string queryPart)
+    Optional<IEpoch> IPartInterpreter<IEpoch>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 

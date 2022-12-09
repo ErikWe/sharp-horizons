@@ -30,21 +30,21 @@ internal sealed class MPCObjectInterpreter : IPartInterpreter<MPCObject>
         MPCNameInterpreter = mpcNameInterpreter;
     }
 
-    Optional<MPCObject> IPartInterpreter<MPCObject>.TryInterpret(string queryPart)
+    Optional<MPCObject> IPartInterpreter<MPCObject>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
-        if (MPCSequentialNumberInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var number })
+        if (MPCSequentialNumberInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var number })
         {
             return new();
         }
 
-        if (MPCProvisionalDesignationInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var designation })
+        if (MPCProvisionalDesignationInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var designation })
         {
             return new();
         }
 
-        if (MPCNameInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var name })
+        if (MPCNameInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var name })
         {
             return MPCObject.Unnamed(number, designation);
         }

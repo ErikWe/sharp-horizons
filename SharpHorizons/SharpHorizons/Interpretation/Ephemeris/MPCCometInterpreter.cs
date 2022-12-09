@@ -25,16 +25,16 @@ internal sealed class MPCCometInterpreter : IPartInterpreter<MPCComet>
         MPCCometNameInterpreter = mpcCometNameInterpreter;
     }
 
-    Optional<MPCComet> IPartInterpreter<MPCComet>.TryInterpret(string queryPart)
+    Optional<MPCComet> IPartInterpreter<MPCComet>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
-        if (MPCCometDesignationInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var designation })
+        if (MPCCometDesignationInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var designation })
         {
             return new();
         }
 
-        if (MPCCometNameInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var name })
+        if (MPCCometNameInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var name })
         {
             return new MPCComet(designation);
         }

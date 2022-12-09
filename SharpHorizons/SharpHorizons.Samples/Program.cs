@@ -46,7 +46,7 @@ internal class Program
         var textResult = await httpTextExtractor.ExtractAsync(httpResult);
         var vectorsHeader = vectorsHeaderInterpreter.Interpret(textResult);
 
-        Console.WriteLine(vectorsHeader.TargetHeader.Target.ComposeArgument());
+        Console.WriteLine(vectorsHeader.Value.TargetHeader.Target.ComposeArgument());
     }
 
     private static void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configuration)

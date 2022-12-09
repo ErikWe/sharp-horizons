@@ -13,16 +13,16 @@ public sealed record class MajorObject
     /// <summary>The <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>.</summary>
     public required MajorObjectID ID { get; init; }
 
-    /// <summary>The <see cref="ObjectRadiiInterpretation"/> of the <see cref="MajorObject"/>, or <see langword="null"/> if the <see cref="MajorObject"/> is unnamed.</summary>
+    /// <summary>The <see cref="MajorObjectName"/> of the <see cref="MajorObject"/>, or <see langword="null"/> if the <see cref="MajorObject"/> is unnamed.</summary>
     /// <exception cref="ArgumentException"/>
-    public ObjectRadiiInterpretation? Name
+    public MajorObjectName? Name
     {
         get => name;
         init
         {
             if (value is not null)
             {
-                ObjectRadiiInterpretation.Validate(value.Value);
+                MajorObjectName.Validate(value.Value);
             }
 
             name = value;
@@ -58,11 +58,11 @@ public sealed record class MajorObject
     /// <param name="name"><inheritdoc cref="Name" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     [SetsRequiredMembers]
-    public MajorObject(MajorObjectID id, ObjectRadiiInterpretation? name)
+    public MajorObject(MajorObjectID id, MajorObjectName? name)
     {
         if (name is not null)
         {
-            ObjectRadiiInterpretation.Validate(name.Value);
+            MajorObjectName.Validate(name.Value);
         }
 
         ID = id;
@@ -70,7 +70,7 @@ public sealed record class MajorObject
     }
 
     /// <summary>Backing field for <see cref="Name"/>. Should not be used elsewhere.</summary>
-    private readonly ObjectRadiiInterpretation? name = null;
+    private readonly MajorObjectName? name = null;
 
     /// <summary>Backing field for <see cref="LongitudeDefinition"/>. Should not be used elsewhere.</summary>
     private readonly LongitudeDefinition longitudeDefinition = LongitudeDefinition.Unknown;

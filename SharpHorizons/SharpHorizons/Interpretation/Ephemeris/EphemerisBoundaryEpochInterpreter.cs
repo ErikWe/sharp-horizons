@@ -32,7 +32,7 @@ internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochIn
         InterpretationOptionsProvider = interpretationOptionsProvider;
     }
 
-    Optional<IStartEpoch> IPartInterpreter<IStartEpoch>.TryInterpret(string queryPart)
+    Optional<IStartEpoch> IPartInterpreter<IStartEpoch>.Interpret(string queryPart)
     {
         if (Interpret(queryPart) is EphemerisBoundaryEpoch epoch)
         {
@@ -42,7 +42,7 @@ internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochIn
         return new();
     }
 
-    Optional<IStopEpoch> IPartInterpreter<IStopEpoch>.TryInterpret(string queryPart)
+    Optional<IStopEpoch> IPartInterpreter<IStopEpoch>.Interpret(string queryPart)
     {
         if (Interpret(queryPart) is EphemerisBoundaryEpoch epoch)
         {

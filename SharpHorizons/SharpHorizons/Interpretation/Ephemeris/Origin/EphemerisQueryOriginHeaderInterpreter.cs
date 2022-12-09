@@ -53,18 +53,16 @@ internal sealed class EphemerisQueryOriginHeaderInterpreter : ALineIterativeEphe
 
     protected override bool ValidateHeader(MutableOriginDataInterpretation header) => header.Origin is not null;
 
-    Optional<IEphemerisQueryOriginHeader> IInterpreter<IEphemerisQueryOriginHeader>.TryInterpret(IQueryResult queryResult)
+    Optional<IEphemerisQueryOriginHeader> IInterpreter<IEphemerisQueryOriginHeader>.Interpret(IQueryResult queryResult)
     {
         ArgumentNullException.ThrowIfNull(queryResult);
 
-        var result = TryInterpret(queryResult);
-
-        if (result.HasValue is false)
+        if (Interpret(queryResult) is not { HasValue: true, Value: var interpretation })
         {
             return new();
         }
 
-        return result.Value;
+        return interpretation;
     }
 
     /// <summary>A mutable <see cref="IEphemerisQueryOriginHeader"/>.</summary>

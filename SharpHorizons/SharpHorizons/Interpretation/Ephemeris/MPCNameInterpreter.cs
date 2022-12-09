@@ -10,7 +10,7 @@ using System;
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCName"/>.</summary>
 internal sealed class MPCNameInterpreter : IPartInterpreter<MPCName>
 {
-    Optional<MPCName> IPartInterpreter<MPCName>.TryInterpret(string queryPart)
+    Optional<MPCName> IPartInterpreter<MPCName>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 

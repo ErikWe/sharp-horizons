@@ -23,7 +23,7 @@ internal sealed class RadiiInterpreter : ITargetRadiiInterpreter, IOriginRadiiIn
         InterpretationOptionsProvider = interpretationOptionsProvider;
     }
 
-    Optional<ObjectRadiiInterpretation> IPartInterpreter<ObjectRadiiInterpretation>.TryInterpret(string queryPart)
+    Optional<ObjectRadiiInterpretation> IPartInterpreter<ObjectRadiiInterpretation>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 

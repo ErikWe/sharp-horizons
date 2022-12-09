@@ -74,7 +74,7 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
 
     protected override Optional<MutableVectorsQueryHeader> ConstructHeader(IQueryResult queryResult)
     {
-        if (TargetHeaderInterpreter.TryInterpret(queryResult) is not { HasValue: true, Value: var target } || OriginHeaderInterpreter.TryInterpret(queryResult) is not { HasValue: true, Value: var origin })
+        if (TargetHeaderInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var target } || OriginHeaderInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var origin })
         {
             return new();
         }
@@ -84,18 +84,16 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
 
     protected override bool ValidateHeader(MutableVectorsQueryHeader header) => header.QueryTime is not null && header.StartTime is not null && header.StopTime is not null;
 
-    Optional<IVectorsQueryHeader> IInterpreter<IVectorsQueryHeader>.TryInterpret(IQueryResult queryResult)
+    Optional<IVectorsQueryHeader> IInterpreter<IVectorsQueryHeader>.Interpret(IQueryResult queryResult)
     {
         ArgumentNullException.ThrowIfNull(queryResult);
 
-        var result = TryInterpret(queryResult);
-
-        if (result.HasValue is false)
+        if (Interpret(queryResult) is not { HasValue: true, Value: var interpretation })
         {
             return new();
         }
 
-        return result.Value;
+        return interpretation;
     }
 
     /// <summary>A mutable <see cref="IVectorsQueryHeader"/>.</summary>

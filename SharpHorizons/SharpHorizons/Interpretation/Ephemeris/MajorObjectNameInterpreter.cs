@@ -6,10 +6,10 @@ using SharpHorizons.Query.Result;
 
 using System;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="SharpHorizons.ObjectRadiiInterpretation"/>.</summary>
-internal sealed class MajorObjectNameInterpreter : IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation>
+/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MajorObjectName"/>.</summary>
+internal sealed class MajorObjectNameInterpreter : IPartInterpreter<MajorObjectName>
 {
-    Optional<SharpHorizons.ObjectRadiiInterpretation> IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation>.TryInterpret(string queryPart)
+    Optional<MajorObjectName> IPartInterpreter<MajorObjectName>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
@@ -22,6 +22,6 @@ internal sealed class MajorObjectNameInterpreter : IPartInterpreter<SharpHorizon
             return new();
         }
 
-        return new SharpHorizons.ObjectRadiiInterpretation(name);
+        return new MajorObjectName(name);
     }
 }

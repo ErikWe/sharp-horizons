@@ -123,7 +123,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<ITargetSiteObjectComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
         services.AddSingleton<ITargetSiteObjectComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetSiteObjectComposer<ObjectRadiiInterpretation>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
 
         return services;
     }
@@ -140,7 +140,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<IOriginObjectComposer<MajorObject>, Query.Arguments.Composers.Origin.MajorObjectComposer>();
         services.AddSingleton<IOriginObjectComposer<MajorObjectID>, Query.Arguments.Composers.Origin.MajorObjectIDComposer>();
-        services.AddSingleton<IOriginObjectComposer<ObjectRadiiInterpretation>, Query.Arguments.Composers.Origin.MajorObjectNameComposer>();
+        services.AddSingleton<IOriginObjectComposer<MajorObjectName>, Query.Arguments.Composers.Origin.MajorObjectNameComposer>();
 
         return services;
     }
@@ -203,7 +203,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<ITargetComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
         services.AddSingleton<ITargetComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetComposer<ObjectRadiiInterpretation>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
 
         services.AddSingleton<ITargetComposer<MPCObject>, MPCObjectTargetComposer>();
         services.AddSingleton<ITargetComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
@@ -276,7 +276,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<IPartInterpreter<MajorObject>, MajorObjectInterpreter>();
         services.AddSingleton<IPartInterpreter<MajorObjectID>, MajorObjectIDInterpreter>();
-        services.AddSingleton<IPartInterpreter<ObjectRadiiInterpretation>, MajorObjectNameInterpreter>();
+        services.AddSingleton<IPartInterpreter<MajorObjectName>, MajorObjectNameInterpreter>();
 
         services.AddSingleton<IPartInterpreter<MPCObject>, MPCObjectInterpreter>();
         services.AddSingleton<IPartInterpreter<MPCProvisionalObject>, MPCProvisionalObjectInterpreter>();

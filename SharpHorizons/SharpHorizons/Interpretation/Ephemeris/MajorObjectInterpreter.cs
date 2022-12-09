@@ -13,27 +13,27 @@ internal sealed class MajorObjectInterpreter : IPartInterpreter<MajorObject>
     private IPartInterpreter<MajorObjectID> MajorObjectIDInterpreter { get; }
 
     /// <inheritdoc cref="Ephemeris.MajorObjectNameInterpreter"/>
-    private IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation> MajorObjectNameInterpreter { get; }
+    private IPartInterpreter<SharpHorizons.MajorObjectName> MajorObjectNameInterpreter { get; }
 
     /// <inheritdoc cref="MajorObjectInterpreter"/>
     /// <param name="majorObjectIDInterpreter"><inheritdoc cref="MajorObjectIDInterpreter" path="/summary"/></param>
     /// <param name="majorObjectNameInterpreter"><inheritdoc cref="MajorObjectNameInterpreter" path="/summary"/></param>
-    public MajorObjectInterpreter(IPartInterpreter<MajorObjectID> majorObjectIDInterpreter, IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation> majorObjectNameInterpreter)
+    public MajorObjectInterpreter(IPartInterpreter<MajorObjectID> majorObjectIDInterpreter, IPartInterpreter<SharpHorizons.MajorObjectName> majorObjectNameInterpreter)
     {
         MajorObjectIDInterpreter = majorObjectIDInterpreter;
         MajorObjectNameInterpreter = majorObjectNameInterpreter;
     }
 
-    Optional<MajorObject> IPartInterpreter<MajorObject>.TryInterpret(string queryPart)
+    Optional<MajorObject> IPartInterpreter<MajorObject>.Interpret(string queryPart)
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
-        if (MajorObjectIDInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var id })
+        if (MajorObjectIDInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var id })
         {
             return new();
         }
 
-        if (MajorObjectNameInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var name })
+        if (MajorObjectNameInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var name })
         {
             return new MajorObject(id);
         }

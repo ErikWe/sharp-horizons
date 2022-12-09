@@ -13,14 +13,14 @@ internal sealed class OriginObjectFactory : IOriginObjectFactory
     /// <summary>Used to compose <see cref="OriginObjectIdentifier"/> that describe <see cref="MajorObjectID"/>.</summary>
     private IOriginObjectComposer<MajorObjectID> MajorObjectIDComposer { get; }
 
-    /// <summary>Used to compose <see cref="OriginObjectIdentifier"/> that describe <see cref="ObjectRadiiInterpretation"/>.</summary>
-    private IOriginObjectComposer<ObjectRadiiInterpretation> MajorObjectNameComposer { get; }
+    /// <summary>Used to compose <see cref="OriginObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
+    private IOriginObjectComposer<MajorObjectName> MajorObjectNameComposer { get; }
 
     /// <inheritdoc cref="OriginObjectFactory"/>
     /// <param name="majorObjectComposer"><inheritdoc cref="MajorObjectComposer" path="/summary"/></param>
     /// <param name="majorObjectIDComposer"><inheritdoc cref="MajorObjectIDComposer" path="/summary"/></param>
     /// <param name="majorObjectNameComposer"><inheritdoc cref="MajorObjectNameComposer" path="/summary"/></param>
-    public OriginObjectFactory(IOriginObjectComposer<MajorObject>? majorObjectComposer = null, IOriginObjectComposer<MajorObjectID>? majorObjectIDComposer = null, IOriginObjectComposer<ObjectRadiiInterpretation>? majorObjectNameComposer = null)
+    public OriginObjectFactory(IOriginObjectComposer<MajorObject>? majorObjectComposer = null, IOriginObjectComposer<MajorObjectID>? majorObjectIDComposer = null, IOriginObjectComposer<MajorObjectName>? majorObjectNameComposer = null)
     {
         majorObjectIDComposer ??= new MajorObjectIDComposer();
 
@@ -37,9 +37,9 @@ internal sealed class OriginObjectFactory : IOriginObjectFactory
     }
 
     IOriginObject IOriginObjectFactory.Create(MajorObjectID majorObjectID) => new MajorObjectIDOrigin(majorObjectID, MajorObjectIDComposer);
-    IOriginObject IOriginObjectFactory.Create(ObjectRadiiInterpretation majorObjectName)
+    IOriginObject IOriginObjectFactory.Create(MajorObjectName majorObjectName)
     {
-        ObjectRadiiInterpretation.Validate(majorObjectName);
+        MajorObjectName.Validate(majorObjectName);
 
         return new MajorObjectNameOrigin(majorObjectName, MajorObjectNameComposer);
     }
