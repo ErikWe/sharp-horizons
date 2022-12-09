@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 
 using SharpMeasures.Astronomy;
 
@@ -9,13 +9,13 @@ using System;
 /// <summary>Handles construction of <see cref="ITarget"/>.</summary>
 public sealed class TargetFactory : ITargetFactory
 {
-    /// <summary><inheritdoc cref="IMajorObjectTargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IMajorObjectTargetFactory"/>
     private IMajorObjectTargetFactory MajorObjectFactory { get; }
 
-    /// <summary><inheritdoc cref="IMPCTargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IMPCTargetFactory"/>
     private IMPCTargetFactory MPCFactory { get; }
 
-    /// <summary><inheritdoc cref="IMPCCometTargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IMPCCometTargetFactory"/>
     private IMPCCometTargetFactory MPCCometFactory { get; }
 
     /// <inheritdoc cref="TargetFactory"/>
@@ -41,12 +41,18 @@ public sealed class TargetFactory : ITargetFactory
     public ITarget Create(MajorObjectID majorObjectID) => MajorObjectFactory.Create(majorObjectID);
 
     /// <inheritdoc/>
-    public ITarget Create(MajorObjectName majorObjectName) => MajorObjectFactory.Create(majorObjectName);
+    public ITarget Create(ObjectRadiiInterpretation majorObjectName)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+
+        return MajorObjectFactory.Create(majorObjectName);
+    }
 
     /// <inheritdoc/>
     public ITarget Create(MajorObject majorObject, CylindricalCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
+        SharpMeasuresValidation.Validate(coordinate);
 
         return MajorObjectFactory.Create(majorObject, coordinate);
     }
@@ -55,21 +61,44 @@ public sealed class TargetFactory : ITargetFactory
     public ITarget Create(MajorObject majorObject, GeodeticCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
+        SharpMeasuresValidation.Validate(coordinate);
 
         return MajorObjectFactory.Create(majorObject, coordinate);
     }
 
     /// <inheritdoc/>
-    public ITarget Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => MajorObjectFactory.Create(majorObjectID, coordinate);
+    public ITarget Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return MajorObjectFactory.Create(majorObjectID, coordinate);
+    }
 
     /// <inheritdoc/>
-    public ITarget Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => MajorObjectFactory.Create(majorObjectID, coordinate);
+    public ITarget Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return MajorObjectFactory.Create(majorObjectID, coordinate);
+    }
 
     /// <inheritdoc/>
-    public ITarget Create(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => MajorObjectFactory.Create(majorObjectName, coordinate);
+    public ITarget Create(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return MajorObjectFactory.Create(majorObjectName, coordinate);
+    }
 
     /// <inheritdoc/>
-    public ITarget Create(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => MajorObjectFactory.Create(majorObjectName, coordinate);
+    public ITarget Create(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return MajorObjectFactory.Create(majorObjectName, coordinate);
+    }
 
     /// <inheritdoc/>
     public ITarget Create(MPCObject mpcObject)
@@ -80,13 +109,28 @@ public sealed class TargetFactory : ITargetFactory
     }
 
     /// <inheritdoc/>
-    public ITarget Create(MPCProvisionalObject mpcObject) => MPCFactory.Create(mpcObject);
+    public ITarget Create(MPCProvisionalObject mpcObject)
+    {
+        MPCProvisionalObject.Validate(mpcObject);
+
+        return MPCFactory.Create(mpcObject);
+    }
 
     /// <inheritdoc/>
-    public ITarget Create(MPCName mpcName) => MPCFactory.Create(mpcName);
+    public ITarget Create(MPCName mpcName)
+    {
+        MPCName.Validate(mpcName);
+
+        return MPCFactory.Create(mpcName);
+    }
 
     /// <inheritdoc/>
-    public ITarget Create(MPCProvisionalDesignation mpcDesignation) => MPCFactory.Create(mpcDesignation);
+    public ITarget Create(MPCProvisionalDesignation mpcDesignation)
+    {
+        MPCProvisionalDesignation.Validate(mpcDesignation);
+
+        return MPCFactory.Create(mpcDesignation);
+    }
 
     /// <inheritdoc/>
     public ITarget Create(MPCSequentialNumber mpcNumber) => MPCFactory.Create(mpcNumber);
@@ -100,8 +144,18 @@ public sealed class TargetFactory : ITargetFactory
     }
 
     /// <inheritdoc/>
-    public ITarget Create(MPCCometName mpcCometName) => MPCCometFactory.Create(mpcCometName);
+    public ITarget Create(MPCCometName mpcCometName)
+    {
+        MPCCometName.Validate(mpcCometName);
+
+        return MPCCometFactory.Create(mpcCometName);
+    }
 
     /// <inheritdoc/>
-    public ITarget Create(MPCCometDesignation mpcCometDesignation) => MPCCometFactory.Create(mpcCometDesignation);
+    public ITarget Create(MPCCometDesignation mpcCometDesignation)
+    {
+        MPCCometDesignation.Validate(mpcCometDesignation);
+
+        return MPCCometFactory.Create(mpcCometDesignation);
+    }
 }

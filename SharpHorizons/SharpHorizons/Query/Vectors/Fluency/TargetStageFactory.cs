@@ -5,10 +5,10 @@ using SharpHorizons.Query.Target;
 /// <inheritdoc cref="ITargetStageFactory"/>
 internal sealed class TargetStageFactory : ITargetStageFactory
 {
-    /// <summary><inheritdoc cref="ITargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="ITargetFactory"/>
     private ITargetFactory TargetFactory { get; }
 
-    /// <summary><inheritdoc cref="IOriginStageFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IOriginStageFactory"/>
     private IOriginStageFactory OriginStageFactory { get; }
 
     /// <inheritdoc cref="TargetStageFactory"/>

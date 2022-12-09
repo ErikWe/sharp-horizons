@@ -3,6 +3,8 @@
 /// <summary>Specifies an ephemeris type.</summary>
 public enum EphemerisType
 {
+    /// <summary>The <see cref="EphemerisType"/> is unknown.</summary>
+    Unknown,
     /// <summary>Ephemeris of observable states.</summary>
     Observables,
     /// <summary>Ephemeris of orbital state vectors.</summary>

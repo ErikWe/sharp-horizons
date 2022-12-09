@@ -2,8 +2,10 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
+
+using System;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCComet"/>.</summary>
 internal sealed class MPCCometInterpreter : IPartInterpreter<MPCComet>
@@ -25,6 +27,8 @@ internal sealed class MPCCometInterpreter : IPartInterpreter<MPCComet>
 
     Optional<MPCComet> IPartInterpreter<MPCComet>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (MPCCometDesignationInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var designation })
         {
             return new();

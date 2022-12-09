@@ -5,6 +5,7 @@ using SharpHorizons.Query.Target;
 
 using SharpMeasures;
 
+using System;
 using System.ComponentModel;
 
 /// <summary>Handles construction of <see cref="IFixedStepSize"/>, describing the <see cref="IStepSize"/> in a query using a fixed <see cref="Time"/>.</summary>
@@ -12,6 +13,8 @@ public interface IFixedStepSizeFactory
 {
     /// <summary>Describes the <see cref="IStepSize"/> in a query using a fixed <see cref="Time"/> difference <paramref name="deltaTime"/>.</summary>
     /// <param name="deltaTime"><inheritdoc cref="IFixedStepSize.DeltaTime" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public abstract IFixedStepSize Create(Time deltaTime);
 }
 
@@ -20,6 +23,7 @@ public interface IUniformStepSizeFactory
 {
     /// <summary>Describes the <see cref="IStepSize"/> in a query using <paramref name="stepCount"/> uniformly distributed steps.</summary>
     /// <param name="stepCount"><inheritdoc cref="IUniformStepSize.StepCount" path="/summary"/></param>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public abstract IUniformStepSize Create(int stepCount);
 }
 
@@ -30,6 +34,8 @@ public interface ICalendarStepSizeFactory
     /// <summary>Describes the <see cref="IStepSize"/> in a query such that each step represents <paramref name="count"/> of some calendar-based <paramref name="unit"/>.</summary>
     /// <param name="count">Describes the size of each attempted step, with the intended <see cref="CalendarStepSizeUnit"/> being specified through <paramref name="unit"/>. A step is skipped if the resulting date does not exist.</param>
     /// <param name="unit">Determines the calendar-based unit that each step is based on - with <paramref name="count"/> scaling the <see cref="CalendarStepSizeUnit"/> by some <see cref="int"/> value.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract ICalendarStepSize Create(int count, CalendarStepSizeUnit unit);
 }
@@ -40,5 +46,7 @@ public interface IAngularStepSizeFactory
 {
     /// <summary>Describes the <see cref="IStepSize"/> in a query as the variable amount of time it takes for the position of the <see cref="ITarget"/> to change by <paramref name="deltaAngle"/>, as seen from the <see cref="IOrigin"/>.</summary>
     /// <param name="deltaAngle"><inheritdoc cref="IAngularStepSize.DeltaAngle" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public abstract IAngularStepSize Create(Angle deltaAngle);
 }

@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 
@@ -16,7 +15,9 @@ public interface IFixedEpochRangeFactory
     /// <param name="startEpoch">The start-point of the timespan, with <paramref name="stopEpoch"/> representing the stop-point.</param>
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
     /// <param name="deltaTime"><inheritdoc cref="IFixedStepSize.DeltaTime" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public abstract IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, Time deltaTime);
 }
 
@@ -28,6 +29,7 @@ public interface IUniformEpochRangeFactory
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
     /// <param name="stepCount"><inheritdoc cref="IUniformStepSize.StepCount" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public abstract IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, int stepCount);
 }
 
@@ -40,7 +42,9 @@ public interface ICalendarEpochRangeFactory
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
     /// <param name="count">Describes the size of each attempted step, with the intended <see cref="CalendarStepSizeUnit"/> being specified through <paramref name="unit"/>. A step is skipped if the resulting date does not exist.</param>
     /// <param name="unit">Determines the calendar-based unit that each step is based on - with <paramref name="count"/> scaling the <see cref="CalendarStepSizeUnit"/> by some <see cref="int"/> value.</param>
+    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, int count, CalendarStepSizeUnit unit);
 }
@@ -53,6 +57,8 @@ public interface IAngularEpochRangeFactory
     /// <param name="startEpoch">The start-point of the timespan, with <paramref name="stopEpoch"/> representing the stop-point.</param>
     /// <param name="stopEpoch">The stop-point of the timespan, with <paramref name="startEpoch"/> representing the start-point.</param>
     /// <param name="deltaAngle"><inheritdoc cref="IAngularStepSize.DeltaAngle" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public abstract IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, Angle deltaAngle);
 }

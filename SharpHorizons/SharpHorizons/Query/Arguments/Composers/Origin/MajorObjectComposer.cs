@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Origin;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Origin;
 
 using System;
@@ -22,6 +21,17 @@ internal sealed class MajorObjectComposer : IOriginObjectComposer<MajorObject>
     {
         ArgumentNullException.ThrowIfNull(obj);
 
-        return MajorObjectIDComposer.Compose(obj.ID);
+        var identifier = MajorObjectIDComposer.Compose(obj.ID);
+
+        try
+        {
+            OriginObjectIdentifier.Validate(identifier);
+        }
+        catch (ArgumentException e)
+        {
+            throw new InvalidOperationException($"The {nameof(IOriginComposer<MajorObjectID>)} for {nameof(MajorObjectID)} provided an invalid {nameof(OriginObjectIdentifier)}.", e);
+        }
+
+        return identifier;
     }
 }

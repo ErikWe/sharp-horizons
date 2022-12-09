@@ -3,6 +3,8 @@
 /// <summary>Specifies what reference plane is used in the result of a query.</summary>
 public enum ReferencePlane
 {
+    /// <summary>The <see cref="ReferencePlane"/> is unknown.</summary>
+    Unknown,
     /// <summary>The ecliptic, the orbit of Earth around the Sun.</summary>
     Ecliptic,
     /// <summary>The unaltered <see cref="ReferenceSystem"/>.</summary>

@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Vectors.Fluency;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Target;
 
 using SharpMeasures.Astronomy;
@@ -11,10 +11,10 @@ using System.Diagnostics.CodeAnalysis;
 /// <inheritdoc cref="ITargetStage"/>
 internal sealed class TargetStage : ITargetStage
 {
-    /// <summary><inheritdoc cref="ITargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="ITargetFactory"/>
     public required ITargetFactory TargetFactory { private get; init; }
 
-    /// <summary><inheritdoc cref="IOriginStageFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IOriginStageFactory"/>
     public required IOriginStageFactory OriginStageFactory { private get; init; }
 
     /// <inheritdoc cref="TargetStage"/>
@@ -34,47 +34,33 @@ internal sealed class TargetStage : ITargetStage
     {
         ArgumentNullException.ThrowIfNull(target);
 
-        return OriginStageFactory.Create(target);
+        return Create(target);
     }
 
-    IOriginStage ITargetStage.WithTarget(MajorObject majorObject)
-    {
-        ArgumentNullException.ThrowIfNull(majorObject);
+    IOriginStage ITargetStage.WithTarget(MajorObject majorObject) => Create(TargetFactory.Create(majorObject));
 
-        return OriginStageFactory.Create(TargetFactory.Create(majorObject));
-    }
+    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID) => Create(TargetFactory.Create(majorObjectID));
+    IOriginStage ITargetStage.WithTarget(ObjectRadiiInterpretation majorObjectName) => Create(TargetFactory.Create(majorObjectName));
 
-    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID) => OriginStageFactory.Create(TargetFactory.Create(majorObjectID));
-    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName) => OriginStageFactory.Create(TargetFactory.Create(majorObjectName));
+    IOriginStage ITargetStage.WithTarget(MajorObject majorObject, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObject, coordinate));
+    IOriginStage ITargetStage.WithTarget(MajorObject majorObject, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObject, coordinate));
 
-    IOriginStage ITargetStage.WithTarget(MajorObject majorObject, CylindricalCoordinate coordinate)
-    {
-        ArgumentNullException.ThrowIfNull(majorObject);
+    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObjectID, coordinate));
+    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObjectID, coordinate));
+    IOriginStage ITargetStage.WithTarget(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
+    IOriginStage ITargetStage.WithTarget(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
 
-        return OriginStageFactory.Create(TargetFactory.Create(majorObject, coordinate));
-    }
+    IOriginStage ITargetStage.WithTarget(MPCObject mpcObject) => Create(TargetFactory.Create(mpcObject));
+    IOriginStage ITargetStage.WithTarget(MPCProvisionalObject mpcObject) => Create(TargetFactory.Create(mpcObject));
+    IOriginStage ITargetStage.WithTarget(MPCName mpcName) => Create(TargetFactory.Create(mpcName));
+    IOriginStage ITargetStage.WithTarget(MPCProvisionalDesignation mpcDesignation) => Create(TargetFactory.Create(mpcDesignation));
+    IOriginStage ITargetStage.WithTarget(MPCSequentialNumber mpcNumber) => Create(TargetFactory.Create(mpcNumber));
 
-    IOriginStage ITargetStage.WithTarget(MajorObject majorObject, GeodeticCoordinate coordinate)
-    {
-        ArgumentNullException.ThrowIfNull(majorObject);
+    IOriginStage ITargetStage.WithTarget(MPCComet mpcComet) => Create(TargetFactory.Create(mpcComet));
+    IOriginStage ITargetStage.WithTarget(MPCCometName mpcCometName) => Create(TargetFactory.Create(mpcCometName));
+    IOriginStage ITargetStage.WithTarget(MPCCometDesignation mpcCometDesignation) => Create(TargetFactory.Create(mpcCometDesignation));
 
-        return OriginStageFactory.Create(TargetFactory.Create(majorObject, coordinate));
-    }
-
-    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => OriginStageFactory.Create(TargetFactory.Create(majorObjectID, coordinate));
-    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => OriginStageFactory.Create(TargetFactory.Create(majorObjectID, coordinate));
-    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => OriginStageFactory.Create(TargetFactory.Create(majorObjectName, coordinate));
-    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => OriginStageFactory.Create(TargetFactory.Create(majorObjectName, coordinate));
-
-    IOriginStage ITargetStage.WithTarget(MPCObject mpcObject)
-    {
-        ArgumentNullException.ThrowIfNull(mpcObject);
-
-        return OriginStageFactory.Create(TargetFactory.Create(mpcObject));
-    }
-
-    IOriginStage ITargetStage.WithTarget(MPCProvisionalObject mpcObject) => OriginStageFactory.Create(TargetFactory.Create(mpcObject));
-    IOriginStage ITargetStage.WithTarget(MPCName mpcName) => OriginStageFactory.Create(TargetFactory.Create(mpcName));
-    IOriginStage ITargetStage.WithTarget(MPCProvisionalDesignation mpcDesignation) => OriginStageFactory.Create(TargetFactory.Create(mpcDesignation));
-    IOriginStage ITargetStage.WithTarget(MPCSequentialNumber mpcNumber) => OriginStageFactory.Create(TargetFactory.Create(mpcNumber));
+    /// <summary>Selects <paramref name="target"/> as the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</summary>
+    /// <param name="target">The <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>
+    private IOriginStage Create(ITarget target) => OriginStageFactory.Create(target);
 }

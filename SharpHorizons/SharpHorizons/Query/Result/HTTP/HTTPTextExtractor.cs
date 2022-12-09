@@ -3,9 +3,9 @@
 using SharpHorizons.Interpretation;
 
 using System.IO;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Net.Mime;
 
 /// <inheritdoc cref="IHTTPResultExtractor"/>
 internal sealed class HTTPTextExtractor : IHTTPResultExtractor
@@ -13,10 +13,10 @@ internal sealed class HTTPTextExtractor : IHTTPResultExtractor
     /// <summary>Configures the <see cref="JsonSerializer"/>.</summary>
     private static JsonSerializerOptions DeserializationOptions { get; } = new() { PropertyNameCaseInsensitive = true };
 
-    /// <summary><inheritdoc cref="IInterpretationOptionsProvider.RawTextSource"/></summary>
+    /// <inheritdoc cref="IInterpretationOptionsProvider.RawTextSource"/>
     private string RawTextSourceKey { get; }
 
-    /// <summary><inheritdoc cref="IInterpretationOptionsProvider.RawTextVersion"/></summary>
+    /// <inheritdoc cref="IInterpretationOptionsProvider.RawTextVersion"/>
     private string RawTextVersionKey { get; }
 
     /// <inheritdoc cref="HTTPTextExtractor"/>

@@ -3,6 +3,9 @@
 /// <summary>Provides options for how the result of a query is interpreted.</summary>
 public interface IInterpretationOptionsProvider
 {
+    /// <inheritdoc cref="InterpretationOptions.HorizonsTimeZoneID"/>
+    public abstract string HorizonsTimeZoneID { get; }
+
     /// <inheritdoc cref="InterpretationOptions.RawTextSource"/>
     public abstract string RawTextSource { get; }
 

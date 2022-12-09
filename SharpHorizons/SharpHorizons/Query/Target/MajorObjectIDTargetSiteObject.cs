@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments.Composers.Target;
 
 using System.Diagnostics.CodeAnalysis;
 

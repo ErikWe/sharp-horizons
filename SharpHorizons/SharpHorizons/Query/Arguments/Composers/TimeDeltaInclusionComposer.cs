@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
-using System.ComponentModel;
-
 /// <inheritdoc cref="ITimeDeltaInclusionComposer"/>
 internal sealed class TimeDeltaInclusionComposer : ITimeDeltaInclusionComposer
 {
@@ -9,6 +7,6 @@ internal sealed class TimeDeltaInclusionComposer : ITimeDeltaInclusionComposer
     {
         TimeDeltaInclusion.Disable => "NO",
         TimeDeltaInclusion.Enable => "YES",
-        _ => throw new InvalidEnumArgumentException(nameof(obj), (int)obj, typeof(TimeDeltaInclusion))
+        _ => throw InvalidEnumArgumentExceptionFactory.Create(obj)
     });
 }

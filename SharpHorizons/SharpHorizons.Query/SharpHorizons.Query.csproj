@@ -10,7 +10,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Ephemeris\SharpHorizons.Ephemeris.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Identity\SharpHorizons.Identity.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
 	</ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 
 using System;
 
@@ -21,7 +21,18 @@ internal sealed class MPCCometTargetComposer : ITargetComposer<MPCComet>
     {
         ArgumentNullException.ThrowIfNull(obj);
 
-        return ((IArgumentComposer<ITargetArgument, MPCCometDesignation>)DesignationComposer).Compose(obj.Designation);
+        var argument = ((IArgumentComposer<ITargetArgument, MPCCometDesignation>)DesignationComposer).Compose(obj.Designation);
+
+        try
+        {
+            QueryArgument.Validate(argument);
+        }
+        catch (ArgumentException e)
+        {
+            throw new InvalidOperationException($"The {nameof(ITargetComposer<MPCCometDesignation>)} for {nameof(MPCCometDesignation)} provided an invalid {nameof(ITargetArgument)}.", e);
+        }
+
+        return argument;
     }
 
     ICommandArgument IArgumentComposer<ICommandArgument, MPCComet>.Compose(MPCComet obj) => ((IArgumentComposer<ITargetArgument, MPCComet>)this).Compose(obj);

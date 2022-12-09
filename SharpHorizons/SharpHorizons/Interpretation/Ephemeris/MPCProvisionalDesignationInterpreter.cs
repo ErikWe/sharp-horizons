@@ -2,14 +2,18 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
+
+using System;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCProvisionalDesignation"/>.</summary>
 internal sealed class MPCProvisionalDesignationInterpreter : IPartInterpreter<MPCProvisionalDesignation>
 {
     Optional<MPCProvisionalDesignation> IPartInterpreter<MPCProvisionalDesignation>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         var startIndex = queryPart.IndexOf('(') + 1;
 
         if (startIndex is 0)

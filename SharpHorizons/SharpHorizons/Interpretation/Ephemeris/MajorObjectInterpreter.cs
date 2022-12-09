@@ -2,8 +2,9 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Result;
+
+using System;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MajorObject"/>.</summary>
 internal sealed class MajorObjectInterpreter : IPartInterpreter<MajorObject>
@@ -12,12 +13,12 @@ internal sealed class MajorObjectInterpreter : IPartInterpreter<MajorObject>
     private IPartInterpreter<MajorObjectID> MajorObjectIDInterpreter { get; }
 
     /// <inheritdoc cref="Ephemeris.MajorObjectNameInterpreter"/>
-    private IPartInterpreter<MajorObjectName> MajorObjectNameInterpreter { get; }
+    private IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation> MajorObjectNameInterpreter { get; }
 
     /// <inheritdoc cref="MajorObjectInterpreter"/>
     /// <param name="majorObjectIDInterpreter"><inheritdoc cref="MajorObjectIDInterpreter" path="/summary"/></param>
     /// <param name="majorObjectNameInterpreter"><inheritdoc cref="MajorObjectNameInterpreter" path="/summary"/></param>
-    public MajorObjectInterpreter(IPartInterpreter<MajorObjectID> majorObjectIDInterpreter, IPartInterpreter<MajorObjectName> majorObjectNameInterpreter)
+    public MajorObjectInterpreter(IPartInterpreter<MajorObjectID> majorObjectIDInterpreter, IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation> majorObjectNameInterpreter)
     {
         MajorObjectIDInterpreter = majorObjectIDInterpreter;
         MajorObjectNameInterpreter = majorObjectNameInterpreter;
@@ -25,6 +26,8 @@ internal sealed class MajorObjectInterpreter : IPartInterpreter<MajorObject>
 
     Optional<MajorObject> IPartInterpreter<MajorObject>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (MajorObjectIDInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var id })
         {
             return new();

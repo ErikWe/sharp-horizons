@@ -2,24 +2,15 @@
 
 using SharpHorizons.Query.Epoch;
 
-using System;
-
-/// <summary>Composes <see cref="IEpochCollectionFormatArgument"/> that describe <see cref="EpochCollectionFormat"/>.</summary>
+/// <summary>Composes <see cref="IEpochCollectionFormatArgument"/> that describe <see cref="EpochFormat"/>.</summary>
 internal sealed class EpochCollectionFormatComposer : IEpochCollectionFormatComposer
 {
-    IEpochCollectionFormatArgument IArgumentComposer<IEpochCollectionFormatArgument, EpochCollectionFormat>.Compose(EpochCollectionFormat obj)
+    IEpochCollectionFormatArgument IArgumentComposer<IEpochCollectionFormatArgument, EpochFormat>.Compose(EpochFormat obj) => new QueryArgument(obj switch
     {
-        return new QueryArgument(Compose(obj));
-    }
-
-    /// <summary>Composes a <see cref="string"/> describing <paramref name="epochCollectionFormat"/>.</summary>
-    /// <param name="epochCollectionFormat">The composed <see cref="string"/> describes this <see cref="EpochCollectionFormat"/>.</param>
-    /// <exception cref="NotSupportedException"></exception>
-    private static string Compose(EpochCollectionFormat epochCollectionFormat) => epochCollectionFormat switch
-    {
-        EpochCollectionFormat.JulianDays => "JD",
-        EpochCollectionFormat.ModifiedJulianDays => "MJD",
-        EpochCollectionFormat.CalendarDates => "CAL",
-        _ => throw new NotSupportedException($"{epochCollectionFormat} was not of a supported {typeof(EpochCollectionFormat).FullName}.")
-    };
+        EpochFormat.Unknown => throw ArgumentExceptionFactory.UnsupportedEnumValue(obj),
+        EpochFormat.JulianDays => "JD",
+        EpochFormat.ModifiedJulianDays => "MJD",
+        EpochFormat.CalendarDates => "CAL",
+        _ => throw InvalidEnumArgumentExceptionFactory.Create(obj)
+    });
 }

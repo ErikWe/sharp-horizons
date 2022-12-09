@@ -10,11 +10,11 @@ internal sealed class OutputLabelsComposer : IElementLabelsComposer, IVectorLabe
 
     /// <summary>Composes a <see cref="string"/> describing <paramref name="outputLabels"/>.</summary>
     /// <param name="outputLabels">The composed <see cref="string"/> describes this <see cref="OutputLabels"/>.</param>
-    /// <exception cref="InvalidEnumArgumentException"></exception>
+    /// <exception cref="InvalidEnumArgumentException"/>
     private static string Compose(OutputLabels outputLabels) => outputLabels switch
     {
         OutputLabels.Disable => "NO",
         OutputLabels.Enable => "YES",
-        _ => throw new InvalidEnumArgumentException(nameof(outputLabels), (int)outputLabels, typeof(OutputLabels))
+        _ => throw InvalidEnumArgumentExceptionFactory.Create(outputLabels)
     };
 }

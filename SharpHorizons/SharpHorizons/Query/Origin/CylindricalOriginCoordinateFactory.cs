@@ -31,5 +31,10 @@ internal sealed class CylindricalOriginCoordinateFactory : IOriginCoordinateFact
         OriginCoordinateTypeComposer = originCoordinateTypeComposer ?? defaultComposer!;
     }
 
-    IOriginCoordinate IOriginCoordinateFactory<CylindricalCoordinate>.Create(CylindricalCoordinate coordinate) => new CylindricalOriginCoordinate(coordinate, OriginCoordinateComposer, OriginCoordinateTypeComposer);
+    IOriginCoordinate IOriginCoordinateFactory<CylindricalCoordinate>.Create(CylindricalCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return new CylindricalOriginCoordinate(coordinate, OriginCoordinateComposer, OriginCoordinateTypeComposer);
+    }
 }

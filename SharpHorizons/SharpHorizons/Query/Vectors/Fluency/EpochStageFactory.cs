@@ -3,32 +3,33 @@
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
+using SharpHorizons.Query.Vectors.Table;
 
 /// <inheritdoc cref="IEpochStageFactory"/>
 internal sealed class EpochStageFactory : IEpochStageFactory
 {
-    /// <inheritdoc cref="Vectors.VectorsQueryInstantiation"/>
-    private VectorsQueryInstantiation VectorsQueryInstantiation { get; }
+    /// <inheritdoc cref="IVectorTableContentValidator"/>
+    private IVectorTableContentValidator TableContentValidator { get; }
 
-    /// <summary><inheritdoc cref="IFixedEpochRangeFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IFixedEpochRangeFactory"/>
     private IFixedEpochRangeFactory FixedRangeFactory { get; }
 
-    /// <summary><inheritdoc cref="IUniformEpochRangeFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IUniformEpochRangeFactory"/>
     private IUniformEpochRangeFactory UniformRangeFactory { get; }
 
-    /// <summary><inheritdoc cref="ICalendarEpochRangeFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="ICalendarEpochRangeFactory"/>
     private ICalendarEpochRangeFactory CalendarRangeFactory { get; }
 
-    /// <summary><inheritdoc cref="IEpochCollectionFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IEpochCollectionFactory"/>
     private IEpochCollectionFactory CollectionFactory { get; }
 
     /// <inheritdoc cref="EpochStageFactory"/>
-    /// <param name="vectorsQueryInstantiation"><inheritdoc cref="VectorsQueryInstantiation" path="/summary"/></param>
+    /// <param name="tableContentValidator"><inheritdoc cref="TableContentValidator" path="/summary"/></param>
     /// <param name="fixedRangeFactory"><inheritdoc cref="FixedRangeFactory" path="/summary"/></param>
     /// <param name="uniformRangeFactory"><inheritdoc cref="UniformRangeFactory" path="/summary"/></param>
     /// <param name="calendarRangeFactory"><inheritdoc cref="CalendarRangeFactory" path="/summary"/></param>
     /// <param name="collectionFactory"><inheritdoc cref="CollectionFactory" path="/summary"/></param>
-    public EpochStageFactory(VectorsQueryInstantiation? vectorsQueryInstantiation = null, IFixedEpochRangeFactory? fixedRangeFactory = null, IUniformEpochRangeFactory? uniformRangeFactory = null, ICalendarEpochRangeFactory? calendarRangeFactory = null, IEpochCollectionFactory? collectionFactory = null)
+    public EpochStageFactory(IVectorTableContentValidator? tableContentValidator = null, IFixedEpochRangeFactory? fixedRangeFactory = null, IUniformEpochRangeFactory? uniformRangeFactory = null, ICalendarEpochRangeFactory? calendarRangeFactory = null, IEpochCollectionFactory? collectionFactory = null)
     {
         EpochRangeFactory? defaultEpochRangeFactory = null;
 
@@ -37,7 +38,7 @@ internal sealed class EpochStageFactory : IEpochStageFactory
             defaultEpochRangeFactory = new EpochRangeFactory();
         }
 
-        VectorsQueryInstantiation = vectorsQueryInstantiation ?? VectorsQuery.Instantiation;
+        TableContentValidator = tableContentValidator ?? new VectorTableContentValidator();
 
         FixedRangeFactory = fixedRangeFactory ?? defaultEpochRangeFactory!;
         UniformRangeFactory = uniformRangeFactory ?? defaultEpochRangeFactory!;
@@ -46,5 +47,5 @@ internal sealed class EpochStageFactory : IEpochStageFactory
         CollectionFactory = collectionFactory ?? new EpochCollectionFactory();
     }
 
-    IEpochStage IEpochStageFactory.Create(ITarget target, IOrigin origin) => new EpochStage(target, origin, VectorsQueryInstantiation, FixedRangeFactory, UniformRangeFactory, CalendarRangeFactory, CollectionFactory);
+    IEpochStage IEpochStageFactory.Create(ITarget target, IOrigin origin) => new EpochStage(target, origin, TableContentValidator, FixedRangeFactory, UniformRangeFactory, CalendarRangeFactory, CollectionFactory);
 }

@@ -11,10 +11,12 @@ internal sealed class CylindricalCoordinateComposer : ITargetSiteComposer<Cylind
 {
     TargetSiteIdentifier ITargetSiteComposer<CylindricalCoordinate>.Compose(CylindricalCoordinate obj)
     {
+        SharpMeasuresValidation.Validate(obj);
+
         var azimuth = obj.Azimuth.Degrees.ToString("F7", CultureInfo.InvariantCulture);
         var radialDistance = obj.RadialDistance.Kilometres.ToString("F7", CultureInfo.InvariantCulture);
         var height = obj.Height.Kilometres.ToString("F7", CultureInfo.InvariantCulture);
 
-        return $"c:{azimuth},{radialDistance},{height}";
+        return new($"c:{azimuth},{radialDistance},{height}");
     }
 }

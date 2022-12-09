@@ -2,14 +2,17 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MajorObjectName"/>.</summary>
-internal sealed class MajorObjectNameInterpreter : IPartInterpreter<MajorObjectName>
+using System;
+
+/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="SharpHorizons.ObjectRadiiInterpretation"/>.</summary>
+internal sealed class MajorObjectNameInterpreter : IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation>
 {
-    Optional<MajorObjectName> IPartInterpreter<MajorObjectName>.TryInterpret(string queryPart)
+    Optional<SharpHorizons.ObjectRadiiInterpretation> IPartInterpreter<SharpHorizons.ObjectRadiiInterpretation>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         var lastIndex = queryPart.LastIndexOf('(');
 
         var name = queryPart[..lastIndex].Trim();
@@ -19,6 +22,6 @@ internal sealed class MajorObjectNameInterpreter : IPartInterpreter<MajorObjectN
             return new();
         }
 
-        return new MajorObjectName(name);
+        return new SharpHorizons.ObjectRadiiInterpretation(name);
     }
 }

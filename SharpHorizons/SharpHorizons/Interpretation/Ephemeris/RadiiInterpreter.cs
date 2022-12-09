@@ -7,24 +7,27 @@ using SharpHorizons.Interpretation.Ephemeris.Target;
 
 using SharpMeasures;
 
+using System;
 using System.Globalization;
 
 /// <inheritdoc cref="ITargetRadiiInterpreter"/>
 internal sealed class RadiiInterpreter : ITargetRadiiInterpreter, IOriginRadiiInterpreter
 {
     /// <inheritdoc cref="IInterpretationOptionsProvider"/>
-    private IInterpretationOptionsProvider InterpretationKeyProvider { get; }
+    private IInterpretationOptionsProvider InterpretationOptionsProvider { get; }
 
     /// <inheritdoc cref="RadiiInterpreter"/>
-    /// <param name="interpretationKeyProvider"><inheritdoc cref="InterpretationKeyProvider" path="/summary"/></param>
-    public RadiiInterpreter(IInterpretationOptionsProvider interpretationKeyProvider)
+    /// <param name="interpretationOptionsProvider"><inheritdoc cref="InterpretationOptionsProvider" path="/summary"/></param>
+    public RadiiInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider)
     {
-        InterpretationKeyProvider = interpretationKeyProvider;
+        InterpretationOptionsProvider = interpretationOptionsProvider;
     }
 
     Optional<ObjectRadiiInterpretation> IPartInterpreter<ObjectRadiiInterpretation>.TryInterpret(string queryPart)
     {
-        if (queryPart.Contains(InterpretationKeyProvider.UnavailableText))
+        ArgumentNullException.ThrowIfNull(queryPart);
+
+        if (queryPart.Contains(InterpretationOptionsProvider.UnavailableText))
         {
             return new();
         }

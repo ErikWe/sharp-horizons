@@ -1,8 +1,6 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Identity;
-
-/// <summary>Describes the <see cref="IOrigin"/> in a query as an <see cref="Identity.ObservationSiteID"/> associated with an <see cref="IOriginObject"/>.</summary>
+/// <summary>Describes the <see cref="IOrigin"/> in a query as an <see cref="SharpHorizons.ObservationSiteID"/> associated with an <see cref="IOriginObject"/>.</summary>
 public interface IObservationSiteOrigin : IOrigin
 {
     /// <summary>The <see cref="IOriginObject"/>, associated with <see cref="ObservationSiteID"/>.</summary>

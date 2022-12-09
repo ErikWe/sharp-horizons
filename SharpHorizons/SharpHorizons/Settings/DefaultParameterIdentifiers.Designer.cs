@@ -229,5 +229,32 @@ namespace SharpHorizons.Query.Parameters {
                 return ((string)(this["VectorTableContent"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("CAL_TYPE")]
+        public string EpochCalendar {
+            get {
+                return ((string)(this["EpochCalendar"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TIME_TYPE")]
+        public string TimeSystem {
+            get {
+                return ((string)(this["TimeSystem"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TIME_ZONE")]
+        public string TimeZone {
+            get {
+                return ((string)(this["TimeZone"]));
+            }
+        }
     }
 }

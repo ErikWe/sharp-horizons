@@ -2,18 +2,15 @@
 
 using System;
 
-/// <summary>Represents an error caused by attempting to finalize a <see cref="IQueryArgumentSetBuilder"/> without specifying a <see cref="ICommandArgument"/>.</summary>
+/// <summary>Represents an <see cref="Exception"/> that occurred when attempting to finalize a <see cref="IQueryArgumentSetBuilder"/> without specifying a <see cref="ICommandArgument"/>.</summary>
 public sealed class QueryArgumentRequireCommandException : Exception
 {
     /// <inheritdoc cref="QueryArgumentRequireCommandException"/>
-    public QueryArgumentRequireCommandException() : base($"The {typeof(ICommandArgument).Name} was never specified by the {typeof(IQueryArgumentSetBuilder).Name}.") { }
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="QueryArgumentRequireCommandException"/>.</param>
+    public QueryArgumentRequireCommandException(Exception? innerException = null) : base($"The {nameof(ICommandArgument)} was never specified by the {nameof(IQueryArgumentSetBuilder)}.", innerException) { }
 
     /// <inheritdoc cref="QueryArgumentRequireCommandException"/>
-    /// <param name="message">The message that describes the error.</param>
-    public QueryArgumentRequireCommandException(string? message) : base(message) { }
-
-    /// <inheritdoc cref="QueryArgumentRequireCommandException"/>
-    /// <param name="message">The message that describes the error.</param>
-    /// <param name="innerException">The <see cref="Exception"/> that caused the current exception.</param>
-    public QueryArgumentRequireCommandException(string? message, Exception? innerException) : base(message, innerException) { }
+    /// <param name="message">The message that describes the <see cref="QueryArgumentRequireCommandException"/>.</param>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="QueryArgumentRequireCommandException"/>.</param>
+    public QueryArgumentRequireCommandException(string? message, Exception? innerException = null) : base(message, innerException) { }
 }

@@ -1,15 +1,15 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Describes the <see cref="ITarget"/> in a query as the center of a <see cref="Identity.MPCComet"/>.</summary>
+/// <summary>Describes the <see cref="ITarget"/> in a query as the center of a <see cref="MPC.MPCComet"/>.</summary>
 internal sealed record class MPCCometTarget : ITarget
 {
-    /// <summary>The <see cref="Identity.MPCComet"/>, the center of which represents the <see cref="ITarget"/> in a query.</summary>
+    /// <summary>The <see cref="MPC.MPCComet"/>, the center of which represents the <see cref="ITarget"/> in a query.</summary>
     public required MPCComet MPCComet { private get; init; }
 
     /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>

@@ -8,7 +8,7 @@
 	<PropertyGroup>
 		<Title>SharpHorizons</Title>
 		<Description>
-			Allows integration of JPL Horizons in C# applications.
+			Simplifes integration of JPL Horizons in C# applications.
 		</Description>
 	</PropertyGroup>
 
@@ -26,6 +26,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="NodaTime" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="SharpMeasures.Astronomy" />
 		<PackageReference Include="SharpMeasures.Generators" PrivateAssets="all" />
 	</ItemGroup>
@@ -36,9 +40,12 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\SharpHorizons.Abstractions\SharpHorizons.Abstractions.csproj" />
-		<ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Ephemeris\SharpHorizons.Ephemeris.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Identity\SharpHorizons.Identity.csproj" />
 		<ProjectReference Include="..\SharpHorizons.Interpretation\SharpHorizons.Interpretation.csproj" />
 		<ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -47,6 +54,7 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DefaultEphemerisInterpretation.settings</DependentUpon>
 		</Compile>
+		
 		<Compile Update="Settings\DefaultInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
 		  <AutoGen>True</AutoGen>
@@ -65,16 +73,16 @@
 			<DependentUpon>DefaultQuerySettings.settings</DependentUpon>
 		</Compile>
 
-		<Compile Update="Settings\DefaultOriginInterpretationKeys.Designer.cs">
+		<Compile Update="Settings\DefaultEphemerisOriginInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
-		  <DependentUpon>DefaultOriginInterpretationKeys.settings</DependentUpon>
+		  <DependentUpon>DefaultEphemerisOriginInterpretation.settings</DependentUpon>
 		  <AutoGen>True</AutoGen>
 		</Compile>
 
-		<Compile Update="Settings\DefaultTargetInterpretationKeys.Designer.cs">
+		<Compile Update="Settings\DefaultEphemerisTargetInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
 		  <AutoGen>True</AutoGen>
-		  <DependentUpon>DefaultTargetInterpretationKeys.settings</DependentUpon>
+		  <DependentUpon>DefaultEphemerisTargetInterpretation.settings</DependentUpon>
 		</Compile>
 	</ItemGroup>
 
@@ -84,6 +92,7 @@
 		  <LastGenOutput>DefaultEphemerisInterpretation.Designer.cs</LastGenOutput>
 		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris</CustomToolNamespace>
 		</None>
+		
 		<None Update="Settings\DefaultInterpretation.settings">
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		  <LastGenOutput>DefaultInterpretation.Designer.cs</LastGenOutput>
@@ -104,15 +113,15 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 
-		<None Update="Settings\DefaultOriginInterpretationKeys.settings">
+		<None Update="Settings\DefaultEphemerisOriginInterpretation.settings">
 		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Origin</CustomToolNamespace>
-		  <LastGenOutput>DefaultOriginInterpretationKeys.Designer.cs</LastGenOutput>
+		  <LastGenOutput>DefaultEphemerisOriginInterpretation.Designer.cs</LastGenOutput>
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		</None>
 
-		<None Update="Settings\DefaultTargetInterpretationKeys.settings">
+		<None Update="Settings\DefaultEphemerisTargetInterpretation.settings">
 		  <Generator>SettingsSingleFileGenerator</Generator>
-		  <LastGenOutput>DefaultTargetInterpretationKeys.Designer.cs</LastGenOutput>
+		  <LastGenOutput>DefaultEphemerisTargetInterpretation.Designer.cs</LastGenOutput>
 		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Target</CustomToolNamespace>
 		</None>
 	</ItemGroup>

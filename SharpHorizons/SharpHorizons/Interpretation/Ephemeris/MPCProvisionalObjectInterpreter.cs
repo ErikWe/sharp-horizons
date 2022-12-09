@@ -2,8 +2,10 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
+
+using System;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCProvisionalObject"/>.</summary>
 internal sealed class MPCProvisionalObjectInterpreter : IPartInterpreter<MPCProvisionalObject>
@@ -20,6 +22,8 @@ internal sealed class MPCProvisionalObjectInterpreter : IPartInterpreter<MPCProv
 
     Optional<MPCProvisionalObject> IPartInterpreter<MPCProvisionalObject>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (queryPart[0] is not '(')
         {
             return new();

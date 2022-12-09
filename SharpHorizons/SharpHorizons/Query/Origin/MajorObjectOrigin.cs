@@ -1,13 +1,13 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments.Composers.Origin;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Describes the <see cref="IOriginObject"/> in a query as <see cref="Identity.MajorObject"/>.</summary>
+/// <summary>Describes the <see cref="IOriginObject"/> in a query as <see cref="SharpHorizons.MajorObject"/>.</summary>
 internal sealed record class MajorObjectOrigin : IOriginObject
 {
-    /// <summary>The <see cref="Identity.MajorObject"/> which represents the <see cref="IOriginObject"/> in a query.</summary>
+    /// <summary>The <see cref="SharpHorizons.MajorObject"/> which represents the <see cref="IOriginObject"/> in a query.</summary>
     public required MajorObject MajorObject { private get; init; }
 
     /// <summary>Used to compose a <see cref="OriginObjectIdentifier"/> describing <see langword="this"/>.</summary>

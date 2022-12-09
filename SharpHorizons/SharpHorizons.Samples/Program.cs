@@ -5,10 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using SharpHorizons;
-using SharpHorizons.Epoch;
-using SharpHorizons.Identity;
-using SharpHorizons.Interpretation.Ephemeris.Origin;
-using SharpHorizons.Interpretation.Ephemeris.Target;
+using SharpHorizons.Interpretation.Ephemeris.Vectors;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Request.HTTP;
@@ -41,18 +38,15 @@ internal class Program
         var vectorsComposer = host.Services.GetRequiredService<IVectorsQueryComposer>();
         var httpQueryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
         var httpTextExtractor = host.Services.GetRequiredService<IHTTPResultExtractor>();
-        var targetInterpreter = host.Services.GetRequiredService<ITargetDataInterpreter>();
-        var originInterpreter = host.Services.GetRequiredService<IOriginDataInterpreter>();
+        var vectorsHeaderInterpreter = host.Services.GetRequiredService<IVectorsQueryHeaderInterpreter>();
 
         var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: SharpHorizons.Query.OutputFormat.JSON);
         var uri = vectorsComposer.Compose(query);
         var httpResult = httpQueryHandler.RequestAsync(uri).Result;
         var textResult = await httpTextExtractor.ExtractAsync(httpResult);
-        var targetInterpretation = targetInterpreter.Interpret(textResult);
-        var originInterpretation = originInterpreter.Interpret(textResult);
+        var vectorsHeader = vectorsHeaderInterpreter.Interpret(textResult);
 
-        Console.WriteLine(targetInterpretation.Target.ComposeArgument());
-        Console.WriteLine(originInterpretation.Origin.ComposeArgument());
+        Console.WriteLine(vectorsHeader.TargetHeader.Target.ComposeArgument());
     }
 
     private static void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configuration)

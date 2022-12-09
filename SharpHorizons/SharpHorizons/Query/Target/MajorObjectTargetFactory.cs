@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Arguments.Composers.Target;
@@ -18,8 +17,8 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MajorObjectID"/>.</summary>
     private ITargetComposer<MajorObjectID> MajorObjectIDComposer { get; }
 
-    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MajorObjectName"/>.</summary>
-    private ITargetComposer<MajorObjectName> MajorObjectNameComposer { get; }
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="ObjectRadiiInterpretation"/>.</summary>
+    private ITargetComposer<ObjectRadiiInterpretation> MajorObjectNameComposer { get; }
 
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="ISiteTarget"/>.</summary>
     private ITargetComposer<ISiteTarget> SiteComposer { get; }
@@ -37,7 +36,7 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     /// <param name="siteComposer"><inheritdoc cref="SiteComposer" path="/summary"/></param>
     /// <param name="siteObjectFactory"><inheritdoc cref="SiteObjectFactory" path="/summary"/></param>
     /// <param name="siteFactory"><inheritdoc cref="SiteFactory" path="/summary"/></param>
-    public MajorObjectTargetFactory(ITargetComposer<MajorObject>? majorObjectComposer = null, ITargetComposer<MajorObjectID>? majorObjectIDComposer = null, ITargetComposer<MajorObjectName>? majorObjectNameComposer = null, ITargetComposer<ISiteTarget>? siteComposer = null, ITargetSiteObjectFactory? siteObjectFactory = null, ITargetSiteFactory? siteFactory = null)
+    public MajorObjectTargetFactory(ITargetComposer<MajorObject>? majorObjectComposer = null, ITargetComposer<MajorObjectID>? majorObjectIDComposer = null, ITargetComposer<ObjectRadiiInterpretation>? majorObjectNameComposer = null, ITargetComposer<ISiteTarget>? siteComposer = null, ITargetSiteObjectFactory? siteObjectFactory = null, ITargetSiteFactory? siteFactory = null)
     {
         MajorObjectIDComposer? defaultMajorObjectIDComposer = null;
 
@@ -64,11 +63,17 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     }
 
     ITarget IMajorObjectTargetFactory.Create(MajorObjectID majorObjectID) => CreateTarget(majorObjectID);
-    ITarget IMajorObjectTargetFactory.Create(MajorObjectName majorObjectName) => CreateTarget(majorObjectName);
+    ITarget IMajorObjectTargetFactory.Create(ObjectRadiiInterpretation majorObjectName)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+
+        return CreateTarget(majorObjectName);
+    }
 
     ITarget IMajorObjectTargetFactory.Create(MajorObject majorObject, CylindricalCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
+        SharpMeasuresValidation.Validate(coordinate);
 
         return CreateTarget(SiteObjectFactory.Create(majorObject), SiteFactory.Create(coordinate));
     }
@@ -76,14 +81,40 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     ITarget IMajorObjectTargetFactory.Create(MajorObject majorObject, GeodeticCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
+        SharpMeasuresValidation.Validate(coordinate);
 
         return CreateTarget(SiteObjectFactory.Create(majorObject), SiteFactory.Create(coordinate));
     }
 
-    ITarget IMajorObjectTargetFactory.Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => CreateTarget(SiteObjectFactory.Create(majorObjectID), SiteFactory.Create(coordinate));
-    ITarget IMajorObjectTargetFactory.Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => CreateTarget(SiteObjectFactory.Create(majorObjectID), SiteFactory.Create(coordinate));
-    ITarget IMajorObjectTargetFactory.Create(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => CreateTarget(SiteObjectFactory.Create(majorObjectName), SiteFactory.Create(coordinate));
-    ITarget IMajorObjectTargetFactory.Create(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => CreateTarget(SiteObjectFactory.Create(majorObjectName), SiteFactory.Create(coordinate));
+    ITarget IMajorObjectTargetFactory.Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateTarget(SiteObjectFactory.Create(majorObjectID), SiteFactory.Create(coordinate));
+    }
+
+    ITarget IMajorObjectTargetFactory.Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateTarget(SiteObjectFactory.Create(majorObjectID), SiteFactory.Create(coordinate));
+    }
+
+    ITarget IMajorObjectTargetFactory.Create(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateTarget(SiteObjectFactory.Create(majorObjectName), SiteFactory.Create(coordinate));
+    }
+
+    ITarget IMajorObjectTargetFactory.Create(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateTarget(SiteObjectFactory.Create(majorObjectName), SiteFactory.Create(coordinate));
+    }
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as the center of <paramref name="majorObject"/>.</summary>
     /// <param name="majorObject">The center of this <see cref="MajorObject"/> represents the <see cref="ITarget"/> in a query.</param>
@@ -94,8 +125,8 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     private ITarget CreateTarget(MajorObjectID majorObjectID) => new MajorObjectIDTarget(majorObjectID, MajorObjectIDComposer);
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an object identified by <paramref name="majorObjectName"/>.</summary>
-    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</param>
-    private ITarget CreateTarget(MajorObjectName majorObjectName) => new MajorObjectNameTarget(majorObjectName, MajorObjectNameComposer);
+    /// <param name="majorObjectName">The <see cref="ObjectRadiiInterpretation"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</param>
+    private ITarget CreateTarget(ObjectRadiiInterpretation majorObjectName) => new MajorObjectNameTarget(majorObjectName, MajorObjectNameComposer);
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as a <paramref name="targetSite"/> assocaited with <paramref name="targetSiteObject"/>.</summary>
     /// <param name="targetSiteObject">The <see cref="ITargetSiteObject"/> associated with <paramref name="targetSite"/>.</param>

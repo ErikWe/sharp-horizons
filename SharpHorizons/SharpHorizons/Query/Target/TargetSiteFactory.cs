@@ -21,6 +21,17 @@ internal sealed class TargetSiteFactory : ITargetSiteFactory
         GeodeticCoordinateComposer = geodeticCoordinateComposer ?? new GeodeticCoordinateComposer();
     }
 
-    ITargetSite ITargetSiteFactory.Create(CylindricalCoordinate coordinate) => new CylindricalTargetSiteCoordinate(coordinate, CylindricalCoordinateComposer);
-    ITargetSite ITargetSiteFactory.Create(GeodeticCoordinate coordinate) => new GeodeticTargetSiteCoordinate(coordinate, GeodeticCoordinateComposer);
+    ITargetSite ITargetSiteFactory.Create(CylindricalCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return new CylindricalTargetSiteCoordinate(coordinate, CylindricalCoordinateComposer);
+    }
+
+    ITargetSite ITargetSiteFactory.Create(GeodeticCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return new GeodeticTargetSiteCoordinate(coordinate, GeodeticCoordinateComposer);
+    }
 }

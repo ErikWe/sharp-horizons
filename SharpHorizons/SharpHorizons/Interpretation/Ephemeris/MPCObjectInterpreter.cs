@@ -2,8 +2,10 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
+
+using System;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCObject"/>.</summary>
 internal sealed class MPCObjectInterpreter : IPartInterpreter<MPCObject>
@@ -30,6 +32,8 @@ internal sealed class MPCObjectInterpreter : IPartInterpreter<MPCObject>
 
     Optional<MPCObject> IPartInterpreter<MPCObject>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (MPCSequentialNumberInterpreter.TryInterpret(queryPart) is not { HasValue: true, Value: var number })
         {
             return new();

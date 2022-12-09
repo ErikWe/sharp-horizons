@@ -1,12 +1,11 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Epoch;
-
 /// <summary>Uses the timespan between two <see cref="IEpoch"/> and an associated <see cref="IStepSize"/> to describe the <see cref="IEpochSelection"/> in a query.</summary>
 public interface IEpochRange : IEpochSelection
 {
     /// <summary>The start-point of the <see cref="IEpochRange"/>.</summary>
     public abstract IStartEpoch StartEpoch { get; }
+
     /// <summary>The stop-point of the <see cref="IEpochRange"/>.</summary>
     public abstract IStopEpoch StopEpoch { get; }
 

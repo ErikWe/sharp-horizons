@@ -2,16 +2,18 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Ephemeris;
 using SharpHorizons.Ephemeris.Vectors;
-using SharpHorizons.Interpretation.Ephemeris;
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets <see cref="IQueryResult"/> as an <see cref="IEphemeris{TEntry}"/> of <see cref="IOrbitalStateVectors"/>.</summary>
-internal sealed class OrbitalStateVectorsInterpreter : IEphemerisInterpreter<IOrbitalStateVectorsEphemeris, IOrbitalStateVectors>
+using System;
+
+/// <inheritdoc cref="IOrbitalStateVectorsInterpreter"/>
+internal sealed class OrbitalStateVectorsInterpreter : IOrbitalStateVectorsInterpreter
 {
     Optional<IOrbitalStateVectorsEphemeris> IInterpreter<IOrbitalStateVectorsEphemeris>.TryInterpret(IQueryResult queryResult)
     {
-        throw new System.Exception();
+        ArgumentNullException.ThrowIfNull(queryResult);
+
+        throw new Exception();
     }
 }

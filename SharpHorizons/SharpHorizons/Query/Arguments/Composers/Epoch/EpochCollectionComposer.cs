@@ -1,16 +1,26 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Epoch;
 
-using SharpHorizons.Epoch;
 using SharpHorizons.Query.Epoch;
+
+using SharpMeasures;
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+using System.ComponentModel;
 
 /// <summary>Composes <see cref="IEpochCollectionArgument"/> that describe <see cref="IEpochCollection"/>.</summary>
 internal sealed class EpochCollectionComposer : IEpochCollectionComposer<IEpochCollection>
 {
+    /// <inheritdoc cref="IQueryEpochComposer"/>
+    private IQueryEpochComposer QueryEpochComposer { get; }
+
+    /// <inheritdoc cref="EpochCalendarComposer"/>
+    /// <param name="queryEpochComposer"><inheritdoc cref="QueryEpochComposer" path="/summary"/></param>
+    public EpochCollectionComposer(IQueryEpochComposer? queryEpochComposer = null)
+    {
+        QueryEpochComposer = queryEpochComposer ?? new QueryEpochComposer();
+    }
+
     IEpochCollectionArgument IArgumentComposer<IEpochCollectionArgument, IEpochCollection>.Compose(IEpochCollection obj)
     {
         ArgumentNullException.ThrowIfNull(obj);
@@ -20,71 +30,91 @@ internal sealed class EpochCollectionComposer : IEpochCollectionComposer<IEpochC
 
     /// <summary>Composes a <see cref="string"/> describing <paramref name="epochCollection"/>.</summary>
     /// <param name="epochCollection">The composed <see cref="string"/> describes this <see cref="IEpochCollection"/>.</param>
-    /// <exception cref="NotSupportedException"></exception>
-    private static string Compose(IEpochCollection epochCollection) => epochCollection.Format switch
-    {
-        EpochCollectionFormat.JulianDays => ComposeWithDayNumbers(epochCollection, (epoch) => epoch.ToJulianDay().Day),
-        EpochCollectionFormat.ModifiedJulianDays => ComposeWithDayNumbers(epochCollection, (epoch) => epoch.ToEpoch<ModifiedJulianDay>().Day),
-        EpochCollectionFormat.CalendarDates => ComposeWithCalendarDates(epochCollection),
-        _ => throw new NotSupportedException($"{epochCollection.Format} was not of a supported {typeof(EpochCollectionFormat).FullName}.")
-    };
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="InvalidOperationException"/>
+    private string Compose(IEpochCollection epochCollection) => string.Join(',', ComposeComponents(epochCollection));
 
-    /// <summary>Composes a <see cref="string"/> describing <paramref name="epochCollection"/>, with the individual <see cref="IEpoch"/> formatted according to the day numbers provided by <paramref name="dayNumberDelegate"/>.</summary>
-    /// <param name="epochCollection">The composed <see cref="string"/> describes these <see cref="IEpoch"/>, with the individual <see cref="IEpoch"/> formatted according to the day numbers provided by <paramref name="dayNumberDelegate"/>.</param>
-    /// <param name="dayNumberDelegate">Extracts a <see cref="double"/> representing the day number of an <see cref="IEpoch"/>, in some day-number-based calendar.</param>
-    private static string ComposeWithDayNumbers(IEnumerable<IEpoch> epochCollection, Func<IEpoch, double> dayNumberDelegate)
+    /// <summary>Composes <see cref="string"/> that describes the <see cref="IEpoch"/> of <paramref name="epochCollection"/>.</summary>
+    /// <param name="epochCollection">The composed <see cref="string"/> describe the <see cref="IEpoch"/> of this <see cref="IEpochCollection"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="InvalidOperationException"/>
+    private IEnumerable<string> ComposeComponents(IEpochCollection epochCollection)
     {
-        StringBuilder builder = new();
-
-        foreach (var epoch in epochCollection)
+        try
         {
-            if (builder.Length > 0)
-            {
-                builder.Append(',');
-            }
-
-            builder.Append(CultureInfo.InvariantCulture, $"{dayNumberDelegate(epoch).ToString("F9", CultureInfo.InvariantCulture)}");
+            return ComposeComponents(epochCollection, epochCollection.GetEnumerator());
         }
-
-        return builder.ToString();
+        catch (ArgumentNullException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<IEpochCollection>(nameof(epochCollection), e);
+        }
     }
 
-    /// <summary>Composes a <see cref="string"/> describing <paramref name="epochCollection"/>, with the individual <see cref="IEpoch"/> formatted as calendar dates.</summary>
-    /// <param name="epochCollection">The composed <see cref="string"/> describes these <see cref="IEpoch"/>, with the individual <see cref="IEpoch"/> formatted as calendar dates.</param>
-    /// <remarks><see cref="IEpoch"/> prior to the <see cref="GregorianCalendarEpoch"/> { October 15th, 1582 CE 0:00:00 } are formatted as <see cref="JulianCalendarEpoch"/>, and later <see cref="IEpoch"/> are formatted as <see cref="GregorianCalendarEpoch"/>.</remarks>
-    private static string ComposeWithCalendarDates(IEnumerable<IEpoch> epochCollection)
+    /// <summary>Composes <see cref="string"/> that describes the <see cref="IEpoch"/> of <paramref name="epochCollection"/>.</summary>
+    /// <param name="epochCollection">The composed <see cref="string"/> describe the <see cref="IEpoch"/> of this <see cref="IEpochCollection"/>.</param>
+    /// <param name="epochEnumerator">The <see cref="IEnumerator{T}"/> used to enumerate the <see cref="IEpoch"/> of <paramref name="epochCollection"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    private IEnumerable<string> ComposeComponents(IEpochCollection epochCollection, IEnumerator<IEpoch> epochEnumerator)
     {
-        StringBuilder builder = new();
+        ArgumentNullException.ThrowIfNull(epochEnumerator);
 
-        foreach (var epoch in epochCollection)
+        while (epochEnumerator.MoveNext())
         {
-            var (Year, Month, Day, Hour, Minute, Second) = formatEpoch(epoch);
+            yield return Compose(epochCollection, epochEnumerator.Current);
+        }
+    }
 
-            var era = Year < 0 ? "BC" : "AD";
-            var year = Year.ToString(CultureInfo.InvariantCulture);
-            var month = Month.ToString();
-            var day = Day.ToString(CultureInfo.InvariantCulture);
-            var hour = Hour.ToString(CultureInfo.InvariantCulture);
-            var minute = Minute.ToString(CultureInfo.InvariantCulture);
-            var second = Second.ToString("F4", CultureInfo.InvariantCulture);
+    /// <summary>Composes a <see cref="string"/> describing <paramref name="epoch"/>.</summary>
+    /// <param name="epochCollection">Provides the <see cref="EpochFormat"/> and related information about how to compose the <see cref="string"/>.</param>
+    /// <param name="epoch">The composed <see cref="string"/> describes this <see cref="IEpoch"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
+    private string Compose(IEpochCollection epochCollection, IEpoch epoch)
+    {
+        ArgumentNullException.ThrowIfNull(epoch);
 
-            builder.Append(CultureInfo.InvariantCulture, $"'{era} {year} {month} {day} {hour}:{minute}:{second}'");
+        try
+        {
+            return Compose(epoch, epochCollection.Format, epochCollection.Calendar, epochCollection.TimeSystem, epochCollection.Offset);
+        }
+        catch (ArgumentException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<IEpochCollection>(nameof(epochCollection), e);
+        }
+    }
+
+    /// <summary>Composes a <see cref="string"/> describing <paramref name="epoch"/>.</summary>
+    /// <param name="epoch">The composed <see cref="string"/> describes this <see cref="IEpoch"/>.</param>
+    /// <param name="format"><inheritdoc cref="QueryEpoch.Format" path="/summary"/></param>
+    /// <param name="calendar"><inheritdoc cref="QueryEpoch.Calendar" path="/summary"/></param>
+    /// <param name="timeSystem"><inheritdoc cref="QueryEpoch.TimeSystem" path="/summary"/></param>
+    /// <param name="offset"><inheritdoc cref="QueryEpoch.Offset" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="InvalidEnumArgumentException"/>
+    /// <exception cref="InvalidOperationException"/>
+    private string Compose(IEpoch epoch, EpochFormat format, CalendarType calendar, TimeSystem timeSystem, Time offset)
+    {
+        QueryEpoch queryEpoch = new(epoch) { Format = format, Calendar = calendar, TimeSystem = timeSystem, Offset = offset };
+
+        return Compose(queryEpoch);
+    }
+
+    /// <summary>Composes a <see cref="string"/> describing <paramref name="queryEpoch"/>.</summary>
+    /// <param name="queryEpoch">The composed <see cref="string"/> describes this <see cref="QueryEpoch"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="InvalidOperationException"/>
+    private string Compose(QueryEpoch queryEpoch)
+    {
+        var composed = QueryEpochComposer.Compose(queryEpoch);
+
+        if (string.IsNullOrEmpty(composed))
+        {
+            throw new InvalidOperationException($"The {nameof(IQueryEpochComposer)} provided an invalid {nameof(String)}.");
         }
 
-        return builder.ToString();
-
-        static (int Year, JulianCalendarMonth Month, int Day, int Hour, int Minute, double Second) formatEpoch(IEpoch epoch)
-        {
-            if (epoch.ToJulianDay().Day < 2299160.5)
-            {
-                var julianDate = epoch.ToEpoch<JulianCalendarEpoch>();
-
-                return (julianDate.Year, julianDate.Month, julianDate.Day, julianDate.Hour, julianDate.Minute, julianDate.Second);
-            }
-
-            var gregorianDate = epoch.ToEpoch<GregorianCalendarEpoch>();
-
-            return (gregorianDate.Year, gregorianDate.Month, gregorianDate.Day, gregorianDate.Hour, gregorianDate.Minute, gregorianDate.Second);
-        }
+        return composed;
     }
 }

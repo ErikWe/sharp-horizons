@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Origin;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Arguments.Composers.Origin;
@@ -61,12 +60,18 @@ public sealed class OriginFactory : IOriginFactory
     public IOrigin Create(MajorObjectID majorObjectID) => CreateOrigin(CreateOriginObject(majorObjectID));
 
     /// <inheritdoc/>
-    public IOrigin Create(MajorObjectName majorObjectName) => CreateOrigin(CreateOriginObject(majorObjectName));
+    public IOrigin Create(ObjectRadiiInterpretation majorObjectName)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+
+        return CreateOrigin(CreateOriginObject(majorObjectName));
+    }
 
     /// <inheritdoc/>
     public IOrigin Create(MajorObject majorObject, CylindricalCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
+        SharpMeasuresValidation.Validate(coordinate);
 
         return CreateOrigin(CreateOriginObject(majorObject), CreateOriginCoordinate(coordinate));
     }
@@ -75,35 +80,69 @@ public sealed class OriginFactory : IOriginFactory
     public IOrigin Create(MajorObject majorObject, GeodeticCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
+        SharpMeasuresValidation.Validate(coordinate);
 
         return CreateOrigin(CreateOriginObject(majorObject), CreateOriginCoordinate(coordinate));
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => CreateOrigin(CreateOriginObject(majorObjectID), CreateOriginCoordinate(coordinate));
+    public IOrigin Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateOrigin(CreateOriginObject(majorObjectID), CreateOriginCoordinate(coordinate));
+    }
+    /// <inheritdoc/>
+    public IOrigin Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateOrigin(CreateOriginObject(majorObjectID), CreateOriginCoordinate(coordinate));
+    }
 
     /// <inheritdoc/>
-    public IOrigin Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => CreateOrigin(CreateOriginObject(majorObjectID), CreateOriginCoordinate(coordinate));
+    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateOrigin(CreateOriginObject(majorObjectName), CreateOriginCoordinate(coordinate));
+    }
 
     /// <inheritdoc/>
-    public IOrigin Create(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => CreateOrigin(CreateOriginObject(majorObjectName), CreateOriginCoordinate(coordinate));
+    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+        SharpMeasuresValidation.Validate(coordinate);
 
-    /// <inheritdoc/>
-    public IOrigin Create(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => CreateOrigin(CreateOriginObject(majorObjectName), CreateOriginCoordinate(coordinate));
+        return CreateOrigin(CreateOriginObject(majorObjectName), CreateOriginCoordinate(coordinate));
+    }
 
     /// <inheritdoc/>
     public IOrigin Create(MajorObject majorObject, ObservationSiteID observationSiteID)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
+        ObservationSiteID.Validate(observationSiteID);
 
         return CreateOrigin(CreateOriginObject(majorObject), observationSiteID);
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(MajorObjectID majorObjectID, ObservationSiteID observationSiteID) => CreateOrigin(CreateOriginObject(majorObjectID), observationSiteID);
+    public IOrigin Create(MajorObjectID majorObjectID, ObservationSiteID observationSiteID)
+    {
+        ObservationSiteID.Validate(observationSiteID);
+
+        return CreateOrigin(CreateOriginObject(majorObjectID), observationSiteID);
+    }
 
     /// <inheritdoc/>
-    public IOrigin Create(MajorObjectName majorObjectName, ObservationSiteID observationSiteID) => CreateOrigin(CreateOriginObject(majorObjectName), observationSiteID);
+    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, ObservationSiteID observationSiteID)
+    {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
+        ObservationSiteID.Validate(observationSiteID);
+
+        return CreateOrigin(CreateOriginObject(majorObjectName), observationSiteID);
+    }
 
     /// <inheritdoc/>
     public IOrigin Create(MajorObject majorObject, ObservationSite observationSite)
@@ -123,8 +162,9 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(MajorObjectName majorObjectName, ObservationSite observationSite)
+    public IOrigin Create(ObjectRadiiInterpretation majorObjectName, ObservationSite observationSite)
     {
+        ObjectRadiiInterpretation.Validate(majorObjectName);
         ArgumentNullException.ThrowIfNull(observationSite);
 
         return Create(majorObjectName, observationSite.ID);
@@ -150,8 +190,8 @@ public sealed class OriginFactory : IOriginFactory
     /// <inheritdoc cref="IOriginObjectFactory.Create(MajorObjectID)"/>
     private IOriginObject CreateOriginObject(MajorObjectID majorObjectID) => OriginObjectFactory.Create(majorObjectID);
 
-    /// <inheritdoc cref="IOriginObjectFactory.Create(MajorObjectName)"/>
-    private IOriginObject CreateOriginObject(MajorObjectName majorObjectName) => OriginObjectFactory.Create(majorObjectName);
+    /// <inheritdoc cref="IOriginObjectFactory.Create(ObjectRadiiInterpretation)"/>
+    private IOriginObject CreateOriginObject(ObjectRadiiInterpretation majorObjectName) => OriginObjectFactory.Create(majorObjectName);
 
     /// <summary>Describes the <see cref="IOriginCoordinate"/> in a query as <paramref name="coordinate"/>.</summary>
     /// <param name="coordinate">This <see cref="CylindricalCoordinate"/> represents the <see cref="IOriginCoordinate"/> in a query.</param>

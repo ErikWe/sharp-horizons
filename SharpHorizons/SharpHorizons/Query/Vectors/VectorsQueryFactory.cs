@@ -4,6 +4,7 @@ using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors.Fluency;
+using SharpHorizons.Query.Vectors.Table;
 
 using System;
 
@@ -13,17 +14,17 @@ public sealed class VectorsQueryFactory : IVectorsQueryFactory
     /// <inheritdoc cref="ITargetStageFactory"/>
     private ITargetStageFactory TargetStageFactory { get; }
 
-    /// <inheritdoc cref="Vectors.VectorsQueryInstantiation"/>
-    private VectorsQueryInstantiation VectorsQueryInstantiation { get; }
+    /// <inheritdoc cref="IVectorTableContentValidator"/>
+    private IVectorTableContentValidator VectorTableContentValidator { get; }
 
     /// <inheritdoc cref="VectorsQueryFactory"/>
     /// <param name="targetStageFactory"><inheritdoc cref="TargetStageFactory" path="/summary"/></param>
-    /// <param name="vectorsQueryInstantiation"><inheritdoc cref="VectorsQueryInstantiation" path="/summary"/></param>
-    public VectorsQueryFactory(ITargetStageFactory? targetStageFactory = null, VectorsQueryInstantiation? vectorsQueryInstantiation = null)
+    /// <param name="vectorTableContentValidator"><inheritdoc cref="VectorTableContentValidator" path="/summary"/></param>
+    public VectorsQueryFactory(ITargetStageFactory? targetStageFactory = null, IVectorTableContentValidator? vectorTableContentValidator = null)
     {
         TargetStageFactory = targetStageFactory ?? new TargetStageFactory();
 
-        VectorsQueryInstantiation = vectorsQueryInstantiation ?? VectorsQuery.Instantiation;
+        VectorTableContentValidator = vectorTableContentValidator ?? new VectorTableContentValidator();
     }
 
     /// <inheritdoc/>
@@ -33,7 +34,7 @@ public sealed class VectorsQueryFactory : IVectorsQueryFactory
         ArgumentNullException.ThrowIfNull(origin);
         ArgumentNullException.ThrowIfNull(epochs);
 
-        return VectorsQueryInstantiation(target, origin, epochs);
+        return new VectorsQuery(VectorTableContentValidator, target, origin, epochs);
     }
 
     /// <inheritdoc/>

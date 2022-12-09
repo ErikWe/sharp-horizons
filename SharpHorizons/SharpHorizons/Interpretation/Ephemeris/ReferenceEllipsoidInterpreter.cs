@@ -5,25 +5,29 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
 
+using System;
+
 /// <inheritdoc cref="ITargetReferenceEllipsoidInterpreter"/>
 internal sealed class ReferenceEllipsoidInterpreter : ITargetReferenceEllipsoidInterpreter, IOriginReferenceEllipsoidInterpreter
 {
-    /// <summary><inheritdoc cref="IEphemerisInterpretationOptionsProvider.WestPositiveLongitude"/></summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.WestPositiveLongitude"/>
     private string WestPositiveLongitude { get; }
 
-    /// <summary><inheritdoc cref="IEphemerisInterpretationOptionsProvider.EastPositiveLongitude"/></summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.EastPositiveLongitude"/>
     private string EastPositiveLongitude { get; }
 
     /// <inheritdoc cref="ReferenceEllipsoidInterpretation"/>
-    /// <param name="interpretationKeyProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
-    public ReferenceEllipsoidInterpreter(IEphemerisInterpretationOptionsProvider interpretationKeyProvider)
+    /// <param name="interpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
+    public ReferenceEllipsoidInterpreter(IEphemerisInterpretationOptionsProvider interpretationOptionsProvider)
     {
-        WestPositiveLongitude = FormatLongitudeKey(interpretationKeyProvider.WestPositiveLongitude);
-        EastPositiveLongitude = FormatLongitudeKey(interpretationKeyProvider.EastPositiveLongitude);
+        WestPositiveLongitude = FormatLongitudeKey(interpretationOptionsProvider.WestPositiveLongitude);
+        EastPositiveLongitude = FormatLongitudeKey(interpretationOptionsProvider.EastPositiveLongitude);
     }
 
     Optional<ReferenceEllipsoidInterpretation> IPartInterpreter<ReferenceEllipsoidInterpretation>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (queryPart.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } openBracketSplit || openBracketSplit[1].Split('}') is not { Length: > 1 } closeBracketSplit)
         {
             return new();
@@ -36,23 +40,23 @@ internal sealed class ReferenceEllipsoidInterpreter : ITargetReferenceEllipsoidI
         };
     }
 
-    /// <summary>Interprets <paramref name="text"/> as <see cref="LongitudeInterpretation"/>.</summary>
+    /// <summary>Interprets <paramref name="text"/> as <see cref="LongitudeDefinition"/>.</summary>
     /// <param name="text">This <see cref="string"/> is interpreted.</param>
-    private LongitudeInterpretation InterpretLongitude(string text)
+    private LongitudeDefinition InterpretLongitude(string text)
     {
         var formattedText = FormatLongitudeKey(text);
 
         if (formattedText == WestPositiveLongitude)
         {
-            return LongitudeInterpretation.WestPositive;
+            return LongitudeDefinition.WestPositive;
         }
 
         if (formattedText == EastPositiveLongitude)
         {
-            return LongitudeInterpretation.EastPositive;
+            return LongitudeDefinition.EastPositive;
         }
 
-        return LongitudeInterpretation.Unknown;
+        return LongitudeDefinition.Unknown;
     }
 
     /// <summary>Converts <paramref name="key"/> to a format suitable for comparison.</summary>

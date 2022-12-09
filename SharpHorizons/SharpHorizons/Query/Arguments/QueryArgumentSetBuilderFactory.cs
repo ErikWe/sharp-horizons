@@ -5,6 +5,8 @@ internal sealed class QueryArgumentSetBuilderFactory : IQueryArgumentSetBuilderF
 {
     IQueryArgumentSetBuilder IQueryArgumentSetBuilderFactory.Create(ICommandArgument command)
     {
+        QueryArgument.Validate(command);
+
         IQueryArgumentSetBuilder builder = new QueryArgumentSetBuilder();
 
         builder.Specify(command);

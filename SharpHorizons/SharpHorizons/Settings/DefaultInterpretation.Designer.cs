@@ -58,5 +58,14 @@ namespace SharpHorizons.Interpretation {
                 return ((string)(this["BlockSeparator"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("US/Pacific")]
+        public string HorizonsTimeZoneID {
+            get {
+                return ((string)(this["HorizonsTimeZoneID"]));
+            }
+        }
     }
 }

@@ -14,4 +14,10 @@ public interface IEphemerisInterpretationOptionsProvider
 
     /// <inheritdoc cref="EphemerisInterpretationOptions.EastPositiveLongitude"/>
     public abstract string EastPositiveLongitude { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.BoundaryEpochBCE"/>
+    public abstract string BoundaryEpochBCE { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.BoundaryEpochCE"/>
+    public abstract string BoundaryEpochCE { get; }
 }

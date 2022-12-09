@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
-using System.ComponentModel;
-
 /// <inheritdoc cref="IEphemerisTypeComposer"/>
 internal sealed class GenerateEphemeridesComposer : IGenerateEphemeridesComposer
 {
@@ -9,6 +7,6 @@ internal sealed class GenerateEphemeridesComposer : IGenerateEphemeridesComposer
     {
         GenerateEphemerides.Disable => "NO",
         GenerateEphemerides.Enable => "YES",
-        _ => throw new InvalidEnumArgumentException(nameof(obj), (int)obj, typeof(GenerateEphemerides))
+        _ => throw InvalidEnumArgumentExceptionFactory.Create(obj)
     });
 }

@@ -1,12 +1,13 @@
 ﻿namespace SharpHorizons.Query.Request;
 
-using System;
 using SharpHorizons.Query.Request.HTTP;
+
+using System;
 
 /// <inheritdoc cref="IURIComposer"/>
 internal sealed class URIComposer : IURIComposer
 {
-    /// <summary><inheritdoc cref="IHorizonsHTTPAddressProvider" path="/summary"/></summary>
+    /// <inheritdoc cref="IHorizonsHTTPAddressProvider"/>
     private IHorizonsHTTPAddressProvider APIAddressProvider { get; }
 
     /// <inheritdoc cref="URIComposer"/>
@@ -16,5 +17,10 @@ internal sealed class URIComposer : IURIComposer
         APIAddressProvider = apiAddressProvider;
     }
 
-    HorizonsQueryURI IURIComposer.Compose(HorizonsQueryString query) => new Uri(APIAddressProvider.HTTPAddress, $"?{query}");
+    HorizonsQueryURI IURIComposer.Compose(HorizonsQueryString query)
+    {
+        HorizonsQueryString.Validate(query);
+
+        return new(new Uri(APIAddressProvider.HTTPAddress, $"?{query}"));
+    }
 }

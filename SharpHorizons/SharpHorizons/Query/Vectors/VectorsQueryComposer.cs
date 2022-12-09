@@ -2,18 +2,19 @@
 
 using SharpHorizons.Query.Request;
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IVectorsQueryComposer"/>
 internal sealed class VectorsQueryComposer : IVectorsQueryComposer
 {
-    /// <summary><inheritdoc cref="IVectorsQueryArgumentComposer" path="/summary"/></summary>
+    /// <inheritdoc cref="IVectorsQueryArgumentComposer"/>
     public required IVectorsQueryArgumentComposer ArgumentComposer { private get; init; }
 
-    /// <summary><inheritdoc cref="IQueryStringComposer" path="/summary"/></summary>
+    /// <inheritdoc cref="IQueryStringComposer"/>
     public required IQueryStringComposer QueryStringComposer { private get; init; }
 
-    /// <summary><inheritdoc cref="IURIComposer" path="/summary"/></summary>
+    /// <inheritdoc cref="IURIComposer"/>
     public required IURIComposer URIComposer { private get; init; }
 
 
@@ -34,8 +35,11 @@ internal sealed class VectorsQueryComposer : IVectorsQueryComposer
 
     HorizonsQueryURI IVectorsQueryComposer.Compose(IVectorsQuery query)
     {
+        ArgumentNullException.ThrowIfNull(query);
+
         var argumentSet = ArgumentComposer.Compose(query);
         var queryString = QueryStringComposer.Compose(argumentSet);
+        
         return URIComposer.Compose(queryString);
     }
 }

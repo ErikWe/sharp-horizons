@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// <inheritdoc cref="IHTTPQueryHandler"/>
 internal sealed class HTTPQueryHandler : IHTTPQueryHandler
 {
-    /// <summary><inheritdoc cref="IHttpClientFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IHttpClientFactory"/>
     private HttpClient Client { get; }
 
     /// <inheritdoc cref="HTTPQueryHandler"/>
@@ -25,7 +25,9 @@ internal sealed class HTTPQueryHandler : IHTTPQueryHandler
     /// <inheritdoc cref="IHTTPQueryHandler.RequestAsync(HorizonsQueryURI, CancellationToken)"/>
     private async Task<IHTTPQueryResult> RequestAsync(HorizonsQueryURI queryURI, CancellationToken token)
     {
-        var response = await Client.GetAsync(queryURI, token);
+        HorizonsQueryURI.Validate(queryURI);
+
+        var response = await Client.GetAsync(queryURI.Value, token);
 
         return new HTTPQueryResult(response);
     }

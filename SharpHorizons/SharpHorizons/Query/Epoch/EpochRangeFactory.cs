@@ -1,9 +1,9 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Epoch;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Arguments.Composers.Epoch;
+
 using SharpMeasures;
 
 using System;
@@ -24,10 +24,19 @@ public sealed class EpochRangeFactory : IFixedEpochRangeFactory, IUniformEpochRa
     private IAngularStepSizeFactory AngularStepSizeFactory { get; }
 
     /// <summary>Composes <see cref="IStartEpochArgument"/> that describe <see cref="IEpoch"/>.</summary>
-    private IStartEpochComposer<IEpoch> StartEpochComposer { get; }
+    private IStartEpochComposer<IEpochRange> StartEpochComposer { get; }
 
     /// <summary>Composes <see cref="IStopEpochArgument"/> that describe <see cref="IEpoch"/>.</summary>
-    private IStopEpochComposer<IEpoch> StopEpochComposer { get; }
+    private IStopEpochComposer<IEpochRange> StopEpochComposer { get; }
+
+    /// <inheritdoc cref="IEpochCalendarComposer"/>
+    private IEpochCalendarComposer CalendarComposer { get; }
+
+    /// <inheritdoc cref="ITimeSystemComposer"/>
+    private ITimeSystemComposer TimeSystemComposer { get; }
+
+    /// <inheritdoc cref="ITimeZoneComposer"/>
+    private ITimeZoneComposer TimeZoneComposer { get; }
 
     /// <inheritdoc cref="StepSizeFactory"/>
     /// <param name="fixedStepSizeFactory"><inheritdoc cref="FixedStepSizeFactory" path="/summary"/></param>
@@ -36,7 +45,11 @@ public sealed class EpochRangeFactory : IFixedEpochRangeFactory, IUniformEpochRa
     /// <param name="angularStepSizeFactory"><inheritdoc cref="AngularStepSizeFactory" path="/summary"/></param>
     /// <param name="startEpochComposer"><inheritdoc cref="StartEpochComposer" path="/summary"/></param>
     /// <param name="stopEpochComposer"><inheritdoc cref="StopEpochComposer" path="/summary"/></param>
-    public EpochRangeFactory(IFixedStepSizeFactory? fixedStepSizeFactory = null, IUniformStepSizeFactory? uniformStepSizeFactory = null, ICalendarStepSizeFactory? calendarStepSizeFactory = null, IAngularStepSizeFactory? angularStepSizeFactory = null, IStartEpochComposer<IEpoch>? startEpochComposer = null, IStopEpochComposer<IEpoch>? stopEpochComposer = null)
+    /// <param name="calendarComposer"><inheritdoc cref="CalendarComposer" path="/summary"/></param>
+    /// <param name="timeSystemComposer"><inheritdoc cref="TimeSystemComposer" path="/summary"/></param>
+    /// <param name="timeZoneComposer"><inheritdoc cref="TimeZoneComposer" path="/summary"/></param>
+    public EpochRangeFactory(IFixedStepSizeFactory? fixedStepSizeFactory = null, IUniformStepSizeFactory? uniformStepSizeFactory = null, ICalendarStepSizeFactory? calendarStepSizeFactory = null, IAngularStepSizeFactory? angularStepSizeFactory = null,
+        IStartEpochComposer<IEpochRange>? startEpochComposer = null, IStopEpochComposer<IEpochRange>? stopEpochComposer = null, IEpochCalendarComposer? calendarComposer = null, ITimeSystemComposer? timeSystemComposer = null, ITimeZoneComposer? timeZoneComposer = null)
     {
         StepSizeFactory? defaultStepSizeFactory = null;
         EpochRangeEpochComposer? defaultEpochComposer = null;
@@ -58,6 +71,10 @@ public sealed class EpochRangeFactory : IFixedEpochRangeFactory, IUniformEpochRa
 
         StartEpochComposer = startEpochComposer ?? defaultEpochComposer!;
         StopEpochComposer = stopEpochComposer ?? defaultEpochComposer!;
+
+        CalendarComposer = calendarComposer ?? new EpochCalendarComposer();
+        TimeSystemComposer = timeSystemComposer ?? new TimeSystemComposer();
+        TimeZoneComposer = timeZoneComposer ?? new TimeZoneComposer();
     }
 
     /// <inheritdoc cref="IFixedEpochRangeFactory.Create(IEpoch, IEpoch, Time)"/>
@@ -78,13 +95,13 @@ public sealed class EpochRangeFactory : IFixedEpochRangeFactory, IUniformEpochRa
     IEpochRange ICalendarEpochRangeFactory.Create(IEpoch startEpoch, IEpoch stopEpoch, int count, CalendarStepSizeUnit unit) => Calendar(startEpoch, stopEpoch, count, unit);
     IEpochRange IAngularEpochRangeFactory.Create(IEpoch startEpoch, IEpoch stopEpoch, Angle deltaAngle) => Angular(startEpoch, stopEpoch, deltaAngle);
 
-    /// <inheritdoc cref="EpochRange(IStartEpoch, IStopEpoch, IStepSize)"/>
+    /// <inheritdoc cref="EpochRange(IStartEpoch, IStopEpoch, IStepSize, IStartEpochComposer{IEpochRange}, IStopEpochComposer{IEpochRange}, IEpochCalendarComposer, ITimeSystemComposer, ITimeZoneComposer)"/>
     /// <exception cref="ArgumentNullException"/>
     private IEpochRange Create(IEpoch startEpoch, IEpoch stopEpoch, IStepSize stepSize)
     {
         ArgumentNullException.ThrowIfNull(startEpoch);
         ArgumentNullException.ThrowIfNull(stopEpoch);
 
-        return new EpochRange(new StartEpoch(startEpoch, StartEpochComposer), new StopEpoch(stopEpoch, StopEpochComposer), stepSize);
+        return new EpochRange(new EphemerisBoundaryEpoch(startEpoch), new EphemerisBoundaryEpoch(stopEpoch), stepSize, StartEpochComposer, StopEpochComposer, CalendarComposer, TimeSystemComposer, TimeZoneComposer);
     }
 }

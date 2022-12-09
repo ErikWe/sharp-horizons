@@ -58,5 +58,23 @@ namespace SharpHorizons.Interpretation.Ephemeris {
                 return ((string)(this["EastPositiveLongitude"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("B.C.")]
+        public string BoundaryEpochBCE {
+            get {
+                return ((string)(this["BoundaryEpochBCE"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C.E.")]
+        public string BoundaryEpochCE {
+            get {
+                return ((string)(this["BoundaryEpochCE"]));
+            }
+        }
     }
 }

@@ -6,6 +6,8 @@ using SharpHorizons.Query.Arguments.Composers.Epoch;
 
 using SharpMeasures;
 
+using System;
+
 /// <summary>Handles construction of <see cref="IStepSize"/>.</summary>
 public sealed class StepSizeFactory : IFixedStepSizeFactory, IUniformStepSizeFactory, ICalendarStepSizeFactory, IAngularStepSizeFactory
 {
@@ -35,16 +37,59 @@ public sealed class StepSizeFactory : IFixedStepSizeFactory, IUniformStepSizeFac
     }
 
     /// <inheritdoc cref="IFixedStepSizeFactory.Create(Time)"/>
-    public IFixedStepSize Fixed(Time deltaTime) => new FixedStepSize(deltaTime, FixedComposer);
+    public IFixedStepSize Fixed(Time deltaTime)
+    {
+        SharpMeasuresValidation.Validate(deltaTime);
+
+        if (deltaTime.IsNegative || deltaTime.IsZero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(deltaTime), deltaTime, $"A value greater than 0 should be used to represent the delta time of a {nameof(IFixedStepSize)}.");
+        }
+
+        return new FixedStepSize(deltaTime, FixedComposer);
+    }
 
     /// <inheritdoc cref="IUniformStepSizeFactory.Create(int)"/>
-    public IUniformStepSize Uniform(int stepCount) => new UniformStepSize(stepCount, UniformComposer);
+    public IUniformStepSize Uniform(int stepCount)
+    {
+        if (stepCount <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(stepCount), stepCount, $"A value greater than 0 should be used to represent the step count of a {nameof(IUniformStepSize)}.");
+        }
+
+        return new UniformStepSize(stepCount, UniformComposer);
+    }
 
     /// <inheritdoc cref="ICalendarStepSizeFactory.Create(int, CalendarStepSizeUnit)"/>
-    public ICalendarStepSize Calendar(int count, CalendarStepSizeUnit unit) => new CalendarStepSize(count, unit, CalendarComposer);
+    public ICalendarStepSize Calendar(int count, CalendarStepSizeUnit unit)
+    {
+        if (count <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count), count, $"A value greater than 0 should be used to represent the count of a {nameof(ICalendarStepSize)}.");
+        }
+
+        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(unit);
+
+        if (unit is CalendarStepSizeUnit.Unknown)
+        {
+            throw ArgumentExceptionFactory.UnsupportedEnumValue(unit);
+        }
+
+        return new CalendarStepSize(count, unit, CalendarComposer);
+    }
 
     /// <inheritdoc cref="IAngularStepSizeFactory.Create(Angle)"/>
-    public IAngularStepSize Angular(Angle deltaAngle) => new AngularStepSize(deltaAngle, AngularComposer);
+    public IAngularStepSize Angular(Angle deltaAngle)
+    {
+        SharpMeasuresValidation.Validate(deltaAngle);
+
+        if (deltaAngle.IsNegative || deltaAngle.IsZero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(deltaAngle), deltaAngle, $"A value greater than 0 should be used to represent the delta angle of a {nameof(IAngularStepSize)}.");
+        }
+
+        return new AngularStepSize(deltaAngle, AngularComposer);
+    }
 
     IFixedStepSize IFixedStepSizeFactory.Create(Time deltaTime) => Fixed(deltaTime);
     IUniformStepSize IUniformStepSizeFactory.Create(int stepCount) => Uniform(stepCount);

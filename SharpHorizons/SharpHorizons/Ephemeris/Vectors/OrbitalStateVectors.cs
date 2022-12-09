@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Ephemeris.Vectors;
 
-using SharpHorizons.Epoch;
-
 using SharpMeasures;
 
 using System.Diagnostics.CodeAnalysis;

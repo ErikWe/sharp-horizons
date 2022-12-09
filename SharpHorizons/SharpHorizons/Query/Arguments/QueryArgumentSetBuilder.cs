@@ -3,7 +3,7 @@
 /// <inheritdoc cref="IQueryArgumentSetBuilder"/>
 internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 {
-    /// <summary><inheritdoc cref="IQueryArgumentSet" path="/summary"/></summary>
+    /// <inheritdoc cref="IQueryArgumentSet"/>
     private MutableQueryArgumentSet ArgumentSet { get; set; } = new();
 
     IQueryArgumentSet IQueryArgumentSetBuilder.Build()
@@ -18,6 +18,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ICommandArgument command)
     {
+        QueryArgument.Validate(command);
+
         ArgumentSet.Command = command;
 
         return this;
@@ -25,6 +27,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IEphemerisTypeArgument ephemerisType)
     {
+        QueryArgument.Validate(ephemerisType);
+
         ArgumentSet.EphemerisType = OptionalQueryArgument.Construct(ephemerisType);
 
         return this;
@@ -32,6 +36,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IGenerateEphemeridesArgument generateEphemerides)
     {
+        QueryArgument.Validate(generateEphemerides);
+
         ArgumentSet.GenerateEphemerides = OptionalQueryArgument.Construct(generateEphemerides);
 
         return this;
@@ -39,6 +45,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IOutputFormatArgument outputFormat)
     {
+        QueryArgument.Validate(outputFormat);
+
         ArgumentSet.OutputFormat = OptionalQueryArgument.Construct(outputFormat);
 
         return this;
@@ -46,6 +54,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IObjectDataInclusionArgument objectDataInclusion)
     {
+        QueryArgument.Validate(objectDataInclusion);
+
         ArgumentSet.ObjectDataInclusion = OptionalQueryArgument.Construct(objectDataInclusion);
 
         return this;
@@ -53,6 +63,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IOriginArgument origin)
     {
+        QueryArgument.Validate(origin);
+
         ArgumentSet.Origin = OptionalQueryArgument.Construct(origin);
 
         return this;
@@ -60,6 +72,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IOriginCoordinateArgument originCoordinate)
     {
+        QueryArgument.Validate(originCoordinate);
+
         ArgumentSet.OriginCoordinate = OptionalQueryArgument.Construct(originCoordinate);
 
         return this;
@@ -67,6 +81,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IOriginCoordinateTypeArgument originCoordinateType)
     {
+        QueryArgument.Validate(originCoordinateType);
+
         ArgumentSet.OriginCoordinateType = OptionalQueryArgument.Construct(originCoordinateType);
 
         return this;
@@ -74,6 +90,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IEpochCollectionArgument epochCollection)
     {
+        QueryArgument.Validate(epochCollection);
+
         ArgumentSet.EpochCollection = OptionalQueryArgument.Construct(epochCollection);
 
         return this;
@@ -81,13 +99,44 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IEpochCollectionFormatArgument epochCollectionFormat)
     {
+        QueryArgument.Validate(epochCollectionFormat);
+
         ArgumentSet.EpochCollectionFormat = OptionalQueryArgument.Construct(epochCollectionFormat);
+
+        return this;
+    }
+
+    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ICalendarTypeArgument epochCalendar)
+    {
+        QueryArgument.Validate(epochCalendar);
+
+        ArgumentSet.EpochCalendar = OptionalQueryArgument.Construct(epochCalendar);
+
+        return this;
+    }
+
+    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ITimeSystemArgument timeSystem)
+    {
+        QueryArgument.Validate(timeSystem);
+
+        ArgumentSet.TimeSystem = OptionalQueryArgument.Construct(timeSystem);
+
+        return this;
+    }
+
+    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ITimeZoneArgument timeZone)
+    {
+        QueryArgument.Validate(timeZone);
+
+        ArgumentSet.TimeZone = OptionalQueryArgument.Construct(timeZone);
 
         return this;
     }
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IStartEpochArgument startEpoch)
     {
+        QueryArgument.Validate(startEpoch);
+
         ArgumentSet.StartEpoch = OptionalQueryArgument.Construct(startEpoch);
 
         return this;
@@ -95,6 +144,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IStopEpochArgument stopEpoch)
     {
+        QueryArgument.Validate(stopEpoch);
+
         ArgumentSet.StopEpoch = OptionalQueryArgument.Construct(stopEpoch);
 
         return this;
@@ -102,6 +153,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IStepSizeArgument stepSize)
     {
+        QueryArgument.Validate(stepSize);
+
         ArgumentSet.StepSize = OptionalQueryArgument.Construct(stepSize);
 
         return this;
@@ -109,6 +162,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IReferencePlaneArgument referencePlane)
     {
+        QueryArgument.Validate(referencePlane);
+
         ArgumentSet.ReferencePlane = OptionalQueryArgument.Construct(referencePlane);
 
         return this;
@@ -116,6 +171,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IReferenceSystemArgument referenceSystem)
     {
+        QueryArgument.Validate(referenceSystem);
+
         ArgumentSet.ReferenceSystem = OptionalQueryArgument.Construct(referenceSystem);
 
         return this;
@@ -123,6 +180,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ITimePrecisionArgument timePrecision)
     {
+        QueryArgument.Validate(timePrecision);
+
         ArgumentSet.TimePrecision = OptionalQueryArgument.Construct(timePrecision);
 
         return this;
@@ -130,6 +189,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IVectorCorrectionArgument vectorCorrection)
     {
+        QueryArgument.Validate(vectorCorrection);
+
         ArgumentSet.VectorCorrection = OptionalQueryArgument.Construct(vectorCorrection);
 
         return this;
@@ -137,6 +198,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(ITimeDeltaInclusionArgument timeDeltaInclusion)
     {
+        QueryArgument.Validate(timeDeltaInclusion);
+
         ArgumentSet.TimeDeltaInclusion = OptionalQueryArgument.Construct(timeDeltaInclusion);
 
         return this;
@@ -144,6 +207,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IVectorTableContentArgument vectorTableContent)
     {
+        QueryArgument.Validate(vectorTableContent);
+
         ArgumentSet.VectorTableContent = OptionalQueryArgument.Construct(vectorTableContent);
 
         return this;
@@ -151,6 +216,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IOutputUnitsArgument outputUnits)
     {
+        QueryArgument.Validate(outputUnits);
+
         ArgumentSet.OutputUnits = OptionalQueryArgument.Construct(outputUnits);
 
         return this;
@@ -158,6 +225,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IElementLabelsArgument elementLabels)
     {
+        QueryArgument.Validate(elementLabels);
+
         ArgumentSet.ElementLabels = OptionalQueryArgument.Construct(elementLabels);
 
         return this;
@@ -165,6 +234,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IVectorLabelsArgument vectorLabels)
     {
+        QueryArgument.Validate(vectorLabels);
+
         ArgumentSet.VectorLabels = OptionalQueryArgument.Construct(vectorLabels);
 
         return this;
@@ -172,6 +243,8 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IValueSeparationArgument valueSeparation)
     {
+        QueryArgument.Validate(valueSeparation);
+
         ArgumentSet.ValueSeparation = OptionalQueryArgument.Construct(valueSeparation);
 
         return this;
@@ -190,6 +263,9 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
         public OptionalQueryArgument<IOriginCoordinateTypeArgument> OriginCoordinateType { get; set; }
         public OptionalQueryArgument<IEpochCollectionArgument> EpochCollection { get; set; }
         public OptionalQueryArgument<IEpochCollectionFormatArgument> EpochCollectionFormat { get; set; }
+        public OptionalQueryArgument<ICalendarTypeArgument> EpochCalendar { get; set; }
+        public OptionalQueryArgument<ITimeSystemArgument> TimeSystem { get; set; }
+        public OptionalQueryArgument<ITimeZoneArgument> TimeZone { get; set; }
         public OptionalQueryArgument<IStartEpochArgument> StartEpoch { get; set; }
         public OptionalQueryArgument<IStopEpochArgument> StopEpoch { get; set; }
         public OptionalQueryArgument<IStepSizeArgument> StepSize { get; set; }

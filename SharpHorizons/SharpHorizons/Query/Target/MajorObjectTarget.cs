@@ -1,15 +1,14 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Describes the <see cref="ITarget"/> in a query as the center of a <see cref="Identity.MajorObject"/>.</summary>
+/// <summary>Describes the <see cref="ITarget"/> in a query as the center of a <see cref="SharpHorizons.MajorObject"/>.</summary>
 internal sealed record class MajorObjectTarget : ITarget
 {
-    /// <summary>The center of this <see cref="Identity.MajorObject"/> represents the <see cref="ITarget"/> in a query.</summary>
+    /// <summary>The center of this <see cref="SharpHorizons.MajorObject"/> represents the <see cref="ITarget"/> in a query.</summary>
     public required MajorObject MajorObject { private get; init; }
 
     /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>

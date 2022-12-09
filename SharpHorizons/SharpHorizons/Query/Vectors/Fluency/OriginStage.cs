@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Vectors.Fluency;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 
@@ -15,10 +14,10 @@ internal sealed class OriginStage : IOriginStage
     /// <summary>The <see cref="ITarget"/> selected for the <see cref="IVectorsQuery"/>.</summary>
     public required ITarget Target { private get; init; }
 
-    /// <summary><inheritdoc cref="IOriginFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IOriginFactory"/>
     public required IOriginFactory OriginFactory { private get; init; }
 
-    /// <summary><inheritdoc cref="IEpochStageFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IEpochStageFactory"/>
     public required IEpochStageFactory EpochStageFactory { private get; init; }
 
     /// <inheritdoc cref="OriginStage"/>
@@ -44,42 +43,23 @@ internal sealed class OriginStage : IOriginStage
         return EpochStageFactory.Create(Target, origin);
     }
 
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject)
-    {
-        ArgumentNullException.ThrowIfNull(majorObject);
+    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject) => Create(OriginFactory.Create(majorObject));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID) => Create(OriginFactory.Create(majorObjectID));
+    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName) => Create(OriginFactory.Create(majorObjectName));
 
-        return EpochStageFactory.Create(Target, OriginFactory.Create(majorObject));
-    }
+    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObject, coordinate));
+    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObject, coordinate));
 
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectID));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectName));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObjectID, coordinate));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObjectID, coordinate));
+    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
+    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
 
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, CylindricalCoordinate coordinate)
-    {
-        ArgumentNullException.ThrowIfNull(majorObject);
+    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObject, observationSiteID));
+    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObjectID, observationSiteID));
+    IEpochStage IOriginStage.WithOrigin(ObjectRadiiInterpretation majorObjectName, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObjectName, observationSiteID));
 
-        return EpochStageFactory.Create(Target, OriginFactory.Create(majorObject, coordinate));
-    }
-
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, GeodeticCoordinate coordinate)
-    {
-        ArgumentNullException.ThrowIfNull(majorObject);
-
-        return EpochStageFactory.Create(Target, OriginFactory.Create(majorObject, coordinate));
-    }
-
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectID, coordinate));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectID, coordinate));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectName, coordinate));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectName, coordinate));
-
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, ObservationSiteID observationSiteID)
-    {
-        ArgumentNullException.ThrowIfNull(majorObject);
-
-        return EpochStageFactory.Create(Target, OriginFactory.Create(majorObject, observationSiteID));
-    }
-
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, ObservationSiteID observationSiteID) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectID, observationSiteID));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, ObservationSiteID observationSiteID) => EpochStageFactory.Create(Target, OriginFactory.Create(majorObjectName, observationSiteID));
+    /// <summary>Selects <paramref name="origin"/> as the <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</summary>
+    /// <param name="origin">The <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</param>
+    private IEpochStage Create(IOrigin origin) => EpochStageFactory.Create(Target, origin);
 }

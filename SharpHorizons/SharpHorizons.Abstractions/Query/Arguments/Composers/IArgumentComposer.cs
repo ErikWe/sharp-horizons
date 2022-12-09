@@ -9,6 +9,8 @@ public interface IArgumentComposer<TArgument, T> where TArgument : IQueryArgumen
 {
     /// <summary>Composes a <typeparamref name="TArgument"/> describing <paramref name="obj"/>.</summary>
     /// <param name="obj">The composed <typeparamref name="TArgument"/> describes this <typeparamref name="T"/>.</param>
+    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
     public abstract TArgument Compose(T obj);
 }

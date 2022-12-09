@@ -24,7 +24,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
-      <ProjectReference Include="..\SharpHorizons.Domain\SharpHorizons.Domain.csproj" PrivateAssets="all" />
     </ItemGroup>
 
 </Project>

@@ -3,72 +3,81 @@
 /// <summary>Provides the <see cref="IQueryParameterIdentifier"/> associated with the available parameters.</summary>
 public interface IQueryParameterIdentifierProvider
 {
-    /// <summary><inheritdoc cref="ICommandParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="ICommandParameterIdentifier"/>
     public abstract ICommandParameterIdentifier Command { get; }
 
-    /// <summary><inheritdoc cref="IElementLabelsParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IElementLabelsParameterIdentifier"/>
     public abstract IElementLabelsParameterIdentifier ElementLabels { get; }
 
-    /// <summary><inheritdoc cref="IEphemerisTypeParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IEphemerisTypeParameterIdentifier"/>
     public abstract IEphemerisTypeParameterIdentifier EphemerisType { get; }
 
-    /// <summary><inheritdoc cref="IEpochCollectionParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="ICalendarTypeParameterIdentifier"/>
+    public abstract ICalendarTypeParameterIdentifier EpochCalendar { get; }
+
+    /// <inheritdoc cref="IEpochCollectionParameterIdentifier"/>
     public abstract IEpochCollectionParameterIdentifier EpochCollection { get; }
 
-    /// <summary><inheritdoc cref="ICommandParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="ICommandParameterIdentifier"/>
     public abstract IEpochCollectionFormatParameterIdentifier EpochCollectionFormat { get; }
 
-    /// <summary><inheritdoc cref="IGenerateEphemeridesParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IGenerateEphemeridesParameterIdentifier"/>
     public abstract IGenerateEphemeridesParameterIdentifier GenerateEphemerides { get; }
 
-    /// <summary><inheritdoc cref="IObjectDataInclusionParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IObjectDataInclusionParameterIdentifier"/>
     public abstract IObjectDataInclusionParameterIdentifier ObjectDataInclusion { get; }
 
-    /// <summary><inheritdoc cref="IOriginParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IOriginParameterIdentifier"/>
     public abstract IOriginParameterIdentifier Origin { get; }
 
-    /// <summary><inheritdoc cref="IOriginCoordinateParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IOriginCoordinateParameterIdentifier"/>
     public abstract IOriginCoordinateParameterIdentifier OriginCoordinate { get; }
 
-    /// <summary><inheritdoc cref="IOriginCoordinateTypeParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IOriginCoordinateTypeParameterIdentifier"/>
     public abstract IOriginCoordinateTypeParameterIdentifier OriginCoordinateType { get; }
 
-    /// <summary><inheritdoc cref="IOutputFormatParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IOutputFormatParameterIdentifier"/>
     public abstract IOutputFormatParameterIdentifier OutputFormat { get; }
 
-    /// <summary><inheritdoc cref="IOutputUnitsParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IOutputUnitsParameterIdentifier"/>
     public abstract IOutputUnitsParameterIdentifier OutputUnits { get; }
 
-    /// <summary><inheritdoc cref="IReferencePlaneParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IReferencePlaneParameterIdentifier"/>
     public abstract IReferencePlaneParameterIdentifier ReferencePlane { get; }
 
-    /// <summary><inheritdoc cref="IReferenceSystemParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IReferenceSystemParameterIdentifier"/>
     public abstract IReferenceSystemParameterIdentifier ReferenceSystem { get; }
 
-    /// <summary><inheritdoc cref="IStartEpochParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IStartEpochParameterIdentifier"/>
     public abstract IStartEpochParameterIdentifier StartEpoch { get; }
 
-    /// <summary><inheritdoc cref="IStepSizeParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IStepSizeParameterIdentifier"/>
     public abstract IStepSizeParameterIdentifier StepSize { get; }
 
-    /// <summary><inheritdoc cref="IStopEpochParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IStopEpochParameterIdentifier"/>
     public abstract IStopEpochParameterIdentifier StopEpoch { get; }
 
-    /// <summary><inheritdoc cref="ITimeDeltaInclusionParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="ITimeDeltaInclusionParameterIdentifier"/>
     public abstract ITimeDeltaInclusionParameterIdentifier TimeDeltaInclusion { get; }
 
-    /// <summary><inheritdoc cref="ITimePrecisionParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="ITimePrecisionParameterIdentifier"/>
     public abstract ITimePrecisionParameterIdentifier TimePrecision { get; }
 
-    /// <summary><inheritdoc cref="IValueSeparationParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="ITimeSystemParameterIdentifier"/>
+    public abstract ITimeSystemParameterIdentifier TimeSystem { get; }
+
+    /// <inheritdoc cref="ITimeZoneParameterIdentifier"/>
+    public abstract ITimeZoneParameterIdentifier TimeZone { get; }
+
+    /// <inheritdoc cref="IValueSeparationParameterIdentifier"/>
     public abstract IValueSeparationParameterIdentifier ValueSeparation { get; }
 
-    /// <summary><inheritdoc cref="IVectorCorrectionParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IVectorCorrectionParameterIdentifier"/>
     public abstract IVectorCorrectionParameterIdentifier VectorCorrection { get; }
 
-    /// <summary><inheritdoc cref="IVectorLabelsParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IVectorLabelsParameterIdentifier"/>
     public abstract IVectorLabelsParameterIdentifier VectorLabels { get; }
 
-    /// <summary><inheritdoc cref="IVectorTableContentParameterIdentifier" path="/summary"/></summary>
+    /// <inheritdoc cref="IVectorTableContentParameterIdentifier"/>
     public abstract IVectorTableContentParameterIdentifier VectorTableContent { get; }
 }

@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Target;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Target;
 
 using System;
@@ -10,6 +9,7 @@ internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITarge
 {
     /// <summary>Used to compose a <see cref="ITargetArgument"/> that describe the <see cref="MajorObjectID"/> associated with a <see cref="MajorObject"/>.</summary>
     private ITargetComposer<MajorObjectID> IDComposer { get; }
+
     /// <summary>Used to compose a <see cref="TargetSiteObjectIdentifier"/> that describe the <see cref="MajorObjectID"/> associated with a <see cref="MajorObject"/>.</summary>
     private ITargetSiteObjectComposer<MajorObjectID> IDSiteObjectComposer { get; }
 
@@ -26,7 +26,18 @@ internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITarge
     {
         ArgumentNullException.ThrowIfNull(obj);
 
-        return ((IArgumentComposer<ITargetArgument, MajorObjectID>)IDComposer).Compose(obj.ID);
+        var argument = ((IArgumentComposer<ITargetArgument, MajorObjectID>)IDComposer).Compose(obj.ID);
+
+        try
+        {
+            QueryArgument.Validate(argument);
+        }
+        catch (ArgumentException e)
+        {
+            throw new InvalidOperationException($"The {nameof(ITargetComposer<MajorObject>)} for {nameof(MajorObject)} provided an invalid {nameof(ITargetArgument)}.", e);
+        }
+
+        return argument;
     }
 
     ICommandArgument IArgumentComposer<ICommandArgument, MajorObject>.Compose(MajorObject obj) => ((IArgumentComposer<ITargetArgument, MajorObject>)this).Compose(obj);
@@ -35,6 +46,17 @@ internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITarge
     {
         ArgumentNullException.ThrowIfNull(obj);
 
-        return IDSiteObjectComposer.Compose(obj.ID);
+        var identifier = IDSiteObjectComposer.Compose(obj.ID);
+
+        try
+        {
+            TargetSiteObjectIdentifier.Validate(identifier);
+        }
+        catch (ArgumentException e)
+        {
+            throw new InvalidOperationException($"The {nameof(ITargetSiteObjectComposer<MajorObjectID>)} for {nameof(MajorObjectID)} provided an invalid {nameof(TargetSiteObjectIdentifier)}.", e);
+        }
+
+        return identifier;
     }
 }

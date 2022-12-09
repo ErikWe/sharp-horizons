@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 /// <summary>Provides options for how the result of a query is interpreted.</summary>
 internal sealed class InterpretationOptionsProvider : IInterpretationOptionsProvider
 {
-    /// <summary><inheritdoc cref="InterpretationOptions" path="/summary"/></summary>
+    /// <inheritdoc cref="InterpretationOptions"/>
     private InterpretationOptions Options { get; }
 
     /// <inheritdoc cref="InterpretationOptionsProvider"/>
@@ -15,6 +15,7 @@ internal sealed class InterpretationOptionsProvider : IInterpretationOptionsProv
         Options = options.Value;
     }
 
+    string IInterpretationOptionsProvider.HorizonsTimeZoneID => Options.HorizonsTimeZoneID;
     string IInterpretationOptionsProvider.RawTextSource => Options.RawTextSource;
     string IInterpretationOptionsProvider.RawTextVersion => Options.RawTextVersion;
     string IInterpretationOptionsProvider.BlockSeparator => Options.BlockSeparator;

@@ -1,15 +1,14 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
-using System.ComponentModel;
-
 /// <inheritdoc cref="IReferencePlaneComposer"/>
 internal sealed class ReferencePlaneComposer : IReferencePlaneComposer
 {
     IReferencePlaneArgument IArgumentComposer<IReferencePlaneArgument, ReferencePlane>.Compose(ReferencePlane obj) => new QueryArgument(obj switch
     {
+        ReferencePlane.Unknown => throw ArgumentExceptionFactory.UnsupportedEnumValue(obj),
         ReferencePlane.Ecliptic => "E",
         ReferencePlane.Frame => "F",
         ReferencePlane.BodyEquator => "B",
-        _ => throw new InvalidEnumArgumentException(nameof(obj), (int)obj, typeof(ReferencePlane))
+        _ => throw InvalidEnumArgumentExceptionFactory.Create(obj)
     });
 }

@@ -17,9 +17,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Update="SharpMeasures" Version="0.3.67" />
-		<PackageReference Update="SharpMeasures.Astronomy" Version="0.3.67" />
-		<PackageReference Update="SharpMeasures.Base" Version="0.3.67" />
+		<PackageReference Update="NodaTime" Version="3.1.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Update="SharpMeasures.Astronomy" Version="0.3.68" />
 		<PackageReference Update="SharpMeasures.Generators" Version="0.3.67" />
 	</ItemGroup>
 

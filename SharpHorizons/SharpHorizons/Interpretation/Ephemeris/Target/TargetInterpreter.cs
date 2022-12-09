@@ -2,8 +2,10 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Target;
+
+using System;
 
 /// <inheritdoc cref="ITargetInterpreter"/>
 internal sealed class TargetInterpreter : ITargetInterpreter
@@ -41,6 +43,8 @@ internal sealed class TargetInterpreter : ITargetInterpreter
 
     Optional<ITarget> IPartInterpreter<ITarget>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (queryPart.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit)
         {
             return new();

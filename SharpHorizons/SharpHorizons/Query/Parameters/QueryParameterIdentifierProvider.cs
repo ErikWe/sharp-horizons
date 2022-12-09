@@ -2,12 +2,13 @@
 
 using Microsoft.Extensions.Options;
 
-/// <summary><inheritdoc cref="IQueryParameterIdentifierProvider" path="/summary"/></summary>
+/// <inheritdoc cref="IQueryParameterIdentifierProvider"/>
 internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifierProvider
 {
     public ICommandParameterIdentifier Command { get; }
     public IElementLabelsParameterIdentifier ElementLabels { get; }
     public IEphemerisTypeParameterIdentifier EphemerisType { get; }
+    public ICalendarTypeParameterIdentifier EpochCalendar { get; }
     public IEpochCollectionParameterIdentifier EpochCollection { get; }
     public IEpochCollectionFormatParameterIdentifier EpochCollectionFormat { get; }
     public IGenerateEphemeridesParameterIdentifier GenerateEphemerides { get; }
@@ -24,6 +25,8 @@ internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifi
     public IStopEpochParameterIdentifier StopEpoch { get; }
     public ITimeDeltaInclusionParameterIdentifier TimeDeltaInclusion { get; }
     public ITimePrecisionParameterIdentifier TimePrecision { get; }
+    public ITimeSystemParameterIdentifier TimeSystem { get; }
+    public ITimeZoneParameterIdentifier TimeZone { get; }
     public IValueSeparationParameterIdentifier ValueSeparation { get; }
     public IVectorCorrectionParameterIdentifier VectorCorrection { get; }
     public IVectorLabelsParameterIdentifier VectorLabels { get; }
@@ -36,6 +39,7 @@ internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifi
         Command = new QueryParameterIdentifier(parameterIdentifierOptions.Value.Command);
         ElementLabels = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ElementLabels);
         EphemerisType = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EphemerisType);
+        EpochCalendar = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCalendar);
         EpochCollection = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCollection);
         EpochCollectionFormat = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCollectionFormat);
         GenerateEphemerides = new QueryParameterIdentifier(parameterIdentifierOptions.Value.GenerateEphemerides);
@@ -52,6 +56,8 @@ internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifi
         StopEpoch = new QueryParameterIdentifier(parameterIdentifierOptions.Value.StopEpoch);
         TimeDeltaInclusion = new QueryParameterIdentifier(parameterIdentifierOptions.Value.TimeDeltaInclusion);
         TimePrecision = new QueryParameterIdentifier(parameterIdentifierOptions.Value.TimePrecision);
+        TimeSystem = new QueryParameterIdentifier(parameterIdentifierOptions.Value.TimeSystem);
+        TimeZone = new QueryParameterIdentifier(parameterIdentifierOptions.Value.TimeZone);
         ValueSeparation = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ValueSeparation);
         VectorCorrection = new QueryParameterIdentifier(parameterIdentifierOptions.Value.VectorCorrection);
         VectorLabels = new QueryParameterIdentifier(parameterIdentifierOptions.Value.VectorLabels);

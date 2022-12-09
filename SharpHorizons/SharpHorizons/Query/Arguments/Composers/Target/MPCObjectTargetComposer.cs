@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 
 using System;
 
@@ -21,7 +21,18 @@ internal sealed class MPCObjectTargetComposer : ITargetComposer<MPCObject>
     {
         ArgumentNullException.ThrowIfNull(obj);
 
-        return ((IArgumentComposer<ITargetArgument, MPCSequentialNumber>)SequentialNumberComposer).Compose(obj.SequentialNumber);
+        var argument = ((IArgumentComposer<ITargetArgument, MPCSequentialNumber>)SequentialNumberComposer).Compose(obj.SequentialNumber);
+
+        try
+        {
+            QueryArgument.Validate(argument);
+        }
+        catch (ArgumentException e)
+        {
+            throw new InvalidOperationException($"The {nameof(ITargetComposer<MPCSequentialNumber>)} for {nameof(MPCSequentialNumber)} provided an invalid {nameof(ITargetArgument)}.", e);
+        }
+
+        return argument;
     }
 
     ICommandArgument IArgumentComposer<ICommandArgument, MPCObject>.Compose(MPCObject obj) => ((IArgumentComposer<ITargetArgument, MPCObject>)this).Compose(obj);

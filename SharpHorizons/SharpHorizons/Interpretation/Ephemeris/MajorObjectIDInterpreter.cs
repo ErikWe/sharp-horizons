@@ -2,14 +2,17 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Result;
+
+using System;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MajorObjectID"/>.</summary>
 internal sealed class MajorObjectIDInterpreter : IPartInterpreter<MajorObjectID>
 {
     Optional<MajorObjectID> IPartInterpreter<MajorObjectID>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         var startIndex = queryPart.LastIndexOf('(') + 1;
 
         if (startIndex is 0)

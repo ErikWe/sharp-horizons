@@ -11,10 +11,12 @@ internal sealed class GeodeticCoordinateComposer : ITargetSiteComposer<GeodeticC
 {
     TargetSiteIdentifier ITargetSiteComposer<GeodeticCoordinate>.Compose(GeodeticCoordinate obj)
     {
+        SharpMeasuresValidation.Validate(obj);
+
         var longitude = obj.Longitude.Degrees.ToString("F7", CultureInfo.InvariantCulture);
         var latitude = obj.Latitude.Degrees.ToString("F7", CultureInfo.InvariantCulture);
         var height = obj.Height.Kilometres.ToString("F7", CultureInfo.InvariantCulture);
 
-        return $"g:{longitude},{latitude},{height}";
+        return new($"g:{longitude},{latitude},{height}");
     }
 }

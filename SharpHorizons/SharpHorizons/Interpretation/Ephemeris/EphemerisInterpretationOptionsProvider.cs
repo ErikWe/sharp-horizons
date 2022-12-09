@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
 internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider
 {
-    /// <summary><inheritdoc cref="EphemerisInterpretationOptions" path="/summary"/></summary>
+    /// <inheritdoc cref="EphemerisInterpretationOptions"/>
     private EphemerisInterpretationOptions Options { get; }
 
     /// <inheritdoc cref="EphemerisInterpretationOptionsProvider"/>
@@ -19,4 +19,6 @@ internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpr
     int IEphemerisInterpretationOptionsProvider.EphemerisDataBlockCount => Options.EphemerisDataBlockCount;
     string IEphemerisInterpretationOptionsProvider.WestPositiveLongitude => Options.WestPositiveLongitude;
     string IEphemerisInterpretationOptionsProvider.EastPositiveLongitude => Options.EastPositiveLongitude;
+    string IEphemerisInterpretationOptionsProvider.BoundaryEpochBCE => Options.BoundaryEpochBCE;
+    string IEphemerisInterpretationOptionsProvider.BoundaryEpochCE => Options.BoundaryEpochCE;
 }

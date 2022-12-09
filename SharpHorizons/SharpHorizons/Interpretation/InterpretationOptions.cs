@@ -2,11 +2,18 @@
 
 using Microsoft.Extensions.Configuration;
 
-/// <summary>Specifies how the result of a query is interpreted.</summary>
+using NodaTime;
+
+using SharpHorizons.Query.Result;
+
+/// <summary>Specifies how a <see cref="IQueryResult"/> is interpreted.</summary>
 internal sealed class InterpretationOptions
 {
     /// <summary>Describes the name of the <see cref="IConfigurationSection"/> which describes <see cref="InterpretationOptions"/>.</summary>
     internal static string Section { get; } = "Interpretation";
+
+    /// <summary>The ID of the Horizons time zone, as defined in TZDB and <see cref="IDateTimeZoneProvider"/>.</summary>
+    public string HorizonsTimeZoneID { get; set; } = null!;
 
     /// <summary>The key corresponding to the source in a response formatted as raw text.</summary>
     public string RawTextSource { get; set; } = null!;
@@ -24,6 +31,7 @@ internal sealed class InterpretationOptions
     /// <param name="options">The default values are applied to these <see cref="InterpretationOptions"/>.</param>
     public static void ApplyDefaults(InterpretationOptions options)
     {
+        options.HorizonsTimeZoneID = DefaultInterpretation.Default.HorizonsTimeZoneID;
         options.RawTextSource = DefaultInterpretation.Default.RawTextSource;
         options.RawTextVersion = DefaultInterpretation.Default.RawTextVersion;
         options.BlockSeparator = DefaultInterpretation.Default.BlockSeparator;

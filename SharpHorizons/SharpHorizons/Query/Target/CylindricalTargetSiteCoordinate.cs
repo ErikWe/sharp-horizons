@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Query.Target;
 
+using SharpHorizons.Query.Arguments.Composers.Target;
+
 using SharpMeasures.Astronomy;
 
 using System.Diagnostics.CodeAnalysis;

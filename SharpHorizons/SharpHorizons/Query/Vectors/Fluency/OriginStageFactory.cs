@@ -3,13 +3,15 @@
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 
+using System;
+
 /// <inheritdoc cref="IOriginStageFactory"/>
 internal sealed class OriginStageFactory : IOriginStageFactory
 {
-    /// <summary><inheritdoc cref="ITargetFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="ITargetFactory"/>
     private IOriginFactory OriginFactory { get; }
 
-    /// <summary><inheritdoc cref="IEpochStageFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IEpochStageFactory"/>
     private IEpochStageFactory EpochStageFactory { get; }
 
     /// <inheritdoc cref="OriginStageFactory"/>
@@ -21,5 +23,10 @@ internal sealed class OriginStageFactory : IOriginStageFactory
         EpochStageFactory = epochStageFactory ?? new EpochStageFactory();
     }
 
-    IOriginStage IOriginStageFactory.Create(ITarget target) => new OriginStage(target, OriginFactory, EpochStageFactory);
+    IOriginStage IOriginStageFactory.Create(ITarget target)
+    {
+        ArgumentNullException.ThrowIfNull(target);
+
+        return new OriginStage(target, OriginFactory, EpochStageFactory);
+    }
 }

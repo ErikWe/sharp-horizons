@@ -1,6 +1,8 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
+
+using System;
 
 /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalObject"/>.</summary>
 internal sealed class MPCProvisionalObjectTargetComposer : ITargetComposer<MPCProvisionalObject>
@@ -15,6 +17,23 @@ internal sealed class MPCProvisionalObjectTargetComposer : ITargetComposer<MPCPr
         DesignationComposer = designationComposer;
     }
 
-    ITargetArgument IArgumentComposer<ITargetArgument, MPCProvisionalObject>.Compose(MPCProvisionalObject obj) => ((IArgumentComposer<ITargetArgument, MPCProvisionalDesignation>)DesignationComposer).Compose(obj.Designation);
+    ITargetArgument IArgumentComposer<ITargetArgument, MPCProvisionalObject>.Compose(MPCProvisionalObject obj)
+    {
+        MPCProvisionalObject.Validate(obj);
+
+        var argument = ((IArgumentComposer<ITargetArgument, MPCProvisionalDesignation>)DesignationComposer).Compose(obj.Designation);
+
+        try
+        {
+            QueryArgument.Validate(argument);
+        }
+        catch (ArgumentException e)
+        {
+            throw new InvalidOperationException($"The {nameof(ITargetComposer<MPCProvisionalDesignation>)} for {nameof(MPCProvisionalDesignation)} provided an invalid {nameof(ITargetArgument)}.", e);
+        }
+
+        return argument;
+    }
+
     ICommandArgument IArgumentComposer<ICommandArgument, MPCProvisionalObject>.Compose(MPCProvisionalObject obj) => ((IArgumentComposer<ITargetArgument, MPCProvisionalObject>)this).Compose(obj);
 }

@@ -14,5 +14,11 @@
     <Setting Name="EastPositiveLongitude" Type="System.String" Scope="Application">
       <Value Profile="(Default)">East-longitude positive</Value>
     </Setting>
+    <Setting Name="BoundaryEpochBCE" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">B.C.</Value>
+    </Setting>
+    <Setting Name="BoundaryEpochCE" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C.E.</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

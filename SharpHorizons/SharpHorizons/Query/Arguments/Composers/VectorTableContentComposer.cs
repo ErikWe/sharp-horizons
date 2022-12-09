@@ -1,31 +1,41 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
-using SharpHorizons.Query.VectorTable;
+using SharpHorizons.Query.Vectors.Table;
 
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
-/// <summary>Composes <see cref="IVectorTableContentArgument"/> that describe <see cref="VectorTableContent"/>.</summary>
+/// <inheritdoc cref="IVectorTableContentComposer"/>
 internal sealed class VectorTableContentComposer : IVectorTableContentComposer
 {
+    /// <inheritdoc cref="IVectorTableContentValidator"/>
+    private IVectorTableContentValidator ContentValidator { get; }
+
+    /// <inheritdoc cref="VectorTableContentComposer"/>
+    /// <param name="contentValidator"><inheritdoc cref="ContentValidator" path="/summary"/></param>
+    public VectorTableContentComposer(IVectorTableContentValidator contentValidator)
+    {
+        ContentValidator = contentValidator;
+    }
+
     IVectorTableContentArgument IArgumentComposer<IVectorTableContentArgument, VectorTableContent>.Compose(VectorTableContent obj)
     {
-        if ((obj.Uncertainties | VectorTableUncertainties.All) is not VectorTableUncertainties.All)
-        {
-            throw new UnsupportedVectorTableException($"{obj.Uncertainties} is not of a supported {typeof(VectorTableUncertainties).FullName}.");
-        }
+        ContentValidator.ThrowIfUnsupported(obj);
 
-        if (obj.Uncertainties is not VectorTableUncertainties.None && obj.Quantities is not VectorTableQuantities.Position or VectorTableQuantities.StateVectors)
+        try
         {
-            throw new UnsupportedVectorTableException($"{obj.Quantities} is not compatible with {obj.Uncertainties}.");
+            return new QueryArgument($"{GetQuantitiesIdentifier(obj.Quantities)}{GetUncertaintyIdentifier(obj.Uncertainties)}");
         }
-
-        return new QueryArgument($"{GetQuantitiesIdentifier(obj.Quantities)}{GetUncertaintyIdentifier(obj.Uncertainties)}");
+        catch (InvalidEnumArgumentException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<VectorTableContent>(nameof(obj), e);
+        }
     }
 
     /// <summary>Retrieves a <see cref="string"/> identifier that describes <paramref name="quantities"/>.</summary>
     /// <param name="quantities">The retrieved identifier describes these <see cref="VectorTableQuantities"/>.</param>
-    /// <exception cref="UnsupportedVectorTableException"></exception>
+    /// <exception cref="InvalidEnumArgumentException"/>
     private static string GetQuantitiesIdentifier(VectorTableQuantities quantities) => (quantities switch
     {
         VectorTableQuantities.Position => 1,
@@ -34,12 +44,11 @@ internal sealed class VectorTableContentComposer : IVectorTableContentComposer
         VectorTableQuantities.Position | VectorTableQuantities.Distance => 4,
         VectorTableQuantities.Velocity => 5,
         VectorTableQuantities.Distance => 6,
-        _ => throw new UnsupportedVectorTableException($"{quantities} was not of a supported {typeof(VectorTableQuantities).FullName}.")
+        _ => throw InvalidEnumArgumentExceptionFactory.Create(quantities)
     }).ToString(CultureInfo.InvariantCulture);
 
     /// <summary>Retrieves a <see cref="string"/> identifier that describes <paramref name="uncertainties"/>.</summary>
     /// <param name="uncertainties">The retrieved identifier describes these <see cref="VectorTableUncertainties"/>.</param>
-    /// <exception cref="UnsupportedVectorTableException"></exception>
     private static string GetUncertaintyIdentifier(VectorTableUncertainties uncertainties)
     {
         var uncertaintyBuilder = new StringBuilder(4);

@@ -31,5 +31,10 @@ internal sealed class GeodeticOriginCoordinateFactory : IOriginCoordinateFactory
         OriginCoordinateTypeComposer = originCoordinateTypeComposer ?? defaultComposer!;
     }
 
-    IOriginCoordinate IOriginCoordinateFactory<GeodeticCoordinate>.Create(GeodeticCoordinate coordinate) => new GeodeticOriginCoordinate(coordinate, OriginCoordinateComposer, OriginCoordinateTypeComposer);
+    IOriginCoordinate IOriginCoordinateFactory<GeodeticCoordinate>.Create(GeodeticCoordinate coordinate)
+    {
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return new GeodeticOriginCoordinate(coordinate, OriginCoordinateComposer, OriginCoordinateTypeComposer);
+    }
 }

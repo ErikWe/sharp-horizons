@@ -2,13 +2,14 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Origin;
+
+using System;
 
 /// <inheritdoc cref="IOriginInterpreter"/>
 internal sealed class OriginInterpreter : IOriginInterpreter
 {
-    /// <summary><inheritdoc cref="IOriginFactory" path="/summary"/></summary>
+    /// <inheritdoc cref="IOriginFactory"/>
     private IOriginFactory OriginFactory { get; }
 
     /// <inheritdoc cref="Ephemeris.MajorObjectInterpreter"/>
@@ -26,6 +27,8 @@ internal sealed class OriginInterpreter : IOriginInterpreter
 
     Optional<IOrigin> IPartInterpreter<IOrigin>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (queryPart.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit)
         {
             return new();

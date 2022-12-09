@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 

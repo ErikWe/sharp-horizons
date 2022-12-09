@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Ephemeris.Vectors;
 
-using SharpHorizons.Epoch;
 using SharpHorizons.Ephemeris;
 
 using System.Collections;
@@ -20,8 +19,6 @@ internal sealed record class OrbitalStateVectorsEphemeris : IOrbitalStateVectors
 
     /// <summary>The <see cref="IOrbitalStateVectors"/> of the <see cref="IEphemeris{TEntry}"/>, ordered by <see cref="IEpoch"/>.</summary>
     private IReadOnlyList<IOrbitalStateVectors> OrbitalStateVectors { get; }
-
-    IReadOnlyList<IOrbitalStateVectors> IEphemeris<IOrbitalStateVectors>.Entries => OrbitalStateVectors;
 
     /// <inheritdoc cref="OrbitalStateVectorsEphemeris"/>
     /// <param name="orbitalStateVectors"><inheritdoc cref="OrbitalStateVectors" path="/summary"/></param>

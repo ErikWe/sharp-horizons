@@ -1,17 +1,17 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.Query.Arguments.Composers.Target;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Describes the <see cref="ITargetSiteObject"/> as an object identified by a <see cref="MajorObjectName"/>.</summary>
+/// <summary>Describes the <see cref="ITargetSiteObject"/> as an object identified by a <see cref="ObjectRadiiInterpretation"/>.</summary>
 internal sealed record class MajorObjectNameTargetSiteObject : ITargetSiteObject
 {
     /// <summary>The <see cref="MajorObjectID"/> of an object which represents the <see cref="ITargetSiteObject"/>.</summary>
-    public required MajorObjectName Name { private get; init; }
+    public required ObjectRadiiInterpretation Name { private get; init; }
 
     /// <summary>Used to compose a <see cref="TargetSiteObjectIdentifier"/> describing <see langword="this"/>.</summary>
-    public required ITargetSiteObjectComposer<MajorObjectName> Composer { private get; init; }
+    public required ITargetSiteObjectComposer<ObjectRadiiInterpretation> Composer { private get; init; }
 
     /// <inheritdoc cref="MajorObjectNameTargetSiteObject"/>
     public MajorObjectNameTargetSiteObject() { }
@@ -20,7 +20,7 @@ internal sealed record class MajorObjectNameTargetSiteObject : ITargetSiteObject
     /// <param name="name"><inheritdoc cref="Name" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public MajorObjectNameTargetSiteObject(MajorObjectName name, ITargetSiteObjectComposer<MajorObjectName> composer)
+    public MajorObjectNameTargetSiteObject(ObjectRadiiInterpretation name, ITargetSiteObjectComposer<ObjectRadiiInterpretation> composer)
     {
         Name = name;
 

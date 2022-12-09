@@ -2,14 +2,18 @@
 
 using Microsoft.CodeAnalysis;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
+
+using System;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCCometName"/>.</summary>
 internal sealed class MPCCometNameInterpreter : IPartInterpreter<MPCCometName>
 {
     Optional<MPCCometName> IPartInterpreter<MPCCometName>.TryInterpret(string queryPart)
     {
+        ArgumentNullException.ThrowIfNull(queryPart);
+
         if (TryInterpretNumberedCometName(queryPart) is MPCCometName numberedCometName)
         {
             return numberedCometName;
@@ -41,7 +45,7 @@ internal sealed class MPCCometNameInterpreter : IPartInterpreter<MPCCometName>
             stopIndex = queryPart.Length;
         }
 
-        return queryPart[startIndex..stopIndex].Trim();
+        return new(queryPart[startIndex..stopIndex].Trim());
     }
 
     /// <summary>Attempts to interpret the <see cref="MPCCometName"/> of an unnumbered <see cref="MPCComet"/> from <paramref name="queryPart"/>.</summary>
@@ -55,6 +59,6 @@ internal sealed class MPCCometNameInterpreter : IPartInterpreter<MPCCometName>
             return null;
         }
 
-        return queryPart[..stopIndex].Trim();
+        return new(queryPart[..stopIndex].Trim());
     }
 }

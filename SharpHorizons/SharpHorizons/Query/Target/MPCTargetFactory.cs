@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Arguments.Composers.Target;
@@ -50,8 +50,25 @@ internal sealed class MPCTargetFactory : IMPCTargetFactory
         return new MPCObjectTarget(mpcObject, ObjectComposer);
     }
 
-    ITarget IMPCTargetFactory.Create(MPCProvisionalObject mpcObject) => new MPCProvisionalObjectTarget(mpcObject, ProvisionalObjectComposer);
-    ITarget IMPCTargetFactory.Create(MPCName mpcName) => new MPCNameTarget(mpcName, NameComposer);
-    ITarget IMPCTargetFactory.Create(MPCProvisionalDesignation mpcDesignation) => new MPCProvisionalDesignationTarget(mpcDesignation, ProvisionalDesignationComposer);
+    ITarget IMPCTargetFactory.Create(MPCProvisionalObject mpcObject)
+    {
+        MPCProvisionalObject.Validate(mpcObject);
+
+        return new MPCProvisionalObjectTarget(mpcObject, ProvisionalObjectComposer);
+    }
+    ITarget IMPCTargetFactory.Create(MPCName mpcName)
+    {
+        MPCName.Validate(mpcName);
+
+        return new MPCNameTarget(mpcName, NameComposer);
+    }
+
+    ITarget IMPCTargetFactory.Create(MPCProvisionalDesignation mpcDesignation)
+    {
+        MPCProvisionalDesignation.Validate(mpcDesignation);
+
+        return new MPCProvisionalDesignationTarget(mpcDesignation, ProvisionalDesignationComposer);
+    }
+
     ITarget IMPCTargetFactory.Create(MPCSequentialNumber mpcNumber) => new MPCSequentialNumberTarget(mpcNumber, SequentialNumberComposer);
 }

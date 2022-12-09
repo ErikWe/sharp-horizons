@@ -3,13 +3,15 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using SharpHorizons.Epoch;
+using NodaTime;
+
 using SharpHorizons.Ephemeris.Vectors;
-using SharpHorizons.Identity;
 using SharpHorizons.Interpretation;
 using SharpHorizons.Interpretation.Ephemeris;
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
+using SharpHorizons.Interpretation.Ephemeris.Vectors;
+using SharpHorizons.MPC;
 using SharpHorizons.Query;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
@@ -25,6 +27,7 @@ using SharpHorizons.Query.Result.HTTP;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.Vectors.Fluency;
+using SharpHorizons.Query.Vectors.Table;
 
 using SharpMeasures.Astronomy;
 
@@ -37,8 +40,12 @@ public static class IServiceCollectionExtensions
     {
         services.AddHttpClient();
 
+        services.AddSingleton(DateTimeZoneProviders.Tzdb);
+
         services.AddTransient<IQueryArgumentSetBuilder, QueryArgumentSetBuilder>();
         services.AddSingleton<IQueryArgumentSetBuilderFactory, QueryArgumentSetBuilderFactory>();
+
+        services.AddSingleton<ITimeSystemOffsetProvider, ZeroTimeSystemOffsetProvider>();
 
         services.AddSharpHorizonsOptions();
         services.AddSharpHorizonsHTTP();
@@ -62,8 +69,8 @@ public static class IServiceCollectionExtensions
         services.Configure<QueryOptions>(configuration.GetSection(QueryOptions.Section));
         services.Configure<ParameterIdentifierOptions>(configuration.GetSection(ParameterIdentifierOptions.Section));
         services.Configure<EphemerisInterpretationOptions>(configuration.GetSection(EphemerisInterpretationOptions.Section));
-        services.Configure<TargetInterpretationKeyOptions>(configuration.GetSection(TargetInterpretationKeyOptions.Section));
-        services.Configure<OriginInterpretationKeyOptions>(configuration.GetSection(OriginInterpretationKeyOptions.Section));
+        services.Configure<TargetInterpretationOptions>(configuration.GetSection(TargetInterpretationOptions.Section));
+        services.Configure<OriginInterpretationOptions>(configuration.GetSection(OriginInterpretationOptions.Section));
 
         return services;
     }
@@ -76,15 +83,15 @@ public static class IServiceCollectionExtensions
         services.AddOptions<ParameterIdentifierOptions>().Configure(ParameterIdentifierOptions.ApplyDefaults);
         services.AddOptions<InterpretationOptions>().Configure(InterpretationOptions.ApplyDefaults);
         services.AddOptions<EphemerisInterpretationOptions>().Configure(EphemerisInterpretationOptions.ApplyDefaults);
-        services.AddOptions<TargetInterpretationKeyOptions>().Configure(TargetInterpretationKeyOptions.ApplyDefaults);
-        services.AddOptions<OriginInterpretationKeyOptions>().Configure(OriginInterpretationKeyOptions.ApplyDefaults);
+        services.AddOptions<TargetInterpretationOptions>().Configure(TargetInterpretationOptions.ApplyDefaults);
+        services.AddOptions<OriginInterpretationOptions>().Configure(OriginInterpretationOptions.ApplyDefaults);
 
         services.AddSingleton<IHorizonsHTTPAddressProvider, HorizonsHTTPAddressProvider>();
         services.AddSingleton<IQueryParameterIdentifierProvider, QueryParameterIdentifierProvider>();
         services.AddSingleton<IInterpretationOptionsProvider, InterpretationOptionsProvider>();
         services.AddSingleton<IEphemerisInterpretationOptionsProvider, EphemerisInterpretationOptionsProvider>();
-        services.AddSingleton<ITargetInterpretationKeyProvider, TargetInterpretationKeyProvider>();
-        services.AddSingleton<IOriginInterpretationKeyProvider, OriginInterpretationKeyProvider>();
+        services.AddSingleton<ITargetInterpretationOptionsProvider, TargetInterpretationOptionsProvider>();
+        services.AddSingleton<IOriginInterpretationOptionsProvider, OriginInterpretationOptionsProvider>();
 
         return services;
     }
@@ -116,7 +123,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<ITargetSiteObjectComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
         services.AddSingleton<ITargetSiteObjectComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetSiteObjectComposer<ObjectRadiiInterpretation>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
 
         return services;
     }
@@ -133,7 +140,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<IOriginObjectComposer<MajorObject>, Query.Arguments.Composers.Origin.MajorObjectComposer>();
         services.AddSingleton<IOriginObjectComposer<MajorObjectID>, Query.Arguments.Composers.Origin.MajorObjectIDComposer>();
-        services.AddSingleton<IOriginObjectComposer<MajorObjectName>, Query.Arguments.Composers.Origin.MajorObjectNameComposer>();
+        services.AddSingleton<IOriginObjectComposer<ObjectRadiiInterpretation>, Query.Arguments.Composers.Origin.MajorObjectNameComposer>();
 
         return services;
     }
@@ -161,7 +168,6 @@ public static class IServiceCollectionExtensions
     /// <param name="services"><see cref="IOrbitalStateVectors"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsVectors(this IServiceCollection services)
     {
-        services.AddSingleton(VectorsQuery.Instantiation);
         services.AddSingleton<IVectorsQueryFactory, VectorsQueryFactory>();
 
         services.AddSingleton<IVectorsQueryArgumentComposer, VectorsQueryArgumentComposer>();
@@ -170,6 +176,9 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<ITargetStageFactory, TargetStageFactory>();
         services.AddSingleton<IOriginStageFactory, OriginStageFactory>();
         services.AddSingleton<IEpochStageFactory, EpochStageFactory>();
+
+        services.AddSingleton<IVectorTableContentValidator, VectorTableContentValidator>();
+        services.AddSingleton<IVectorTableQuantitiesValidator, VectorTableQuantitiesValidator>();
 
         return services;
     }
@@ -194,7 +203,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<ITargetComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
         services.AddSingleton<ITargetComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetComposer<ObjectRadiiInterpretation>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
 
         services.AddSingleton<ITargetComposer<MPCObject>, MPCObjectTargetComposer>();
         services.AddSingleton<ITargetComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
@@ -214,11 +223,13 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IOriginCoordinateTypeComposer<CylindricalCoordinate>, Query.Arguments.Composers.Origin.CylindricalCoordinateComposer>();
         services.AddSingleton<IOriginCoordinateTypeComposer<GeodeticCoordinate>, Query.Arguments.Composers.Origin.GeodeticCoordinateComposer>();
 
+        services.AddSingleton<IQueryEpochComposer, QueryEpochComposer>();
+
         services.AddSingleton<IEpochCollectionComposer<IEpochCollection>, EpochCollectionComposer>();
         services.AddSingleton<IEpochCollectionFormatComposer, EpochCollectionFormatComposer>();
 
-        services.AddSingleton<IStartEpochComposer<IEpoch>, EpochRangeEpochComposer>();
-        services.AddSingleton<IStopEpochComposer<IEpoch>, EpochRangeEpochComposer>();
+        services.AddSingleton<IStartEpochComposer<IEpochRange>, EpochRangeEpochComposer>();
+        services.AddSingleton<IStopEpochComposer<IEpochRange>, EpochRangeEpochComposer>();
 
         services.AddSingleton<IStepSizeComposer<IFixedStepSize>, FixedStepSizeComposer>();
         services.AddSingleton<IStepSizeComposer<IUniformStepSize>, UniformStepSizeComposer>();
@@ -247,14 +258,16 @@ public static class IServiceCollectionExtensions
     /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsInterpreters(this IServiceCollection services)
     {
-        services.AddSingleton<ITargetDataInterpreter, TargetDataInterpreter>();
+        services.AddSingleton<IVectorsQueryHeaderInterpreter, VectorsQueryHeaderInterpreter>();
+
+        services.AddSingleton<IEphemerisQueryTargetHeaderInterpreter, EphemerisQueryTargetHeaderInterpreter>();
         services.AddSingleton<ITargetInterpreter, TargetInterpreter>();
         services.AddSingleton<ITargetGeodeticCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<ITargetCylindricalCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<ITargetReferenceEllipsoidInterpreter, ReferenceEllipsoidInterpreter>();
         services.AddSingleton<ITargetRadiiInterpreter, RadiiInterpreter>();
 
-        services.AddSingleton<IOriginDataInterpreter, OriginDataInterpreter>();
+        services.AddSingleton<IEphemerisQueryOriginHeaderInterpreter, EphemerisQueryOriginHeaderInterpreter>();
         services.AddSingleton<IOriginInterpreter, OriginInterpreter>();
         services.AddSingleton<IOriginGeodeticCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<IOriginCylindricalCoordinateInterpreter, CoordinateInterpreter>();
@@ -263,7 +276,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<IPartInterpreter<MajorObject>, MajorObjectInterpreter>();
         services.AddSingleton<IPartInterpreter<MajorObjectID>, MajorObjectIDInterpreter>();
-        services.AddSingleton<IPartInterpreter<MajorObjectName>, MajorObjectNameInterpreter>();
+        services.AddSingleton<IPartInterpreter<ObjectRadiiInterpretation>, MajorObjectNameInterpreter>();
 
         services.AddSingleton<IPartInterpreter<MPCObject>, MPCObjectInterpreter>();
         services.AddSingleton<IPartInterpreter<MPCProvisionalObject>, MPCProvisionalObjectInterpreter>();
@@ -274,6 +287,8 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IPartInterpreter<MPCComet>, MPCCometInterpreter>();
         services.AddSingleton<IPartInterpreter<MPCCometDesignation>, MPCCometDesignationInterpreter>();
         services.AddSingleton<IPartInterpreter<MPCCometName>, MPCCometNameInterpreter>();
+
+        services.AddSingleton<IEphemerisQueryEpochInterpreter, EphemerisQueryEpochInterpreter>();
 
         return services;
     }

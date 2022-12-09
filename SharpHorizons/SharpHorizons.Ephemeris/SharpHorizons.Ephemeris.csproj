@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<RootNamespace>SharpHorizons.Ephemeris</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NodaTime" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="SharpMeasures.Astronomy" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
+	  <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
+	</ItemGroup>
+
+</Project>

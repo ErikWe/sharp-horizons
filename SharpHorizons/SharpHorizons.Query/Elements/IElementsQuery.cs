@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Elements;
 
-using SharpHorizons.Epoch;
 using SharpHorizons.Ephemeris.Elements;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
@@ -15,6 +14,6 @@ public interface IElementsQuery
     /// <summary>The <see cref="IOrigin"/>, relative to which the <see cref="IOsculatingOrbitalElements"/> of the <see cref="ITarget"/> are expressed.</summary>
     public abstract IOrigin Origin { get; }
 
-    /// <summary>Determines the <see cref="IEpoch"/> of the <see cref="IOsculatingOrbitalElements"/>.</summary>
+    /// <summary>Determines the <see cref="IEpochSelection"/> of the <see cref="IOsculatingOrbitalElements"/>.</summary>
     public abstract IEpochSelection Epochs { get; }
 }

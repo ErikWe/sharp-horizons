@@ -9,6 +9,7 @@ using SharpHorizons.Query.Result;
 using SharpMeasures;
 using SharpMeasures.Astronomy;
 
+using System;
 using System.Globalization;
 
 /// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="GeodeticCoordinate"/> or <see cref="CylindricalCoordinate"/>.</summary>
@@ -34,12 +35,14 @@ internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpret
         return new CylindricalCoordinate(distance * Distance.OneKilometre, azimuth * Azimuth.OneDegree, height * Height.OneKilometre);
     }
 
-    /// <summary>Attempts to interpret <paramref name="queryResult"/> as (<see cref="double"/>, <see cref="double"/>, <see cref="double"/>).</summary>
-    /// <param name="queryResult">This <see cref="string"/> is interpreted.</param>
-    /// <exception cref="UnexpectedQueryResultFormatException"></exception>
-    private static (double, double, double)? Interpret(string queryResult)
+    /// <summary>Attempts to interpret <paramref name="queryPart"/> as (<see cref="double"/>, <see cref="double"/>, <see cref="double"/>).</summary>
+    /// <param name="queryPart">This <see cref="string"/> is interpreted.</param>
+    /// <exception cref="ArgumentNullException"/>
+    private static (double, double, double)? Interpret(string queryPart)
     {
-        if (queryResult.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit || bracketSplit[0].Split(',') is not { Length: 3 } commaSplit)
+        ArgumentNullException.ThrowIfNull(queryPart);
+
+        if (queryPart.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit || bracketSplit[0].Split(',') is not { Length: 3 } commaSplit)
         {
             return null;
         }

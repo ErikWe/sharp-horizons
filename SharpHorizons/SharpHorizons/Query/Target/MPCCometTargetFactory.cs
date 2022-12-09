@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
 using SharpHorizons.Query.Arguments.Composers.Target;
@@ -39,6 +39,17 @@ internal sealed class MPCCometTargetFactory : IMPCCometTargetFactory
         return new MPCCometTarget(mpcComet, CometComposer);
     }
 
-    ITarget IMPCCometTargetFactory.Create(MPCCometName mpcName) => new MPCCometNameTarget(mpcName, NameComposer);
-    ITarget IMPCCometTargetFactory.Create(MPCCometDesignation mpcDesignation) => new MPCCometDesignationTarget(mpcDesignation, DesignationComposer);
+    ITarget IMPCCometTargetFactory.Create(MPCCometName mpcName)
+    {
+        MPCCometName.Validate(mpcName);
+
+        return new MPCCometNameTarget(mpcName, NameComposer);
+    }
+
+    ITarget IMPCCometTargetFactory.Create(MPCCometDesignation mpcDesignation)
+    {
+        MPCCometDesignation.Validate(mpcDesignation);
+
+        return new MPCCometDesignationTarget(mpcDesignation, DesignationComposer);
+    }
 }

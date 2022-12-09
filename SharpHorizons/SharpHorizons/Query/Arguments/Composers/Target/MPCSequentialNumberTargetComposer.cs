@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers.Target;
 
-using SharpHorizons.Identity;
+using SharpHorizons.MPC;
 
 using System.Globalization;
 

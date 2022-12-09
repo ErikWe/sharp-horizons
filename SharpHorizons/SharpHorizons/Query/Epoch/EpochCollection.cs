@@ -1,31 +1,25 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Epoch;
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Arguments.Composers;
+
+using SharpMeasures;
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 /// <inheritdoc cref="IEpochCollection"/>
 internal sealed record class EpochCollection : IEpochCollection
 {
     public required IEnumerable<IEpoch> Epochs { get; init; }
-    public required EpochCollectionFormat Format
-    {
-        get => _Format;
-        init
-        {
-            ValidateEpochCollectionFormat(value);
 
-            _Format = value;
-        }
-    }
+    public EpochFormat Format { get; init; } = EpochFormat.JulianDays;
+    public CalendarType Calendar { get; init; } = CalendarType.Gregorian;
+    public TimeSystem TimeSystem { get; init; } = TimeSystem.UT;
+    public Time Offset { get; init; } = Time.Zero;
 
     /// <summary>Used to compose <see cref="IEpochCollectionArgument"/> that describe <see langword="this"/>.</summary>
     public required IEpochCollectionComposer<IEpochCollection> Composer { private get; init; }
@@ -33,8 +27,14 @@ internal sealed record class EpochCollection : IEpochCollection
     /// <summary>Used to compose <see cref="IEpochCollectionFormatArgument"/> that describe <see cref="Format"/>.</summary>
     public required IEpochCollectionFormatComposer FormatComposer { private get; init; }
 
-    /// <inheritdoc cref="Format"/>
-    private EpochCollectionFormat _Format { get; init; }
+    /// <summary>Used to compose <see cref="ICalendarTypeArgument"/> that describe <see cref="Calendar"/>.</summary>
+    public required IEpochCalendarComposer CalendarComposer { private get; init; }
+
+    /// <summary>Used to compose <see cref="ITimeSystemArgument"/> that describe <see cref="TimeSystem"/>.</summary>
+    public required ITimeSystemComposer TimeSystemComposer { private get; init; }
+
+    /// <summary>Used to compose <see cref="ITimeZoneArgument"/> that describe <see cref="Offset"/>.</summary>
+    public required ITimeZoneComposer TimeZoneComposer { private get; init; }
 
     /// <inheritdoc cref="EpochCollection"/>
     public EpochCollection() { }
@@ -44,47 +44,41 @@ internal sealed record class EpochCollection : IEpochCollection
     /// <param name="format"><inheritdoc cref="Format" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     /// <param name="formatComposer"><inheritdoc cref="FormatComposer" path="/summary"/></param>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="InvalidEnumArgumentException"/>
+    /// <param name="calendarComposer"><inheritdoc cref="CalendarComposer" path="/summary"/></param>
+    /// <param name="timeSystemComposer"><inheritdoc cref="TimeSystemComposer" path="/summary"/></param>
+    /// <param name="timeZoneComposer"><inheritdoc cref="TimeZoneComposer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public EpochCollection(IEnumerable<IEpoch> epochs, EpochCollectionFormat format, IEpochCollectionComposer<IEpochCollection> composer, IEpochCollectionFormatComposer formatComposer)
+    public EpochCollection(IEnumerable<IEpoch> epochs, EpochFormat format, IEpochCollectionComposer<IEpochCollection> composer, IEpochCollectionFormatComposer formatComposer, IEpochCalendarComposer calendarComposer, ITimeSystemComposer timeSystemComposer, ITimeZoneComposer timeZoneComposer)
     {
-        ValidateEpochCollectionFormat(format);
-
         Epochs = epochs;
 
         Format = format;
 
         Composer = composer;
         FormatComposer = formatComposer;
+        CalendarComposer = calendarComposer;
+        TimeSystemComposer = timeSystemComposer;
+        TimeZoneComposer = timeZoneComposer;
     }
 
     EpochSelectionMode IEpochSelection.Selection => EpochSelectionMode.Collection;
+
     IEpochCollectionArgument IEpochSelection.ComposeCollectionArgument() => Composer.Compose(this);
     IEpochCollectionFormatArgument IEpochSelection.ComposeCollectionFormatArgument() => FormatComposer.Compose(Format);
-    IStartEpochArgument IEpochSelection.ComposeStartTimeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
-    IStopEpochArgument IEpochSelection.ComposeStopTimeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
-    IStepSizeArgument IEpochSelection.ComposeStepSizeArgument() => throw UnsupportedEpochSelectionException.EpochSelectionNotRange;
+    ICalendarTypeArgument IEpochSelection.ComposeEpochCalendarArgument() => CalendarComposer.Compose(Calendar);
+    ITimeSystemArgument IEpochSelection.ComposeTimeSystemArgument() => TimeSystemComposer.Compose(TimeSystem);
+    ITimeZoneArgument IEpochSelection.ComposeTimeZoneArgument() => TimeZoneComposer.Compose(Offset);
+    IStartEpochArgument IEpochSelection.ComposeStartTimeArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
+    IStopEpochArgument IEpochSelection.ComposeStopTimeArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
+    IStepSizeArgument IEpochSelection.ComposeStepSizeArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
 
     public IEpochCollection Concat(IEnumerable<IEpoch> epochs)
     {
         ArgumentNullException.ThrowIfNull(epochs);
 
-        return new EpochCollection(Epochs.Concat(epochs), Format, Composer, FormatComposer);
+        return new EpochCollection(Epochs.Concat(epochs), Format, Composer, FormatComposer, CalendarComposer, TimeSystemComposer, TimeZoneComposer);
     }
 
     public IEnumerator<IEpoch> GetEnumerator() => Epochs.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    /// <summary>Throws an <see cref="InvalidEnumArgumentException"/> if <paramref name="format"/> does not represent a valid <see cref="EpochCollectionFormat"/>.</summary>
-    /// <param name="format">A <see cref="InvalidEnumArgumentException"/> is thrown if this <see cref="EpochCollectionFormat"/> is invalid.</param>
-    /// <param name="parameterName">The name of the parameter with which <paramref name="format"/> corresponds.</param>
-    /// <exception cref="InvalidEnumArgumentException"/>
-    private static void ValidateEpochCollectionFormat(EpochCollectionFormat format, [CallerArgumentExpression("format")] string? parameterName = null)
-    {
-        if (Enum.IsDefined(typeof(EpochCollectionFormat), format) is false)
-        {
-            throw new InvalidEnumArgumentException(parameterName, (int)format, typeof(EpochCollectionFormat));
-        }
-    }
 }
