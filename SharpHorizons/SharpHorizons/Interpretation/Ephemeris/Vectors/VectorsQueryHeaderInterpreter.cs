@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
+namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
 
 using Microsoft.CodeAnalysis;
 
@@ -82,7 +82,7 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
         return new MutableVectorsQueryHeader(target, origin);
     }
 
-    protected override bool ValidateHeader(MutableVectorsQueryHeader header) => header.QueryTime is not null && header.StartTime is not null && header.StopTime is not null;
+    protected override bool ValidateHeader(MutableVectorsQueryHeader header) => header.QueryTime is not null && header.StartEpoch is not null && header.StopEpoch is not null;
 
     Optional<IVectorsQueryHeader> IInterpreter<IVectorsQueryHeader>.Interpret(IQueryResult queryResult)
     {
@@ -104,11 +104,11 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
         public IEphemerisQueryTargetHeader TargetHeader { get; }
         public IEphemerisQueryOriginHeader OriginHeader { get; }
 
-        public IEpoch StartTime { get; set; } = null!;
-        public IEpoch StopTime { get; set; } = null!;
+        public IEpoch StartEpoch { get; set; } = null!;
+        public IEpoch StopEpoch { get; set; } = null!;
         public IStepSize? StepSize { get; set; }
-        public bool UsedDiscreteTimeList { get; set; }
 
+        public TimeSystem TimeSystem { get; set; }
         public Time TimeZoneOffset { get; set; }
 
         public bool SmallPerturbers { get; set; }

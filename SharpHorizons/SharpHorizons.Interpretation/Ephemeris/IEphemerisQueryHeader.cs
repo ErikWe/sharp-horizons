@@ -8,8 +8,6 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
-using System.Diagnostics.CodeAnalysis;
-
 /// <summary>Represents the header of the <see cref="IQueryResult"/> of a ephemeris query.</summary>
 public interface IEphemerisQueryHeader
 {
@@ -23,19 +21,21 @@ public interface IEphemerisQueryHeader
     public abstract IEphemerisQueryOriginHeader OriginHeader { get; }
 
     /// <summary>The <see cref="IEpoch"/> of the first <see cref="IEphemerisEntry"/>.</summary>
-    public abstract IEpoch StartTime { get; }
+    public abstract IEpoch StartEpoch { get; }
 
     /// <summary>The <see cref="IEpoch"/> of the last <see cref="IEphemerisEntry"/>.</summary>
-    public abstract IEpoch StopTime { get; }
+    public abstract IEpoch StopEpoch { get; }
 
     /// <summary>The <see cref="IStepSize"/> between each <see cref="IEphemerisEntry"/> - if one was used.</summary>
     public abstract IStepSize? StepSize { get; }
 
-    /// <summary>Indicates whether the epochs were defined through a list of discrete epochs, rather than through a <see cref="StepSize"/>.</summary>
-    [MemberNotNullWhen(false, nameof(StepSize))]
-    public abstract bool UsedDiscreteTimeList { get; }
+    /// <summary>Represents the <see cref="Query.Epoch.EpochSelectionMode"/> that was used.</summary>
+    public virtual EpochSelectionMode EpochSelectionMode => StepSize is null ? EpochSelectionMode.Collection : EpochSelectionMode.Range;
 
-    /// <summary>The <see cref="Time"/> offset from UTC of the timezone used in the <see cref="IQueryResult"/>.</summary>
+    /// <summary>Represents the <see cref="Query.Epoch.TimeSystem"/> used to express the <see cref="IEpoch"/> in the <see cref="IQueryResult"/>.</summary>
+    public abstract TimeSystem TimeSystem { get; }
+
+    /// <summary>The <see cref="Time"/> offset from UTC of the timezone used to express the <see cref="IEpoch"/> in the <see cref="IQueryResult"/>.</summary>
     public abstract Time TimeZoneOffset { get; }
 
     /// <summary>Indicates whether small perturbers were considered when executing the query.</summary>
