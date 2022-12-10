@@ -289,6 +289,11 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IPartInterpreter<MPCCometName>, MPCCometNameInterpreter>();
 
         services.AddSingleton<IEphemerisQueryEpochInterpreter, EphemerisQueryEpochInterpreter>();
+        services.AddSingleton<IEphemerisStartEpochInterpreter, EphemerisBoundaryEpochInterpreter>();
+        services.AddSingleton<IEphemerisStopEpochInterpreter, EphemerisBoundaryEpochInterpreter>();
+        services.AddSingleton<ITimeSystemInterpreter, TimeSystemInterpreter>();
+        services.AddSingleton<ITimeZoneOffsetInterpreter, TimeZoneOffsetInterpreter>();
+        services.AddSingleton<IEphemerisStepSizeInterpreter, EphemerisStepSizeInterpreter>();
 
         return services;
     }

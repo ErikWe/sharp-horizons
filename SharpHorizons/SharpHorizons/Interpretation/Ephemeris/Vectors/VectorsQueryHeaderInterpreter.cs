@@ -1,4 +1,4 @@
-namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
+﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
 
 using Microsoft.CodeAnalysis;
 
@@ -29,14 +29,31 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
     /// <param name="targetHeaderInterpreter"><inheritdoc cref="TargetHeaderInterpreter" path="/summary"/></param>
     /// <param name="originHeaderInterpreter"><inheritdoc cref="OriginHeaderInterpreter" path="/summary"/></param>
     /// <param name="queryTimeInterpreter"><inheritdoc cref="IEphemerisQueryEpochInterpreter" path="/summary"/></param>
+    /// <param name="startEpochInterpreter"><inheritdoc cref="IEphemerisStartEpochInterpreter" path="/summary"/></param>
+    /// <param name="stopEpochInterpreter"><inheritdoc cref="IEphemerisStopEpochInterpreter" path="/summary"/></param>
+    /// <param name="timeZoneOffsetInterpreter"><inheritdoc cref="ITimeZoneOffsetInterpreter" path="/summary"/></param>
+    /// <param name="timeSystemInterpreter"><inheritdoc cref="ITimeSystemInterpreter" path="/summary"/></param>
+    /// <param name="stepSizeInterpreter"><inheritdoc cref="IEphemerisStepSizeInterpreter" path="/summary"/></param>
+    /// <param name="smallPerturbersInterpreter"><inheritdoc cref="ISmallPerturbersInterpreter" path="/summary"/></param>
     public VectorsQueryHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, IEphemerisQueryTargetHeaderInterpreter targetHeaderInterpreter, IEphemerisQueryOriginHeaderInterpreter originHeaderInterpreter,
-        IEphemerisQueryEpochInterpreter queryTimeInterpreter)
+        IEphemerisQueryEpochInterpreter queryTimeInterpreter, IEphemerisStartEpochInterpreter startEpochInterpreter, IEphemerisStopEpochInterpreter stopEpochInterpreter, ITimeZoneOffsetInterpreter timeZoneOffsetInterpreter, ITimeSystemInterpreter timeSystemInterpreter, IEphemerisStepSizeInterpreter stepSizeInterpreter,
+        ISmallPerturbersInterpreter smallPerturbersInterpreter)
         : base(interpretationOptionsProvider, ephemerisInterpretationOptionsProvider)
     {
         TargetHeaderInterpreter = targetHeaderInterpreter;
         OriginHeaderInterpreter = originHeaderInterpreter;
 
         RegisterFirstLineInterpreter(queryTimeInterpreter, (queryTime, header) => header.QueryTime = queryTime);
+        RegisterKeyInterpreter(startEpochInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (startEpoch, header) => header.StartEpoch = startEpoch);
+        RegisterKeyInterpreter(stopEpochInterpreter, ephemerisInterpretationOptionsProvider.StopEpoch, (stopEpoch, header) => header.StopEpoch = stopEpoch);
+        RegisterKeyInterpreter(timeZoneOffsetInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (timeZoneOffset, header) => header.TimeZoneOffset = timeZoneOffset);
+        RegisterKeyInterpreter(timeSystemInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (timeSystem, header) => header.TimeSystem = timeSystem);
+        RegisterKeyInterpreter(stepSizeInterpreter, ephemerisInterpretationOptionsProvider.StepSize, (stepSize, header) => header.StepSize = stepSize);
+
+        foreach (var smallPerturbersKey in ephemerisInterpretationOptionsProvider.SmallPerturbers)
+        {
+            RegisterKeyInterpreter(smallPerturbersInterpreter, smallPerturbersKey, (smallPerturbers, header) => header.SmallPerturbers = smallPerturbers);
+        }
     }
 
     /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when the first line of the ephemeris is encountered.</summary>
