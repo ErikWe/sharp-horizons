@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris;
 
-using SharpHorizons.Query.Epoch;
+using SharpHorizons.Ephemeris;
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="IStartEpoch"/>.</summary>
-public interface IEphemerisStartEpochInterpreter : IPartInterpreter<IStartEpoch> { }
+/// <summary>Interprets some part of <see cref="IQueryResult"/> as the <see cref="IEpoch"/> of the first <see cref="IEphemerisEntry"/>.</summary>
+public interface IEphemerisStartEpochInterpreter : IPartInterpreter<IEpoch> { }

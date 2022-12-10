@@ -28,7 +28,7 @@ internal sealed class EphemerisQueryEpochInterpreter : IEphemerisQueryEpochInter
     {
         ArgumentNullException.ThrowIfNull(queryPart);
 
-        if (queryPart.Split('/') is not { Length: 3 } slashSplit || slashSplit[1].Trim().Split(' ') is not { Length: 8 } spaceSplit || spaceSplit[4].Split(':') is not { Length: 3 } colonSplit)
+        if (queryPart.Split('/') is not { Length: 3 } slashSplit || slashSplit[1].Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: 8 } spaceSplit || spaceSplit[4].Split(':') is not { Length: 3 } colonSplit)
         {
             return new();
         }

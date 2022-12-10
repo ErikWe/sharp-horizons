@@ -59,7 +59,7 @@ internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpret
     /// <param name="text">An <see cref="int"/> is parsed from this <see cref="string"/>, if possible.</param>
     private static int? TryParse(string text)
     {
-        var valid = int.TryParse(text, NumberStyles.Number | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, provider: null, out var value);
+        var valid = int.TryParse(text, NumberStyles.Number, provider: null, out var value);
 
         return valid ? value : null;
     }

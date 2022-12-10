@@ -19,13 +19,15 @@ internal sealed class MPCNameInterpreter : IPartInterpreter<MPCName>
             return new();
         }
 
-        var startIndex = parenthesisSplit[0].IndexOf(' ') + 1;
+        var numberAndName = parenthesisSplit[0].TrimStart();
+
+        var startIndex = numberAndName.IndexOf(' ') + 1;
 
         if (startIndex is 0)
         {
             return new();
         }
 
-        return new MPCName(parenthesisSplit[0][startIndex..]);
+        return new MPCName(numberAndName[startIndex..].Trim());
     }
 }

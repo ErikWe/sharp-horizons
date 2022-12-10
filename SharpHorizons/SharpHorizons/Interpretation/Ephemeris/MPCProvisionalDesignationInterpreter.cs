@@ -28,7 +28,7 @@ internal sealed class MPCProvisionalDesignationInterpreter : IPartInterpreter<MP
             return new();
         }
 
-        var designation = queryPart[startIndex..stopIndex];
+        var designation = queryPart[startIndex..stopIndex].Trim();
 
         if (designation.Contains(' ') is false || designation.Contains('/'))
         {
