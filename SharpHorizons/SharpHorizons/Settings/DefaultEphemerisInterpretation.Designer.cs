@@ -76,5 +76,62 @@ namespace SharpHorizons.Interpretation.Ephemeris {
                 return ((string)(this["BoundaryEpochCE"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Start time")]
+        public string StartEpoch {
+            get {
+                return ((string)(this["StartEpoch"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Stop  time")]
+        public string StopEpoch {
+            get {
+                return ((string)(this["StopEpoch"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Start time")]
+        public string TimeSystem {
+            get {
+                return ((string)(this["TimeSystem"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Start time")]
+        public string TimeZoneOffset {
+            get {
+                return ((string)(this["TimeZoneOffset"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Step-size")]
+        public string StepSize {
+            get {
+                return ((string)(this["StepSize"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsd=\"http://www.w3." +
+            "org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <s" +
+            "tring>Small perturbers</string>\r\n  <string>Small-body perts</string>\r\n</ArrayOfS" +
+            "tring>")]
+        public global::System.Collections.Specialized.StringCollection SmallPerturbers {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SmallPerturbers"]));
+            }
+        }
     }
 }
