@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris;
 
+using System.Collections.Generic;
+
 /// <summary>Provides options for how the result of an ephemeris query is interpreted.</summary>
 public interface IEphemerisInterpretationOptionsProvider
 {
@@ -20,4 +22,22 @@ public interface IEphemerisInterpretationOptionsProvider
 
     /// <inheritdoc cref="EphemerisInterpretationOptions.BoundaryEpochCE"/>
     public abstract string BoundaryEpochCE { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.StartEpoch"/>
+    public abstract string StartEpoch { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.StopEpoch"/>
+    public abstract string StopEpoch { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.TimeSystem"/>
+    public abstract string TimeSystem { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.TimeZoneOffset"/>
+    public abstract string TimeZoneOffset { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.StepSize"/>
+    public abstract string StepSize { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.SmallPerturbers"/>
+    public abstract IEnumerable<string> SmallPerturbers { get; }
 }

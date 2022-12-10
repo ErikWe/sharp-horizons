@@ -2,7 +2,13 @@
 
 using Microsoft.Extensions.Configuration;
 
+using SharpHorizons.Ephemeris;
 using SharpHorizons.Query.Epoch;
+
+using SharpMeasures;
+
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 /// <summary>Specifies how the result of an ephemeris query is interpreted.</summary>
 internal sealed class EphemerisInterpretationOptions
@@ -22,11 +28,29 @@ internal sealed class EphemerisInterpretationOptions
     /// <summary>The <see cref="string"/> indicating <see cref="LongitudeDefinition.EastPositive"/>.</summary>
     public string EastPositiveLongitude { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating that the <see cref="IStartEpoch"/> or <see cref="IStopEpoch"/> represents an epoch before the common era (before year 0).</summary>
+    /// <summary>The <see cref="string"/> indicating that the <see cref="IEpoch"/> of the first or last <see cref="IEphemerisEntry"/> represents an epoch before the common era (before year 0).</summary>
     public string BoundaryEpochBCE { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating that the <see cref="IStartEpoch"/> or <see cref="IStopEpoch"/> represents an epoch in the common era (after year 0).</summary>
+    /// <summary>The <see cref="string"/> indicating that the <see cref="IEpoch"/> of the first or last <see cref="IEphemerisEntry"/> represents an epoch in the common era (after year 0).</summary>
     public string BoundaryEpochCE { get; set; } = null!;
+
+    /// <summary>The key corresponding to the <see cref="IEpoch"/> of the first <see cref="IEphemerisEntry"/>.</summary>
+    public string StartEpoch { get; set; } = null!;
+
+    /// <summary>The key corresponding to the <see cref="IEpoch"/> of the last <see cref="IEphemerisEntry"/>.</summary>
+    public string StopEpoch { get; set; } = null!;
+
+    /// <summary>The key corresponding to the <see cref="Query.Epoch.TimeSystem"/>.</summary>
+    public string TimeSystem { get; set; } = null!;
+
+    /// <summary>The key corresponding to the <see cref="Time"/> offset to UTC.</summary>
+    public string TimeZoneOffset { get; set; } = null!;
+
+    /// <summary>The key corresponding to the <see cref="IStepSize"/>.</summary>
+    public string StepSize { get; set; } = null!;
+
+    /// <summary>The keys corresponding to the inclusion of small-body perturbers.</summary>
+    public IEnumerable<string> SmallPerturbers { get; set; } = null!;
 
     /// <summary>Applies the default values to <paramref name="options"/>.</summary>
     /// <param name="options">The default values are applied to these <see cref="EphemerisInterpretationOptions"/>.</param>
@@ -40,5 +64,26 @@ internal sealed class EphemerisInterpretationOptions
 
         options.BoundaryEpochBCE = DefaultEphemerisInterpretation.Default.BoundaryEpochBCE;
         options.BoundaryEpochCE = DefaultEphemerisInterpretation.Default.BoundaryEpochCE;
+
+        options.StartEpoch = DefaultEphemerisInterpretation.Default.StartEpoch;
+        options.StopEpoch = DefaultEphemerisInterpretation.Default.StopEpoch;
+        options.TimeSystem = DefaultEphemerisInterpretation.Default.TimeSystem;
+        options.TimeZoneOffset = DefaultEphemerisInterpretation.Default.TimeZoneOffset;
+        options.StepSize = DefaultEphemerisInterpretation.Default.StepSize;
+
+        options.SmallPerturbers = WrapStringCollection(DefaultEphemerisInterpretation.Default.SmallPerturbers);
+    }
+
+    /// <summary>Wraps a <see cref="StringCollection"/>, <paramref name="collection"/>, as an <see cref="IEnumerable{T}"/> of <see cref="string"/>.</summary>
+    /// <param name="collection">This <see cref="StringCollection"/> is wrapped as an <see cref="IEnumerable{T}"/> of <see cref="string"/>.</param>
+    private static IEnumerable<string> WrapStringCollection(StringCollection collection)
+    {
+        foreach (var item in collection)
+        {
+            if (item is not null)
+            {
+                yield return item;
+            }
+        }
     }
 }

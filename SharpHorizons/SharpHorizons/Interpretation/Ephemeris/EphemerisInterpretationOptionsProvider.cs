@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Options;
 
+using System.Collections.Generic;
+
 /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
 internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider
 {
@@ -21,4 +23,10 @@ internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpr
     string IEphemerisInterpretationOptionsProvider.EastPositiveLongitude => Options.EastPositiveLongitude;
     string IEphemerisInterpretationOptionsProvider.BoundaryEpochBCE => Options.BoundaryEpochBCE;
     string IEphemerisInterpretationOptionsProvider.BoundaryEpochCE => Options.BoundaryEpochCE;
+    string IEphemerisInterpretationOptionsProvider.StartEpoch => Options.StartEpoch;
+    string IEphemerisInterpretationOptionsProvider.StopEpoch => Options.StopEpoch;
+    string IEphemerisInterpretationOptionsProvider.TimeSystem => Options.TimeSystem;
+    string IEphemerisInterpretationOptionsProvider.TimeZoneOffset => Options.TimeZoneOffset;
+    string IEphemerisInterpretationOptionsProvider.StepSize => Options.StepSize;
+    IEnumerable<string> IEphemerisInterpretationOptionsProvider.SmallPerturbers => Options.SmallPerturbers;
 }
