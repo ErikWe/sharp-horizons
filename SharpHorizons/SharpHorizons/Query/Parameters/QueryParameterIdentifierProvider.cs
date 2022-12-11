@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Options;
 
+using SharpHorizons.Settings.Query.Parameters;
+
 /// <inheritdoc cref="IQueryParameterIdentifierProvider"/>
 internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifierProvider
 {

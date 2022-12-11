@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Target;
 
+using SharpHorizons.Settings.Interpretation.Ephemeris.Target;
+
 /// <summary>Provides options for how the <see cref="IEphemerisQueryTargetHeader"/> is interpreted.</summary>
 public interface ITargetInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider
 {

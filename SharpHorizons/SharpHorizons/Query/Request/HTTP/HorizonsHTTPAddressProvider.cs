@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Options;
 
+using SharpHorizons.Settings.Query;
+
 using System;
 
 /// <inheritdoc cref="IHorizonsHTTPAddressProvider"/>

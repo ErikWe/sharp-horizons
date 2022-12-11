@@ -49,43 +49,43 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Settings\DefaultEphemerisInterpretation.Designer.cs">
+		<Compile Update="Settings\Interpretation\Ephemeris\DefaultEphemerisInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DefaultEphemerisInterpretation.settings</DependentUpon>
 		</Compile>
 		
-		<Compile Update="Settings\DefaultInterpretation.Designer.cs">
+		<Compile Update="Settings\Interpretation\DefaultInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DefaultInterpretation.settings</DependentUpon>
 		</Compile>
 		
-		<Compile Update="Settings\DefaultParameterIdentifiers.Designer.cs">
+		<Compile Update="Settings\Query\Parameters\DefaultParameterIdentifiers.Designer.cs">
 			<DesignTimeSharedInput>True</DesignTimeSharedInput>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>DefaultParameterIdentifiers.settings</DependentUpon>
 		</Compile>
 
-		<Compile Update="Settings\DefaultQuerySettings.Designer.cs">
+		<Compile Update="Settings\Query\DefaultQuerySettings.Designer.cs">
 			<DesignTimeSharedInput>True</DesignTimeSharedInput>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>DefaultQuerySettings.settings</DependentUpon>
 		</Compile>
 
-		<Compile Update="Settings\DefaultEphemerisOriginInterpretation.Designer.cs">
+		<Compile Update="Settings\Interpretation\Ephemeris\Origin\DefaultEphemerisOriginInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
 		  <DependentUpon>DefaultEphemerisOriginInterpretation.settings</DependentUpon>
 		  <AutoGen>True</AutoGen>
 		</Compile>
 
-		<Compile Update="Settings\DefaultEphemerisTargetInterpretation.Designer.cs">
+		<Compile Update="Settings\Interpretation\Ephemeris\Target\DefaultEphemerisTargetInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DefaultEphemerisTargetInterpretation.settings</DependentUpon>
 		</Compile>
 
-		<Compile Update="Settings\DefaultVectorsInterpretation.Designer.cs">
+		<Compile Update="Settings\Interpretation\Ephemeris\Vectors\DefaultVectorsInterpretation.Designer.cs">
 		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DefaultVectorsInterpretation.settings</DependentUpon>
@@ -93,48 +93,48 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Settings\DefaultEphemerisInterpretation.settings">
+		<None Update="Settings\Interpretation\Ephemeris\DefaultEphemerisInterpretation.settings">
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		  <LastGenOutput>DefaultEphemerisInterpretation.Designer.cs</LastGenOutput>
-		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris</CustomToolNamespace>
+		  <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris</CustomToolNamespace>
 		</None>
 		
-		<None Update="Settings\DefaultInterpretation.settings">
+		<None Update="Settings\Interpretation\DefaultInterpretation.settings">
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		  <LastGenOutput>DefaultInterpretation.Designer.cs</LastGenOutput>
-		  <CustomToolNamespace>SharpHorizons.Interpretation</CustomToolNamespace>
+		  <CustomToolNamespace>SharpHorizons.Settings.Interpretation</CustomToolNamespace>
 		</None>
 		
-		<None Update="Settings\DefaultParameterIdentifiers.settings">
+		<None Update="Settings\Query\Parameters\DefaultParameterIdentifiers.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>DefaultParameterIdentifiers.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>SharpHorizons.Query.Parameters</CustomToolNamespace>
+			<CustomToolNamespace>SharpHorizons.Settings.Query.Parameters</CustomToolNamespace>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 
-		<None Update="Settings\DefaultQuerySettings.settings">
+		<None Update="Settings\Query\DefaultQuerySettings.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>DefaultQuerySettings.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>SharpHorizons.Query</CustomToolNamespace>
+			<CustomToolNamespace>SharpHorizons.Settings.Query</CustomToolNamespace>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 
-		<None Update="Settings\DefaultEphemerisOriginInterpretation.settings">
-		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Origin</CustomToolNamespace>
+		<None Update="Settings\Interpretation\Ephemeris\Origin\DefaultEphemerisOriginInterpretation.settings">
+		  <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris.Origin</CustomToolNamespace>
 		  <LastGenOutput>DefaultEphemerisOriginInterpretation.Designer.cs</LastGenOutput>
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		</None>
 
-		<None Update="Settings\DefaultEphemerisTargetInterpretation.settings">
+		<None Update="Settings\Interpretation\Ephemeris\Target\DefaultEphemerisTargetInterpretation.settings">
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		  <LastGenOutput>DefaultEphemerisTargetInterpretation.Designer.cs</LastGenOutput>
-		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Target</CustomToolNamespace>
+		  <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris.Target</CustomToolNamespace>
 		</None>
 
-		<None Update="Settings\DefaultVectorsInterpretation.settings">
+		<None Update="Settings\Interpretation\Ephemeris\Vectors\DefaultVectorsInterpretation.settings">
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		  <LastGenOutput>DefaultVectorsInterpretation.Designer.cs</LastGenOutput>
-		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Vectors</CustomToolNamespace>
+		  <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris.Vectors</CustomToolNamespace>
 		</None>
 	</ItemGroup>
 

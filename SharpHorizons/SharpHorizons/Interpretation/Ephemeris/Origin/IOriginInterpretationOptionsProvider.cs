@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Origin;
 
+using SharpHorizons.Settings.Interpretation.Ephemeris.Origin;
+
 /// <summary>Provides options for how the <see cref="IEphemerisQueryOriginHeader"/> is interpreted.</summary>
 public interface IOriginInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider
 {

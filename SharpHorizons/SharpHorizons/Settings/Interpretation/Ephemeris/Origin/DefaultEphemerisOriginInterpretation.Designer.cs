@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SharpHorizons.Interpretation.Ephemeris.Origin {
+namespace SharpHorizons.Settings.Interpretation.Ephemeris.Origin {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

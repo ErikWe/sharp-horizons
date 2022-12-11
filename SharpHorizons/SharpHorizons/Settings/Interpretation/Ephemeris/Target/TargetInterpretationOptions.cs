@@ -1,7 +1,9 @@
-﻿namespace SharpHorizons.Interpretation.Ephemeris.Target;
+﻿namespace SharpHorizons.Settings.Interpretation.Ephemeris.Target;
 
 using Microsoft.Extensions.Configuration;
 
+using SharpHorizons.Interpretation.Ephemeris;
+using SharpHorizons.Interpretation.Ephemeris.Target;
 using SharpHorizons.Query.Target;
 
 /// <summary>Options for how the <see cref="IEphemerisQueryTargetHeader"/> is interpreted.</summary>

@@ -1,8 +1,9 @@
-﻿namespace SharpHorizons.Query.Parameters;
+﻿namespace SharpHorizons.Settings.Query.Parameters;
 
 using Microsoft.Extensions.Configuration;
 
 using SharpHorizons.Query.Arguments;
+using SharpHorizons.Query.Parameters;
 
 /// <summary>Specifies the identifiers associated with the available parameters.</summary>
 /// <remarks><see cref="IQueryParameterIdentifierProvider"/> should be used to access the identifiers once specified.</remarks>

@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris;
 
+using SharpHorizons.Settings.Interpretation.Ephemeris;
+
 using System.Collections.Generic;
 
 /// <summary>Provides options for how the result of an ephemeris query is interpreted.</summary>

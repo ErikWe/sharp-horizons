@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SharpHorizons.Interpretation {
+namespace SharpHorizons.Settings.Interpretation.Ephemeris.Target {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
-    internal sealed partial class DefaultInterpretation : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class DefaultEphemerisTargetInterpretation : global::System.Configuration.ApplicationSettingsBase {
         
-        private static DefaultInterpretation defaultInstance = ((DefaultInterpretation)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new DefaultInterpretation())));
+        private static DefaultEphemerisTargetInterpretation defaultInstance = ((DefaultEphemerisTargetInterpretation)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new DefaultEphemerisTargetInterpretation())));
         
-        public static DefaultInterpretation Default {
+        public static DefaultEphemerisTargetInterpretation Default {
             get {
                 return defaultInstance;
             }
@@ -25,46 +25,46 @@ namespace SharpHorizons.Interpretation {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("unavailable")]
-        public string UnavailableText {
+        [global::System.Configuration.DefaultSettingValueAttribute("Target body name")]
+        public string BodyName {
             get {
-                return ((string)(this["UnavailableText"]));
+                return ((string)(this["BodyName"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("API SOURCE")]
-        public string RawTextSource {
+        [global::System.Configuration.DefaultSettingValueAttribute("Target geodetic")]
+        public string GeodeticCoordinate {
             get {
-                return ((string)(this["RawTextSource"]));
+                return ((string)(this["GeodeticCoordinate"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("API VERSION")]
-        public string RawTextVersion {
+        [global::System.Configuration.DefaultSettingValueAttribute("Target cylindric")]
+        public string CylindricalCoordinate {
             get {
-                return ((string)(this["RawTextVersion"]));
+                return ((string)(this["CylindricalCoordinate"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("*****")]
-        public string BlockSeparator {
+        [global::System.Configuration.DefaultSettingValueAttribute("Target pole/equ")]
+        public string ReferenceEllipsoid {
             get {
-                return ((string)(this["BlockSeparator"]));
+                return ((string)(this["ReferenceEllipsoid"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("US/Pacific")]
-        public string HorizonsTimeZoneID {
+        [global::System.Configuration.DefaultSettingValueAttribute("Target radii")]
+        public string Radii {
             get {
-                return ((string)(this["HorizonsTimeZoneID"]));
+                return ((string)(this["Radii"]));
             }
         }
     }

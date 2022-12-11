@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SharpHorizons.Query.Parameters {
+namespace SharpHorizons.Settings.Query.Parameters {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

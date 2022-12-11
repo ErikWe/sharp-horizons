@@ -28,6 +28,13 @@ using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.Vectors.Fluency;
 using SharpHorizons.Query.Vectors.Table;
+using SharpHorizons.Settings.Interpretation;
+using SharpHorizons.Settings.Interpretation.Ephemeris;
+using SharpHorizons.Settings.Interpretation.Ephemeris.Origin;
+using SharpHorizons.Settings.Interpretation.Ephemeris.Target;
+using SharpHorizons.Settings.Interpretation.Ephemeris.Vectors;
+using SharpHorizons.Settings.Query;
+using SharpHorizons.Settings.Query.Parameters;
 
 using SharpMeasures.Astronomy;
 

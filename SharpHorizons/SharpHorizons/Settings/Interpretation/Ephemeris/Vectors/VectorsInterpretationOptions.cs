@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
+﻿namespace SharpHorizons.Settings.Interpretation.Ephemeris.Vectors;
 
 using Microsoft.Extensions.Configuration;
 
@@ -10,13 +10,13 @@ internal sealed class VectorsInterpretationOptions
     /// <summary>Describes the name of the <see cref="IConfigurationSection"/> which describes <see cref="VectorsInterpretationOptions"/>.</summary>
     internal static string Section { get; } = "Interpretation:Ephemeris:Vectors";
 
-    /// <summary>The key corresponding to the <see cref="Query.OutputUnits"/>.</summary>
+    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.OutputUnits"/>.</summary>
     public string OutputUnits { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="Query.Vectors.VectorCorrection"/>.</summary>
+    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.Vectors.VectorCorrection"/>.</summary>
     public string VectorCorrection { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="Query.Vectors.Table.VectorTableContent"/>.</summary>
+    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.Vectors.Table.VectorTableContent"/>.</summary>
     public string VectorTableContent { get; set; } = null!;
 
     /// <summary>Applies the default values to <paramref name="options"/>.</summary>

@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Interpretation;
+﻿namespace SharpHorizons.Settings.Interpretation;
 
 using Microsoft.Extensions.Configuration;
 

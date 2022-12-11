@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Query;
+﻿namespace SharpHorizons.Settings.Query;
 
 using Microsoft.Extensions.Configuration;
 

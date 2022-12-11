@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
 
 using SharpHorizons.Query.Vectors;
+using SharpHorizons.Settings.Interpretation.Ephemeris.Vectors;
 
 /// <summary>Provides options for how the result of a <see cref="IVectorsQuery"/> is interpreted.</summary>
 public interface IVectorsInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider

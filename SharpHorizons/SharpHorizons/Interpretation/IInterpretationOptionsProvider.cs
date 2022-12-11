@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation;
 
+using SharpHorizons.Settings.Interpretation;
+
 /// <summary>Provides options for how the result of a query is interpreted.</summary>
 public interface IInterpretationOptionsProvider
 {

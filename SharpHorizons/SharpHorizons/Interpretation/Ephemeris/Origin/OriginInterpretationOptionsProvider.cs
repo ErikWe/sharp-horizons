@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Options;
 
+using SharpHorizons.Settings.Interpretation.Ephemeris.Origin;
+
 using System.Collections.Generic;
 
 /// <inheritdoc cref="IOriginInterpretationOptionsProvider"/>

@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Options;
 
+using SharpHorizons.Settings.Interpretation;
+
 /// <summary>Provides options for how the result of a query is interpreted.</summary>
 internal sealed class InterpretationOptionsProvider : IInterpretationOptionsProvider
 {

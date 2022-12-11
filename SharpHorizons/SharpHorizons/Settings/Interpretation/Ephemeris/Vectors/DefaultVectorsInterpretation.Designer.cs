@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SharpHorizons.Interpretation.Ephemeris.Vectors {
+namespace SharpHorizons.Settings.Interpretation.Ephemeris.Vectors {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

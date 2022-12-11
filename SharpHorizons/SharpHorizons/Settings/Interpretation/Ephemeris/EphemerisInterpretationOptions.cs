@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Interpretation.Ephemeris;
+﻿namespace SharpHorizons.Settings.Interpretation.Ephemeris;
 
 using Microsoft.Extensions.Configuration;
 
@@ -40,7 +40,7 @@ internal sealed class EphemerisInterpretationOptions
     /// <summary>The key corresponding to the <see cref="IEpoch"/> of the last <see cref="IEphemerisEntry"/>.</summary>
     public string StopEpoch { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="Query.Epoch.TimeSystem"/>.</summary>
+    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.Epoch.TimeSystem"/>.</summary>
     public string TimeSystem { get; set; } = null!;
 
     /// <summary>The key corresponding to the <see cref="Time"/> offset to UTC.</summary>
@@ -52,10 +52,10 @@ internal sealed class EphemerisInterpretationOptions
     /// <summary>The keys corresponding to the inclusion of small-body perturbers.</summary>
     public IEnumerable<string> SmallPerturbers { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="Query.ReferenceSystem"/>.</summary>
+    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.ReferenceSystem"/>.</summary>
     public string ReferenceSystem { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="Query.ReferencePlane"/>.</summary>
+    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.ReferencePlane"/>.</summary>
     public string ReferencePlane { get; set; } = null!;
 
     /// <summary>Applies the default values to <paramref name="options"/>.</summary>

@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Options;
 
+using SharpHorizons.Settings.Interpretation.Ephemeris;
+
 using System.Collections.Generic;
 
 /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>

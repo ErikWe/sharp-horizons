@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Options;
 
+using SharpHorizons.Settings.Interpretation.Ephemeris.Vectors;
+
 using System.Collections.Generic;
 
 /// <inheritdoc cref="IVectorsInterpretationOptionsProvider"/>
