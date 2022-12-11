@@ -42,5 +42,11 @@
   &lt;string&gt;Small-body perts&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
+    <Setting Name="ReferenceSystem" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Reference frame</Value>
+    </Setting>
+    <Setting Name="ReferencePlane" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Reference frame</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -133,5 +133,23 @@ namespace SharpHorizons.Interpretation.Ephemeris {
                 return ((global::System.Collections.Specialized.StringCollection)(this["SmallPerturbers"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Reference frame")]
+        public string ReferenceSystem {
+            get {
+                return ((string)(this["ReferenceSystem"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Reference frame")]
+        public string ReferencePlane {
+            get {
+                return ((string)(this["ReferencePlane"]));
+            }
+        }
     }
 }

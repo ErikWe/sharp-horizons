@@ -1,22 +1,22 @@
-﻿namespace SharpHorizons.Interpretation.Ephemeris.Origin;
+﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
 
 using Microsoft.Extensions.Options;
 
 using System.Collections.Generic;
 
-/// <inheritdoc cref="IOriginInterpretationOptionsProvider"/>
-internal sealed class OriginInterpretationOptionsProvider : IOriginInterpretationOptionsProvider
+/// <inheritdoc cref="IVectorsInterpretationOptionsProvider"/>
+internal sealed class VectorsInterpretationOptionsProvider : IVectorsInterpretationOptionsProvider
 {
-    /// <inheritdoc cref="OriginInterpretationOptions"/>
-    private OriginInterpretationOptions Options { get; }
+    /// <inheritdoc cref="VectorsInterpretationOptions"/>
+    private VectorsInterpretationOptions Options { get; }
 
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
     private IEphemerisInterpretationOptionsProvider EphemerisInterpretationOptionsProvider { get; }
 
-    /// <inheritdoc cref="OriginInterpretationOptionsProvider"/>
+    /// <inheritdoc cref="EphemerisInterpretationOptionsProvider"/>
     /// <param name="options"><inheritdoc cref="Options" path="/summary"/></param>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="EphemerisInterpretationOptionsProvider" path="/summary"/></param>
-    public OriginInterpretationOptionsProvider(IOptions<OriginInterpretationOptions> options, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider)
+    public VectorsInterpretationOptionsProvider(IOptions<VectorsInterpretationOptions> options, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider)
     {
         Options = options.Value;
         EphemerisInterpretationOptionsProvider = ephemerisInterpretationOptionsProvider;
@@ -43,12 +43,7 @@ internal sealed class OriginInterpretationOptionsProvider : IOriginInterpretatio
     string IEphemerisInterpretationOptionsProvider.ReferenceSystem => EphemerisInterpretationOptionsProvider.ReferenceSystem;
     string IEphemerisInterpretationOptionsProvider.ReferencePlane => EphemerisInterpretationOptionsProvider.ReferencePlane;
 
-    string IOriginInterpretationOptionsProvider.BodyName => Options.BodyName;
-    string IOriginInterpretationOptionsProvider.SiteName => Options.SiteName;
-    string IOriginInterpretationOptionsProvider.GeocentricSite => Options.GeocentricSite;
-    string IOriginInterpretationOptionsProvider.CustomSite => Options.CustomSite;
-    string IOriginInterpretationOptionsProvider.GeodeticCoordinate => Options.GeodeticCoordinate;
-    string IOriginInterpretationOptionsProvider.CylindricalCoordinate => Options.CylindricalCoordinate;
-    string IOriginInterpretationOptionsProvider.ReferenceEllipsoid => Options.ReferenceEllipsoid;
-    string IOriginInterpretationOptionsProvider.Radii => Options.Radii;
+    string IVectorsInterpretationOptionsProvider.OutputUnits => Options.OutputUnits;
+    string IVectorsInterpretationOptionsProvider.VectorCorrection => Options.VectorCorrection;
+    string IVectorsInterpretationOptionsProvider.VectorTableContent => Options.VectorTableContent;
 }

@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 
 /// <summary>Provides options for how the result of an ephemeris query is interpreted.</summary>
-public interface IEphemerisInterpretationOptionsProvider
+public interface IEphemerisInterpretationOptionsProvider : IInterpretationOptionsProvider
 {
     /// <inheritdoc cref="EphemerisInterpretationOptions.EphemerisDataStart"/>
     public abstract string EphemerisDataStart { get; }
@@ -40,4 +40,10 @@ public interface IEphemerisInterpretationOptionsProvider
 
     /// <inheritdoc cref="EphemerisInterpretationOptions.SmallPerturbers"/>
     public abstract IEnumerable<string> SmallPerturbers { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.ReferenceSystem"/>
+    public abstract string ReferenceSystem { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.ReferencePlane"/>
+    public abstract string ReferencePlane { get; }
 }

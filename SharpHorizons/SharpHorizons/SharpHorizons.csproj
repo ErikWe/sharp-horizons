@@ -84,6 +84,12 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DefaultEphemerisTargetInterpretation.settings</DependentUpon>
 		</Compile>
+
+		<Compile Update="Settings\DefaultVectorsInterpretation.Designer.cs">
+		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DefaultVectorsInterpretation.settings</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -123,6 +129,12 @@
 		  <Generator>SettingsSingleFileGenerator</Generator>
 		  <LastGenOutput>DefaultEphemerisTargetInterpretation.Designer.cs</LastGenOutput>
 		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Target</CustomToolNamespace>
+		</None>
+
+		<None Update="Settings\DefaultVectorsInterpretation.settings">
+		  <Generator>SettingsSingleFileGenerator</Generator>
+		  <LastGenOutput>DefaultVectorsInterpretation.Designer.cs</LastGenOutput>
+		  <CustomToolNamespace>SharpHorizons.Interpretation.Ephemeris.Vectors</CustomToolNamespace>
 		</None>
 	</ItemGroup>
 

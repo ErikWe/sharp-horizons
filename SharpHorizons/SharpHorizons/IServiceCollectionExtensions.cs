@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons;
+namespace SharpHorizons;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -71,6 +71,7 @@ public static class IServiceCollectionExtensions
         services.Configure<EphemerisInterpretationOptions>(configuration.GetSection(EphemerisInterpretationOptions.Section));
         services.Configure<TargetInterpretationOptions>(configuration.GetSection(TargetInterpretationOptions.Section));
         services.Configure<OriginInterpretationOptions>(configuration.GetSection(OriginInterpretationOptions.Section));
+        services.Configure<VectorsInterpretationOptions>(configuration.GetSection(VectorsInterpretationOptions.Section));
 
         return services;
     }
@@ -85,6 +86,7 @@ public static class IServiceCollectionExtensions
         services.AddOptions<EphemerisInterpretationOptions>().Configure(EphemerisInterpretationOptions.ApplyDefaults);
         services.AddOptions<TargetInterpretationOptions>().Configure(TargetInterpretationOptions.ApplyDefaults);
         services.AddOptions<OriginInterpretationOptions>().Configure(OriginInterpretationOptions.ApplyDefaults);
+        services.AddOptions<VectorsInterpretationOptions>().Configure(VectorsInterpretationOptions.ApplyDefaults);
 
         services.AddSingleton<IHorizonsHTTPAddressProvider, HorizonsHTTPAddressProvider>();
         services.AddSingleton<IQueryParameterIdentifierProvider, QueryParameterIdentifierProvider>();
@@ -92,6 +94,7 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IEphemerisInterpretationOptionsProvider, EphemerisInterpretationOptionsProvider>();
         services.AddSingleton<ITargetInterpretationOptionsProvider, TargetInterpretationOptionsProvider>();
         services.AddSingleton<IOriginInterpretationOptionsProvider, OriginInterpretationOptionsProvider>();
+        services.AddSingleton<IVectorsInterpretationOptionsProvider, VectorsInterpretationOptionsProvider>();
 
         return services;
     }
