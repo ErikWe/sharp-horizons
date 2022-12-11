@@ -6,7 +6,7 @@ using SharpHorizons.Interpretation.Ephemeris;
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Query.Origin;
 
-/// <summary>Options for how the <see cref="IEphemerisQueryOriginHeader"/> is interpreted.</summary>
+/// <summary>Options for how the <see cref="IEphemerisOriginHeader"/> is interpreted.</summary>
 internal sealed class OriginInterpretationOptions
 {
     /// <summary>Describes the name of the <see cref="IConfigurationSection"/> which describes <see cref="OriginInterpretationOptions"/>.</summary>

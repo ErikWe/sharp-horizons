@@ -1,7 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
 
 using Microsoft.CodeAnalysis;
-using SharpHorizons.Interpretation.Ephemeris;
+
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
 using SharpHorizons.Query;
@@ -14,16 +14,16 @@ using SharpMeasures;
 
 using System;
 
-/// <inheritdoc cref="IVectorsQueryHeaderInterpreter"/>
-internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQueryHeaderInterpreter<VectorsQueryHeaderInterpreter.MutableVectorsQueryHeader>, IVectorsQueryHeaderInterpreter
+/// <inheritdoc cref="IVectorsHeaderInterpreter"/>
+internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderInterpreter<VectorsHeaderInterpreter.MutableVectorsQueryHeader>, IVectorsHeaderInterpreter
 {
-    /// <inheritdoc cref="IEphemerisQueryTargetHeaderInterpreter"/>
-    private IEphemerisQueryTargetHeaderInterpreter TargetHeaderInterpreter { get; }
+    /// <inheritdoc cref="IEphemerisTargetHeaderInterpreter"/>
+    private IEphemerisTargetHeaderInterpreter TargetHeaderInterpreter { get; }
 
-    /// <inheritdoc cref="IEphemerisQueryOriginHeaderInterpreter"/>
-    private IEphemerisQueryOriginHeaderInterpreter OriginHeaderInterpreter { get; }
+    /// <inheritdoc cref="IEphemerisOriginHeaderInterpreter"/>
+    private IEphemerisOriginHeaderInterpreter OriginHeaderInterpreter { get; }
 
-    /// <inheritdoc cref="VectorsQueryHeaderInterpreter"/>
+    /// <inheritdoc cref="VectorsHeaderInterpreter"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="IVectorsInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="targetHeaderInterpreter"><inheritdoc cref="TargetHeaderInterpreter" path="/summary"/></param>
     /// <param name="originHeaderInterpreter"><inheritdoc cref="OriginHeaderInterpreter" path="/summary"/></param>
@@ -39,7 +39,7 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
     /// <param name="referencePlaneInterpreter"><inheritdoc cref="IReferencePlaneInterpreter" path="/summary"/></param>
     /// <param name="correctionInterpreter"><inheritdoc cref="IVectorCorrectionInterpreter" path="/summary"/></param>
     /// <param name="tableContentInterpreter"><inheritdoc cref="IVectorTableContentInterpreter" path="/summary"/></param>
-    public VectorsQueryHeaderInterpreter(IVectorsInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisQueryTargetHeaderInterpreter targetHeaderInterpreter, IEphemerisQueryOriginHeaderInterpreter originHeaderInterpreter, IEphemerisQueryEpochInterpreter queryTimeInterpreter, IEphemerisStartEpochInterpreter startEpochInterpreter,
+    public VectorsHeaderInterpreter(IVectorsInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisTargetHeaderInterpreter targetHeaderInterpreter, IEphemerisOriginHeaderInterpreter originHeaderInterpreter, IEphemerisQueryEpochInterpreter queryTimeInterpreter, IEphemerisStartEpochInterpreter startEpochInterpreter,
         IEphemerisStopEpochInterpreter stopEpochInterpreter, ITimeZoneOffsetInterpreter timeZoneOffsetInterpreter, ITimeSystemInterpreter timeSystemInterpreter, IEphemerisStepSizeInterpreter stepSizeInterpreter, ISmallPerturbersInterpreter smallPerturbersInterpreter, IOutputUnitsInterpreter outputUnitsInterpreter,
         IReferenceSystemInterpreter referenceSystemInterpreter, IReferencePlaneInterpreter referencePlaneInterpreter, IVectorCorrectionInterpreter correctionInterpreter, IVectorTableContentInterpreter tableContentInterpreter)
         : base(interpretationOptionsProvider)
@@ -112,7 +112,7 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
 
     protected override bool ValidateHeader(MutableVectorsQueryHeader header) => header.QueryTime is not null && header.StartEpoch is not null && header.StopEpoch is not null;
 
-    Optional<IVectorsQueryHeader> IInterpreter<IVectorsQueryHeader>.Interpret(IQueryResult queryResult)
+    Optional<IVectorsHeader> IInterpreter<IVectorsHeader>.Interpret(IQueryResult queryResult)
     {
         ArgumentNullException.ThrowIfNull(queryResult);
 
@@ -124,13 +124,13 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
         return interpretation;
     }
 
-    /// <summary>A mutable <see cref="IVectorsQueryHeader"/>.</summary>
-    public sealed class MutableVectorsQueryHeader : IVectorsQueryHeader
+    /// <summary>A mutable <see cref="IVectorsHeader"/>.</summary>
+    public sealed class MutableVectorsQueryHeader : IVectorsHeader
     {
         public IEpoch QueryTime { get; set; } = null!;
         
-        public IEphemerisQueryTargetHeader TargetHeader { get; }
-        public IEphemerisQueryOriginHeader OriginHeader { get; }
+        public IEphemerisTargetHeader TargetHeader { get; }
+        public IEphemerisOriginHeader OriginHeader { get; }
 
         public IEpoch StartEpoch { get; set; } = null!;
         public IEpoch StopEpoch { get; set; } = null!;
@@ -150,7 +150,7 @@ internal sealed class VectorsQueryHeaderInterpreter : ALineIterativeEphemerisQue
         /// <inheritdoc cref="MutableVectorsQueryHeader"/>
         /// <param name="targetHeader"><inheritdoc cref="TargetHeader" path="/summary"/></param>
         /// <param name="originHeader"><inheritdoc cref="OriginHeader" path="/summary"/></param>
-        public MutableVectorsQueryHeader(IEphemerisQueryTargetHeader targetHeader, IEphemerisQueryOriginHeader originHeader)
+        public MutableVectorsQueryHeader(IEphemerisTargetHeader targetHeader, IEphemerisOriginHeader originHeader)
         {
             TargetHeader = targetHeader;
             OriginHeader = originHeader;

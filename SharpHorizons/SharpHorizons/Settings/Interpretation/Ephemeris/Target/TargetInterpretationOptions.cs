@@ -6,7 +6,7 @@ using SharpHorizons.Interpretation.Ephemeris;
 using SharpHorizons.Interpretation.Ephemeris.Target;
 using SharpHorizons.Query.Target;
 
-/// <summary>Options for how the <see cref="IEphemerisQueryTargetHeader"/> is interpreted.</summary>
+/// <summary>Options for how the <see cref="IEphemerisTargetHeader"/> is interpreted.</summary>
 internal sealed class TargetInterpretationOptions
 {
     /// <summary>Describes the name of the <see cref="IConfigurationSection"/> which describes <see cref="TargetInterpretationOptions"/>.</summary>

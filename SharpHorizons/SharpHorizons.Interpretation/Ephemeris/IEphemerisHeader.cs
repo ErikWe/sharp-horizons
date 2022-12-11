@@ -10,16 +10,16 @@ using SharpHorizons.Query.Result;
 using SharpMeasures;
 
 /// <summary>Represents the header of the <see cref="IQueryResult"/> of a ephemeris query.</summary>
-public interface IEphemerisQueryHeader
+public interface IEphemerisHeader
 {
     /// <summary>The <see cref="IEpoch"/> when the query was executed by Horizons.</summary>
     public abstract IEpoch QueryTime { get; }
 
-    /// <inheritdoc cref="IEphemerisQueryTargetHeader"/>
-    public abstract IEphemerisQueryTargetHeader TargetHeader { get; }
+    /// <inheritdoc cref="IEphemerisTargetHeader"/>
+    public abstract IEphemerisTargetHeader TargetHeader { get; }
 
-    /// <inheritdoc cref="IEphemerisQueryOriginHeader"/>
-    public abstract IEphemerisQueryOriginHeader OriginHeader { get; }
+    /// <inheritdoc cref="IEphemerisOriginHeader"/>
+    public abstract IEphemerisOriginHeader OriginHeader { get; }
 
     /// <summary>The <see cref="IEpoch"/> of the first <see cref="IEphemerisEntry"/>.</summary>
     public abstract IEpoch StartEpoch { get; }

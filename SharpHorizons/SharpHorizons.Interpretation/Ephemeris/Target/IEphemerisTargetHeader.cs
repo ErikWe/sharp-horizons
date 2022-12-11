@@ -6,8 +6,8 @@ using SharpMeasures.Astronomy;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Represents the <see cref="ITarget"/>-related properties of a <see cref="IEphemerisQueryHeader"/>.</summary>
-public interface IEphemerisQueryTargetHeader
+/// <summary>Represents the <see cref="ITarget"/>-related properties of a <see cref="IEphemerisHeader"/>.</summary>
+public interface IEphemerisTargetHeader
 {
     /// <summary>The <see cref="ITarget"/> of the query, or the object relative to which the <see cref="ITarget"/> is expressed.</summary>
     public abstract ITarget Target { get; }

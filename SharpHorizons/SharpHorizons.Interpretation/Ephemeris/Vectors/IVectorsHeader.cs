@@ -6,7 +6,7 @@ using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.Vectors.Table;
 
 /// <summary>Represents the header of the <see cref="IQueryResult"/> of a <see cref="IVectorsQuery"/>.</summary>
-public interface IVectorsQueryHeader : IEphemerisQueryHeader
+public interface IVectorsHeader : IEphemerisHeader
 {
     /// <summary>Describes the <see cref="Query.OutputUnits"/> used in the <see cref="IQueryResult"/>.</summary>
     public abstract OutputUnits OutputUnits { get; }

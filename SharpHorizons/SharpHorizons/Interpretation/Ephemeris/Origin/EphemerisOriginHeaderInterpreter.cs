@@ -9,17 +9,17 @@ using SharpMeasures.Astronomy;
 
 using System;
 
-/// <inheritdoc cref="IEphemerisQueryOriginHeaderInterpreter"/>
-internal sealed class EphemerisQueryOriginHeaderInterpreter : ALineIterativeEphemerisQueryHeaderInterpreter<EphemerisQueryOriginHeaderInterpreter.MutableOriginDataInterpretation>, IEphemerisQueryOriginHeaderInterpreter
+/// <inheritdoc cref="IEphemerisOriginHeaderInterpreter"/>
+internal sealed class EphemerisOriginHeaderInterpreter : ALineIterativeEphemerisHeaderInterpreter<EphemerisOriginHeaderInterpreter.MutableEphemerisOriginHeader>, IEphemerisOriginHeaderInterpreter
 {
-    /// <inheritdoc cref="EphemerisQueryOriginHeaderInterpreter"/>
+    /// <inheritdoc cref="EphemerisOriginHeaderInterpreter"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="IOriginInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="originInterpreter"><inheritdoc cref="IOriginInterpreter" path="/summary"/>.</param>
     /// <param name="geodeticCoordinateInterpreter"><inheritdoc cref="IOriginGeodeticCoordinateInterpreter" path="/summary"/></param>
     /// <param name="cylindricalCoordinateInterpreter"><inheritdoc cref="IOriginCylindricalCoordinateInterpreter" path="/summary"/></param>
     /// <param name="referenceEllipsoidInterpreter"><inheritdoc cref="IOriginReferenceEllipsoidInterpreter" path="/summary"/></param>
     /// <param name="radiiInterpreter"><inheritdoc cref="IOriginRadiiInterpreter" path="/summary"/></param>
-    public EphemerisQueryOriginHeaderInterpreter(IOriginInterpretationOptionsProvider interpretationOptionsProvider, IOriginInterpreter originInterpreter, IOriginGeodeticCoordinateInterpreter geodeticCoordinateInterpreter,
+    public EphemerisOriginHeaderInterpreter(IOriginInterpretationOptionsProvider interpretationOptionsProvider, IOriginInterpreter originInterpreter, IOriginGeodeticCoordinateInterpreter geodeticCoordinateInterpreter,
         IOriginCylindricalCoordinateInterpreter cylindricalCoordinateInterpreter, IOriginReferenceEllipsoidInterpreter referenceEllipsoidInterpreter, IOriginRadiiInterpreter radiiInterpreter)
         : base(interpretationOptionsProvider)
     {
@@ -35,11 +35,11 @@ internal sealed class EphemerisQueryOriginHeaderInterpreter : ALineIterativeEphe
     /// <param name="interpreter">This <see cref="IInterpreter{TInterpretation}"/> is registered for invokation when a <paramref name="key"/> is encounterd.</param>
     /// <param name="key">The key which, when encountered, results in the <paramref name="interpreter"/> being invoked.</param>
     /// <param name="setter">Delegate for applying the result of the <paramref name="interpreter"/>.</param>
-    private void RegisterKeyInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, string key, Action<TInterpretation, MutableOriginDataInterpretation> setter)
+    private void RegisterKeyInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, string key, Action<TInterpretation, MutableEphemerisOriginHeader> setter)
     {
         RegisterKeyInterpreter(interpreter, key, wrapper);
 
-        MutableOriginDataInterpretation wrapper(TInterpretation interpretation, MutableOriginDataInterpretation header)
+        MutableEphemerisOriginHeader wrapper(TInterpretation interpretation, MutableEphemerisOriginHeader header)
         {
             setter(interpretation, header);
 
@@ -47,11 +47,11 @@ internal sealed class EphemerisQueryOriginHeaderInterpreter : ALineIterativeEphe
         }
     }
 
-    protected override Optional<MutableOriginDataInterpretation> ConstructHeader(IQueryResult _) => new MutableOriginDataInterpretation();
+    protected override Optional<MutableEphemerisOriginHeader> ConstructHeader(IQueryResult _) => new MutableEphemerisOriginHeader();
 
-    protected override bool ValidateHeader(MutableOriginDataInterpretation header) => header.Origin is not null;
+    protected override bool ValidateHeader(MutableEphemerisOriginHeader header) => header.Origin is not null;
 
-    Optional<IEphemerisQueryOriginHeader> IInterpreter<IEphemerisQueryOriginHeader>.Interpret(IQueryResult queryResult)
+    Optional<IEphemerisOriginHeader> IInterpreter<IEphemerisOriginHeader>.Interpret(IQueryResult queryResult)
     {
         ArgumentNullException.ThrowIfNull(queryResult);
 
@@ -63,8 +63,8 @@ internal sealed class EphemerisQueryOriginHeaderInterpreter : ALineIterativeEphe
         return interpretation;
     }
 
-    /// <summary>A mutable <see cref="IEphemerisQueryOriginHeader"/>.</summary>
-    public sealed class MutableOriginDataInterpretation : IEphemerisQueryOriginHeader
+    /// <summary>A mutable <see cref="IEphemerisOriginHeader"/>.</summary>
+    public sealed class MutableEphemerisOriginHeader : IEphemerisOriginHeader
     {
         public IOrigin Origin { get; set; } = null!;
 

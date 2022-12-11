@@ -38,7 +38,7 @@ internal class Program
         var vectorsComposer = host.Services.GetRequiredService<IVectorsQueryComposer>();
         var httpQueryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
         var httpTextExtractor = host.Services.GetRequiredService<IHTTPResultExtractor>();
-        var vectorsHeaderInterpreter = host.Services.GetRequiredService<IVectorsQueryHeaderInterpreter>();
+        var vectorsHeaderInterpreter = host.Services.GetRequiredService<IVectorsHeaderInterpreter>();
 
         var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: SharpHorizons.Query.OutputFormat.JSON);
         var uri = vectorsComposer.Compose(query);

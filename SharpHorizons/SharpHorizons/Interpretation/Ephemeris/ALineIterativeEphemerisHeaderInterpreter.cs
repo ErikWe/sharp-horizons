@@ -10,7 +10,7 @@ using System.IO;
 
 /// <summary>Handles iterative interpretation of the lines of the the ephemeris header.</summary>
 /// <typeparam name="THeader">The type of the interpreted header.</typeparam>
-internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
+internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader>
 {
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
     private IEphemerisInterpretationOptionsProvider InterpretationOptionsProvider { get; }
@@ -21,9 +21,9 @@ internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
     /// <summary>Delegates registered for invokation when some <see cref="string"/> key is encountered.</summary>
     private Dictionary<string, ICollection<Func<string, THeader, THeader>>> KeyInterpreters { get; } = new();
 
-    /// <inheritdoc cref="ALineIterativeEphemerisQueryHeaderInterpreter{THeader}"/>
+    /// <inheritdoc cref="ALineIterativeEphemerisHeaderInterpreter{THeader}"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="InterpretationOptionsProvider" path="/summary"/></param>
-    public ALineIterativeEphemerisQueryHeaderInterpreter(IEphemerisInterpretationOptionsProvider interpretationOptionsProvider)
+    public ALineIterativeEphemerisHeaderInterpreter(IEphemerisInterpretationOptionsProvider interpretationOptionsProvider)
     {
         InterpretationOptionsProvider = interpretationOptionsProvider;
     }

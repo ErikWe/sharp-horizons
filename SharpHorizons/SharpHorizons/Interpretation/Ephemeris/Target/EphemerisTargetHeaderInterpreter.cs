@@ -9,17 +9,17 @@ using SharpMeasures.Astronomy;
 
 using System;
 
-/// <inheritdoc cref="IEphemerisQueryTargetHeaderInterpreter"/>
-internal sealed class EphemerisQueryTargetHeaderInterpreter : ALineIterativeEphemerisQueryHeaderInterpreter<EphemerisQueryTargetHeaderInterpreter.MutableTargetDataInterpretation>, IEphemerisQueryTargetHeaderInterpreter
+/// <inheritdoc cref="IEphemerisTargetHeaderInterpreter"/>
+internal sealed class EphemerisTargetHeaderInterpreter : ALineIterativeEphemerisHeaderInterpreter<EphemerisTargetHeaderInterpreter.MutableTargetDataInterpretation>, IEphemerisTargetHeaderInterpreter
 {
-    /// <inheritdoc cref="EphemerisQueryTargetHeaderInterpreter"/>
+    /// <inheritdoc cref="EphemerisTargetHeaderInterpreter"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="ITargetInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="targetInterpreter"><inheritdoc cref="ITargetInterpreter" path="/summary"/></param>
     /// <param name="geodeticCoordinateInterpreter"><inheritdoc cref="ITargetGeodeticCoordinateInterpreter" path="/summary"/></param>
     /// <param name="cylindricalCoordinateInterpreter"><inheritdoc cref="ITargetCylindricalCoordinateInterpreter" path="/summary"/></param>
     /// <param name="referenceEllipsoidInterpreter"><inheritdoc cref="ITargetReferenceEllipsoidInterpreter" path="/summary"/></param>
     /// <param name="radiiInterpreter"><inheritdoc cref="ITargetRadiiInterpreter" path="/summary"/></param>
-    public EphemerisQueryTargetHeaderInterpreter(ITargetInterpretationOptionsProvider interpretationOptionsProvider, ITargetInterpreter targetInterpreter, ITargetGeodeticCoordinateInterpreter geodeticCoordinateInterpreter,
+    public EphemerisTargetHeaderInterpreter(ITargetInterpretationOptionsProvider interpretationOptionsProvider, ITargetInterpreter targetInterpreter, ITargetGeodeticCoordinateInterpreter geodeticCoordinateInterpreter,
         ITargetCylindricalCoordinateInterpreter cylindricalCoordinateInterpreter, ITargetReferenceEllipsoidInterpreter referenceEllipsoidInterpreter, ITargetRadiiInterpreter radiiInterpreter)
         : base(interpretationOptionsProvider)
     {
@@ -51,7 +51,7 @@ internal sealed class EphemerisQueryTargetHeaderInterpreter : ALineIterativeEphe
 
     protected override bool ValidateHeader(MutableTargetDataInterpretation header) => header.Target is not null;
 
-    Optional<IEphemerisQueryTargetHeader> IInterpreter<IEphemerisQueryTargetHeader>.Interpret(IQueryResult queryResult)
+    Optional<IEphemerisTargetHeader> IInterpreter<IEphemerisTargetHeader>.Interpret(IQueryResult queryResult)
     {
         ArgumentNullException.ThrowIfNull(queryResult);
 
@@ -63,8 +63,8 @@ internal sealed class EphemerisQueryTargetHeaderInterpreter : ALineIterativeEphe
         return interpretation;
     }
 
-    /// <summary>A mutable <see cref="IEphemerisQueryTargetHeader"/>.</summary>
-    public sealed class MutableTargetDataInterpretation : IEphemerisQueryTargetHeader
+    /// <summary>A mutable <see cref="IEphemerisTargetHeader"/>.</summary>
+    public sealed class MutableTargetDataInterpretation : IEphemerisTargetHeader
     {
         public ITarget Target { get; set; } = null!;
 

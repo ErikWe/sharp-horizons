@@ -2,7 +2,7 @@
 
 using SharpHorizons.Settings.Interpretation.Ephemeris.Origin;
 
-/// <summary>Provides options for how the <see cref="IEphemerisQueryOriginHeader"/> is interpreted.</summary>
+/// <summary>Provides options for how the <see cref="IEphemerisOriginHeader"/> is interpreted.</summary>
 public interface IOriginInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider
 {
     /// <inheritdoc cref="OriginInterpretationOptions.BodyName"/>

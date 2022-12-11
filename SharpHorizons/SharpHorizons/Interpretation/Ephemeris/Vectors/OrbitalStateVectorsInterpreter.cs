@@ -5,15 +5,23 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.Ephemeris.Vectors;
 using SharpHorizons.Query.Result;
 
-using System;
-
 /// <inheritdoc cref="IOrbitalStateVectorsInterpreter"/>
 internal sealed class OrbitalStateVectorsInterpreter : IOrbitalStateVectorsInterpreter
 {
+    /// <inheritdoc cref="IVectorsHeaderInterpreter"/>
+    private IVectorsHeaderInterpreter HeaderInterpreter { get; }
+
+    /// <inheritdoc cref="OrbitalStateVectorsInterpreter"/>
+    /// <param name="headerInterpreter"><inheritdoc cref="IVectorsHeaderInterpreter" path="/summary"/></param>
+    public OrbitalStateVectorsInterpreter(IVectorsHeaderInterpreter headerInterpreter)
+    {
+        HeaderInterpreter = headerInterpreter;
+    }
+
     Optional<IOrbitalStateVectorsEphemeris> IInterpreter<IOrbitalStateVectorsEphemeris>.Interpret(IQueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryResult);
+        var _ = HeaderInterpreter.Interpret(queryResult);
 
-        throw new Exception();
+        throw new System.Exception();
     }
 }

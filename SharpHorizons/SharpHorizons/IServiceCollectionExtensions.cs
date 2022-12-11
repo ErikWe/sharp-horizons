@@ -268,16 +268,16 @@ public static class IServiceCollectionExtensions
     /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsInterpreters(this IServiceCollection services)
     {
-        services.AddSingleton<IVectorsQueryHeaderInterpreter, VectorsQueryHeaderInterpreter>();
+        services.AddSingleton<IVectorsHeaderInterpreter, VectorsHeaderInterpreter>();
 
-        services.AddSingleton<IEphemerisQueryTargetHeaderInterpreter, EphemerisQueryTargetHeaderInterpreter>();
+        services.AddSingleton<IEphemerisTargetHeaderInterpreter, EphemerisTargetHeaderInterpreter>();
         services.AddSingleton<ITargetInterpreter, TargetInterpreter>();
         services.AddSingleton<ITargetGeodeticCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<ITargetCylindricalCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<ITargetReferenceEllipsoidInterpreter, ReferenceEllipsoidInterpreter>();
         services.AddSingleton<ITargetRadiiInterpreter, RadiiInterpreter>();
 
-        services.AddSingleton<IEphemerisQueryOriginHeaderInterpreter, EphemerisQueryOriginHeaderInterpreter>();
+        services.AddSingleton<IEphemerisOriginHeaderInterpreter, EphemerisOriginHeaderInterpreter>();
         services.AddSingleton<IOriginInterpreter, OriginInterpreter>();
         services.AddSingleton<IOriginGeodeticCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<IOriginCylindricalCoordinateInterpreter, CoordinateInterpreter>();
