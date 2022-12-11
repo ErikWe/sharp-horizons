@@ -1,4 +1,4 @@
-namespace SharpHorizons;
+﻿namespace SharpHorizons;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -297,6 +297,16 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<ITimeSystemInterpreter, TimeSystemInterpreter>();
         services.AddSingleton<ITimeZoneOffsetInterpreter, TimeZoneOffsetInterpreter>();
         services.AddSingleton<IEphemerisStepSizeInterpreter, EphemerisStepSizeInterpreter>();
+
+        services.AddSingleton<ISmallPerturbersInterpreter, SmallPerturbersInterpreter>();
+
+        services.AddSingleton<IReferenceSystemInterpreter, ReferenceSystemInterpreter>();
+        services.AddSingleton<IReferencePlaneInterpreter, ReferencePlaneInterpreter>();
+
+        services.AddSingleton<IOutputUnitsInterpreter, OutputUnitsInterpreter>();
+
+        services.AddSingleton<IVectorCorrectionInterpreter, VectorCorrectionInterpreter>();
+        services.AddSingleton<IVectorTableContentInterpreter, VectorTableContentInterpreter>();
 
         return services;
     }

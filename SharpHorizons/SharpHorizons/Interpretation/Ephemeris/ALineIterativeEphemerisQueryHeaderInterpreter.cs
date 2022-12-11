@@ -12,11 +12,8 @@ using System.IO;
 /// <typeparam name="THeader">The type of the interpreted header.</typeparam>
 internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
 {
-    /// <inheritdoc cref="IInterpretationOptionsProvider"/>
-    private IInterpretationOptionsProvider InterpretationOptionsProvider { get; }
-
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
-    private IEphemerisInterpretationOptionsProvider EphemerisInterpretationOptionsProvider { get; }
+    private IEphemerisInterpretationOptionsProvider InterpretationOptionsProvider { get; }
 
     /// <summary>Delegates registered for invokation when the first line of the ephemeris header is encountered.</summary>
     private ICollection<Func<string, THeader, THeader>> FirstLineInterpreters { get; } = new List<Func<string, THeader, THeader>>();
@@ -26,11 +23,9 @@ internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
 
     /// <inheritdoc cref="ALineIterativeEphemerisQueryHeaderInterpreter{THeader}"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="InterpretationOptionsProvider" path="/summary"/></param>
-    /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="EphemerisInterpretationOptionsProvider" path="/summary"/></param>
-    public ALineIterativeEphemerisQueryHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider)
+    public ALineIterativeEphemerisQueryHeaderInterpreter(IEphemerisInterpretationOptionsProvider interpretationOptionsProvider)
     {
         InterpretationOptionsProvider = interpretationOptionsProvider;
-        EphemerisInterpretationOptionsProvider = ephemerisInterpretationOptionsProvider;
     }
 
     /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when the first line of the ephemeris header is encountered.</summary>
@@ -127,7 +122,7 @@ internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
     /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
     private Optional<THeader> TryInterpretFirstLine(string line, THeader header)
     {
-        if (line.StartsWith(EphemerisInterpretationOptionsProvider.EphemerisDataStart) is false)
+        if (line.StartsWith(InterpretationOptionsProvider.EphemerisDataStart) is false)
         {
             return new();
         }
@@ -160,7 +155,7 @@ internal abstract class ALineIterativeEphemerisQueryHeaderInterpreter<THeader>
 
         blockSeparatorCount += 1;
 
-        return blockSeparatorCount == EphemerisInterpretationOptionsProvider.EphemerisDataBlockCount;
+        return blockSeparatorCount == InterpretationOptionsProvider.EphemerisDataBlockCount;
     }
 
     /// <summary>Interprets a <paramref name="line"/> of the ephemeris header, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>

@@ -3,6 +3,7 @@
 using SharpHorizons.Ephemeris;
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
+using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Result;
 
@@ -40,4 +41,7 @@ public interface IEphemerisQueryHeader
 
     /// <summary>Indicates whether small perturbers were considered when executing the query.</summary>
     public abstract bool SmallPerturbers { get; }
+
+    /// <summary>Represents the <see cref="Query.ReferenceSystem"/> used in the <see cref="IQueryResult"/>.</summary>
+    public abstract ReferenceSystem ReferenceSystem { get; }
 }

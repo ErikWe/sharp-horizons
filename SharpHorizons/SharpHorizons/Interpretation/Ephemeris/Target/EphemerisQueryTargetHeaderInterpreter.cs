@@ -13,23 +13,21 @@ using System;
 internal sealed class EphemerisQueryTargetHeaderInterpreter : ALineIterativeEphemerisQueryHeaderInterpreter<EphemerisQueryTargetHeaderInterpreter.MutableTargetDataInterpretation>, IEphemerisQueryTargetHeaderInterpreter
 {
     /// <inheritdoc cref="EphemerisQueryTargetHeaderInterpreter"/>
-    /// <param name="interpretationOptionsProvider"><inheritdoc cref="IInterpretationOptionsProvider" path="/summary"/></param>
-    /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
-    /// <param name="targetInterpretationOptionsProvider"><inheritdoc cref="ITargetInterpretationOptionsProvider" path="/summary"/></param>
+    /// <param name="interpretationOptionsProvider"><inheritdoc cref="ITargetInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="targetInterpreter"><inheritdoc cref="ITargetInterpreter" path="/summary"/></param>
     /// <param name="geodeticCoordinateInterpreter"><inheritdoc cref="ITargetGeodeticCoordinateInterpreter" path="/summary"/></param>
     /// <param name="cylindricalCoordinateInterpreter"><inheritdoc cref="ITargetCylindricalCoordinateInterpreter" path="/summary"/></param>
     /// <param name="referenceEllipsoidInterpreter"><inheritdoc cref="ITargetReferenceEllipsoidInterpreter" path="/summary"/></param>
     /// <param name="radiiInterpreter"><inheritdoc cref="ITargetRadiiInterpreter" path="/summary"/></param>
-    public EphemerisQueryTargetHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, ITargetInterpretationOptionsProvider targetInterpretationOptionsProvider, ITargetInterpreter targetInterpreter,
-        ITargetGeodeticCoordinateInterpreter geodeticCoordinateInterpreter, ITargetCylindricalCoordinateInterpreter cylindricalCoordinateInterpreter, ITargetReferenceEllipsoidInterpreter referenceEllipsoidInterpreter, ITargetRadiiInterpreter radiiInterpreter)
-        : base(interpretationOptionsProvider, ephemerisInterpretationOptionsProvider)
+    public EphemerisQueryTargetHeaderInterpreter(ITargetInterpretationOptionsProvider interpretationOptionsProvider, ITargetInterpreter targetInterpreter, ITargetGeodeticCoordinateInterpreter geodeticCoordinateInterpreter,
+        ITargetCylindricalCoordinateInterpreter cylindricalCoordinateInterpreter, ITargetReferenceEllipsoidInterpreter referenceEllipsoidInterpreter, ITargetRadiiInterpreter radiiInterpreter)
+        : base(interpretationOptionsProvider)
     {
-        RegisterKeyInterpreter(targetInterpreter, targetInterpretationOptionsProvider.BodyName, static (target, interpretation) => interpretation.Target = target);
-        RegisterKeyInterpreter(geodeticCoordinateInterpreter, targetInterpretationOptionsProvider.GeodeticCoordinate, static (target, interpretation) => interpretation.GeodeticCoordinate = target);
-        RegisterKeyInterpreter(cylindricalCoordinateInterpreter, targetInterpretationOptionsProvider.CylindricalCoordinate, static (target, interpretation) => interpretation.CylindricalCoordinate = target);
-        RegisterKeyInterpreter(referenceEllipsoidInterpreter, targetInterpretationOptionsProvider.ReferenceEllipsoid, static (referenceEllipsoid, interpretation) => interpretation.ReferenceEllipsoid = referenceEllipsoid);
-        RegisterKeyInterpreter(radiiInterpreter, targetInterpretationOptionsProvider.Radii, static (radii, interpretation) => interpretation.Radii = radii);
+        RegisterKeyInterpreter(targetInterpreter, interpretationOptionsProvider.BodyName, static (target, interpretation) => interpretation.Target = target);
+        RegisterKeyInterpreter(geodeticCoordinateInterpreter, interpretationOptionsProvider.GeodeticCoordinate, static (target, interpretation) => interpretation.GeodeticCoordinate = target);
+        RegisterKeyInterpreter(cylindricalCoordinateInterpreter, interpretationOptionsProvider.CylindricalCoordinate, static (target, interpretation) => interpretation.CylindricalCoordinate = target);
+        RegisterKeyInterpreter(referenceEllipsoidInterpreter, interpretationOptionsProvider.ReferenceEllipsoid, static (referenceEllipsoid, interpretation) => interpretation.ReferenceEllipsoid = referenceEllipsoid);
+        RegisterKeyInterpreter(radiiInterpreter, interpretationOptionsProvider.Radii, static (radii, interpretation) => interpretation.Radii = radii);
     }
 
     /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when a <paramref name="key"/> is encountered.</summary>
