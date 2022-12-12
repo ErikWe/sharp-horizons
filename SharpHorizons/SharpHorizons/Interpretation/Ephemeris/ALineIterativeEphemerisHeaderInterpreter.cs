@@ -215,7 +215,7 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
                 break;
             }
 
-            var components = linesEnumerator.Current.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var components = getComponentsOfLine(linesEnumerator.Current);
 
             for (int columnIndex = 0; columnIndex < components.Length; columnIndex++)
             {
@@ -226,6 +226,16 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
         }
 
         return new(quantities, rowIndex);
+
+        static string[] getComponentsOfLine(string line)
+        {
+            if (line.Contains(','))
+            {
+                return line.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            return line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        }
     }
 
     /// <summary>Converts <paramref name="key"/> to a format suitable for comparison.</summary>
