@@ -268,19 +268,23 @@ public static class IServiceCollectionExtensions
     /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsInterpreters(this IServiceCollection services)
     {
+        services.AddSingleton<IEphemerisHeaderInterpretationProvider, EphemerisHeaderInterpretationProvider>();
+        services.AddSingleton<IEphemerisTargetHeaderInterpretationProvider, EphemerisTargetHeaderInterpretationProvider>();
+        services.AddSingleton<IEphemerisOriginHeaderInterpretationProvider, EphemerisOriginHeaderInterpretationProvider>();
+        services.AddSingleton<IVectorsHeaderInterpretationProvider, VectorsHeaderInterpretationProvider>();
+
         services.AddSingleton<IVectorsHeaderInterpreter, VectorsHeaderInterpreter>();
 
-        services.AddSingleton<IEphemerisTargetHeaderInterpreter, EphemerisTargetHeaderInterpreter>();
         services.AddSingleton<ITargetInterpreter, TargetInterpreter>();
         services.AddSingleton<ITargetGeodeticCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<ITargetCylindricalCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<ITargetReferenceEllipsoidInterpreter, ReferenceEllipsoidInterpreter>();
         services.AddSingleton<ITargetRadiiInterpreter, RadiiInterpreter>();
 
-        services.AddSingleton<IEphemerisOriginHeaderInterpreter, EphemerisOriginHeaderInterpreter>();
         services.AddSingleton<IOriginInterpreter, OriginInterpreter>();
         services.AddSingleton<IOriginGeodeticCoordinateInterpreter, CoordinateInterpreter>();
         services.AddSingleton<IOriginCylindricalCoordinateInterpreter, CoordinateInterpreter>();
+        services.AddSingleton<IOriginSiteNameInterpreter, SiteNameInterpreter>();
         services.AddSingleton<IOriginReferenceEllipsoidInterpreter, ReferenceEllipsoidInterpreter>();
         services.AddSingleton<IOriginRadiiInterpreter, RadiiInterpreter>();
 
@@ -310,7 +314,7 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IReferenceSystemInterpreter, ReferenceSystemInterpreter>();
         services.AddSingleton<IReferencePlaneInterpreter, ReferencePlaneInterpreter>();
 
-        services.AddSingleton<IOutputUnitsInterpreter, OutputUnitsInterpreter>();
+        services.AddSingleton<IVectorsOutputUnitsInterpreter, OutputUnitsInterpreter>();
 
         services.AddSingleton<IVectorCorrectionInterpreter, VectorCorrectionInterpreter>();
         services.AddSingleton<IVectorTableContentInterpreter, VectorTableContentInterpreter>();

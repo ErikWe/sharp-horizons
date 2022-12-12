@@ -4,78 +4,72 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
-using SharpHorizons.Query;
-using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Result;
-using SharpHorizons.Query.Vectors;
-using SharpHorizons.Query.Vectors.Table;
-
-using SharpMeasures;
 
 using System;
+using System.Collections.Generic;
 
 /// <inheritdoc cref="IVectorsHeaderInterpreter"/>
-internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderInterpreter<VectorsHeaderInterpreter.MutableVectorsQueryHeader>, IVectorsHeaderInterpreter
+internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderInterpreter<MutableVectorsHeader>, IVectorsHeaderInterpreter
 {
-    /// <inheritdoc cref="IEphemerisTargetHeaderInterpreter"/>
-    private IEphemerisTargetHeaderInterpreter TargetHeaderInterpreter { get; }
-
-    /// <inheritdoc cref="IEphemerisOriginHeaderInterpreter"/>
-    private IEphemerisOriginHeaderInterpreter OriginHeaderInterpreter { get; }
-
     /// <inheritdoc cref="VectorsHeaderInterpreter"/>
-    /// <param name="interpretationOptionsProvider"><inheritdoc cref="IVectorsInterpretationOptionsProvider" path="/summary"/></param>
-    /// <param name="targetHeaderInterpreter"><inheritdoc cref="TargetHeaderInterpreter" path="/summary"/></param>
-    /// <param name="originHeaderInterpreter"><inheritdoc cref="OriginHeaderInterpreter" path="/summary"/></param>
-    /// <param name="queryTimeInterpreter"><inheritdoc cref="IEphemerisQueryEpochInterpreter" path="/summary"/></param>
-    /// <param name="startEpochInterpreter"><inheritdoc cref="IEphemerisStartEpochInterpreter" path="/summary"/></param>
-    /// <param name="stopEpochInterpreter"><inheritdoc cref="IEphemerisStopEpochInterpreter" path="/summary"/></param>
-    /// <param name="timeZoneOffsetInterpreter"><inheritdoc cref="ITimeZoneOffsetInterpreter" path="/summary"/></param>
-    /// <param name="timeSystemInterpreter"><inheritdoc cref="ITimeSystemInterpreter" path="/summary"/></param>
-    /// <param name="stepSizeInterpreter"><inheritdoc cref="IEphemerisStepSizeInterpreter" path="/summary"/></param>
-    /// <param name="smallPerturbersInterpreter"><inheritdoc cref="ISmallPerturbersInterpreter" path="/summary"/></param>
-    /// <param name="outputUnitsInterpreter"><inheritdoc cref="IOutputUnitsInterpreter" path="/summary"/></param>
-    /// <param name="referenceSystemInterpreter"><inheritdoc cref="IReferenceSystemInterpreter" path="/summary"/></param>
-    /// <param name="referencePlaneInterpreter"><inheritdoc cref="IReferencePlaneInterpreter" path="/summary"/></param>
-    /// <param name="correctionInterpreter"><inheritdoc cref="IVectorCorrectionInterpreter" path="/summary"/></param>
-    /// <param name="tableContentInterpreter"><inheritdoc cref="IVectorTableContentInterpreter" path="/summary"/></param>
-    public VectorsHeaderInterpreter(IVectorsInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisTargetHeaderInterpreter targetHeaderInterpreter, IEphemerisOriginHeaderInterpreter originHeaderInterpreter, IEphemerisQueryEpochInterpreter queryTimeInterpreter, IEphemerisStartEpochInterpreter startEpochInterpreter,
-        IEphemerisStopEpochInterpreter stopEpochInterpreter, ITimeZoneOffsetInterpreter timeZoneOffsetInterpreter, ITimeSystemInterpreter timeSystemInterpreter, IEphemerisStepSizeInterpreter stepSizeInterpreter, ISmallPerturbersInterpreter smallPerturbersInterpreter, IOutputUnitsInterpreter outputUnitsInterpreter,
-        IReferenceSystemInterpreter referenceSystemInterpreter, IReferencePlaneInterpreter referencePlaneInterpreter, IVectorCorrectionInterpreter correctionInterpreter, IVectorTableContentInterpreter tableContentInterpreter)
-        : base(interpretationOptionsProvider)
+    /// <param name="interpretationOptionsProvider"><inheritdoc cref="IInterpretationOptionsProvider" path="/summary"/></param>
+    /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
+    /// <param name="targetInterpretationOptionsProvider"><inheritdoc cref="ITargetInterpretationOptionsProvider" path="/summary"/></param>
+    /// <param name="originInterpretationOptionsProvider"><inheritdoc cref="IOriginInterpretationOptionsProvider" path="/summary"/></param>
+    /// <param name="vectorsInterpretationOptionsProvider"><inheritdoc cref="IVectorsInterpretationOptionsProvider" path="/summary"/></param>
+    /// <param name="ephemerisHeaderInterpretationProvider"><inheritdoc cref="IEphemerisHeaderInterpretationProvider" path="/summary"/></param>
+    /// <param name="targetHeaderInterpretationProvider"><inheritdoc cref="IEphemerisTargetHeaderInterpretationProvider" path="/summary"/></param>
+    /// <param name="originHeaderInterpretationProvider"><inheritdoc cref="IEphemerisOriginHeaderInterpretationProvider" path="/summary"/></param>
+    /// <param name="vectorsInterpretationProvider"><inheritdoc cref="IVectorsHeaderInterpretationProvider" path="/summary"/></param>
+    public VectorsHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, ITargetInterpretationOptionsProvider targetInterpretationOptionsProvider, IOriginInterpretationOptionsProvider originInterpretationOptionsProvider,
+        IVectorsInterpretationOptionsProvider vectorsInterpretationOptionsProvider, IEphemerisHeaderInterpretationProvider ephemerisHeaderInterpretationProvider, IEphemerisTargetHeaderInterpretationProvider targetHeaderInterpretationProvider,
+        IEphemerisOriginHeaderInterpretationProvider originHeaderInterpretationProvider, IVectorsHeaderInterpretationProvider vectorsInterpretationProvider)
+        : base(interpretationOptionsProvider, ephemerisInterpretationOptionsProvider)
     {
-        TargetHeaderInterpreter = targetHeaderInterpreter;
-        OriginHeaderInterpreter = originHeaderInterpreter;
+        RegisterFirstLineInterpreter(ephemerisHeaderInterpretationProvider.QueryEpochInterpreter, (queryTime, header) => header.QueryEpoch = queryTime);
 
-        RegisterFirstLineInterpreter(queryTimeInterpreter, (queryTime, header) => header.QueryTime = queryTime);
-        RegisterKeyInterpreter(startEpochInterpreter, interpretationOptionsProvider.StartEpoch, (startEpoch, header) => header.StartEpoch = startEpoch);
-        RegisterKeyInterpreter(stopEpochInterpreter, interpretationOptionsProvider.StopEpoch, (stopEpoch, header) => header.StopEpoch = stopEpoch);
-        RegisterKeyInterpreter(timeZoneOffsetInterpreter, interpretationOptionsProvider.StartEpoch, (timeZoneOffset, header) => header.TimeZoneOffset = timeZoneOffset);
-        RegisterKeyInterpreter(timeSystemInterpreter, interpretationOptionsProvider.StartEpoch, (timeSystem, header) => header.TimeSystem = timeSystem);
-        RegisterKeyInterpreter(stepSizeInterpreter, interpretationOptionsProvider.StepSize, (stepSize, header) => header.StepSize = stepSize);
+        RegisterKeyInterpreter(targetHeaderInterpretationProvider.TargetInterpreter, targetInterpretationOptionsProvider.BodyName, (target, header) => header.TargetHeader.Target = target);
+        RegisterKeyInterpreter(targetHeaderInterpretationProvider.GeodeticCoordinateInterpreter, targetInterpretationOptionsProvider.GeodeticCoordinate, static (coordinate, interpretation) => interpretation.TargetHeader.GeodeticCoordinate = coordinate);
+        RegisterKeyInterpreter(targetHeaderInterpretationProvider.CylindricalCoordinateInterpreter, targetInterpretationOptionsProvider.CylindricalCoordinate, static (coordinate, interpretation) => interpretation.TargetHeader.CylindricalCoordinate = coordinate);
+        RegisterKeyInterpreter(targetHeaderInterpretationProvider.ReferenceEllipsoidInterpreter, targetInterpretationOptionsProvider.ReferenceEllipsoid, static (referenceEllipsoid, interpretation) => interpretation.TargetHeader.ReferenceEllipsoid = referenceEllipsoid);
+        RegisterKeyInterpreter(targetHeaderInterpretationProvider.RadiiInterpreter, targetInterpretationOptionsProvider.Radii, static (radii, interpretation) => interpretation.TargetHeader.Radii = radii);
 
-        foreach (var smallPerturbersKey in interpretationOptionsProvider.SmallPerturbers)
+        RegisterKeyInterpreter(originHeaderInterpretationProvider.OriginInterpreter, originInterpretationOptionsProvider.BodyName, (origin, header) => header.OriginHeader.Origin = origin);
+        RegisterKeyInterpreter(originHeaderInterpretationProvider.GeodeticCoordinateInterpreter, originInterpretationOptionsProvider.GeodeticCoordinate, static (coordinate, interpretation) => interpretation.OriginHeader.GeodeticCoordinate = coordinate);
+        RegisterKeyInterpreter(originHeaderInterpretationProvider.CylindricalCoordinateInterpreter, originInterpretationOptionsProvider.CylindricalCoordinate, static (coordinate, interpretation) => interpretation.OriginHeader.CylindricalCoordinate = coordinate);
+        RegisterKeyInterpreter(originHeaderInterpretationProvider.SiteNameInterpreter, originInterpretationOptionsProvider.SiteName, static (siteName, header) => header.OriginHeader.SiteName = siteName);
+        RegisterKeyInterpreter(originHeaderInterpretationProvider.ReferenceEllipsoidInterpreter, originInterpretationOptionsProvider.ReferenceEllipsoid, static (referenceEllipsoid, interpretation) => interpretation.OriginHeader.ReferenceEllipsoid = referenceEllipsoid);
+        RegisterKeyInterpreter(originHeaderInterpretationProvider.RadiiInterpreter, originInterpretationOptionsProvider.Radii, static (radii, interpretation) => interpretation.OriginHeader.Radii = radii);
+
+        RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.StartEpochInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (startEpoch, header) => header.StartEpoch = startEpoch);
+        RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.StopEpochInterpreter, ephemerisInterpretationOptionsProvider.StopEpoch, (stopEpoch, header) => header.StopEpoch = stopEpoch);
+        RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.TimeZoneOffsetInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (timeZoneOffset, header) => header.TimeZoneOffset = timeZoneOffset);
+        RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.TimeSystemInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (timeSystem, header) => header.TimeSystem = timeSystem);
+        RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.StepSizeInterpreter, ephemerisInterpretationOptionsProvider.StepSize, (stepSize, header) => header.StepSize = stepSize);
+
+        foreach (var smallPerturbersKey in ephemerisInterpretationOptionsProvider.SmallPerturbers)
         {
-            RegisterKeyInterpreter(smallPerturbersInterpreter, smallPerturbersKey, (smallPerturbers, header) => header.SmallPerturbers = smallPerturbers);
+            RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.SmallPerturbersInterpreter, smallPerturbersKey, (smallPerturbers, header) => header.SmallPerturbers = smallPerturbers);
         }
 
-        RegisterKeyInterpreter(referenceSystemInterpreter, interpretationOptionsProvider.ReferenceSystem, (referenceSystem, header) => header.ReferenceSystem = referenceSystem);
-        RegisterKeyInterpreter(referencePlaneInterpreter, interpretationOptionsProvider.ReferencePlane, (referencePlane, header) => header.ReferencePlane = referencePlane);
+        RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.ReferenceSystemInterpreter, ephemerisInterpretationOptionsProvider.ReferenceSystem, (referenceSystem, header) => header.ReferenceSystem = referenceSystem);
+        RegisterKeyInterpreter(vectorsInterpretationProvider.ReferencePlaneInterpreter, vectorsInterpretationOptionsProvider.ReferencePlane, (referencePlane, header) => header.ReferencePlane = referencePlane);
 
-        RegisterKeyInterpreter(outputUnitsInterpreter, interpretationOptionsProvider.OutputUnits, (outputUnits, header) => header.OutputUnits = outputUnits);
-        RegisterKeyInterpreter(correctionInterpreter, interpretationOptionsProvider.VectorCorrection, (correction, header) => header.Correction = correction);
-        RegisterKeyInterpreter(tableContentInterpreter, interpretationOptionsProvider.VectorTableContent, (tableContent, header) => header.TableContent = tableContent);
+        RegisterKeyInterpreter(vectorsInterpretationProvider.OutputUnitsInterpreter, vectorsInterpretationOptionsProvider.OutputUnits, (outputUnits, header) => header.OutputUnits = outputUnits);
+        RegisterKeyInterpreter(vectorsInterpretationProvider.CorrectionInterpreter, vectorsInterpretationOptionsProvider.VectorCorrection, (correction, header) => header.Correction = correction);
+        RegisterKeyInterpreter(vectorsInterpretationProvider.TableContentInterpreter, vectorsInterpretationOptionsProvider.VectorTableContent, (tableContent, header) => header.TableContent = tableContent);
     }
 
     /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when the first line of the ephemeris is encountered.</summary>
     /// <typeparam name="TInterpretation">The type of the result interpreted by the <paramref name="interpreter"/>.</typeparam>
     /// <param name="interpreter">This <see cref="IInterpreter{TInterpretation}"/> is registered for invokation when the first line of the ephemeris is encounterd.</param>
     /// <param name="setter">Delegate for applying the result of the <paramref name="interpreter"/>.</param>
-    private void RegisterFirstLineInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, Action<TInterpretation, MutableVectorsQueryHeader> setter)
+    private void RegisterFirstLineInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, Action<TInterpretation, MutableVectorsHeader> setter)
     {
         RegisterFirstLineInterpreter(interpreter, wrapper);
 
-        MutableVectorsQueryHeader wrapper(TInterpretation interpretation, MutableVectorsQueryHeader header)
+        MutableVectorsHeader wrapper(TInterpretation interpretation, MutableVectorsHeader header)
         {
             setter(interpretation, header);
 
@@ -88,11 +82,11 @@ internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderIn
     /// <param name="interpreter">This <see cref="IInterpreter{TInterpretation}"/> is registered for invokation when a <paramref name="key"/> is encounterd.</param>
     /// <param name="key">The key which, when encountered, results in the <paramref name="interpreter"/> being invoked.</param>
     /// <param name="setter">Delegate for applying the result of the <paramref name="interpreter"/>.</param>
-    private void RegisterKeyInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, string key, Action<TInterpretation, MutableVectorsQueryHeader> setter)
+    private void RegisterKeyInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, string key, Action<TInterpretation, MutableVectorsHeader> setter)
     {
         RegisterKeyInterpreter(interpreter, key, wrapper);
 
-        MutableVectorsQueryHeader wrapper(TInterpretation interpretation, MutableVectorsQueryHeader header)
+        MutableVectorsHeader wrapper(TInterpretation interpretation, MutableVectorsHeader header)
         {
             setter(interpretation, header);
 
@@ -100,17 +94,16 @@ internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderIn
         }
     }
 
-    protected override Optional<MutableVectorsQueryHeader> ConstructHeader(IQueryResult queryResult)
-    {
-        if (TargetHeaderInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var target } || OriginHeaderInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var origin })
-        {
-            return new();
-        }
+    protected override Optional<MutableVectorsHeader> ConstructHeader(IQueryResult queryResult) => new MutableVectorsHeader();
 
-        return new MutableVectorsQueryHeader(target, origin);
+    protected override MutableVectorsHeader SetQuantities(MutableVectorsHeader header, EphemerisQuantities quantities)
+    {
+        header.Quantities = quantities;
+
+        return header;
     }
 
-    protected override bool ValidateHeader(MutableVectorsQueryHeader header) => header.QueryTime is not null && header.StartEpoch is not null && header.StopEpoch is not null;
+    protected override bool ValidateHeader(MutableVectorsHeader header) => header.QueryEpoch is not null && header.StartEpoch is not null && header.StopEpoch is not null;
 
     Optional<IVectorsHeader> IInterpreter<IVectorsHeader>.Interpret(IQueryResult queryResult)
     {
@@ -122,38 +115,5 @@ internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderIn
         }
 
         return interpretation;
-    }
-
-    /// <summary>A mutable <see cref="IVectorsHeader"/>.</summary>
-    public sealed class MutableVectorsQueryHeader : IVectorsHeader
-    {
-        public IEpoch QueryTime { get; set; } = null!;
-        
-        public IEphemerisTargetHeader TargetHeader { get; }
-        public IEphemerisOriginHeader OriginHeader { get; }
-
-        public IEpoch StartEpoch { get; set; } = null!;
-        public IEpoch StopEpoch { get; set; } = null!;
-        public IStepSize? StepSize { get; set; }
-
-        public TimeSystem TimeSystem { get; set; }
-        public Time TimeZoneOffset { get; set; }
-
-        public bool SmallPerturbers { get; set; }
-
-        public OutputUnits OutputUnits { get; set; }
-        public VectorCorrection Correction { get; set; }
-        public VectorTableContent TableContent { get; set; }
-        public ReferencePlane ReferencePlane { get; set; }
-        public ReferenceSystem ReferenceSystem { get; set; }
-
-        /// <inheritdoc cref="MutableVectorsQueryHeader"/>
-        /// <param name="targetHeader"><inheritdoc cref="TargetHeader" path="/summary"/></param>
-        /// <param name="originHeader"><inheritdoc cref="OriginHeader" path="/summary"/></param>
-        public MutableVectorsQueryHeader(IEphemerisTargetHeader targetHeader, IEphemerisOriginHeader originHeader)
-        {
-            TargetHeader = targetHeader;
-            OriginHeader = originHeader;
-        }
     }
 }

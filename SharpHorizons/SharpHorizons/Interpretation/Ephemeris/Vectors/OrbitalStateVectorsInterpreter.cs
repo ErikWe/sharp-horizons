@@ -20,7 +20,7 @@ internal sealed class OrbitalStateVectorsInterpreter : IOrbitalStateVectorsInter
 
     Optional<IOrbitalStateVectorsEphemeris> IInterpreter<IOrbitalStateVectorsEphemeris>.Interpret(IQueryResult queryResult)
     {
-        var _ = HeaderInterpreter.Interpret(queryResult);
+        var header = HeaderInterpreter.Interpret(queryResult);
 
         throw new System.Exception();
     }

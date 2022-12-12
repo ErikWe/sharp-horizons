@@ -4,17 +4,11 @@ using SharpHorizons.Query.Target;
 
 using SharpMeasures.Astronomy;
 
-using System.Diagnostics.CodeAnalysis;
-
-/// <summary>Represents the <see cref="ITarget"/>-related properties of a <see cref="IEphemerisHeader"/>.</summary>
+/// <summary>Represents the <see cref="ITarget"/>-related properties of an <see cref="IEphemerisHeader"/>.</summary>
 public interface IEphemerisTargetHeader
 {
     /// <summary>The <see cref="ITarget"/> of the query, or the object relative to which the <see cref="ITarget"/> is expressed.</summary>
     public abstract ITarget Target { get; }
-
-    /// <summary>Indicates whether the center of <see cref="Target"/> represented the <see cref="ITarget"/> in the query, rather than <see cref="GeodeticCoordinate"/> and <see cref="CylindricalCoordinate"/>.</summary>
-    [MemberNotNullWhen(false, nameof(GeodeticCoordinate), nameof(CylindricalCoordinate))]
-    public virtual bool Geocentric => CylindricalCoordinate is null;
 
     /// <summary>The <see cref="SharpMeasures.Astronomy.GeodeticCoordinate"/>, relative to <see cref="Target"/>, describing the <see cref="ITarget"/> of the query - or <see langword="null"/> if no coordinate was used.</summary>
     public abstract GeodeticCoordinate? GeodeticCoordinate { get; }

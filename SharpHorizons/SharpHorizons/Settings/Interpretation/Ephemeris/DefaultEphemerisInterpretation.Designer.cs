@@ -142,14 +142,5 @@ namespace SharpHorizons.Settings.Interpretation.Ephemeris {
                 return ((string)(this["ReferenceSystem"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Reference frame")]
-        public string ReferencePlane {
-            get {
-                return ((string)(this["ReferencePlane"]));
-            }
-        }
     }
 }

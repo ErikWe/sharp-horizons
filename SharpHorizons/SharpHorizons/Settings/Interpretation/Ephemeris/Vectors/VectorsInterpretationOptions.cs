@@ -19,6 +19,9 @@ internal sealed class VectorsInterpretationOptions
     /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.Vectors.Table.VectorTableContent"/>.</summary>
     public string VectorTableContent { get; set; } = null!;
 
+    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.ReferencePlane"/>.</summary>
+    public string ReferencePlane { get; set; } = null!;
+
     /// <summary>Applies the default values to <paramref name="options"/>.</summary>
     /// <param name="options">The default values are applied to these <see cref="VectorsInterpretationOptions"/>.</param>
     public static void ApplyDefaults(VectorsInterpretationOptions options)
@@ -26,5 +29,6 @@ internal sealed class VectorsInterpretationOptions
         options.OutputUnits = DefaultVectorsInterpretation.Default.OutputUnits;
         options.VectorCorrection = DefaultVectorsInterpretation.Default.VectorCorrection;
         options.VectorTableContent = DefaultVectorsInterpretation.Default.VectorTableContent;
+        options.ReferencePlane = DefaultVectorsInterpretation.Default.ReferencePlane;
     }
 }

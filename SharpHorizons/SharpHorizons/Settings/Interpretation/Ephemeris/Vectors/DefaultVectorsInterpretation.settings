@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Interpretation.Ephemeris.Vectors" GeneratedClassName="DefaultVectorsInterpretation">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Settings.Interpretation.Ephemeris.Vectors" GeneratedClassName="DefaultVectorsInterpretation">
   <Profiles />
   <Settings>
     <Setting Name="OutputUnits" Type="System.String" Scope="Application">

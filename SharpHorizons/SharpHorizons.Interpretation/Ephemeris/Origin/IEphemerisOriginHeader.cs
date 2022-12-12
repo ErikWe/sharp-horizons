@@ -4,7 +4,7 @@ using SharpHorizons.Query.Origin;
 
 using SharpMeasures.Astronomy;
 
-/// <summary>Represents the <see cref="IOrigin"/>-related properties of a <see cref="IEphemerisHeader"/>.</summary>
+/// <summary>Represents the <see cref="IOrigin"/>-related properties of an <see cref="IEphemerisHeader"/>.</summary>
 public interface IEphemerisOriginHeader
 {
     /// <summary>The <see cref="IOrigin"/> of the query, or the object relative to which the <see cref="IOrigin"/> is expressed.</summary>

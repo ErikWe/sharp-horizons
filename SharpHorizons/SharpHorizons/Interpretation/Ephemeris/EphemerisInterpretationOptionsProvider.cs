@@ -12,23 +12,12 @@ internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpr
     /// <inheritdoc cref="EphemerisInterpretationOptions"/>
     private EphemerisInterpretationOptions Options { get; }
 
-    /// <inheritdoc cref="IInterpretationOptionsProvider"/>
-    private IInterpretationOptionsProvider InterpretationOptionsProvider { get; }
-
     /// <inheritdoc cref="EphemerisInterpretationOptionsProvider"/>
     /// <param name="options"><inheritdoc cref="Options" path="/summary"/></param>
-    /// <param name="interpretationOptionsProvider"><inheritdoc cref="InterpretationOptionsProvider" path="/summary"/></param>
-    public EphemerisInterpretationOptionsProvider(IOptions<EphemerisInterpretationOptions> options, IInterpretationOptionsProvider interpretationOptionsProvider)
+    public EphemerisInterpretationOptionsProvider(IOptions<EphemerisInterpretationOptions> options)
     {
         Options = options.Value;
-        InterpretationOptionsProvider = interpretationOptionsProvider;
     }
-
-    string IInterpretationOptionsProvider.HorizonsTimeZoneID => InterpretationOptionsProvider.HorizonsTimeZoneID;
-    string IInterpretationOptionsProvider.RawTextSource => InterpretationOptionsProvider.RawTextSource;
-    string IInterpretationOptionsProvider.RawTextVersion => InterpretationOptionsProvider.RawTextVersion;
-    string IInterpretationOptionsProvider.BlockSeparator => InterpretationOptionsProvider.BlockSeparator;
-    string IInterpretationOptionsProvider.UnavailableText => InterpretationOptionsProvider.UnavailableText;
 
     string IEphemerisInterpretationOptionsProvider.EphemerisDataStart => Options.EphemerisDataStart;
     int IEphemerisInterpretationOptionsProvider.EphemerisDataBlockCount => Options.EphemerisDataBlockCount;
@@ -43,5 +32,4 @@ internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpr
     string IEphemerisInterpretationOptionsProvider.StepSize => Options.StepSize;
     IEnumerable<string> IEphemerisInterpretationOptionsProvider.SmallPerturbers => Options.SmallPerturbers;
     string IEphemerisInterpretationOptionsProvider.ReferenceSystem => Options.ReferenceSystem;
-    string IEphemerisInterpretationOptionsProvider.ReferencePlane => Options.ReferencePlane;
 }

@@ -9,11 +9,11 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
-/// <summary>Represents the header of the <see cref="IQueryResult"/> of a ephemeris query.</summary>
+/// <summary>Represents the header of the <see cref="IQueryResult"/> of an ephemeris query.</summary>
 public interface IEphemerisHeader
 {
     /// <summary>The <see cref="IEpoch"/> when the query was executed by Horizons.</summary>
-    public abstract IEpoch QueryTime { get; }
+    public abstract IEpoch QueryEpoch { get; }
 
     /// <inheritdoc cref="IEphemerisTargetHeader"/>
     public abstract IEphemerisTargetHeader TargetHeader { get; }
@@ -44,4 +44,7 @@ public interface IEphemerisHeader
 
     /// <summary>Represents the <see cref="Query.ReferenceSystem"/> used in the <see cref="IQueryResult"/>.</summary>
     public abstract ReferenceSystem ReferenceSystem { get; }
+
+    /// <inheritdoc cref="EphemerisQuantities"/>
+    public abstract EphemerisQuantities Quantities { get; }
 }

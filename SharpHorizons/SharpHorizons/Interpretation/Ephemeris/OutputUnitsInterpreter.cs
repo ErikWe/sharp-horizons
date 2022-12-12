@@ -1,11 +1,11 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris;
 
 using Microsoft.CodeAnalysis;
-
+using SharpHorizons.Interpretation.Ephemeris.Vectors;
 using SharpHorizons.Query;
 
-/// <inheritdoc cref="IOutputUnitsInterpreter"/>
-internal sealed class OutputUnitsInterpreter : IOutputUnitsInterpreter
+/// <inheritdoc cref="IVectorsOutputUnitsInterpreter"/>
+internal sealed class OutputUnitsInterpreter : IVectorsOutputUnitsInterpreter
 {
     Optional<OutputUnits> IPartInterpreter<OutputUnits>.Interpret(string queryPart)
     {

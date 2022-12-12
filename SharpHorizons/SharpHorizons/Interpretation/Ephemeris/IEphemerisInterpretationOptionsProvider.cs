@@ -5,7 +5,7 @@ using SharpHorizons.Settings.Interpretation.Ephemeris;
 using System.Collections.Generic;
 
 /// <summary>Provides options for how the result of an ephemeris query is interpreted.</summary>
-public interface IEphemerisInterpretationOptionsProvider : IInterpretationOptionsProvider
+public interface IEphemerisInterpretationOptionsProvider
 {
     /// <inheritdoc cref="EphemerisInterpretationOptions.EphemerisDataStart"/>
     public abstract string EphemerisDataStart { get; }
@@ -45,7 +45,4 @@ public interface IEphemerisInterpretationOptionsProvider : IInterpretationOption
 
     /// <inheritdoc cref="EphemerisInterpretationOptions.ReferenceSystem"/>
     public abstract string ReferenceSystem { get; }
-
-    /// <inheritdoc cref="EphemerisInterpretationOptions.ReferencePlane"/>
-    public abstract string ReferencePlane { get; }
 }

@@ -3,7 +3,7 @@
 using SharpHorizons.Settings.Interpretation.Ephemeris.Target;
 
 /// <summary>Provides options for how the <see cref="IEphemerisTargetHeader"/> is interpreted.</summary>
-public interface ITargetInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider
+public interface ITargetInterpretationOptionsProvider
 {
     /// <inheritdoc cref="TargetInterpretationOptions.BodyName"/>
     public abstract string BodyName { get; }

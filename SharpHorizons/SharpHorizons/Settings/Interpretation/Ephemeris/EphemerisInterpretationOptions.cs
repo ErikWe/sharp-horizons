@@ -55,9 +55,6 @@ internal sealed class EphemerisInterpretationOptions
     /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.ReferenceSystem"/>.</summary>
     public string ReferenceSystem { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.ReferencePlane"/>.</summary>
-    public string ReferencePlane { get; set; } = null!;
-
     /// <summary>Applies the default values to <paramref name="options"/>.</summary>
     /// <param name="options">The default values are applied to these <see cref="EphemerisInterpretationOptions"/>.</param>
     public static void ApplyDefaults(EphemerisInterpretationOptions options)
@@ -80,7 +77,6 @@ internal sealed class EphemerisInterpretationOptions
         options.SmallPerturbers = WrapStringCollection(DefaultEphemerisInterpretation.Default.SmallPerturbers);
 
         options.ReferenceSystem = DefaultEphemerisInterpretation.Default.ReferenceSystem;
-        options.ReferencePlane = DefaultEphemerisInterpretation.Default.ReferencePlane;
     }
 
     /// <summary>Wraps a <see cref="StringCollection"/>, <paramref name="collection"/>, as an <see cref="IEnumerable{T}"/> of <see cref="string"/>.</summary>
