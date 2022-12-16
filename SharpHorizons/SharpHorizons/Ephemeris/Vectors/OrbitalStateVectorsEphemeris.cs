@@ -6,8 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-/// <inheritdoc cref="IOrbitalStateVectorsEphemeris"/>
-internal sealed record class OrbitalStateVectorsEphemeris : IOrbitalStateVectorsEphemeris
+/// <summary>Represents an <see cref="IEphemeris{TEntry}"/> of the <see cref="IOrbitalStateVectors"/> of an object.</summary>
+internal sealed record class OrbitalStateVectorsEphemeris : IEphemeris<IOrbitalStateVectors>
 {
     /// <summary>Constucts a <see cref="OrbitalStateVectorsEphemeris"/>, representing <paramref name="ephemeris"/>.</summary>
     /// <param name="ephemeris"><inheritdoc cref="Ephemeris" path="/summary"/></param>

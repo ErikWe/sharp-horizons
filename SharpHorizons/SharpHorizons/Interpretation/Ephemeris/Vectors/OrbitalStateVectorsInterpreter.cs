@@ -2,8 +2,8 @@
 
 using Microsoft.CodeAnalysis;
 
+using SharpHorizons.Ephemeris;
 using SharpHorizons.Ephemeris.Vectors;
-using SharpHorizons.Interpretation.Ephemeris;
 using SharpHorizons.Query.Result;
 
 using System;
@@ -35,7 +35,7 @@ internal sealed class OrbitalStateVectorsInterpreter : AEphemerisInterpreter<Mut
 
     protected override bool ValidateEntry(MutableOrbitalStateVectors entry) => MutableOrbitalStateVectors.Validate(entry);
 
-    Optional<IOrbitalStateVectorsEphemeris> IInterpreter<IOrbitalStateVectorsEphemeris>.Interpret(IQueryResult queryResult)
+    Optional<IEphemeris<IOrbitalStateVectors>> IInterpreter<IEphemeris<IOrbitalStateVectors>>.Interpret(IQueryResult queryResult)
     {
         if (HeaderInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var header })
         {
