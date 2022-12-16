@@ -15,13 +15,20 @@ public readonly record struct HorizonsQueryString
     {
         get
         {
-            Validate();
+            try
+            {
+                ArgumentException.ThrowIfNullOrEmpty(valueField);
+            }
+            catch (ArgumentException e)
+            {
+                throw InvalidOperationExceptionFactory.InvalidState<HorizonsQueryString>(e);
+            }
 
-            return valueField!;
+            return valueField;
         }
         init
         {
-            Validate(value);
+            ArgumentException.ThrowIfNullOrEmpty(value);
 
             valueField = value;
         }
@@ -54,41 +61,29 @@ public readonly record struct HorizonsQueryString
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(HorizonsQueryString queryString)
     {
-        Validate(queryString);
-
-        return queryString.valueField!;
-    }
-
-    /// <summary>Validates that <paramref name="value"/> can be used to represent the value of a <see cref="HorizonsQueryString"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    private static void Validate(string? value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null) => ArgumentException.ThrowIfNullOrEmpty(value, argumentExpression);
-
-    /// <summary>Validates the <see cref="HorizonsQueryString"/> <paramref name="queryString"/>, and throws an <see cref="Exception"/> of type <typeparamref name="TException"/> if invalid.</summary>
-    /// <typeparam name="TException">The type of the <see cref="Exception"/> that is thrown if <paramref name="queryString"/> is invalid.</typeparam>
-    /// <param name="queryString">This <see cref="HorizonsQueryString"/> is validated.</param>
-    /// <param name="exceptionInstantiation">Handles instantiation of <typeparamref name="TException"/>.</param>
-    private static void Validate<TException>(HorizonsQueryString queryString, ExceptionInstantiation<TException> exceptionInstantiation) where TException : Exception
-    {
         try
         {
-            Validate(queryString.valueField);
+            return queryString.Value;
         }
-        catch (ArgumentException e)
+        catch (InvalidOperationException e)
         {
-            throw exceptionInstantiation(e);
+            throw ArgumentExceptionFactory.InvalidState<HorizonsQueryString>(nameof(queryString), e);
         }
     }
-
-    /// <summary>Validates the <see cref="HorizonsQueryString"/>, and throws an <see cref="InvalidOperationException"/> if invalid.</summary>
-    /// <exception cref="InvalidOperationException"/>
-    private void Validate() => Validate(this, InvalidOperationExceptionFactory.InvalidState<HorizonsQueryString>);
 
     /// <summary>Validates the <see cref="HorizonsQueryString"/> <paramref name="queryString"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="queryString">This <see cref="HorizonsQueryString"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="queryString"/>.</param>
     /// <exception cref="ArgumentException"/>
-    public static void Validate(HorizonsQueryString queryString, [CallerArgumentExpression(nameof(queryString))] string? argumentExpression = null) => Validate(queryString, ArgumentExceptionFactory.InvalidStateDelegate<HorizonsQueryString>(argumentExpression));
+    public static void Validate(HorizonsQueryString queryString, [CallerArgumentExpression(nameof(queryString))] string? argumentExpression = null)
+    {
+        try
+        {
+            _ = queryString.Value;
+        }
+        catch (InvalidOperationException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<HorizonsQueryString>(argumentExpression, e);
+        }
+    }
 }

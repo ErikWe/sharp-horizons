@@ -19,8 +19,6 @@ internal sealed class VectorTableContentValidator : IVectorTableContentValidator
 
     void IVectorTableContentValidator.ThrowIfUnsupported(VectorTableContent content, string? argumentExpression)
     {
-        VectorTableContent.Validate(content, argumentExpression);
-
         try
         {
             TableQuantitiesValidator.ThrowIfUnsupported(content.Quantities);
@@ -52,6 +50,6 @@ internal sealed class VectorTableContentValidator : IVectorTableContentValidator
             return true;
         }
 
-        return tableContent.Quantities is VectorTableQuantities.Position or VectorTableQuantities.StateVectors; 
+        return tableContent.Quantities is VectorTableQuantities.Position or VectorTableQuantities.StateVectors;
     }
 }

@@ -7,10 +7,11 @@ using SharpHorizons.Query.Result;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 /// <summary>Handles iterative interpretation of the lines of an <see cref="IEphemerisHeader"/>.</summary>
 /// <typeparam name="THeader">The type of the interpreted <see cref="IEphemerisHeader"/>.</typeparam>
-internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where THeader : IEphemerisHeader
+internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEphemerisHeader
 {
     /// <inheritdoc cref="IInterpretationOptionsProvider"/>
     private IInterpretationOptionsProvider InterpretationOptionsProvider { get; }
@@ -24,10 +25,10 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
     /// <summary>Delegates registered for invokation when some <see cref="string"/> key is encountered.</summary>
     private Dictionary<string, ICollection<Func<string, THeader, THeader>>> KeyInterpreters { get; } = new();
 
-    /// <inheritdoc cref="ALineIterativeEphemerisHeaderInterpreter{THeader}"/>
+    /// <inheritdoc cref="AEphemerisHeaderInterpreter{THeader}"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="InterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="EphemerisInterpretationOptionsProvider" path="/summary"/></param>
-    public ALineIterativeEphemerisHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider)
+    public AEphemerisHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider)
     {
         InterpretationOptionsProvider = interpretationOptionsProvider;
         EphemerisInterpretationOptionsProvider = ephemerisInterpretationOptionsProvider;
@@ -43,12 +44,12 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
 
         THeader wrapper(string line, THeader header)
         {
-            if (interpreter.Interpret(line) is not { HasValue: true } optionalHeader)
+            if (interpreter.Interpret(line) is not { HasValue: true } optionalInterpretation)
             {
                 return header;
             }
 
-            return setter(optionalHeader.Value, header);
+            return setter(optionalInterpretation.Value, header);
         }
     }
 
@@ -72,12 +73,12 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
 
         THeader wrapper(string line, THeader header)
         {
-            if (interpreter.Interpret(line) is not { HasValue: true } optionalHeader)
+            if (interpreter.Interpret(line) is not { HasValue: true } optionalInterpretation)
             {
                 return header;
             }
 
-            return setter(optionalHeader.Value, header);
+            return setter(optionalInterpretation.Value, header);
         }
     }
 
@@ -102,7 +103,7 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
             }
         }
 
-        int blockSeparatorCount = 0;
+        var blockSeparatorCount = 0;
 
         while (linesEnumerator.MoveNext())
         {
@@ -125,6 +126,19 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
 
         return header;
     }
+
+    /// <summary>Attempts to construct a <typeparamref name="THeader"/>.</summary>
+    /// <param name="queryResult">The <see cref="IQueryResult"/> which the constructed <typeparamref name="THeader"/> will describe.</param>
+    protected abstract Optional<THeader> ConstructHeader(IQueryResult queryResult);
+
+    /// <summary>Sets the <see cref="IEphemerisHeader.Quantities"/> of the <paramref name="header"/> to <paramref name="quantities"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
+    /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
+    /// <param name="quantities">The <see cref="IEphemerisHeader.Quantities"/> of the <paramref name="header"/> is set to this <see cref="EphemerisQuantityTable"/>.</param>
+    protected abstract THeader SetQuantities(THeader header, EphemerisQuantityTable quantities);
+
+    /// <summary>Checks that <paramref name="header"/> represents a valid <typeparamref name="THeader"/>.</summary>
+    /// <param name="header">This <typeparamref name="THeader"/> is validated.</param>
+    protected virtual bool ValidateHeader(THeader header) => true;
 
     /// <summary>Attempts to interpret the first <paramref name="line"/> of the <see cref="IEphemerisHeader"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
     /// <param name="line">A line of the <see cref="IQueryResult"/>, which is interpreted as the first line of the <see cref="IEphemerisHeader"/>, if possible.</param>
@@ -199,14 +213,13 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
         return header;
     }
 
-
-    /// <summary>Interprets the <see cref="EphemerisQuantities"/> from <paramref name="linesEnumerator"/>.</summary>
+    /// <summary>Interprets the <see cref="EphemerisQuantityTable"/> from <paramref name="linesEnumerator"/>.</summary>
     /// <param name="linesEnumerator">Used to iterate the lines of the <see cref="IEphemerisHeader"/>.</param>
-    private EphemerisQuantities InterpretEphemerisQuantities(IEnumerator<string> linesEnumerator)
+    private EphemerisQuantityTable InterpretEphemerisQuantities(IEnumerator<string> linesEnumerator)
     {
-        Dictionary<(int, int), string> quantities = new();
+        Dictionary<EphemerisQuantityTableIndex, EphemerisQuantityIdentifier> quantities = new();
 
-        int rowIndex = 0;
+        var rowIndex = 0;
 
         while (linesEnumerator.MoveNext())
         {
@@ -215,11 +228,13 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
                 break;
             }
 
-            var components = getComponentsOfLine(linesEnumerator.Current);
+            var columnIndex = 0;
 
-            for (int columnIndex = 0; columnIndex < components.Length; columnIndex++)
+            foreach (var component in getComponentsOfLine(linesEnumerator.Current))
             {
-                quantities[(rowIndex, columnIndex)] = components[columnIndex];
+                quantities[new EphemerisQuantityTableIndex(rowIndex, columnIndex)] = new EphemerisQuantityIdentifier(component.Replace("_", string.Empty).Trim(), component.Length);
+
+                columnIndex += 1;
             }
 
             rowIndex += 1;
@@ -227,14 +242,54 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
 
         return new(quantities, rowIndex);
 
-        static string[] getComponentsOfLine(string line)
+        static IEnumerable<string> getComponentsOfLine(string line)
         {
-            if (line.Contains(','))
+            StringBuilder component = new();
+
+            var lastCharacterWasWhiteSpaceOrComma = true;
+
+            foreach (var character in line)
             {
-                return line.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                if (lastCharacterWasWhiteSpaceOrComma)
+                {
+                    append(character);
+
+                    if (character is not (' ' or ',' or ':'))
+                    {
+                        lastCharacterWasWhiteSpaceOrComma = false;
+                    }
+
+                    continue;
+                }
+
+                if (character is ' ' or ',' or ':')
+                {
+                    yield return component.ToString();
+
+                    component.Clear();
+
+                    lastCharacterWasWhiteSpaceOrComma = true;
+                }
+
+                append(character);
             }
 
-            return line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (component.Length > 0 && lastCharacterWasWhiteSpaceOrComma is false)
+            {
+                yield return component.ToString();
+            }
+
+            void append(char character)
+            {
+                if (character is ',' or ':')
+                {
+                    component.Append(' ');
+
+                    return;
+                }
+
+                component.Append(character);
+            }
         }
     }
 
@@ -253,17 +308,4 @@ internal abstract class ALineIterativeEphemerisHeaderInterpreter<THeader> where 
             yield return line;
         }
     }
-
-    /// <summary>Attempts to construct a <typeparamref name="THeader"/>.</summary>
-    /// <param name="queryResult">The <see cref="IQueryResult"/> which the constructed <typeparamref name="THeader"/> will describe.</param>
-    protected abstract Optional<THeader> ConstructHeader(IQueryResult queryResult);
-
-    /// <summary>Sets the <see cref="IEphemerisHeader.Quantities"/> of the <paramref name="header"/> to <paramref name="quantities"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
-    /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
-    /// <param name="quantities">The <see cref="IEphemerisHeader.Quantities"/> of the <paramref name="header"/> is set to this <see cref="EphemerisQuantities"/>.</param>
-    protected abstract THeader SetQuantities(THeader header, EphemerisQuantities quantities);
-
-    /// <summary>Checks that <paramref name="header"/> represents a valid <typeparamref name="THeader"/>.</summary>
-    /// <param name="header">This <typeparamref name="THeader"/> is validated.</param>
-    protected virtual bool ValidateHeader(THeader header) => true;
 }

@@ -17,9 +17,4 @@ public static class ArgumentExceptionFactory
     /// <param name="argumentExpression">The expression used as the argument which caused the <see cref="ArgumentException"/>.</param>
     /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="ArgumentException"/>.</param>
     public static ArgumentException InvalidState<T>(string? argumentExpression, Exception? innerException = null) => new($"The {typeof(T).Name} does not represent a valid state.", argumentExpression, innerException);
-
-    /// <summary>Constructs a <see cref="ExceptionInstantiation{TException}"/> <see langword="delegate"/> for construction an <see cref="ArgumentException"/> describing an instance of <typeparamref name="T"/> representing an invalid state.</summary>
-    /// <typeparam name="T">The type of the instance that represents an invalid state.</typeparam>
-    /// <param name="argumentExpression">The expression used as the argument which caused the <see cref="ArgumentException"/>.</param>
-    public static ExceptionInstantiation<ArgumentException> InvalidStateDelegate<T>(string? argumentExpression) => (innerException) => InvalidState<T>(argumentExpression, innerException);
 }

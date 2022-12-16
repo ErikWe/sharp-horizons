@@ -142,5 +142,23 @@ namespace SharpHorizons.Settings.Interpretation.Ephemeris {
                 return ((string)(this["ReferenceSystem"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("$$SOE")]
+        public string StartOfEphemeris {
+            get {
+                return ((string)(this["StartOfEphemeris"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("$$EOE")]
+        public string EndOfEphemeris {
+            get {
+                return ((string)(this["EndOfEphemeris"]));
+            }
+        }
     }
 }

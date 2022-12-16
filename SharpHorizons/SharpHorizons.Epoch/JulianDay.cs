@@ -201,17 +201,17 @@ public sealed record class JulianDay : IEpoch<JulianDay>
     /// <summary>Constructs the <see cref="long"/> describing the fractional day of the <paramref name="original"/> and the <paramref name="integralDay"/>.</summary>
     /// <param name="original">The original <see cref="long"/>.</param>
     /// <param name="integralDay">The integral day of the new <see cref="long"/>.</param>
-    private static long SetIntegralDay(long original, int integralDay) => original & FractionalDayBitMask | (long)integralDay << 32;
+    private static long SetIntegralDay(long original, int integralDay) => (original & FractionalDayBitMask) | ((long)integralDay << 32);
 
     /// <summary>Constructs the <see cref="long"/> describing the integral day of the <paramref name="original"/> and the <paramref name="fractionalDay"/>.</summary>
     /// <param name="original">The original <see cref="long"/>.</param>
     /// <param name="fractionalDay">The fractional day of the new <see cref="long"/>.</param>
-    private static long SetFractionalDay(long original, float fractionalDay) => original & IntegralDayBitMask | BitConverter.SingleToUInt32Bits(fractionalDay);
+    private static long SetFractionalDay(long original, float fractionalDay) => (original & IntegralDayBitMask) | BitConverter.SingleToUInt32Bits(fractionalDay);
 
     /// <summary>Constructs the <see cref="long"/> describing <paramref name="integralDay"/> and <paramref name="fractionalDay"/>.</summary>
     /// <param name="integralDay">The integral day of the new <see cref="long"/>.</param>
     /// <param name="fractionalDay">The fractional day of the new <see cref="long"/>.</param>
-    private static long SetIntegralAndFractionalDay(int integralDay, float fractionalDay) => (long)integralDay << 32 | BitConverter.SingleToUInt32Bits(fractionalDay);
+    private static long SetIntegralAndFractionalDay(int integralDay, float fractionalDay) => ((long)integralDay << 32) | BitConverter.SingleToUInt32Bits(fractionalDay);
 
     /// <summary>Validates that <paramref name="fractionalDay"/> can represent the <see cref="FractionalDay"/>, and throws an exception otherwise.</summary>
     /// <param name="fractionalDay">The possibility for this <see cref="float"/> to represent the <see cref="FractionalDay"/> is validated.</param>

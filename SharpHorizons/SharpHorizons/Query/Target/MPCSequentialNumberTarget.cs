@@ -25,7 +25,7 @@ internal sealed record class MPCSequentialNumberTarget : ITarget
     public MPCSequentialNumberTarget(MPCSequentialNumber number, ITargetComposer<MPCSequentialNumber> composer)
     {
         Number = number;
-    
+
         Composer = composer;
     }
 

@@ -268,12 +268,16 @@ public static class IServiceCollectionExtensions
     /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsInterpreters(this IServiceCollection services)
     {
+        services.AddSharpHorizonsVectorQuantitiesInterpreters();
+
         services.AddSingleton<IEphemerisHeaderInterpretationProvider, EphemerisHeaderInterpretationProvider>();
         services.AddSingleton<IEphemerisTargetHeaderInterpretationProvider, EphemerisTargetHeaderInterpretationProvider>();
         services.AddSingleton<IEphemerisOriginHeaderInterpretationProvider, EphemerisOriginHeaderInterpretationProvider>();
         services.AddSingleton<IVectorsHeaderInterpretationProvider, VectorsHeaderInterpretationProvider>();
 
         services.AddSingleton<IVectorsHeaderInterpreter, VectorsHeaderInterpreter>();
+
+        services.AddSingleton<IOrbitalStateVectorsInterpreter, OrbitalStateVectorsInterpreter>();
 
         services.AddSingleton<ITargetInterpreter, TargetInterpreter>();
         services.AddSingleton<ITargetGeodeticCoordinateInterpreter, CoordinateInterpreter>();
@@ -318,6 +322,23 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<IVectorCorrectionInterpreter, VectorCorrectionInterpreter>();
         services.AddSingleton<IVectorTableContentInterpreter, VectorTableContentInterpreter>();
+
+        return services;
+    }
+
+    /// <summary>Adds <see cref="IVectorsQuery"/>-related <see cref="IEphemerisQuantityInterpreter{THeader, TInterpretation}"/> services required by SharpHorizons to <paramref name="services"/>.</summary>
+    /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    private static IServiceCollection AddSharpHorizonsVectorQuantitiesInterpreters(this IServiceCollection services)
+    {
+        services.AddSingleton<IEphemerisEpochInterpreter, EphemerisEpochInterpreter>();
+
+        services.AddSingleton<IPositionXInterpreter, PositionComponentInterpreter>();
+        services.AddSingleton<IPositionYInterpreter, PositionComponentInterpreter>();
+        services.AddSingleton<IPositionZInterpreter, PositionComponentInterpreter>();
+
+        services.AddSingleton<IVelocityXInterpreter, VelocityComponentInterpreter>();
+        services.AddSingleton<IVelocityYInterpreter, VelocityComponentInterpreter>();
+        services.AddSingleton<IVelocityZInterpreter, VelocityComponentInterpreter>();
 
         return services;
     }

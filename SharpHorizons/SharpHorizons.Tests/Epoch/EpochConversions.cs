@@ -48,7 +48,7 @@ public class EpochConversions
     {
         ModifiedJulianDay expected = new(modifiedJulianDay);
 
-        ModifiedJulianDay actual = ModifiedJulianDay.FromJulianDay(new JulianDay(julianDay));
+        var actual = ModifiedJulianDay.FromJulianDay(new JulianDay(julianDay));
 
         AssertApproximatelyEqual(expected, actual);
     }
@@ -99,7 +99,7 @@ public class EpochConversions
     {
         JulianDay expected = new(julianDayNumber);
 
-        JulianDay actual = new ModifiedJulianDay(modifiedJulianDayNumber).ToJulianDay();
+        var actual = new ModifiedJulianDay(modifiedJulianDayNumber).ToJulianDay();
 
         AssertApproximatelyEqual(expected, actual);
     }

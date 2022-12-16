@@ -15,13 +15,20 @@ public readonly record struct MPCName
     {
         get
         {
-            Validate();
+            try
+            {
+                ArgumentException.ThrowIfNullOrEmpty(valueField);
+            }
+            catch (ArgumentException e)
+            {
+                throw InvalidOperationExceptionFactory.InvalidState<MPCName>(e);
+            }
 
-            return valueField!;
+            return valueField;
         }
         init
         {
-            Validate(value);
+            ArgumentException.ThrowIfNullOrEmpty(value);
 
             valueField = value;
         }
@@ -58,41 +65,29 @@ public readonly record struct MPCName
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(MPCName name)
     {
-        Validate(name);
-
-        return name.valueField!;
-    }
-
-    /// <summary>Validates that <paramref name="value"/> can be used to represent the name of an <see cref="MPCObject"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    private static void Validate(string? value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null) => ArgumentException.ThrowIfNullOrEmpty(value, argumentExpression);
-
-    /// <summary>Validates the <see cref="MPCName"/> <paramref name="name"/>, and throws an <see cref="Exception"/> of type <typeparamref name="TException"/> if invalid.</summary>
-    /// <typeparam name="TException">The type of the <see cref="Exception"/> that is thrown if <paramref name="name"/> is invalid.</typeparam>
-    /// <param name="name">This <see cref="MPCName"/> is validated.</param>
-    /// <param name="exceptionInstantiation">Handles construction of <typeparamref name="TException"/>.</param>
-    private static void Validate<TException>(MPCName name, ExceptionInstantiation<TException> exceptionInstantiation) where TException : Exception
-    {
         try
         {
-            Validate(name.valueField);
+            return name.Value;
         }
-        catch (ArgumentException e)
+        catch (InvalidOperationException e)
         {
-            throw exceptionInstantiation(e);
+            throw ArgumentExceptionFactory.InvalidState<MPCName>(nameof(name), e);
         }
     }
-
-    /// <summary>Validates the <see cref="MPCName"/>, and throws an <see cref="InvalidOperationException"/> if invalid.</summary>
-    /// <exception cref="InvalidOperationException"/>
-    private void Validate() => Validate(this, InvalidOperationExceptionFactory.InvalidState<MPCName>);
 
     /// <summary>Validates the <see cref="MPCName"/> <paramref name="name"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="name">This <see cref="MPCName"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="name"/>.</param>
     /// <exception cref="ArgumentException"/>
-    public static void Validate(MPCName name, [CallerArgumentExpression(nameof(name))] string? argumentExpression = null) => Validate(name, ArgumentExceptionFactory.InvalidStateDelegate<MPCName>(argumentExpression));
+    public static void Validate(MPCName name, [CallerArgumentExpression(nameof(name))] string? argumentExpression = null)
+    {
+        try
+        {
+            _ = name.Value;
+        }
+        catch (InvalidOperationException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<MPCName>(argumentExpression, e);
+        }
+    }
 }

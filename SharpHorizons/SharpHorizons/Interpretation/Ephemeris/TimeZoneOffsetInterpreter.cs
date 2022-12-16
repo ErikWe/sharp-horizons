@@ -54,6 +54,6 @@ internal sealed class TimeZoneOffsetInterpreter : ITimeZoneOffsetInterpreter
             return new();
         }
 
-        return hour * Time.OneHour + minute * Time.OneMinute;
+        return (hour * Time.OneHour) + (minute * Time.OneMinute);
     }
 }

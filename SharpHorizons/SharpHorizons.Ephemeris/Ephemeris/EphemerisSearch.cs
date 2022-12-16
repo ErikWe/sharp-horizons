@@ -72,7 +72,7 @@ internal static class EphemerisSearch
     /// <param name="epoch">The <typeparamref name="TEntry"/> of <paramref name="ephemeris"/> that describes the <see cref="IEpoch"/> closest to, but after, this <see cref="IEpoch"/> is retrieved.</param>
     /// <exception cref="EmptyEphemerisSearchException"/>
     /// <exception cref="UnboundedEphemerisSearchException"/>
-    public static TEntry GetClosestAfter<TEntry>(IEphemeris<TEntry> ephemeris, IEpoch epoch)  where TEntry : IEphemerisEntry
+    public static TEntry GetClosestAfter<TEntry>(IEphemeris<TEntry> ephemeris, IEpoch epoch) where TEntry : IEphemerisEntry
     {
         if (ephemeris.Count is 0)
         {
@@ -112,12 +112,12 @@ internal static class EphemerisSearch
     /// <exception cref="InvalidEnumArgumentException"/>
     private static int BinarySearch<TEntry>(IEphemeris<TEntry> ephemeris, JulianDay target, SearchRelation relation) where TEntry : IEphemerisEntry
     {
-        int left = 0;
-        int right = ephemeris.Count;
+        var left = 0;
+        var right = ephemeris.Count;
 
         while (left < right)
         {
-            int mid = (left + right) / 2;
+            var mid = (left + right) / 2;
 
             if (inLeftHalf(mid, target))
             {

@@ -37,7 +37,7 @@ internal sealed class TargetSiteObjectFactory : ITargetSiteObjectFactory
     ITargetSiteObject ITargetSiteObjectFactory.Create(MajorObject majorObject)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
-        
+
         return new MajorObjectTargetSiteObject(majorObject, MajorObjectComposer);
     }
 

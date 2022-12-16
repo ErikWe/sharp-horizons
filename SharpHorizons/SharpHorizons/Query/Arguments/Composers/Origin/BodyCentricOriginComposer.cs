@@ -23,7 +23,7 @@ internal sealed class BodyCentricOriginComposer : IOriginComposer<IBodyCentricOr
     private static void Validate(IBodyCentricOrigin origin, [CallerArgumentExpression(nameof(origin))] string? argumentExpression = null)
     {
         ArgumentNullException.ThrowIfNull(origin, argumentExpression);
-    
+
         try
         {
             ArgumentNullException.ThrowIfNull(origin.OriginObject);

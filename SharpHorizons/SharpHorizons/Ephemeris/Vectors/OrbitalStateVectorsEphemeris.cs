@@ -9,26 +9,26 @@ using System.Linq;
 /// <inheritdoc cref="IOrbitalStateVectorsEphemeris"/>
 internal sealed record class OrbitalStateVectorsEphemeris : IOrbitalStateVectorsEphemeris
 {
-    /// <summary>Constucts a <see cref="OrbitalStateVectorsEphemeris"/>, representing <paramref name="orbitalStateVectors"/>.</summary>
-    /// <param name="orbitalStateVectors"><inheritdoc cref="OrbitalStateVectors" path="/summary"/></param>
-    public static OrbitalStateVectorsEphemeris FromOrdered(IReadOnlyList<IOrbitalStateVectors> orbitalStateVectors) => new(orbitalStateVectors);
+    /// <summary>Constucts a <see cref="OrbitalStateVectorsEphemeris"/>, representing <paramref name="ephemeris"/>.</summary>
+    /// <param name="ephemeris"><inheritdoc cref="Ephemeris" path="/summary"/></param>
+    public static OrbitalStateVectorsEphemeris FromOrdered(IReadOnlyList<IOrbitalStateVectors> ephemeris) => new(ephemeris);
 
-    /// <summary>Constucts a <see cref="OrbitalStateVectorsEphemeris"/>, representing <paramref name="orbitalStateVectors"/>.</summary>
-    /// <param name="orbitalStateVectors"><inheritdoc cref="OrbitalStateVectors" path="/summary"/></param>
-    public static OrbitalStateVectorsEphemeris FromUnordered(IReadOnlyList<IOrbitalStateVectors> orbitalStateVectors) => new(orbitalStateVectors.OrderBy(static (entry) => entry.Epoch.ToJulianDay().Day).ToList());
+    /// <summary>Constucts a <see cref="OrbitalStateVectorsEphemeris"/>, representing <paramref name="ephemeris"/>.</summary>
+    /// <param name="ephemeris"><inheritdoc cref="Ephemeris" path="/summary"/></param>
+    public static OrbitalStateVectorsEphemeris FromUnordered(IReadOnlyList<IOrbitalStateVectors> ephemeris) => new(ephemeris.OrderBy(static (entry) => entry.Epoch.ToJulianDay().Day).ToList());
 
     /// <summary>The <see cref="IOrbitalStateVectors"/> of the <see cref="IEphemeris{TEntry}"/>, ordered by <see cref="IEpoch"/>.</summary>
-    private IReadOnlyList<IOrbitalStateVectors> OrbitalStateVectors { get; }
+    private IReadOnlyList<IOrbitalStateVectors> Ephemeris { get; }
 
     /// <inheritdoc cref="OrbitalStateVectorsEphemeris"/>
-    /// <param name="orbitalStateVectors"><inheritdoc cref="OrbitalStateVectors" path="/summary"/></param>
-    private OrbitalStateVectorsEphemeris(IReadOnlyList<IOrbitalStateVectors> orbitalStateVectors)
+    /// <param name="ephemeris"><inheritdoc cref="Ephemeris" path="/summary"/></param>
+    private OrbitalStateVectorsEphemeris(IReadOnlyList<IOrbitalStateVectors> ephemeris)
     {
-        OrbitalStateVectors = orbitalStateVectors;
+        Ephemeris = ephemeris;
     }
 
-    IOrbitalStateVectors IReadOnlyList<IOrbitalStateVectors>.this[int index] => OrbitalStateVectors[index];
-    int IReadOnlyCollection<IOrbitalStateVectors>.Count => OrbitalStateVectors.Count;
-    IEnumerator<IOrbitalStateVectors> IEnumerable<IOrbitalStateVectors>.GetEnumerator() => OrbitalStateVectors.GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => OrbitalStateVectors.GetEnumerator();
+    IOrbitalStateVectors IReadOnlyList<IOrbitalStateVectors>.this[int index] => Ephemeris[index];
+    int IReadOnlyCollection<IOrbitalStateVectors>.Count => Ephemeris.Count;
+    IEnumerator<IOrbitalStateVectors> IEnumerable<IOrbitalStateVectors>.GetEnumerator() => Ephemeris.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => Ephemeris.GetEnumerator();
 }

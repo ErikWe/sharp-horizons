@@ -45,5 +45,11 @@
     <Setting Name="ReferenceSystem" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Reference frame</Value>
     </Setting>
+    <Setting Name="StartOfEphemeris" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">$$SOE</Value>
+    </Setting>
+    <Setting Name="EndOfEphemeris" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">$$EOE</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

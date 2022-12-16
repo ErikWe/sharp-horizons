@@ -37,5 +37,9 @@ internal sealed class MutableVectorsHeader : IVectorsHeader
     public ReferencePlane ReferencePlane { get; set; }
     public ReferenceSystem ReferenceSystem { get; set; }
 
-    public EphemerisQuantities Quantities { get; set; } = null!;
+    public EphemerisQuantityTable Quantities { get; set; } = null!;
+
+    /// <summary>Validates that <paramref name="header"/> represents a valid <see cref="IVectorsHeader"/>.</summary>
+    /// <param name="header">This <see cref="IVectorsHeader"/> is validated.</param>
+    public static bool Validate(MutableVectorsHeader header) => header.QueryEpoch is not null && header.TargetHeader.Target is not null && header.OriginHeader.Origin is not null && header.StartEpoch is not null && header.StopEpoch is not null && header.Quantities is not null;
 }

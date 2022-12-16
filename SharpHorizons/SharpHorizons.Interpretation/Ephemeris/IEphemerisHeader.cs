@@ -45,6 +45,6 @@ public interface IEphemerisHeader
     /// <summary>Represents the <see cref="Query.ReferenceSystem"/> used in the <see cref="IQueryResult"/>.</summary>
     public abstract ReferenceSystem ReferenceSystem { get; }
 
-    /// <inheritdoc cref="EphemerisQuantities"/>
-    public abstract EphemerisQuantities Quantities { get; }
+    /// <inheritdoc cref="EphemerisQuantityTable"/>
+    public abstract EphemerisQuantityTable Quantities { get; }
 }

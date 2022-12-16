@@ -80,6 +80,8 @@ internal sealed class VectorTableContentInterpreter : IVectorTableContentInterpr
                 case 'p':
                     uncertainties |= VectorTableUncertainties.POS;
                     break;
+                default:
+                    break;
             }
         }
 

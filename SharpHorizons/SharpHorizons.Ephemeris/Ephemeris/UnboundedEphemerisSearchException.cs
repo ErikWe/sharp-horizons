@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Ephemeris;
 
-using NodaTime;
-
 using System;
 
 /// <summary>Represents an <see cref="Exception"/> that occurred when searching an <see cref="IEphemeris{TEntry}"/>, where the search boundaries failed to isolate an <see cref="IEphemerisEntry"/>.</summary>

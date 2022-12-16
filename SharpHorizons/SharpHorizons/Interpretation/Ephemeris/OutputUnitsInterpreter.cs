@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris;
 
 using Microsoft.CodeAnalysis;
+
 using SharpHorizons.Interpretation.Ephemeris.Vectors;
 using SharpHorizons.Query;
 

@@ -16,13 +16,20 @@ public readonly partial record struct MPCProvisionalDesignation
     {
         get
         {
-            Validate();
+            try
+            {
+                ArgumentException.ThrowIfNullOrEmpty(valueField);
+            }
+            catch (ArgumentException e)
+            {
+                throw InvalidOperationExceptionFactory.InvalidState<MPCProvisionalDesignation>(e);
+            }
 
-            return valueField!;
+            return valueField;
         }
         init
         {
-            Validate(value);
+            ArgumentException.ThrowIfNullOrEmpty(value);
 
             valueField = value;
         }
@@ -59,41 +66,29 @@ public readonly partial record struct MPCProvisionalDesignation
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(MPCProvisionalDesignation provisionalDesignation)
     {
-        Validate(provisionalDesignation);
-
-        return provisionalDesignation.valueField!;
-    }
-
-    /// <summary>Validates that <paramref name="value"/> can be used to represent the designation of an <see cref="MPCObject"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    private static void Validate(string? value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null) => ArgumentException.ThrowIfNullOrEmpty(value, argumentExpression);
-
-    /// <summary>Validates the <see cref="MPCProvisionalDesignation"/> <paramref name="designation"/>, and throws an <see cref="Exception"/> of type <typeparamref name="TException"/> if invalid.</summary>
-    /// <typeparam name="TException">The type of the <see cref="Exception"/> that is thrown if <paramref name="designation"/> is invalid.</typeparam>
-    /// <param name="designation">This <see cref="MPCProvisionalDesignation"/> is validated.</param>
-    /// <param name="exceptionInstantiation">Handles construction of <typeparamref name="TException"/>.</param>
-    private static void Validate<TException>(MPCProvisionalDesignation designation, ExceptionInstantiation<TException> exceptionInstantiation) where TException : Exception
-    {
         try
         {
-            Validate(designation.valueField);
+            return provisionalDesignation.Value;
         }
-        catch (ArgumentException e)
+        catch (InvalidOperationException e)
         {
-            throw exceptionInstantiation(e);
+            throw ArgumentExceptionFactory.InvalidState<MPCProvisionalDesignation>(nameof(provisionalDesignation), e);
         }
     }
-
-    /// <summary>Validates the <see cref="MPCProvisionalDesignation"/>, and throws an <see cref="InvalidOperationException"/> if invalid.</summary>
-    /// <exception cref="InvalidOperationException"/>
-    private void Validate() => Validate(this, InvalidOperationExceptionFactory.InvalidState<MPCProvisionalDesignation>);
 
     /// <summary>Validates the <see cref="MPCProvisionalDesignation"/> <paramref name="designation"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="designation">This <see cref="MPCProvisionalDesignation"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="designation"/>.</param>
     /// <exception cref="ArgumentException"/>
-    public static void Validate(MPCProvisionalDesignation designation, [CallerArgumentExpression(nameof(designation))] string? argumentExpression = null) => Validate(designation, ArgumentExceptionFactory.InvalidStateDelegate<MPCProvisionalDesignation>(argumentExpression));
+    public static void Validate(MPCProvisionalDesignation designation, [CallerArgumentExpression(nameof(designation))] string? argumentExpression = null)
+    {
+        try
+        {
+            _ = designation.Value;
+        }
+        catch (InvalidOperationException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<MPCProvisionalDesignation>(argumentExpression, e);
+        }
+    }
 }

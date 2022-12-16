@@ -32,4 +32,6 @@ internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpr
     string IEphemerisInterpretationOptionsProvider.StepSize => Options.StepSize;
     IEnumerable<string> IEphemerisInterpretationOptionsProvider.SmallPerturbers => Options.SmallPerturbers;
     string IEphemerisInterpretationOptionsProvider.ReferenceSystem => Options.ReferenceSystem;
+    string IEphemerisInterpretationOptionsProvider.StartOfEphemeris => Options.StartOfEphemeris;
+    string IEphemerisInterpretationOptionsProvider.EndOfEphemeris => Options.EndOfEphemeris;
 }

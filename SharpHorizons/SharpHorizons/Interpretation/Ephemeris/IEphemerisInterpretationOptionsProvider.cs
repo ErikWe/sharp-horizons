@@ -45,4 +45,10 @@ public interface IEphemerisInterpretationOptionsProvider
 
     /// <inheritdoc cref="EphemerisInterpretationOptions.ReferenceSystem"/>
     public abstract string ReferenceSystem { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.StartOfEphemeris"/>
+    public abstract string StartOfEphemeris { get; }
+
+    /// <inheritdoc cref="EphemerisInterpretationOptions.EndOfEphemeris"/>
+    public abstract string EndOfEphemeris { get; }
 }

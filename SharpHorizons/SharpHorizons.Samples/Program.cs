@@ -6,12 +6,14 @@ using Microsoft.Extensions.Hosting;
 
 using SharpHorizons;
 using SharpHorizons.Interpretation.Ephemeris.Vectors;
+using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Request.HTTP;
 using SharpHorizons.Query.Result.HTTP;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
+using SharpHorizons.Query.Vectors.Table;
 
 using SharpMeasures;
 
@@ -20,7 +22,7 @@ using System.Threading.Tasks;
 
 internal class Program
 {
-    private async static Task Main()
+    private static async Task Main()
     {
         var host = Host.CreateDefaultBuilder().ConfigureAppConfiguration(ConfigureConfiguration).ConfigureServices(ConfigureServices).Build();
 
@@ -38,15 +40,15 @@ internal class Program
         var vectorsComposer = host.Services.GetRequiredService<IVectorsQueryComposer>();
         var httpQueryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
         var httpTextExtractor = host.Services.GetRequiredService<IHTTPResultExtractor>();
-        var vectorsHeaderInterpreter = host.Services.GetRequiredService<IVectorsHeaderInterpreter>();
+        var orbitalStateVectorsInterpreter = host.Services.GetRequiredService<IOrbitalStateVectorsInterpreter>();
 
-        var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: SharpHorizons.Query.OutputFormat.JSON);
+        var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: OutputFormat.JSON, tableContent: new(VectorTableQuantities.StateVectors, VectorTableUncertainties.All), outputLabels: OutputLabels.Enable);
         var uri = vectorsComposer.Compose(query);
         var httpResult = httpQueryHandler.RequestAsync(uri).Result;
         var textResult = await httpTextExtractor.ExtractAsync(httpResult);
-        var vectorsHeader = vectorsHeaderInterpreter.Interpret(textResult);
+        var orbitalStateVectors = orbitalStateVectorsInterpreter.Interpret(textResult);
 
-        Console.WriteLine(vectorsHeader.Value.TargetHeader.Target.ComposeArgument());
+        Console.WriteLine(orbitalStateVectors.Value.Count);
     }
 
     private static void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configuration)

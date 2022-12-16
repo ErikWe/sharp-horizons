@@ -15,13 +15,20 @@ public readonly record struct OriginObjectIdentifier
     {
         get
         {
-            Validate();
+            try
+            {
+                ArgumentException.ThrowIfNullOrEmpty(valueField);
+            }
+            catch (ArgumentException e)
+            {
+                throw InvalidOperationExceptionFactory.InvalidState<OriginObjectIdentifier>(e);
+            }
 
-            return valueField!;
+            return valueField;
         }
         init
         {
-            Validate(value);
+            ArgumentException.ThrowIfNullOrEmpty(value);
 
             valueField = value;
         }
@@ -54,41 +61,29 @@ public readonly record struct OriginObjectIdentifier
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(OriginObjectIdentifier originObject)
     {
-        Validate(originObject);
-
-        return originObject.valueField!;
-    }
-
-    /// <summary>Validates that <paramref name="value"/> can be used to represent the identifier of an <see cref="IOriginObject"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    private static void Validate(string? value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null) => ArgumentException.ThrowIfNullOrEmpty(value, argumentExpression);
-
-    /// <summary>Validates the <see cref="OriginObjectIdentifier"/> <paramref name="identifier"/>, and throws an <see cref="Exception"/> of type <typeparamref name="TException"/> if invalid.</summary>
-    /// <typeparam name="TException">The type of the <see cref="Exception"/> that is thrown if <paramref name="identifier"/> is invalid.</typeparam>
-    /// <param name="identifier">This <see cref="OriginObjectIdentifier"/> is validated.</param>
-    /// <param name="exceptionInstantiation">Handles instantiation of <typeparamref name="TException"/>.</param>
-    private static void Validate<TException>(OriginObjectIdentifier identifier, ExceptionInstantiation<TException> exceptionInstantiation) where TException : Exception
-    {
         try
         {
-            Validate(identifier.valueField);
+            return originObject.Value;
         }
-        catch (ArgumentException e)
+        catch (InvalidOperationException e)
         {
-            throw exceptionInstantiation(e);
+            throw ArgumentExceptionFactory.InvalidState<OriginObjectIdentifier>(nameof(originObject), e);
         }
     }
-
-    /// <summary>Validates the <see cref="OriginObjectIdentifier"/>, and throws an <see cref="InvalidOperationException"/> if invalid.</summary>
-    /// <exception cref="InvalidOperationException"/>
-    private void Validate() => Validate(this, InvalidOperationExceptionFactory.InvalidState<OriginObjectIdentifier>);
 
     /// <summary>Validates the <see cref="OriginObjectIdentifier"/> <paramref name="identifier"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="identifier">This <see cref="OriginObjectIdentifier"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="identifier"/>.</param>
     /// <exception cref="ArgumentException"/>
-    public static void Validate(OriginObjectIdentifier identifier, [CallerArgumentExpression(nameof(identifier))] string? argumentExpression = null) => Validate(identifier, ArgumentExceptionFactory.InvalidStateDelegate<OriginObjectIdentifier>(argumentExpression));
+    public static void Validate(OriginObjectIdentifier identifier, [CallerArgumentExpression(nameof(identifier))] string? argumentExpression = null)
+    {
+        try
+        {
+            _ = identifier.Value;
+        }
+        catch (InvalidOperationException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<OriginObjectIdentifier>(argumentExpression, e);
+        }
+    }
 }

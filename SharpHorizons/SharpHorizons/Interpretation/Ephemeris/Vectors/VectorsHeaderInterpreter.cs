@@ -7,10 +7,9 @@ using SharpHorizons.Interpretation.Ephemeris.Target;
 using SharpHorizons.Query.Result;
 
 using System;
-using System.Collections.Generic;
 
 /// <inheritdoc cref="IVectorsHeaderInterpreter"/>
-internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderInterpreter<MutableVectorsHeader>, IVectorsHeaderInterpreter
+internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<MutableVectorsHeader>, IVectorsHeaderInterpreter
 {
     /// <inheritdoc cref="VectorsHeaderInterpreter"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="IInterpretationOptionsProvider" path="/summary"/></param>
@@ -96,14 +95,14 @@ internal sealed class VectorsHeaderInterpreter : ALineIterativeEphemerisHeaderIn
 
     protected override Optional<MutableVectorsHeader> ConstructHeader(IQueryResult queryResult) => new MutableVectorsHeader();
 
-    protected override MutableVectorsHeader SetQuantities(MutableVectorsHeader header, EphemerisQuantities quantities)
+    protected override MutableVectorsHeader SetQuantities(MutableVectorsHeader header, EphemerisQuantityTable quantities)
     {
         header.Quantities = quantities;
 
         return header;
     }
 
-    protected override bool ValidateHeader(MutableVectorsHeader header) => header.QueryEpoch is not null && header.StartEpoch is not null && header.StopEpoch is not null;
+    protected override bool ValidateHeader(MutableVectorsHeader header) => MutableVectorsHeader.Validate(header);
 
     Optional<IVectorsHeader> IInterpreter<IVectorsHeader>.Interpret(IQueryResult queryResult)
     {

@@ -15,13 +15,20 @@ public readonly record struct TargetSiteIdentifier
     {
         get
         {
-            Validate();
+            try
+            {
+                ArgumentException.ThrowIfNullOrEmpty(valueField);
+            }
+            catch (ArgumentException e)
+            {
+                throw InvalidOperationExceptionFactory.InvalidState<TargetSiteIdentifier>(e);
+            }
 
-            return valueField!;
+            return valueField;
         }
         init
         {
-            Validate(value);
+            ArgumentException.ThrowIfNullOrEmpty(value);
 
             valueField = value;
         }
@@ -54,41 +61,29 @@ public readonly record struct TargetSiteIdentifier
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(TargetSiteIdentifier targetSite)
     {
-        Validate(targetSite);
-
-        return targetSite.valueField!;
-    }
-
-    /// <summary>Validates that <paramref name="value"/> can be used to represent the identifier of a <see cref="ITargetSite"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    private static void Validate(string? value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null) => ArgumentException.ThrowIfNullOrEmpty(value, argumentExpression);
-
-    /// <summary>Validates the <see cref="TargetSiteIdentifier"/> <paramref name="identifier"/>, and throws an <see cref="Exception"/> of type <typeparamref name="TException"/> if invalid.</summary>
-    /// <typeparam name="TException">The type of the <see cref="Exception"/> that is thrown if <paramref name="identifier"/> is invalid.</typeparam>
-    /// <param name="identifier">This <see cref="TargetSiteIdentifier"/> is validated.</param>
-    /// <param name="exceptionInstantiation">Handles instantiation of <typeparamref name="TException"/>.</param>
-    private static void Validate<TException>(TargetSiteIdentifier identifier, ExceptionInstantiation<TException> exceptionInstantiation) where TException : Exception
-    {
         try
         {
-            Validate(identifier.valueField);
+            return targetSite.Value;
         }
-        catch (ArgumentException e)
+        catch (InvalidOperationException e)
         {
-            throw exceptionInstantiation(e);
+            throw ArgumentExceptionFactory.InvalidState<TargetSiteIdentifier>(nameof(targetSite), e);
         }
     }
-
-    /// <summary>Validates the <see cref="TargetSiteIdentifier"/>, and throws an <see cref="InvalidOperationException"/> if invalid.</summary>
-    /// <exception cref="InvalidOperationException"/>
-    private void Validate() => Validate(this, InvalidOperationExceptionFactory.InvalidState<TargetSiteIdentifier>);
 
     /// <summary>Validates the <see cref="TargetSiteIdentifier"/> <paramref name="identifier"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="identifier">This <see cref="TargetSiteIdentifier"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="identifier"/>.</param>
     /// <exception cref="ArgumentException"/>
-    public static void Validate(TargetSiteIdentifier identifier, [CallerArgumentExpression(nameof(identifier))] string? argumentExpression = null) => Validate(identifier, ArgumentExceptionFactory.InvalidStateDelegate<TargetSiteIdentifier>(argumentExpression));
+    public static void Validate(TargetSiteIdentifier identifier, [CallerArgumentExpression(nameof(identifier))] string? argumentExpression = null)
+    {
+        try
+        {
+            _ = identifier.Value;
+        }
+        catch (InvalidOperationException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<TargetSiteIdentifier>(argumentExpression, e);
+        }
+    }
 }

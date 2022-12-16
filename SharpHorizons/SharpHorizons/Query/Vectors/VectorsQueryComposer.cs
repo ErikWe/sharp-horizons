@@ -17,7 +17,6 @@ internal sealed class VectorsQueryComposer : IVectorsQueryComposer
     /// <inheritdoc cref="IURIComposer"/>
     public required IURIComposer URIComposer { private get; init; }
 
-
     /// <inheritdoc cref="VectorsQueryComposer"/>
     public VectorsQueryComposer() { }
 
@@ -39,7 +38,7 @@ internal sealed class VectorsQueryComposer : IVectorsQueryComposer
 
         var argumentSet = ArgumentComposer.Compose(query);
         var queryString = QueryStringComposer.Compose(argumentSet);
-        
+
         return URIComposer.Compose(queryString);
     }
 }

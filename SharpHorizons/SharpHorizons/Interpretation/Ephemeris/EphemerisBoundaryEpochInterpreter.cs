@@ -104,7 +104,7 @@ internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochIn
     /// <param name="timeZoneOffset">The interpreted <see cref="Time"/> offset from UTC used to express the <see cref="IEpoch"/>.</param>
     private Optional<IEpoch> InterpretEpoch(string[] spaceSplit, Era era, TimeSystem timeSystem, Time timeZoneOffset)
     {
-        var timeZone = DateTimeZone.ForOffset(Offset.FromHoursAndMinutes((int)timeZoneOffset.Hours, (int)(timeZoneOffset.Minutes - timeZoneOffset.Hours * 60)));
+        var timeZone = DateTimeZone.ForOffset(Offset.FromHoursAndMinutes((int)timeZoneOffset.Hours, (int)(timeZoneOffset.Minutes - (timeZoneOffset.Hours * 60))));
 
         var eraText = era is Era.BCE ? "-" : string.Empty;
 

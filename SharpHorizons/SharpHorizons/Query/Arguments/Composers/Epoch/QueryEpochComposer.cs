@@ -65,7 +65,7 @@ internal class QueryEpochComposer : IQueryEpochComposer
 
     /// <summary>Extracts the components of <paramref name="date"/>.</summary>
     /// <param name="date">The components of this <see cref="ZonedDateTime"/> are extracted.</param>
-    private static (int Year, int Month, int Day, int Hour, int Minute, double Second) ToDate(ZonedDateTime date) => (date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second + date.Millisecond / 1000d);
+    private static (int Year, int Month, int Day, int Hour, int Minute, double Second) ToDate(ZonedDateTime date) => (date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second + (date.Millisecond / 1000d));
 
     /// <summary>Converts <paramref name="epoch"/> to a <see cref="ZonedDateTime"/> representing the same <see cref="IEpoch"/>.</summary>
     /// <param name="epoch">The <see cref="IEpoch"/> which is converted to a <see cref="ZonedDateTime"/>.</param>

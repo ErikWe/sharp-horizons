@@ -14,13 +14,20 @@ public readonly record struct HorizonsQueryURI
     {
         get
         {
-            Validate();
+            try
+            {
+                ArgumentNullException.ThrowIfNull(valueField);
+            }
+            catch (ArgumentNullException e)
+            {
+                throw InvalidOperationExceptionFactory.InvalidState<HorizonsQueryURI>(e);
+            }
 
             return valueField!;
         }
         init
         {
-            Validate(value);
+            ArgumentNullException.ThrowIfNull(value);
 
             valueField = value;
         }
@@ -51,40 +58,29 @@ public readonly record struct HorizonsQueryURI
     /// <exception cref="ArgumentException"/>
     public static explicit operator Uri(HorizonsQueryURI uri)
     {
-        Validate(uri);
-
-        return uri.Value;
-    }
-
-    /// <summary>Validates that <paramref name="value"/> can be used to represent the <see cref="Uri"/> of a <see cref="HorizonsQueryURI"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
-    /// <exception cref="ArgumentNullException"/>
-    private static void Validate(Uri? value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null) => ArgumentNullException.ThrowIfNull(value, argumentExpression);
-
-    /// <summary>Validates the <see cref="HorizonsQueryURI"/> <paramref name="queryURI"/>, and throws an <see cref="Exception"/> of type <typeparamref name="TException"/> if invalid.</summary>
-    /// <typeparam name="TException">The type of the <see cref="Exception"/> that is thrown if <paramref name="queryURI"/> is invalid.</typeparam>
-    /// <param name="queryURI">This <see cref="HorizonsQueryURI"/> is validated.</param>
-    /// <param name="exceptionInstantiation">Handles instantiation of <typeparamref name="TException"/>.</param>
-    private static void Validate<TException>(HorizonsQueryURI queryURI, ExceptionInstantiation<TException> exceptionInstantiation) where TException : Exception
-    {
         try
         {
-            Validate(queryURI.valueField);
+            return uri.Value;
         }
-        catch (ArgumentException e)
+        catch (InvalidOperationException e)
         {
-            throw exceptionInstantiation(e);
+            throw ArgumentExceptionFactory.InvalidState<HorizonsQueryURI>(nameof(uri), e);
         }
     }
-
-    /// <summary>Validates the <see cref="HorizonsQueryURI"/>, and throws an <see cref="InvalidOperationException"/> if invalid.</summary>
-    /// <exception cref="InvalidOperationException"/>
-    private void Validate() => Validate(this, InvalidOperationExceptionFactory.InvalidState<HorizonsQueryURI>);
 
     /// <summary>Validates the <see cref="HorizonsQueryURI"/> <paramref name="queryURI"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="queryURI">This <see cref="HorizonsQueryURI"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="queryURI"/>.</param>
     /// <exception cref="ArgumentException"/>
-    public static void Validate(HorizonsQueryURI queryURI, [CallerArgumentExpression(nameof(queryURI))] string? argumentExpression = null) => Validate(queryURI, ArgumentExceptionFactory.InvalidStateDelegate<HorizonsQueryURI>(argumentExpression));
+    public static void Validate(HorizonsQueryURI queryURI, [CallerArgumentExpression(nameof(queryURI))] string? argumentExpression = null)
+    {
+        try
+        {
+            _ = queryURI.Value;
+        }
+        catch (InvalidOperationException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<HorizonsQueryURI>(argumentExpression, e);
+        }
+    }
 }
