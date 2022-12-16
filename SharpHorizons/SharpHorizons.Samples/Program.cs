@@ -40,13 +40,15 @@ internal class Program
         var vectorsComposer = host.Services.GetRequiredService<IVectorsQueryComposer>();
         var httpQueryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
         var httpTextExtractor = host.Services.GetRequiredService<IHTTPResultExtractor>();
+        var headerInterpreter = host.Services.GetRequiredService<IVectorsHeaderInterpreter>();
         var orbitalStateVectorsInterpreter = host.Services.GetRequiredService<IOrbitalStateVectorsInterpreter>();
 
         var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: OutputFormat.JSON, tableContent: new(VectorTableQuantities.StateVectors, VectorTableUncertainties.All), outputLabels: OutputLabels.Enable);
         var uri = vectorsComposer.Compose(query);
         var httpResult = httpQueryHandler.RequestAsync(uri).Result;
         var textResult = await httpTextExtractor.ExtractAsync(httpResult);
-        var orbitalStateVectors = orbitalStateVectorsInterpreter.Interpret(textResult);
+        var header = headerInterpreter.Interpret(textResult);
+        var orbitalStateVectors = orbitalStateVectorsInterpreter.Interpret(header.Value, textResult);
 
         Console.WriteLine(orbitalStateVectors.Value.Count);
     }

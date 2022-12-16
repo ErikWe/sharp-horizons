@@ -11,12 +11,8 @@ using System;
 /// <inheritdoc cref="IOrbitalStateVectorsInterpreter"/>
 internal sealed class OrbitalStateVectorsInterpreter : AEphemerisInterpreter<MutableOrbitalStateVectors, IVectorsHeader>, IOrbitalStateVectorsInterpreter
 {
-    /// <inheritdoc cref="IVectorsHeaderInterpreter"/>
-    private IVectorsHeaderInterpreter HeaderInterpreter { get; }
-
     /// <inheritdoc cref="OrbitalStateVectorsInterpreter"/>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
-    /// <param name="headerInterpreter"><inheritdoc cref="HeaderInterpreter" path="/summary"/></param>
     /// <param name="ephemerisEpochInterpreter"><inheritdoc cref="IEphemerisEpochInterpreter" path="/summary"/></param>
     /// <param name="positionXInterpreter"><inheritdoc cref="IPositionXInterpreter" path="/summary"/></param>
     /// <param name="positionYInterpreter"><inheritdoc cref="IPositionYInterpreter" path="/summary"/></param>
@@ -24,24 +20,16 @@ internal sealed class OrbitalStateVectorsInterpreter : AEphemerisInterpreter<Mut
     /// <param name="velocityXInterpreter"><inheritdoc cref="IVelocityXInterpreter" path="/summary"/></param>
     /// <param name="velocityYInterpreter"><inheritdoc cref="IVelocityYInterpreter" path="/summary"/></param>
     /// <param name="velocityZInterpreter"><inheritdoc cref="IVelocityZInterpreter" path="/summary"/></param>
-    public OrbitalStateVectorsInterpreter(IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, IVectorsHeaderInterpreter headerInterpreter, IEphemerisEpochInterpreter ephemerisEpochInterpreter, IPositionXInterpreter positionXInterpreter, IPositionYInterpreter positionYInterpreter, IPositionZInterpreter positionZInterpreter,
+    public OrbitalStateVectorsInterpreter(IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, IEphemerisEpochInterpreter ephemerisEpochInterpreter, IPositionXInterpreter positionXInterpreter, IPositionYInterpreter positionYInterpreter, IPositionZInterpreter positionZInterpreter,
         IVelocityXInterpreter velocityXInterpreter, IVelocityYInterpreter velocityYInterpreter, IVelocityZInterpreter velocityZInterpreter)
-        : base(ephemerisInterpretationOptionsProvider, new EphemerisQuantityInterpretationDelegater(ephemerisEpochInterpreter, positionXInterpreter, positionYInterpreter, positionZInterpreter, velocityXInterpreter, velocityYInterpreter, velocityZInterpreter))
-    {
-        HeaderInterpreter = headerInterpreter;
-    }
+        : base(ephemerisInterpretationOptionsProvider, new EphemerisQuantityInterpretationDelegater(ephemerisEpochInterpreter, positionXInterpreter, positionYInterpreter, positionZInterpreter, velocityXInterpreter, velocityYInterpreter, velocityZInterpreter)) { }
 
     protected override MutableOrbitalStateVectors CreateEntry() => new();
 
     protected override bool ValidateEntry(MutableOrbitalStateVectors entry) => MutableOrbitalStateVectors.Validate(entry);
 
-    Optional<IEphemeris<IOrbitalStateVectors>> IInterpreter<IEphemeris<IOrbitalStateVectors>>.Interpret(IQueryResult queryResult)
+    Optional<IEphemeris<IOrbitalStateVectors>> IEphemerisInterpreter<IVectorsHeader, IOrbitalStateVectors>.Interpret(IVectorsHeader header, IQueryResult queryResult)
     {
-        if (HeaderInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var header })
-        {
-            return new();
-        }
-
         var ephemeris = InterpretEntries(queryResult, header);
 
         return OrbitalStateVectorsEphemeris.FromOrdered(ephemeris);

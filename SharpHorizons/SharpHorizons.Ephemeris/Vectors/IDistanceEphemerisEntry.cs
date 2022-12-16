@@ -3,7 +3,7 @@
 using SharpMeasures;
 
 /// <summary>Represents <see cref="SharpMeasures.Distance"/>-related properties of an object at some <see cref="IEpoch"/>.</summary>
-public interface IDistanceEphemerisEntry : IEphemerisEntry
+public interface IDistanceEphemerisEntry : IVectorsEphemerisEntry
 {
     /// <summary>The <see cref="SharpMeasures.Distance"/> to the object from the origin.</summary>
     public abstract Distance Distance { get; }
