@@ -4,20 +4,23 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation;
 using SharpHorizons.Query.Epoch;
+using SharpHorizons.Query.Result;
 
 /// <inheritdoc cref="ITimeSystemInterpreter"/>
 internal sealed class TimeSystemInterpreter : ITimeSystemInterpreter
 {
-    Optional<TimeSystem> IPartInterpreter<TimeSystem>.Interpret(string queryPart)
+    Optional<TimeSystem> IInterpreter<TimeSystem>.Interpret(QueryResult queryResult)
     {
-        var firstColonIndex = queryPart.IndexOf(':');
+        QueryResult.Validate(queryResult);
+
+        var firstColonIndex = queryResult.Content.IndexOf(':');
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        if (queryPart[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
+        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
         {
             return new();
         }

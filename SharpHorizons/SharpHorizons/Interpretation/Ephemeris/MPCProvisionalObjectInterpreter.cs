@@ -5,31 +5,29 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCProvisionalObject"/>.</summary>
-internal sealed class MPCProvisionalObjectInterpreter : IPartInterpreter<MPCProvisionalObject>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCProvisionalObject"/>.</summary>
+internal sealed class MPCProvisionalObjectInterpreter : IInterpreter<MPCProvisionalObject>
 {
     /// <inheritdoc cref="Ephemeris.MPCProvisionalDesignationInterpreter"/>
-    private IPartInterpreter<MPCProvisionalDesignation> MPCProvisionalDesignationInterpreter { get; }
+    private IInterpreter<MPCProvisionalDesignation> MPCProvisionalDesignationInterpreter { get; }
 
     /// <inheritdoc cref="MPCProvisionalObjectInterpreter"/>
     /// <param name="mpcProvisionalDesignationInterpreter"><inheritdoc cref="MPCProvisionalDesignationInterpreter" path="/summary"/></param>
-    public MPCProvisionalObjectInterpreter(IPartInterpreter<MPCProvisionalDesignation> mpcProvisionalDesignationInterpreter)
+    public MPCProvisionalObjectInterpreter(IInterpreter<MPCProvisionalDesignation> mpcProvisionalDesignationInterpreter)
     {
         MPCProvisionalDesignationInterpreter = mpcProvisionalDesignationInterpreter;
     }
 
-    Optional<MPCProvisionalObject> IPartInterpreter<MPCProvisionalObject>.Interpret(string queryPart)
+    Optional<MPCProvisionalObject> IInterpreter<MPCProvisionalObject>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (queryPart[0] is not '(')
+        if (queryResult.Content[0] is not '(')
         {
             return new();
         }
 
-        if (MPCProvisionalDesignationInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var designation })
+        if (MPCProvisionalDesignationInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var designation })
         {
             return new();
         }

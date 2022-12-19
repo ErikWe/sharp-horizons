@@ -5,21 +5,19 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCCometName"/>.</summary>
-internal sealed class MPCCometNameInterpreter : IPartInterpreter<MPCCometName>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCCometName"/>.</summary>
+internal sealed class MPCCometNameInterpreter : IInterpreter<MPCCometName>
 {
-    Optional<MPCCometName> IPartInterpreter<MPCCometName>.Interpret(string queryPart)
+    Optional<MPCCometName> IInterpreter<MPCCometName>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (TryInterpretNumberedCometName(queryPart) is MPCCometName numberedCometName)
+        if (TryInterpretNumberedCometName(queryResult) is MPCCometName numberedCometName)
         {
             return numberedCometName;
         }
 
-        if (TryInterpretUnnumberedCometName(queryPart) is MPCCometName unnumberedCometName)
+        if (TryInterpretUnnumberedCometName(queryResult) is MPCCometName unnumberedCometName)
         {
             return unnumberedCometName;
         }
@@ -27,38 +25,38 @@ internal sealed class MPCCometNameInterpreter : IPartInterpreter<MPCCometName>
         return new();
     }
 
-    /// <summary>Attempts to interpret the <see cref="MPCCometName"/> of a numbered <see cref="MPCComet"/> from <paramref name="queryPart"/>.</summary>
-    /// <param name="queryPart">A <see cref="MPCCometName"/> is interpreted from this <see cref="string"/>, if possible.</param>
-    private static MPCCometName? TryInterpretNumberedCometName(string queryPart)
+    /// <summary>Attempts to interpret the <see cref="MPCCometName"/> of a numbered <see cref="MPCComet"/> from <paramref name="queryResult"/>.</summary>
+    /// <param name="queryResult">A <see cref="MPCCometName"/> is interpreted from this <see cref="QueryResult"/>, if possible.</param>
+    private static MPCCometName? TryInterpretNumberedCometName(QueryResult queryResult)
     {
-        var startIndex = queryPart.IndexOf('/') + 1;
+        var startIndex = queryResult.Content.IndexOf('/') + 1;
 
         if (startIndex is 0)
         {
             return null;
         }
 
-        var stopIndex = queryPart.IndexOf('(');
+        var stopIndex = queryResult.Content.IndexOf('(');
 
         if (stopIndex is -1)
         {
-            stopIndex = queryPart.Length;
+            stopIndex = queryResult.Content.Length;
         }
 
-        return new(queryPart[startIndex..stopIndex].Trim());
+        return new(queryResult.Content[startIndex..stopIndex].Trim());
     }
 
-    /// <summary>Attempts to interpret the <see cref="MPCCometName"/> of an unnumbered <see cref="MPCComet"/> from <paramref name="queryPart"/>.</summary>
-    /// <param name="queryPart">A <see cref="MPCCometName"/> is interpreted from this <see cref="string"/>, if possible.</param>
-    private static MPCCometName? TryInterpretUnnumberedCometName(string queryPart)
+    /// <summary>Attempts to interpret the <see cref="MPCCometName"/> of an unnumbered <see cref="MPCComet"/> from <paramref name="queryResult"/>.</summary>
+    /// <param name="queryResult">A <see cref="MPCCometName"/> is interpreted from this <see cref="QueryResult"/>, if possible.</param>
+    private static MPCCometName? TryInterpretUnnumberedCometName(QueryResult queryResult)
     {
-        var stopIndex = queryPart.IndexOf('(');
+        var stopIndex = queryResult.Content.IndexOf('(');
 
         if (stopIndex is -1)
         {
             return null;
         }
 
-        return new(queryPart[..stopIndex].Trim());
+        return new(queryResult.Content[..stopIndex].Trim());
     }
 }

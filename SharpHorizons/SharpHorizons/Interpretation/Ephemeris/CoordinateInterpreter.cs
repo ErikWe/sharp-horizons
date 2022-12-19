@@ -12,12 +12,12 @@ using SharpMeasures.Astronomy;
 using System;
 using System.Globalization;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="GeodeticCoordinate"/> or <see cref="CylindricalCoordinate"/>.</summary>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="GeodeticCoordinate"/> or <see cref="CylindricalCoordinate"/>.</summary>
 internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpreter, ITargetCylindricalCoordinateInterpreter, IOriginGeodeticCoordinateInterpreter, IOriginCylindricalCoordinateInterpreter
 {
-    Optional<GeodeticCoordinate> IPartInterpreter<GeodeticCoordinate>.Interpret(string queryPart)
+    Optional<GeodeticCoordinate> IInterpreter<GeodeticCoordinate>.Interpret(QueryResult queryResult)
     {
-        if (Interpret(queryPart) is not (double longitude, double latitude, double altitude))
+        if (Interpret(queryResult) is not (double longitude, double latitude, double altitude))
         {
             return new();
         }
@@ -25,9 +25,9 @@ internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpret
         return new GeodeticCoordinate(longitude * Longitude.OneDegree, latitude * Latitude.OneDegree, altitude * Height.OneKilometre);
     }
 
-    Optional<CylindricalCoordinate> IPartInterpreter<CylindricalCoordinate>.Interpret(string queryPart)
+    Optional<CylindricalCoordinate> IInterpreter<CylindricalCoordinate>.Interpret(QueryResult queryResult)
     {
-        if (Interpret(queryPart) is not (double azimuth, double distance, double height))
+        if (Interpret(queryResult) is not (double azimuth, double distance, double height))
         {
             return new();
         }
@@ -35,14 +35,14 @@ internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpret
         return new CylindricalCoordinate(distance * Distance.OneKilometre, azimuth * Azimuth.OneDegree, height * Height.OneKilometre);
     }
 
-    /// <summary>Attempts to interpret <paramref name="queryPart"/> as (<see cref="double"/>, <see cref="double"/>, <see cref="double"/>).</summary>
-    /// <param name="queryPart">This <see cref="string"/> is interpreted.</param>
-    /// <exception cref="ArgumentNullException"/>
-    private static (double, double, double)? Interpret(string queryPart)
+    /// <summary>Attempts to interpret <paramref name="queryResult"/> as (<see cref="double"/>, <see cref="double"/>, <see cref="double"/>).</summary>
+    /// <param name="queryResult">This <see cref="QueryResult"/> is interpreted.</param>
+    /// <exception cref="ArgumentException"/>
+    private static (double, double, double)? Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (queryPart.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit || bracketSplit[0].Split(',') is not { Length: 3 } commaSplit)
+        if (queryResult.Content.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit || bracketSplit[0].Split(',') is not { Length: 3 } commaSplit)
         {
             return null;
         }

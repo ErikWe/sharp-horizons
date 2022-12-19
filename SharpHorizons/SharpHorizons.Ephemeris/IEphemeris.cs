@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 
-/// <summary>Represents an ephemeris of an object, with each <see cref="IEphemerisEntry"/> described as an instance of <typeparamref name="TEntry"/>. This is a list of <typeparamref name="TEntry"/>, ordered by their <see cref="IEphemerisEntry.Epoch"/> (earliest first).</summary>
-/// <typeparam name="TEntry">The <see cref="IEphemeris{TEntry}"/> uses instances of this type to describe the properties of an object at different <see cref="IEpoch"/>.</typeparam>
+/// <summary>Represents an ephemeris of an object, with <see cref="IEphemerisEntry"/> of type <typeparamref name="TEntry"/>. This is a list of <typeparamref name="TEntry"/>, ordered by their <see cref="IEphemerisEntry.Epoch"/> (earliest first).</summary>
+/// <typeparam name="TEntry">The type of the <see cref="IEphemerisEntry"/> of the <see cref="IEphemeris{TEntry}"/>.</typeparam>
 public interface IEphemeris<TEntry> : IReadOnlyList<TEntry> where TEntry : IEphemerisEntry
 {
     /// <summary>Retrieves the <typeparamref name="TEntry"/> that describes the <see cref="IEpoch"/> closest to <paramref name="epoch"/>.</summary>

@@ -2,5 +2,5 @@
 
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="ReferenceEllipsoidInterpretation"/>.</summary>
-public interface IOriginReferenceEllipsoidInterpreter : IPartInterpreter<ReferenceEllipsoidInterpretation> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="ReferenceEllipsoidInterpretation"/>.</summary>
+public interface IOriginReferenceEllipsoidInterpreter : IInterpreter<ReferenceEllipsoidInterpretation> { }

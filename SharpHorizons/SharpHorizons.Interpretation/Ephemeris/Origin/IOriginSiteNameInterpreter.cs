@@ -2,5 +2,5 @@
 
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="ObservationSiteName"/>.</summary>
-public interface IOriginSiteNameInterpreter : IPartInterpreter<ObservationSiteName> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="ObservationSiteName"/>.</summary>
+public interface IOriginSiteNameInterpreter : IInterpreter<ObservationSiteName> { }

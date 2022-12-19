@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Target;
 
-/// <summary>Provides the <see cref="IPartInterpreter{TInterpretation}"/> related to interpreting a <see cref="IEphemerisTargetHeader"/>.</summary>
+/// <summary>Provides the <see cref="IInterpreter{TInterpretation}"/> related to interpreting an <see cref="IEphemerisTargetHeader"/>.</summary>
 public interface IEphemerisTargetHeaderInterpretationProvider
 {
     /// <inheritdoc cref="ITargetInterpreter"/>

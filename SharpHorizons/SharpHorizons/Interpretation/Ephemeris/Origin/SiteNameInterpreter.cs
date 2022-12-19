@@ -2,7 +2,7 @@
 
 using Microsoft.CodeAnalysis;
 
-using System;
+using SharpHorizons.Query.Result;
 
 /// <inheritdoc cref="IOriginSiteNameInterpreter"/>
 internal sealed class SiteNameInterpreter : IOriginSiteNameInterpreter
@@ -17,11 +17,11 @@ internal sealed class SiteNameInterpreter : IOriginSiteNameInterpreter
         OriginInterpretationOptionsProvider = originInterpretationOptionsProvider;
     }
 
-    Optional<ObservationSiteName> IPartInterpreter<ObservationSiteName>.Interpret(string queryPart)
+    Optional<ObservationSiteName> IInterpreter<ObservationSiteName>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (queryPart.Split(':') is not { Length: > 1 } colonSplit)
+        if (queryResult.Content.Split(':') is not { Length: > 1 } colonSplit)
         {
             return new();
         }

@@ -5,36 +5,34 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCComet"/>.</summary>
-internal sealed class MPCCometInterpreter : IPartInterpreter<MPCComet>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCComet"/>.</summary>
+internal sealed class MPCCometInterpreter : IInterpreter<MPCComet>
 {
     /// <inheritdoc cref="Ephemeris.MPCCometDesignationInterpreter"/>
-    private IPartInterpreter<MPCCometDesignation> MPCCometDesignationInterpreter { get; }
+    private IInterpreter<MPCCometDesignation> MPCCometDesignationInterpreter { get; }
 
     /// <inheritdoc cref="Ephemeris.MPCCometNameInterpreter"/>
-    private IPartInterpreter<MPCCometName> MPCCometNameInterpreter { get; }
+    private IInterpreter<MPCCometName> MPCCometNameInterpreter { get; }
 
     /// <inheritdoc cref="MPCCometInterpreter"/>
     /// <param name="mpcCometDesignationInterpreter"><inheritdoc cref="MPCCometDesignationInterpreter" path="/summary"/></param>
     /// <param name="mpcCometNameInterpreter"><inheritdoc cref="MPCCometNameInterpreter" path="/summary"/></param>
-    public MPCCometInterpreter(IPartInterpreter<MPCCometDesignation> mpcCometDesignationInterpreter, IPartInterpreter<MPCCometName> mpcCometNameInterpreter)
+    public MPCCometInterpreter(IInterpreter<MPCCometDesignation> mpcCometDesignationInterpreter, IInterpreter<MPCCometName> mpcCometNameInterpreter)
     {
         MPCCometDesignationInterpreter = mpcCometDesignationInterpreter;
         MPCCometNameInterpreter = mpcCometNameInterpreter;
     }
 
-    Optional<MPCComet> IPartInterpreter<MPCComet>.Interpret(string queryPart)
+    Optional<MPCComet> IInterpreter<MPCComet>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (MPCCometDesignationInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var designation })
+        if (MPCCometDesignationInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var designation })
         {
             return new();
         }
 
-        if (MPCCometNameInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var name })
+        if (MPCCometNameInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var name })
         {
             return new MPCComet(designation);
         }

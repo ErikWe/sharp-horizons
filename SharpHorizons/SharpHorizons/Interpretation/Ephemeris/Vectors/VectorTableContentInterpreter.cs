@@ -3,6 +3,7 @@
 using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation;
+using SharpHorizons.Query.Result;
 using SharpHorizons.Query.Vectors.Table;
 
 using System;
@@ -10,16 +11,18 @@ using System;
 /// <inheritdoc cref="IVectorTableContentInterpreter"/>
 internal sealed class VectorTableContentInterpreter : IVectorTableContentInterpreter
 {
-    Optional<VectorTableContent> IPartInterpreter<VectorTableContent>.Interpret(string queryPart)
+    Optional<VectorTableContent> IInterpreter<VectorTableContent>.Interpret(QueryResult queryResult)
     {
-        var firstColonIndex = queryPart.IndexOf(':');
+        QueryResult.Validate(queryResult);
+
+        var firstColonIndex = queryResult.Content.IndexOf(':');
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        if (queryPart[(firstColonIndex + 1)..].Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: > 0 } spaceSplit)
+        if (queryResult.Content[(firstColonIndex + 1)..].Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: > 0 } spaceSplit)
         {
             return new();
         }

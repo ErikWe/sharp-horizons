@@ -4,18 +4,16 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MajorObjectName"/>.</summary>
-internal sealed class MajorObjectNameInterpreter : IPartInterpreter<MajorObjectName>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MajorObjectName"/>.</summary>
+internal sealed class MajorObjectNameInterpreter : IInterpreter<MajorObjectName>
 {
-    Optional<MajorObjectName> IPartInterpreter<MajorObjectName>.Interpret(string queryPart)
+    Optional<MajorObjectName> IInterpreter<MajorObjectName>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        var lastIndex = queryPart.LastIndexOf('(');
+        var lastIndex = queryResult.Content.LastIndexOf('(');
 
-        var name = queryPart[..lastIndex].Trim();
+        var name = queryResult.Content[..lastIndex].Trim();
 
         if (int.TryParse(name, out var _))
         {

@@ -3,13 +3,13 @@
 using System;
 using System.Threading.Tasks;
 
-/// <summary>Handles extraction of <see cref="IQueryResult"/> from <see cref="IHTTPQueryResult"/>.</summary>
+/// <summary>Handles extraction of <see cref="QueryResult"/> from <see cref="HTTPQueryResult"/>.</summary>
 public interface IHTTPResultExtractor
 {
-    /// <summary>Extracts a <see cref="IQueryResult"/> from <paramref name="httpResult"/>.</summary>
-    /// <param name="httpResult">A <see cref="IQueryResult"/> is extracted from this <see cref="IHTTPQueryResult"/>.</param>
+    /// <summary>Extracts a <see cref="QueryResult"/> from <paramref name="httpResult"/>.</summary>
+    /// <param name="httpResult">A <see cref="QueryResult"/> is extracted from this <see cref="HTTPQueryResult"/>.</param>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="UnexpectedQueryResultFormatException"/>
     /// <exception cref="UnsuccesfulHTTPRequestException"/>
-    public abstract Task<IQueryResult> ExtractAsync(IHTTPQueryResult httpResult);
+    public abstract Task<QueryResult> ExtractAsync(HTTPQueryResult httpResult);
 }

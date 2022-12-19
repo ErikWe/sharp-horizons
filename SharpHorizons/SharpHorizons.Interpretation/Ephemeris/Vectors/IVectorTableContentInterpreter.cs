@@ -3,5 +3,5 @@
 using SharpHorizons.Query.Result;
 using SharpHorizons.Query.Vectors.Table;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="VectorTableContent"/>.</summary>
-public interface IVectorTableContentInterpreter : IPartInterpreter<VectorTableContent> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="VectorTableContent"/>.</summary>
+public interface IVectorTableContentInterpreter : IInterpreter<VectorTableContent> { }

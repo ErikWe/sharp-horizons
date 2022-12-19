@@ -3,5 +3,5 @@
 using SharpHorizons.Query;
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="ReferencePlane"/>.</summary>
-public interface IReferencePlaneInterpreter : IPartInterpreter<ReferencePlane> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="ReferencePlane"/>.</summary>
+public interface IReferencePlaneInterpreter : IInterpreter<ReferencePlane> { }

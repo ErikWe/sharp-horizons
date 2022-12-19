@@ -19,11 +19,11 @@ internal sealed class HTTPQueryHandler : IHTTPQueryHandler
         Client = httpClientFactory.CreateClient();
     }
 
-    async Task<IHTTPQueryResult> IHTTPQueryHandler.RequestAsync(HorizonsQueryURI queryURI) => await RequestAsync(queryURI, CancellationToken.None);
-    async Task<IHTTPQueryResult> IHTTPQueryHandler.RequestAsync(HorizonsQueryURI queryURI, CancellationToken token) => await RequestAsync(queryURI, token);
+    async Task<HTTPQueryResult> IHTTPQueryHandler.RequestAsync(HorizonsQueryURI queryURI) => await RequestAsync(queryURI, CancellationToken.None);
+    async Task<HTTPQueryResult> IHTTPQueryHandler.RequestAsync(HorizonsQueryURI queryURI, CancellationToken token) => await RequestAsync(queryURI, token);
 
     /// <inheritdoc cref="IHTTPQueryHandler.RequestAsync(HorizonsQueryURI, CancellationToken)"/>
-    private async Task<IHTTPQueryResult> RequestAsync(HorizonsQueryURI queryURI, CancellationToken token)
+    private async Task<HTTPQueryResult> RequestAsync(HorizonsQueryURI queryURI, CancellationToken token)
     {
         HorizonsQueryURI.Validate(queryURI);
 

@@ -5,6 +5,8 @@ using Microsoft.CodeAnalysis;
 using NodaTime;
 using NodaTime.Text;
 
+using SharpHorizons.Query.Result;
+
 using System;
 
 /// <inheritdoc cref="IEphemerisQueryEpochInterpreter"/>
@@ -24,11 +26,11 @@ internal sealed class EphemerisQueryEpochInterpreter : IEphemerisQueryEpochInter
         JPLTimeZone = timeZoneProvider[interpretationsOptionsProvider.HorizonsTimeZoneID];
     }
 
-    Optional<IEpoch> IPartInterpreter<IEpoch>.Interpret(string queryPart)
+    Optional<IEpoch> IInterpreter<IEpoch>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (queryPart.Split('/') is not { Length: 3 } slashSplit || slashSplit[1].Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: 8 } spaceSplit || spaceSplit[4].Split(':') is not { Length: 3 } colonSplit)
+        if (queryResult.Content.Split('/') is not { Length: 3 } slashSplit || slashSplit[1].Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: 8 } spaceSplit || spaceSplit[4].Split(':') is not { Length: 3 } colonSplit)
         {
             return new();
         }

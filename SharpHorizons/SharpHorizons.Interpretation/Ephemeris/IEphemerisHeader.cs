@@ -9,7 +9,7 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
-/// <summary>Represents the header of the <see cref="IQueryResult"/> of an ephemeris query.</summary>
+/// <summary>Represents the header of the <see cref="QueryResult"/> of an ephemeris query.</summary>
 public interface IEphemerisHeader
 {
     /// <summary>The <see cref="IEpoch"/> when the query was executed by Horizons.</summary>
@@ -33,16 +33,16 @@ public interface IEphemerisHeader
     /// <summary>Represents the <see cref="Query.Epoch.EpochSelectionMode"/> that was used.</summary>
     public virtual EpochSelectionMode EpochSelectionMode => StepSize is null ? EpochSelectionMode.Collection : EpochSelectionMode.Range;
 
-    /// <summary>Represents the <see cref="Query.Epoch.TimeSystem"/> used to express the <see cref="IEpoch"/> in the <see cref="IQueryResult"/>.</summary>
+    /// <summary>Represents the <see cref="Query.Epoch.TimeSystem"/> used to express the <see cref="IEpoch"/> in the <see cref="QueryResult"/>.</summary>
     public abstract TimeSystem TimeSystem { get; }
 
-    /// <summary>The <see cref="Time"/> offset from UTC of the timezone used to express the <see cref="IEpoch"/> in the <see cref="IQueryResult"/>.</summary>
+    /// <summary>The <see cref="Time"/> offset from UTC of the timezone used to express the <see cref="IEpoch"/> in the <see cref="QueryResult"/>.</summary>
     public abstract Time TimeZoneOffset { get; }
 
     /// <summary>Indicates whether small perturbers were considered when executing the query.</summary>
     public abstract bool SmallPerturbers { get; }
 
-    /// <summary>Represents the <see cref="Query.ReferenceSystem"/> used in the <see cref="IQueryResult"/>.</summary>
+    /// <summary>Represents the <see cref="Query.ReferenceSystem"/> used in the <see cref="QueryResult"/>.</summary>
     public abstract ReferenceSystem ReferenceSystem { get; }
 
     /// <inheritdoc cref="EphemerisQuantityTable"/>

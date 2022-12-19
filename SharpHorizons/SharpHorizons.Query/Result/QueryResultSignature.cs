@@ -4,10 +4,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-/// <summary>Describes the signature of a <see cref="IQueryResult"/>.</summary>
+/// <summary>Describes the signature of a <see cref="QueryResult"/>.</summary>
 public readonly record struct QueryResultSignature
 {
-    /// <summary>The source of the <see cref="IQueryResult"/>.</summary>
+    /// <summary>The source of the <see cref="QueryResult"/>.</summary>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     public required string Source

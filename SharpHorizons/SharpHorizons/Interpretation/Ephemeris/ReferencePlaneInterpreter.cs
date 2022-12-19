@@ -4,23 +4,26 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation;
 using SharpHorizons.Query;
+using SharpHorizons.Query.Result;
 
 /// <inheritdoc cref="IReferencePlaneInterpreter"/>
 internal sealed class ReferencePlaneInterpreter : IReferencePlaneInterpreter
 {
-    Optional<ReferencePlane> IPartInterpreter<ReferencePlane>.Interpret(string queryPart)
+    Optional<ReferencePlane> IInterpreter<ReferencePlane>.Interpret(QueryResult queryResult)
     {
-        if (queryPart.Contains("Ecliptic"))
+        QueryResult.Validate(queryResult);
+
+        if (queryResult.Content.Contains("Ecliptic"))
         {
             return ReferencePlane.Ecliptic;
         }
 
-        if (queryPart.Contains("ICRF") || queryPart.Contains("FK4"))
+        if (queryResult.Content.Contains("ICRF") || queryResult.Content.Contains("FK4"))
         {
             return ReferencePlane.Frame;
         }
 
-        if (queryPart.Contains("body equator and node of date"))
+        if (queryResult.Content.Contains("body equator and node of date"))
         {
             return ReferencePlane.BodyEquator;
         }

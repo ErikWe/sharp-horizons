@@ -4,20 +4,23 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation.Ephemeris.Vectors;
 using SharpHorizons.Query;
+using SharpHorizons.Query.Result;
 
 /// <inheritdoc cref="IVectorsOutputUnitsInterpreter"/>
 internal sealed class OutputUnitsInterpreter : IVectorsOutputUnitsInterpreter
 {
-    Optional<OutputUnits> IPartInterpreter<OutputUnits>.Interpret(string queryPart)
+    Optional<OutputUnits> IInterpreter<OutputUnits>.Interpret(QueryResult queryResult)
     {
-        var firstColonIndex = queryPart.IndexOf(':');
+        QueryResult.Validate(queryResult);
+
+        var firstColonIndex = queryResult.Content.IndexOf(':');
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        return queryPart[(firstColonIndex + 1)..].Trim() switch
+        return queryResult.Content[(firstColonIndex + 1)..].Trim() switch
         {
             "KM-S" => OutputUnits.KilometresAndSeconds,
             "KM-D" => OutputUnits.KilometresAndDays,

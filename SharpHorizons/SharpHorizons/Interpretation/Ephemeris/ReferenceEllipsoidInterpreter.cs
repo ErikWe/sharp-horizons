@@ -4,8 +4,7 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
-
-using System;
+using SharpHorizons.Query.Result;
 
 /// <inheritdoc cref="ITargetReferenceEllipsoidInterpreter"/>
 internal sealed class ReferenceEllipsoidInterpreter : ITargetReferenceEllipsoidInterpreter, IOriginReferenceEllipsoidInterpreter
@@ -24,11 +23,11 @@ internal sealed class ReferenceEllipsoidInterpreter : ITargetReferenceEllipsoidI
         EastPositiveLongitude = FormatLongitudeKey(interpretationOptionsProvider.EastPositiveLongitude);
     }
 
-    Optional<ReferenceEllipsoidInterpretation> IPartInterpreter<ReferenceEllipsoidInterpretation>.Interpret(string queryPart)
+    Optional<ReferenceEllipsoidInterpretation> IInterpreter<ReferenceEllipsoidInterpretation>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (queryPart.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } openBracketSplit || openBracketSplit[1].Split('}') is not { Length: > 1 } closeBracketSplit)
+        if (queryResult.Content.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } openBracketSplit || openBracketSplit[1].Split('}') is not { Length: > 1 } closeBracketSplit)
         {
             return new();
         }

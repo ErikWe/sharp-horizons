@@ -20,10 +20,10 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     private IEphemerisInterpretationOptionsProvider EphemerisInterpretationOptionsProvider { get; }
 
     /// <summary>Delegates registered for invokation when the first line of the <see cref="IEphemerisHeader"/> is encountered.</summary>
-    private ICollection<Func<string, THeader, THeader>> FirstLineInterpreters { get; } = new List<Func<string, THeader, THeader>>();
+    private ICollection<Func<QueryResult, THeader, THeader>> FirstLineInterpreters { get; } = new List<Func<QueryResult, THeader, THeader>>();
 
     /// <summary>Delegates registered for invokation when some <see cref="string"/> key is encountered.</summary>
-    private Dictionary<string, ICollection<Func<string, THeader, THeader>>> KeyInterpreters { get; } = new();
+    private Dictionary<string, ICollection<Func<QueryResult, THeader, THeader>>> KeyInterpreters { get; } = new();
 
     /// <inheritdoc cref="AEphemerisHeaderInterpreter{THeader}"/>
     /// <param name="interpretationOptionsProvider"><inheritdoc cref="InterpretationOptionsProvider" path="/summary"/></param>
@@ -34,17 +34,17 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
         EphemerisInterpretationOptionsProvider = ephemerisInterpretationOptionsProvider;
     }
 
-    /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when the first line of the <see cref="IEphemerisHeader"/> is encountered.</summary>
+    /// <summary>Registers a <see cref="IInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when the first line of the <see cref="IEphemerisHeader"/> is encountered.</summary>
     /// <typeparam name="TInterpretation">The type of the result interpreted by the <paramref name="interpreter"/>.</typeparam>
     /// <param name="interpreter">This <see cref="IInterpreter{TInterpretation}"/> is registered for invokation when the first line of the <see cref="IEphemerisHeader"/> is encounterd.</param>
     /// <param name="setter">Delegate for applying the result of the <paramref name="interpreter"/>.</param>
-    protected void RegisterFirstLineInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, Func<TInterpretation, THeader, THeader> setter)
+    protected void RegisterFirstLineInterpreter<TInterpretation>(IInterpreter<TInterpretation> interpreter, Func<TInterpretation, THeader, THeader> setter)
     {
         FirstLineInterpreters.Add(wrapper);
 
-        THeader wrapper(string line, THeader header)
+        THeader wrapper(QueryResult queryResult, THeader header)
         {
-            if (interpreter.Interpret(line) is not { HasValue: true } optionalInterpretation)
+            if (interpreter.Interpret(queryResult) is not { HasValue: true } optionalInterpretation)
             {
                 return header;
             }
@@ -53,27 +53,27 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
         }
     }
 
-    /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when a <paramref name="key"/> is encountered.</summary>
+    /// <summary>Registers a <see cref="IInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when a <paramref name="key"/> is encountered.</summary>
     /// <typeparam name="TInterpretation">The type of the result interpreted by the <paramref name="interpreter"/>.</typeparam>
     /// <param name="interpreter">This <see cref="IInterpreter{TInterpretation}"/> is registered for invokation when a <paramref name="key"/> is encounterd.</param>
     /// <param name="key">The key which, when encountered, results in the <paramref name="interpreter"/> being invoked.</param>
     /// <param name="setter">Delegate for applying the result of the <paramref name="interpreter"/>.</param>
-    protected void RegisterKeyInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, string key, Func<TInterpretation, THeader, THeader> setter)
+    protected void RegisterKeyInterpreter<TInterpretation>(IInterpreter<TInterpretation> interpreter, string key, Func<TInterpretation, THeader, THeader> setter)
     {
         key = FormatKey(key);
 
         if (KeyInterpreters.ContainsKey(key) is false)
         {
-            KeyInterpreters[key] = new List<Func<string, THeader, THeader>>(1) { wrapper };
+            KeyInterpreters[key] = new List<Func<QueryResult, THeader, THeader>>(1) { wrapper };
 
             return;
         }
 
         KeyInterpreters[key].Add(wrapper);
 
-        THeader wrapper(string line, THeader header)
+        THeader wrapper(QueryResult queryResult, THeader header)
         {
-            if (interpreter.Interpret(line) is not { HasValue: true } optionalInterpretation)
+            if (interpreter.Interpret(queryResult) is not { HasValue: true } optionalInterpretation)
             {
                 return header;
             }
@@ -83,8 +83,8 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     }
 
     /// <summary>Attempts to interpret <paramref name="queryResult"/>, resulting in an instance of <typeparamref name="THeader"/>.</summary>
-    /// <param name="queryResult">This <see cref="IQueryResult"/> is interpreted as an instance of <typeparamref name="THeader"/>, if possible.</param>
-    protected Optional<THeader> Interpret(IQueryResult queryResult)
+    /// <param name="queryResult">This <see cref="QueryResult"/> is interpreted as an instance of <typeparamref name="THeader"/>, if possible.</param>
+    protected Optional<THeader> Interpret(QueryResult queryResult)
     {
         if (ConstructHeader(queryResult) is not { HasValue: true, Value: var header })
         {
@@ -95,7 +95,12 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
 
         while (linesEnumerator.MoveNext())
         {
-            if (TryInterpretFirstLine(linesEnumerator.Current, header) is { HasValue: true } optionalHeader)
+            if (linesEnumerator.Current.Length is 0)
+            {
+                continue;
+            }
+
+            if (TryInterpretFirstLine(new QueryResult(queryResult.Signature, linesEnumerator.Current), header) is { HasValue: true } optionalHeader)
             {
                 header = optionalHeader.Value;
 
@@ -112,7 +117,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
                 break;
             }
 
-            header = InterpretLine(linesEnumerator.Current, header);
+            header = InterpretLine(new QueryResult(queryResult.Signature, linesEnumerator.Current), header);
         }
 
         var quantities = InterpretEphemerisQuantities(linesEnumerator);
@@ -128,8 +133,8 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     }
 
     /// <summary>Attempts to construct a <typeparamref name="THeader"/>.</summary>
-    /// <param name="queryResult">The <see cref="IQueryResult"/> which the constructed <typeparamref name="THeader"/> will describe.</param>
-    protected abstract Optional<THeader> ConstructHeader(IQueryResult queryResult);
+    /// <param name="queryResult">The <see cref="QueryResult"/> which the constructed <typeparamref name="THeader"/> will describe.</param>
+    protected abstract Optional<THeader> ConstructHeader(QueryResult queryResult);
 
     /// <summary>Sets the <see cref="IEphemerisHeader.Quantities"/> of the <paramref name="header"/> to <paramref name="quantities"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
     /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
@@ -141,11 +146,11 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     protected virtual bool ValidateHeader(THeader header) => true;
 
     /// <summary>Attempts to interpret the first <paramref name="line"/> of the <see cref="IEphemerisHeader"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
-    /// <param name="line">A line of the <see cref="IQueryResult"/>, which is interpreted as the first line of the <see cref="IEphemerisHeader"/>, if possible.</param>
+    /// <param name="line">A line of the <see cref="QueryResult"/>, which is interpreted as the first line of the <see cref="IEphemerisHeader"/>, if possible.</param>
     /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
-    private Optional<THeader> TryInterpretFirstLine(string line, THeader header)
+    private Optional<THeader> TryInterpretFirstLine(QueryResult line, THeader header)
     {
-        if (line.StartsWith(EphemerisInterpretationOptionsProvider.EphemerisDataStart) is false)
+        if (line.Content.StartsWith(EphemerisInterpretationOptionsProvider.EphemerisDataStart) is false)
         {
             return new();
         }
@@ -156,7 +161,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     /// <summary>Interprets the first <paramref name="line"/> of the <see cref="IEphemerisHeader"/> by invoking the <see cref="FirstLineInterpreters"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
     /// <param name="line">The first line of the <see cref="IEphemerisHeader"/>.</param>
     /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
-    private THeader InvokeFirstLineInterpreters(string line, THeader header)
+    private THeader InvokeFirstLineInterpreters(QueryResult line, THeader header)
     {
         foreach (var interpreter in FirstLineInterpreters)
         {
@@ -184,9 +189,9 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     /// <summary>Interprets a <paramref name="line"/> of the <see cref="IEphemerisHeader"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
     /// <param name="line">A line of the <see cref="IEphemerisHeader"/>.</param>
     /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
-    private THeader InterpretLine(string line, THeader header)
+    private THeader InterpretLine(QueryResult line, THeader header)
     {
-        if (line.Split(':') is not { Length: > 1 } colonSplit)
+        if (line.Content.Split(':') is not { Length: > 1 } colonSplit)
         {
             return header;
         }
@@ -200,7 +205,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     /// <param name="key">The <see cref="string"/> key of the <paramref name="line"/>.</param>
     /// <param name="line">A line of the <see cref="IEphemerisHeader"/>, corresponding to some <paramref name="key"/>.</param>
     /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
-    private THeader InvokeKeyInterpreters(string key, string line, THeader header)
+    private THeader InvokeKeyInterpreters(string key, QueryResult line, THeader header)
     {
         if (KeyInterpreters.TryGetValue(key, out var interpreters))
         {

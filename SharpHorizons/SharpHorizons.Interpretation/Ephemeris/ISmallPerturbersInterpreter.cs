@@ -2,5 +2,5 @@
 
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as a <see cref="bool"/> describing the inclusion of small-body perturbers.</summary>
-public interface ISmallPerturbersInterpreter : IPartInterpreter<bool> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="bool"/> describing the inclusion of small-body perturbers.</summary>
+public interface ISmallPerturbersInterpreter : IInterpreter<bool> { }

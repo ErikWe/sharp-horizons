@@ -2,5 +2,5 @@
 
 using SharpHorizons.Query.Result;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="ObjectRadiiInterpretation"/>.</summary>
-public interface IOriginRadiiInterpreter : IPartInterpreter<ObjectRadiiInterpretation> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="ObjectRadiiInterpretation"/>.</summary>
+public interface IOriginRadiiInterpreter : IInterpreter<ObjectRadiiInterpretation> { }

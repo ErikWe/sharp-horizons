@@ -27,7 +27,7 @@ internal sealed class HTTPTextExtractor : IHTTPResultExtractor
         RawTextVersionKey = FormatKey(intepretationsOptionsProvider.RawTextVersion);
     }
 
-    async Task<IQueryResult> IHTTPResultExtractor.ExtractAsync(IHTTPQueryResult httpResult)
+    async Task<QueryResult> IHTTPResultExtractor.ExtractAsync(HTTPQueryResult httpResult)
     {
         if (httpResult.Response.IsSuccessStatusCode is false)
         {
@@ -47,10 +47,10 @@ internal sealed class HTTPTextExtractor : IHTTPResultExtractor
         throw new UnexpectedQueryResultFormatException();
     }
 
-    /// <summary>Extracts a <see cref="IQueryResult"/> by deserializing <paramref name="httpResult"/> as JSON.</summary>
-    /// <param name="httpResult">A <see cref="IQueryResult"/> is extracted from this <see cref="IHTTPQueryResult"/>.</param>
+    /// <summary>Extracts a <see cref="QueryResult"/> by deserializing <paramref name="httpResult"/> as JSON.</summary>
+    /// <param name="httpResult">A <see cref="QueryResult"/> is extracted from this <see cref="HTTPQueryResult"/>.</param>
     /// <exception cref="UnexpectedQueryResultFormatException"/>
-    private static async Task<IQueryResult> ExtractFromJSON(IHTTPQueryResult httpResult)
+    private static async Task<QueryResult> ExtractFromJSON(HTTPQueryResult httpResult)
     {
         JSON.Root? json;
 
@@ -68,13 +68,13 @@ internal sealed class HTTPTextExtractor : IHTTPResultExtractor
             throw new UnexpectedQueryResultFormatException();
         }
 
-        return new QueryResult(json.Signature, json.Result);
+        return new(json.Signature, json.Result);
     }
 
-    /// <summary>Extracts a <see cref="IQueryResult"/> from <paramref name="httpResult"/> by parsing the raw content.</summary>
-    /// <param name="httpResult">A <see cref="IQueryResult"/> is extracted from this <see cref="IHTTPQueryResult"/>.</param>
+    /// <summary>Extracts a <see cref="QueryResult"/> from <paramref name="httpResult"/> by parsing the raw content.</summary>
+    /// <param name="httpResult">A <see cref="QueryResult"/> is extracted from this <see cref="HTTPQueryResult"/>.</param>
     /// <exception cref="UnexpectedQueryResultFormatException"/>
-    private async Task<IQueryResult> ExtractFromRaw(IHTTPQueryResult httpResult)
+    private async Task<QueryResult> ExtractFromRaw(HTTPQueryResult httpResult)
     {
         using var stream = await httpResult.Response.Content.ReadAsStreamAsync();
         using StreamReader reader = new(stream);
@@ -111,7 +111,7 @@ internal sealed class HTTPTextExtractor : IHTTPResultExtractor
             throw new UnexpectedQueryResultFormatException();
         }
 
-        return new QueryResult(new QueryResultSignature(source, version), await reader.ReadToEndAsync());
+        return new(new QueryResultSignature(source, version), await reader.ReadToEndAsync());
     }
 
     /// <summary>Converts <paramref name="key"/> to a format suitable for comparison.</summary>

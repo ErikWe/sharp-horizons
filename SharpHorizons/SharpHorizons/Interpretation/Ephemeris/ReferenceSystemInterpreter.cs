@@ -4,18 +4,21 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation;
 using SharpHorizons.Query;
+using SharpHorizons.Query.Result;
 
 /// <inheritdoc cref="IReferenceSystemInterpreter"/>
 internal sealed class ReferenceSystemInterpreter : IReferenceSystemInterpreter
 {
-    Optional<ReferenceSystem> IPartInterpreter<ReferenceSystem>.Interpret(string queryPart)
+    Optional<ReferenceSystem> IInterpreter<ReferenceSystem>.Interpret(QueryResult queryResult)
     {
-        if (queryPart.Contains("J2000") || queryPart.Contains("ICRF"))
+        QueryResult.Validate(queryResult);
+
+        if (queryResult.Content.Contains("J2000") || queryResult.Content.Contains("ICRF"))
         {
             return ReferenceSystem.ICRF;
         }
 
-        if (queryPart.Contains("B1950") || queryPart.Contains("FK4"))
+        if (queryResult.Content.Contains("B1950") || queryResult.Content.Contains("FK4"))
         {
             return ReferenceSystem.B1950;
         }

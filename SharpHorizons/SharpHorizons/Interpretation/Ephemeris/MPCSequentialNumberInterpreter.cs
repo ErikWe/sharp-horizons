@@ -5,23 +5,21 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCSequentialNumber"/>.</summary>
-internal sealed class MPCSequentialNumberInterpreter : IPartInterpreter<MPCSequentialNumber>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCSequentialNumber"/>.</summary>
+internal sealed class MPCSequentialNumberInterpreter : IInterpreter<MPCSequentialNumber>
 {
-    Optional<MPCSequentialNumber> IPartInterpreter<MPCSequentialNumber>.Interpret(string queryPart)
+    Optional<MPCSequentialNumber> IInterpreter<MPCSequentialNumber>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        var stopIndex = queryPart.IndexOf(' ') - 1;
+        var stopIndex = queryResult.Content.IndexOf(' ') - 1;
 
         if (stopIndex is -2)
         {
             return new();
         }
 
-        if (int.TryParse(queryPart[..stopIndex], out var id) is false)
+        if (int.TryParse(queryResult.Content[..stopIndex], out var id) is false)
         {
             return new();
         }

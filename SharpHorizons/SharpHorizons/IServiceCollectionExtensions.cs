@@ -121,12 +121,11 @@ public static class IServiceCollectionExtensions
     private static IServiceCollection AddSharpHorizonsTarget(this IServiceCollection services)
     {
         services.AddSingleton<ITargetFactory, TargetFactory>();
+        services.AddSingleton<ITargetSiteFactory, TargetSiteFactory>();
+        services.AddSingleton<ITargetSiteObjectFactory, TargetSiteObjectFactory>();
 
         services.AddSingleton<IMajorObjectTargetFactory, MajorObjectTargetFactory>();
         services.AddSingleton<IMPCTargetFactory, MPCTargetFactory>();
-
-        services.AddSingleton<ITargetSiteFactory, TargetSiteFactory>();
-        services.AddSingleton<ITargetSiteObjectFactory, TargetSiteObjectFactory>();
 
         services.AddSingleton<ITargetSiteComposer<CylindricalCoordinate>, Query.Arguments.Composers.Target.CylindricalCoordinateComposer>();
         services.AddSingleton<ITargetSiteComposer<GeodeticCoordinate>, Query.Arguments.Composers.Target.GeodeticCoordinateComposer>();
@@ -194,21 +193,12 @@ public static class IServiceCollectionExtensions
     }
 
     /// <summary>Adds <see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
-    /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    /// <param name="services"><see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsComposers(this IServiceCollection services)
     {
         services.AddSingleton<IQueryStringComposer, QueryStringComposer>();
         services.AddSingleton<IURIComposer, URIComposer>();
 
-        services.AddSharpHorizonsArgumentComposers();
-
-        return services;
-    }
-
-    /// <summary>Adds <see cref="IArgumentComposer{TArgument, T}"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
-    /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
-    private static IServiceCollection AddSharpHorizonsArgumentComposers(this IServiceCollection services)
-    {
         services.AddSingleton<ICommandComposer<QueryCommand>, QueryCommandComposer>();
 
         services.AddSingleton<ITargetComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
@@ -264,20 +254,15 @@ public static class IServiceCollectionExtensions
         return services;
     }
 
-    /// <summary>Adds <see cref="IInterpreter{TInterpretation}"/> and <see cref="IPartInterpreter{TInterpretation}"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
-    /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    /// <summary>Adds <see cref="IInterpreter{TInterpretation}"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
+    /// <param name="services"><see cref="IInterpreter{TInterpretation}"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsInterpreters(this IServiceCollection services)
     {
-        services.AddSharpHorizonsVectorQuantitiesInterpreters();
+        services.AddSharpHorizonsVectorInterpreters();
 
         services.AddSingleton<IEphemerisHeaderInterpretationProvider, EphemerisHeaderInterpretationProvider>();
         services.AddSingleton<IEphemerisTargetHeaderInterpretationProvider, EphemerisTargetHeaderInterpretationProvider>();
         services.AddSingleton<IEphemerisOriginHeaderInterpretationProvider, EphemerisOriginHeaderInterpretationProvider>();
-        services.AddSingleton<IVectorsHeaderInterpretationProvider, VectorsHeaderInterpretationProvider>();
-
-        services.AddSingleton<IVectorsHeaderInterpreter, VectorsHeaderInterpreter>();
-
-        services.AddSingleton<IOrbitalStateVectorsInterpreter, OrbitalStateVectorsInterpreter>();
 
         services.AddSingleton<ITargetInterpreter, TargetInterpreter>();
         services.AddSingleton<ITargetGeodeticCoordinateInterpreter, CoordinateInterpreter>();
@@ -292,19 +277,19 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IOriginReferenceEllipsoidInterpreter, ReferenceEllipsoidInterpreter>();
         services.AddSingleton<IOriginRadiiInterpreter, RadiiInterpreter>();
 
-        services.AddSingleton<IPartInterpreter<MajorObject>, MajorObjectInterpreter>();
-        services.AddSingleton<IPartInterpreter<MajorObjectID>, MajorObjectIDInterpreter>();
-        services.AddSingleton<IPartInterpreter<MajorObjectName>, MajorObjectNameInterpreter>();
+        services.AddSingleton<IInterpreter<MajorObject>, MajorObjectInterpreter>();
+        services.AddSingleton<IInterpreter<MajorObjectID>, MajorObjectIDInterpreter>();
+        services.AddSingleton<IInterpreter<MajorObjectName>, MajorObjectNameInterpreter>();
 
-        services.AddSingleton<IPartInterpreter<MPCObject>, MPCObjectInterpreter>();
-        services.AddSingleton<IPartInterpreter<MPCProvisionalObject>, MPCProvisionalObjectInterpreter>();
-        services.AddSingleton<IPartInterpreter<MPCSequentialNumber>, MPCSequentialNumberInterpreter>();
-        services.AddSingleton<IPartInterpreter<MPCProvisionalDesignation>, MPCProvisionalDesignationInterpreter>();
-        services.AddSingleton<IPartInterpreter<MPCName>, MPCNameInterpreter>();
+        services.AddSingleton<IInterpreter<MPCObject>, MPCObjectInterpreter>();
+        services.AddSingleton<IInterpreter<MPCProvisionalObject>, MPCProvisionalObjectInterpreter>();
+        services.AddSingleton<IInterpreter<MPCSequentialNumber>, MPCSequentialNumberInterpreter>();
+        services.AddSingleton<IInterpreter<MPCProvisionalDesignation>, MPCProvisionalDesignationInterpreter>();
+        services.AddSingleton<IInterpreter<MPCName>, MPCNameInterpreter>();
 
-        services.AddSingleton<IPartInterpreter<MPCComet>, MPCCometInterpreter>();
-        services.AddSingleton<IPartInterpreter<MPCCometDesignation>, MPCCometDesignationInterpreter>();
-        services.AddSingleton<IPartInterpreter<MPCCometName>, MPCCometNameInterpreter>();
+        services.AddSingleton<IInterpreter<MPCComet>, MPCCometInterpreter>();
+        services.AddSingleton<IInterpreter<MPCCometDesignation>, MPCCometDesignationInterpreter>();
+        services.AddSingleton<IInterpreter<MPCCometName>, MPCCometNameInterpreter>();
 
         services.AddSingleton<IEphemerisQueryEpochInterpreter, EphemerisQueryEpochInterpreter>();
         services.AddSingleton<IEphemerisStartEpochInterpreter, EphemerisBoundaryEpochInterpreter>();
@@ -326,19 +311,66 @@ public static class IServiceCollectionExtensions
         return services;
     }
 
-    /// <summary>Adds <see cref="IVectorsQuery"/>-related <see cref="IEphemerisQuantityInterpreter{THeader, TInterpretation}"/> services required by SharpHorizons to <paramref name="services"/>.</summary>
-    /// <param name="services">Composer-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
-    private static IServiceCollection AddSharpHorizonsVectorQuantitiesInterpreters(this IServiceCollection services)
+    /// <summary>Adds <see cref="IVectorsQuery"/>- and <see cref="IEphemerisQuantityInterpreter{THeader, TInterpretation}"/>-related services required by SharpHorizons to <paramref name="services"/>.</summary>
+    /// <param name="services"><see cref="IVectorsQuery"/>- and <see cref="IEphemerisQuantityInterpreter{THeader, TInterpretation}"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
+    private static IServiceCollection AddSharpHorizonsVectorInterpreters(this IServiceCollection services)
     {
+        services.AddSingleton<IVectorsHeaderInterpreter, VectorsHeaderInterpreter>();
+        services.AddSingleton<IVectorsHeaderInterpretationProvider, VectorsHeaderInterpretationProvider>();
+
+        services.AddSingleton<IOrbitalStateVectorsInterpreter, OrbitalStateVectorsInterpreter>();
+        services.AddSingleton<IOrbitalStateVectorsEphemerisInterpreter, OrbitalStateVectorsEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectPositionInterpreter, ObjectPositionInterpreter>();
+        services.AddSingleton<IObjectPositionEphemerisInterpreter, ObjectPositionEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectPositionUncertaintyACNInterpreter, ObjectPositionUncertaintyACNInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyACNEphemerisInterpreter, ObjectPositionUncertaintyACNEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectPositionUncertaintyPOSInterpreter, ObjectPositionUncertaintyPOSInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyPOSEphemerisInterpreter, ObjectPositionUncertaintyPOSEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectPositionUncertaintyRTNInterpreter, ObjectPositionUncertaintyRTNInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyRTNEphemerisInterpreter, ObjectPositionUncertaintyRTNEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectPositionUncertaintyXYZInterpreter, ObjectPositionUncertaintyXYZInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyXYZEphemerisInterpreter, ObjectPositionUncertaintyXYZEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectVelocityInterpreter, ObjectVelocityInterpreter>();
+        services.AddSingleton<IObjectVelocityEphemerisInterpreter, ObjectVelocityEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectVelocityUncertaintyACNInterpreter, ObjectVelocityUncertaintyACNInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyACNEphemerisInterpreter, ObjectVelocityUncertaintyACNEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectVelocityUncertaintyPOSInterpreter, ObjectVelocityUncertaintyPOSInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyPOSEphemerisInterpreter, ObjectVelocityUncertaintyPOSEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectVelocityUncertaintyRTNInterpreter, ObjectVelocityUncertaintyRTNInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyRTNEphemerisInterpreter, ObjectVelocityUncertaintyRTNEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectVelocityUncertaintyXYZInterpreter, ObjectVelocityUncertaintyXYZInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyXYZEphemerisInterpreter, ObjectVelocityUncertaintyXYZEphemerisInterpreter>();
+
+        services.AddSingleton<IObjectDistanceInterpreter, ObjectDistanceInterpreter>();
+        services.AddSingleton<IObjectDistanceEphemerisInterpreter, ObjectDistanceEphemerisInterpreter>();
+
         services.AddSingleton<IEphemerisEpochInterpreter, EphemerisEpochInterpreter>();
 
-        services.AddSingleton<IPositionXInterpreter, PositionComponentInterpreter>();
-        services.AddSingleton<IPositionYInterpreter, PositionComponentInterpreter>();
-        services.AddSingleton<IPositionZInterpreter, PositionComponentInterpreter>();
+        services.AddSingleton<IObjectPositionComponentInterpreter, DistanceQuantityInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyACNComponentInterpreter, DistanceQuantityInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyPOSComponentInterpreter, DistanceQuantityInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyRTNComponentInterpreter, DistanceQuantityInterpreter>();
+        services.AddSingleton<IObjectPositionUncertaintyXYZComponentInterpreter, DistanceQuantityInterpreter>();
+        services.AddSingleton<IDistanceInterpreter, DistanceQuantityInterpreter>();
 
-        services.AddSingleton<IVelocityXInterpreter, VelocityComponentInterpreter>();
-        services.AddSingleton<IVelocityYInterpreter, VelocityComponentInterpreter>();
-        services.AddSingleton<IVelocityZInterpreter, VelocityComponentInterpreter>();
+        services.AddSingleton<IObjectVelocityComponentInterpreter, SpeedQuantityInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyACNComponentInterpreter, SpeedQuantityInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyPOSComponentInterpreter, SpeedQuantityInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyRTNComponentInterpreter, SpeedQuantityInterpreter>();
+        services.AddSingleton<IObjectVelocityUncertaintyXYZComponentInterpreter, SpeedQuantityInterpreter>();
+        services.AddSingleton<IRadialSpeedInterpreter, SpeedQuantityInterpreter>();
+
+        services.AddSingleton<ILightTimeInterpreter, TimeQuantityInterpreter>();
 
         return services;
     }

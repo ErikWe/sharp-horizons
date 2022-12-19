@@ -13,8 +13,8 @@ using System;
 public interface IEphemerisQuantityInterpreter<THeader, TInterpretation> where THeader : IEphemerisHeader
 {
     /// <summary>Attempts to interpret <paramref name="text"/>, resulting in an instance of <typeparamref name="TInterpretation"/>.</summary>
-    /// <param name="text">This <see cref="string"/>, part of a <see cref="IQueryResult"/>, is interpreted as an instance of type <typeparamref name="TInterpretation"/>, if possible.</param>
-    /// <param name="header">The <typeparamref name="THeader"/>, representing the header of the <see cref="IQueryResult"/>.</param>
+    /// <param name="text">This <see cref="string"/>, part of a <see cref="QueryResult"/>, is interpreted as an instance of type <typeparamref name="TInterpretation"/>, if possible.</param>
+    /// <param name="header">The <typeparamref name="THeader"/>, representing the header of the <see cref="QueryResult"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     public abstract Optional<TInterpretation> Interpret(string text, THeader header);

@@ -6,7 +6,7 @@ using NodaTime;
 
 using SharpHorizons.Query.Result;
 
-/// <summary>Specifies how a <see cref="IQueryResult"/> is interpreted.</summary>
+/// <summary>Specifies how a <see cref="QueryResult"/> is interpreted.</summary>
 internal sealed class InterpretationOptions
 {
     /// <summary>Describes the name of the <see cref="IConfigurationSection"/> which describes <see cref="InterpretationOptions"/>.</summary>

@@ -4,10 +4,10 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
+using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
-using System;
 using System.Globalization;
 
 /// <inheritdoc cref="ITargetRadiiInterpreter"/>
@@ -23,16 +23,16 @@ internal sealed class RadiiInterpreter : ITargetRadiiInterpreter, IOriginRadiiIn
         InterpretationOptionsProvider = interpretationOptionsProvider;
     }
 
-    Optional<ObjectRadiiInterpretation> IPartInterpreter<ObjectRadiiInterpretation>.Interpret(string queryPart)
+    Optional<ObjectRadiiInterpretation> IInterpreter<ObjectRadiiInterpretation>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (queryPart.Contains(InterpretationOptionsProvider.UnavailableText))
+        if (queryResult.Content.Contains(InterpretationOptionsProvider.UnavailableText))
         {
             return new();
         }
 
-        if (queryPart.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit || bracketSplit[0].Split('x') is not { Length: 3 } xSplit || xSplit[2].Split('k') is not { Length: 2 } unitSplit)
+        if (queryResult.Content.Split(':') is not { Length: > 1 } colonSplit || colonSplit[1].Split('{') is not { Length: > 1 } bracketSplit || bracketSplit[0].Split('x') is not { Length: 3 } xSplit || xSplit[2].Split('k') is not { Length: 2 } unitSplit)
         {
             return new();
         }

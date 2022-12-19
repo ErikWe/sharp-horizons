@@ -41,7 +41,7 @@ internal class Program
         var httpQueryHandler = host.Services.GetRequiredService<IHTTPQueryHandler>();
         var httpTextExtractor = host.Services.GetRequiredService<IHTTPResultExtractor>();
         var headerInterpreter = host.Services.GetRequiredService<IVectorsHeaderInterpreter>();
-        var orbitalStateVectorsInterpreter = host.Services.GetRequiredService<IOrbitalStateVectorsInterpreter>();
+        var orbitalStateVectorsInterpreter = host.Services.GetRequiredService<IOrbitalStateVectorsEphemerisInterpreter>();
 
         var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: OutputFormat.JSON, tableContent: new(VectorTableQuantities.StateVectors, VectorTableUncertainties.All), outputLabels: OutputLabels.Enable);
         var uri = vectorsComposer.Compose(query);
@@ -50,7 +50,7 @@ internal class Program
         var header = headerInterpreter.Interpret(textResult);
         var orbitalStateVectors = orbitalStateVectorsInterpreter.Interpret(header.Value, textResult);
 
-        Console.WriteLine(orbitalStateVectors.Value.Count);
+        Console.WriteLine(orbitalStateVectors.Count);
     }
 
     private static void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configuration)

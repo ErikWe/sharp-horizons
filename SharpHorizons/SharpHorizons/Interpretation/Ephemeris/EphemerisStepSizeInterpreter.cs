@@ -3,6 +3,7 @@
 using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Query.Epoch;
+using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
@@ -34,16 +35,18 @@ internal sealed class EphemerisStepSizeInterpreter : IEphemerisStepSizeInterpret
         AngularStepSizeFactory = angularStepSizeFactory;
     }
 
-    Optional<IStepSize> IPartInterpreter<IStepSize>.Interpret(string queryPart)
+    Optional<IStepSize> IInterpreter<IStepSize>.Interpret(QueryResult queryResult)
     {
-        var firstColonIndex = queryPart.IndexOf(':');
+        QueryResult.Validate(queryResult);
+
+        var firstColonIndex = queryResult.Content.IndexOf(':');
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        if (queryPart[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: >= 2 } spaceSplit)
+        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: >= 2 } spaceSplit)
         {
             return new();
         }

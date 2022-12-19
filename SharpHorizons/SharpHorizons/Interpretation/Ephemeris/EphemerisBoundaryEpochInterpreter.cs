@@ -12,7 +12,7 @@ using SharpMeasures;
 
 using System;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="IStartEpoch"/> or <see cref="IStopEpoch"/>.</summary>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="IStartEpoch"/> or <see cref="IStopEpoch"/>.</summary>
 internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochInterpreter, IEphemerisStopEpochInterpreter
 {
     /// <summary>The <see cref="LocalDateTimePattern"/> used internally when parsing the <see cref="IEpoch"/>.</summary>
@@ -44,18 +44,18 @@ internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochIn
         TimeZoneOffsetInterpreter = timeZoneOffsetInterpreter;
     }
 
-    Optional<IEpoch> IPartInterpreter<IEpoch>.Interpret(string queryPart)
+    Optional<IEpoch> IInterpreter<IEpoch>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        var firstColonIndex = queryPart.IndexOf(':');
+        var firstColonIndex = queryResult.Content.IndexOf(':');
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        if (queryPart[(firstColonIndex + 1)..].Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
+        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
         {
             return new();
         }
@@ -67,12 +67,12 @@ internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochIn
             return new();
         }
 
-        if (TimeSystemInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var timeSystem } || timeSystem is TimeSystem.Unknown)
+        if (TimeSystemInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var timeSystem } || timeSystem is TimeSystem.Unknown)
         {
             return new();
         }
 
-        if (TimeZoneOffsetInterpreter.Interpret(queryPart) is not { HasValue: true, Value: var timeZoneOffset })
+        if (TimeZoneOffsetInterpreter.Interpret(queryResult) is not { HasValue: true, Value: var timeZoneOffset })
         {
             return new();
         }

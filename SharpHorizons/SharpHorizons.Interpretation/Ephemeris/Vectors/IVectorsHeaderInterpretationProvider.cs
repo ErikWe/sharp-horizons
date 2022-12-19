@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
 
-/// <summary>Provides the <see cref="IPartInterpreter{TInterpretation}"/> related to interpreting a <see cref="IVectorsHeader"/>.</summary>
+/// <summary>Provides the <see cref="IInterpreter{TInterpretation}"/> related to interpreting a <see cref="IVectorsHeader"/>.</summary>
 public interface IVectorsHeaderInterpretationProvider
 {
     /// <inheritdoc cref="IVectorsOutputUnitsInterpreter"/>

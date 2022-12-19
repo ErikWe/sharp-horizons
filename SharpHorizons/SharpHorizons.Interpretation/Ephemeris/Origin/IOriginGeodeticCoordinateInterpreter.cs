@@ -4,5 +4,5 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures.Astronomy;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="GeodeticCoordinate"/>.</summary>
-public interface IOriginGeodeticCoordinateInterpreter : IPartInterpreter<GeodeticCoordinate> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="GeodeticCoordinate"/>.</summary>
+public interface IOriginGeodeticCoordinateInterpreter : IInterpreter<GeodeticCoordinate> { }

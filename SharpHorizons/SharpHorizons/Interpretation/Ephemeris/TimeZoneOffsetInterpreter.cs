@@ -3,22 +3,25 @@
 using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Interpretation;
+using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
 /// <inheritdoc cref="ITimeZoneOffsetInterpreter"/>
 internal sealed class TimeZoneOffsetInterpreter : ITimeZoneOffsetInterpreter
 {
-    Optional<Time> IPartInterpreter<Time>.Interpret(string queryPart)
+    Optional<Time> IInterpreter<Time>.Interpret(QueryResult queryResult)
     {
-        var firstColonIndex = queryPart.IndexOf(':');
+        QueryResult.Validate(queryResult);
+
+        var firstColonIndex = queryResult.Content.IndexOf(':');
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        if (queryPart[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
+        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
         {
             return new();
         }

@@ -5,16 +5,14 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCName"/>.</summary>
-internal sealed class MPCNameInterpreter : IPartInterpreter<MPCName>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCName"/>.</summary>
+internal sealed class MPCNameInterpreter : IInterpreter<MPCName>
 {
-    Optional<MPCName> IPartInterpreter<MPCName>.Interpret(string queryPart)
+    Optional<MPCName> IInterpreter<MPCName>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (queryPart.Split('(') is not { Length: > 1 } parenthesisSplit)
+        if (queryResult.Content.Split('(') is not { Length: > 1 } parenthesisSplit)
         {
             return new();
         }

@@ -8,10 +8,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Represents the <see cref="EphemerisQuantityIdentifier"/> present in an <see cref="IQueryResult"/> an ephemeris query, by their <see cref="EphemerisQuantityTableIndex"/>.</summary>
+/// <summary>Represents the <see cref="EphemerisQuantityIdentifier"/> present in the <see cref="QueryResult"/> of an ephemeris query, by their <see cref="EphemerisQuantityTableIndex"/>.</summary>
 public sealed record class EphemerisQuantityTable : IReadOnlyDictionary<EphemerisQuantityTableIndex, EphemerisQuantityIdentifier>
 {
-    /// <summary>The <see cref="EphemerisQuantityIdentifier"/> present in the <see cref="IQueryResult"/> of an ephemeris query, by their <see cref="EphemerisQuantityTableIndex"/>.</summary>
+    /// <summary>The <see cref="EphemerisQuantityIdentifier"/> present in the <see cref="QueryResult"/> of an ephemeris query, by their <see cref="EphemerisQuantityTableIndex"/>.</summary>
     /// <exception cref="ArgumentNullException"/>
     public required IReadOnlyDictionary<EphemerisQuantityTableIndex, EphemerisQuantityIdentifier> Identifiers
     {

@@ -5,21 +5,19 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MPCCometDesignation"/>.</summary>
-internal sealed class MPCCometDesignationInterpreter : IPartInterpreter<MPCCometDesignation>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCCometDesignation"/>.</summary>
+internal sealed class MPCCometDesignationInterpreter : IInterpreter<MPCCometDesignation>
 {
-    Optional<MPCCometDesignation> IPartInterpreter<MPCCometDesignation>.Interpret(string queryPart)
+    Optional<MPCCometDesignation> IInterpreter<MPCCometDesignation>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        if (TryInterpretNumberedDesignation(queryPart) is MPCCometDesignation numberedDesignation)
+        if (TryInterpretNumberedDesignation(queryResult) is MPCCometDesignation numberedDesignation)
         {
             return numberedDesignation;
         }
 
-        if (TryInterpretUnnumberedDesignation(queryPart) is MPCCometDesignation unnumberedDesignation)
+        if (TryInterpretUnnumberedDesignation(queryResult) is MPCCometDesignation unnumberedDesignation)
         {
             return unnumberedDesignation;
         }
@@ -27,18 +25,18 @@ internal sealed class MPCCometDesignationInterpreter : IPartInterpreter<MPCComet
         return new();
     }
 
-    /// <summary>Attempts to interpret a numbered <see cref="MPCCometDesignation"/> from <paramref name="queryPart"/>.</summary>
-    /// <param name="queryPart">A <see cref="MPCCometDesignation"/> is interpreted from this <see cref="string"/>, if possible.</param>
-    private static MPCCometDesignation? TryInterpretNumberedDesignation(string queryPart)
+    /// <summary>Attempts to interpret a numbered <see cref="MPCCometDesignation"/> from <paramref name="queryResult"/>.</summary>
+    /// <param name="queryResult">A <see cref="MPCCometDesignation"/> is interpreted from this <see cref="QueryResult"/>, if possible.</param>
+    private static MPCCometDesignation? TryInterpretNumberedDesignation(QueryResult queryResult)
     {
-        var stopIndex = queryPart.IndexOf('/');
+        var stopIndex = queryResult.Content.IndexOf('/');
 
         if (stopIndex is -1)
         {
             return null;
         }
 
-        var designation = queryPart[..stopIndex];
+        var designation = queryResult.Content[..stopIndex];
 
         if (char.IsLetter(designation[^1]) is false || int.TryParse(designation[..^1], out var _) is false)
         {
@@ -48,25 +46,25 @@ internal sealed class MPCCometDesignationInterpreter : IPartInterpreter<MPCComet
         return new(designation);
     }
 
-    /// <summary>Attempts to interpret an unnumbered <see cref="MPCCometDesignation"/> from <paramref name="queryPart"/>.</summary>
-    /// <param name="queryPart">A <see cref="MPCCometDesignation"/> is interpreted from this <see cref="string"/>, if possible.</param>
-    private static MPCCometDesignation? TryInterpretUnnumberedDesignation(string queryPart)
+    /// <summary>Attempts to interpret an unnumbered <see cref="MPCCometDesignation"/> from <paramref name="queryResult"/>.</summary>
+    /// <param name="queryResult">A <see cref="MPCCometDesignation"/> is interpreted from this <see cref="QueryResult"/>, if possible.</param>
+    private static MPCCometDesignation? TryInterpretUnnumberedDesignation(QueryResult queryResult)
     {
-        var startIndex = queryPart.IndexOf('(') + 1;
+        var startIndex = queryResult.Content.IndexOf('(') + 1;
 
         if (startIndex is 0)
         {
             return null;
         }
 
-        var stopIndex = queryPart.IndexOf(')') - 1;
+        var stopIndex = queryResult.Content.IndexOf(')') - 1;
 
         if (stopIndex is -2)
         {
             return null;
         }
 
-        var designation = queryPart[startIndex..stopIndex];
+        var designation = queryResult.Content[startIndex..stopIndex];
 
         if (designation[1] is '/' is false || char.IsLetter(designation[0]) is false || designation.Contains(' ') is false)
         {

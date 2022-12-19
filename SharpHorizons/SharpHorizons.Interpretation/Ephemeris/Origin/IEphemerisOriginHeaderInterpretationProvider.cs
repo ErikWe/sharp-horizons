@@ -1,6 +1,6 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Origin;
 
-/// <summary>Provides the <see cref="IPartInterpreter{TInterpretation}"/> related to interpreting a <see cref="IEphemerisOriginHeader"/>.</summary>
+/// <summary>Provides the <see cref="IInterpreter{TInterpretation}"/> related to interpreting an <see cref="IEphemerisOriginHeader"/>.</summary>
 public interface IEphemerisOriginHeaderInterpretationProvider
 {
     /// <inheritdoc cref="IOriginInterpreter"/>

@@ -4,5 +4,5 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures.Astronomy;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="CylindricalCoordinate"/>.</summary>
-public interface IOriginCylindricalCoordinateInterpreter : IPartInterpreter<CylindricalCoordinate> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="CylindricalCoordinate"/>.</summary>
+public interface IOriginCylindricalCoordinateInterpreter : IInterpreter<CylindricalCoordinate> { }

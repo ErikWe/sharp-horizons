@@ -3,5 +3,5 @@
 using SharpHorizons.Query.Result;
 using SharpHorizons.Query.Target;
 
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="ITarget"/>.</summary>
-public interface ITargetInterpreter : IPartInterpreter<ITarget> { }
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="ITarget"/>.</summary>
+public interface ITargetInterpreter : IInterpreter<ITarget> { }

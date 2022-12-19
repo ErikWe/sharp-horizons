@@ -60,11 +60,11 @@ internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<Mut
         RegisterKeyInterpreter(vectorsInterpretationProvider.TableContentInterpreter, vectorsInterpretationOptionsProvider.VectorTableContent, (tableContent, header) => header.TableContent = tableContent);
     }
 
-    /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when the first line of the ephemeris is encountered.</summary>
+    /// <summary>Registers a <see cref="IInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when the first line of the ephemeris is encountered.</summary>
     /// <typeparam name="TInterpretation">The type of the result interpreted by the <paramref name="interpreter"/>.</typeparam>
     /// <param name="interpreter">This <see cref="IInterpreter{TInterpretation}"/> is registered for invokation when the first line of the ephemeris is encounterd.</param>
     /// <param name="setter">Delegate for applying the result of the <paramref name="interpreter"/>.</param>
-    private void RegisterFirstLineInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, Action<TInterpretation, MutableVectorsHeader> setter)
+    private void RegisterFirstLineInterpreter<TInterpretation>(IInterpreter<TInterpretation> interpreter, Action<TInterpretation, MutableVectorsHeader> setter)
     {
         RegisterFirstLineInterpreter(interpreter, wrapper);
 
@@ -76,12 +76,12 @@ internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<Mut
         }
     }
 
-    /// <summary>Registers a <see cref="IPartInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when a <paramref name="key"/> is encountered.</summary>
+    /// <summary>Registers a <see cref="IInterpreter{TInterpretation}"/>, <paramref name="interpreter"/>, for invokation when a <paramref name="key"/> is encountered.</summary>
     /// <typeparam name="TInterpretation">The type of the result interpreted by the <paramref name="interpreter"/>.</typeparam>
     /// <param name="interpreter">This <see cref="IInterpreter{TInterpretation}"/> is registered for invokation when a <paramref name="key"/> is encounterd.</param>
     /// <param name="key">The key which, when encountered, results in the <paramref name="interpreter"/> being invoked.</param>
     /// <param name="setter">Delegate for applying the result of the <paramref name="interpreter"/>.</param>
-    private void RegisterKeyInterpreter<TInterpretation>(IPartInterpreter<TInterpretation> interpreter, string key, Action<TInterpretation, MutableVectorsHeader> setter)
+    private void RegisterKeyInterpreter<TInterpretation>(IInterpreter<TInterpretation> interpreter, string key, Action<TInterpretation, MutableVectorsHeader> setter)
     {
         RegisterKeyInterpreter(interpreter, key, wrapper);
 
@@ -93,7 +93,7 @@ internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<Mut
         }
     }
 
-    protected override Optional<MutableVectorsHeader> ConstructHeader(IQueryResult queryResult) => new MutableVectorsHeader();
+    protected override Optional<MutableVectorsHeader> ConstructHeader(QueryResult queryResult) => new MutableVectorsHeader();
 
     protected override MutableVectorsHeader SetQuantities(MutableVectorsHeader header, EphemerisQuantityTable quantities)
     {
@@ -104,9 +104,9 @@ internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<Mut
 
     protected override bool ValidateHeader(MutableVectorsHeader header) => MutableVectorsHeader.Validate(header);
 
-    Optional<IVectorsHeader> IInterpreter<IVectorsHeader>.Interpret(IQueryResult queryResult)
+    Optional<IVectorsHeader> IInterpreter<IVectorsHeader>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryResult);
+        QueryResult.Validate(queryResult);
 
         if (Interpret(queryResult) is not { HasValue: true, Value: var interpretation })
         {

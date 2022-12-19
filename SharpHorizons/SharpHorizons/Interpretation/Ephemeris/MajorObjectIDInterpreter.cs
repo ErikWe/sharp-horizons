@@ -4,28 +4,26 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Query.Result;
 
-using System;
-
-/// <summary>Interprets some part of <see cref="IQueryResult"/> as <see cref="MajorObjectID"/>.</summary>
-internal sealed class MajorObjectIDInterpreter : IPartInterpreter<MajorObjectID>
+/// <summary>Interprets <see cref="QueryResult"/> as <see cref="MajorObjectID"/>.</summary>
+internal sealed class MajorObjectIDInterpreter : IInterpreter<MajorObjectID>
 {
-    Optional<MajorObjectID> IPartInterpreter<MajorObjectID>.Interpret(string queryPart)
+    Optional<MajorObjectID> IInterpreter<MajorObjectID>.Interpret(QueryResult queryResult)
     {
-        ArgumentNullException.ThrowIfNull(queryPart);
+        QueryResult.Validate(queryResult);
 
-        var startIndex = queryPart.LastIndexOf('(') + 1;
+        var startIndex = queryResult.Content.LastIndexOf('(') + 1;
 
         if (startIndex is 0)
         {
             return new();
         }
 
-        if (queryPart[^1] is not ')')
+        if (queryResult.Content[^1] is not ')')
         {
             return new();
         }
 
-        var idText = queryPart[startIndex..^1].Trim();
+        var idText = queryResult.Content[startIndex..^1].Trim();
 
         if (int.TryParse(idText, out var id) is false)
         {
