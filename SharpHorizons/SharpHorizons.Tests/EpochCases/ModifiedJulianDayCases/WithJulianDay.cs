@@ -19,7 +19,7 @@ public class WithJulianDay
     }
 
     [Theory]
-    [MemberData(nameof(InvalidJulianDays))]
+    [MemberData(nameof(UnconvertibleJulianDays))]
     public void From_OutOfRange_ArgumentOutOfRangeException(JulianDay julianDay)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => ModifiedJulianDay.FromJulianDay(julianDay));
@@ -40,6 +40,13 @@ public class WithJulianDay
         Assert.Equal(expected.Day, actual.Day, Precision);
     }
 
+    [Theory]
+    [MemberData(nameof(UnconvertibleModifiedJulianDays))]
+    public void To_OutOfRange_EpochOutOfBoundsException(ModifiedJulianDay modifiedJulianDay)
+    {
+        Assert.Throws<EpochOutOfBoundsException>(modifiedJulianDay.ToJulianDay);
+    }
+
     public static IEnumerable<object[]> Conversions() => new object[][]
     {
         new object[] { JulianDay.Epoch, new ModifiedJulianDay(-2400000.5) },
@@ -48,8 +55,13 @@ public class WithJulianDay
         new object[] { new JulianDay(int.MinValue + 2400000.5), new ModifiedJulianDay(int.MinValue) }
     };
 
-    public static IEnumerable<object[]> InvalidJulianDays() => new object[][]
+    public static IEnumerable<object[]> UnconvertibleJulianDays() => new object[][]
     {
-        new object[] { new JulianDay(int.MinValue + 2400000.49) }
+        new object[] { new JulianDay(int.MinValue) }
+    };
+
+    public static IEnumerable<object[]> UnconvertibleModifiedJulianDays() => new object[][]
+    {
+        new object[] { new ModifiedJulianDay(int.MaxValue) }
     };
 }

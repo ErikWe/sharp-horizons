@@ -101,7 +101,7 @@ public class Construction
 
     public static IEnumerable<object[]> Combined_Valid() => new object[][]
     {
-        new object[] { int.MaxValue - 2400000.01 },
+        new object[] { int.MaxValue + 0.99 },
         new object[] { (double)int.MinValue },
         new object[] { 0 },
         new object[] { -10.14 },
@@ -112,14 +112,14 @@ public class Construction
     {
         new object[] { double.PositiveInfinity },
         new object[] { double.NegativeInfinity },
-        new object[] { int.MaxValue - 2400000 },
+        new object[] { int.MaxValue + 1.01 },
         new object[] { int.MinValue - 0.01 }
     };
 
     public static IEnumerable<object[]> Partwise_Valid() => new object[][]
     {
-        new object[] { int.MaxValue - 2400001, 0.99f },
-        new object[] { int.MaxValue - 2400001, 0.01f },
+        new object[] { int.MaxValue, 0.99f },
+        new object[] { int.MaxValue, 0.01f },
         new object[] { int.MinValue, 0.99f },
         new object[] { int.MinValue, 0.01f },
         new object[] { 0, 0 },
@@ -133,6 +133,5 @@ public class Construction
         new object[] { 0, float.NegativeInfinity },
         new object[] { 0, -0.007f },
         new object[] { 0, 1.007f },
-        new object[] { int.MaxValue - 2400000, 0 }
     };
 }

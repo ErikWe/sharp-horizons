@@ -1,73 +1,47 @@
 ﻿namespace SharpHorizons;
 
-using NodaTime;
-
 using SharpMeasures;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
+using System.Globalization;
 
 /// <summary>Represents an <see cref="IEpoch"/>, an instant in time, expressed as a modified Julian day - the fractional number of days since { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }.</summary>
 public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
 {
-    /// <summary>The <see cref="ModifiedJulianDay"/> representing { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }.</summary>
+    /// <summary>The <see cref="ModifiedJulianDay"/> representing { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }, or the <see cref="Day"/> { 0 }.</summary>
     public static ModifiedJulianDay Epoch { get; } = new(0);
 
-    /// <summary>The <see cref="JulianDay"/> epoch when the count for <see cref="ModifiedJulianDay"/> started. This also also the difference { <see cref="JulianDay"/> - <see cref="ModifiedJulianDay"/> }.</summary>
-    private static JulianDay JulianDayEpoch { get; } = new(2400000.5);
+    /// <summary>The <see cref="JulianDay"/> equivalent to <see cref="Epoch"/>. This also represents the difference { <see cref="JulianDay"/> - <see cref="ModifiedJulianDay"/> }.</summary>
+    private static JulianDay JulianDayNumberEpoch { get; } = new(2400000, 0.5f);
 
-    /// <summary>The bit mask for retrieving the time from <see cref="IntegralAndFractionalDay"/>.</summary>
-    private static long FractionalDayBitMask { get; } = ((long)1 << 32) - 1;
-
-    /// <summary>The bit mask for retrieving the integral day from <see cref="IntegralAndFractionalDay"/>.</summary>
-    private static long IntegralDayBitMask { get; } = FractionalDayBitMask ^ -1;
-
-    /// <summary>The upper boundary for <see cref="int"/> that may represent the <see cref="IntegralDay"/> of a <see cref="ModifiedJulianDay"/>.</summary>
-    private static int UpperIntegralDayLimit { get; } = int.MaxValue - JulianDayEpoch.IntegralDay - 1;
+    /// <summary>Describes the <see cref="IntegralDay"/> and <see cref="FractionalDay"/> of the <see cref="ModifiedJulianDay"/>.</summary>
+    private JulianDayRepresentation<ModifiedJulianDay> Representation { get; init; } = JulianDayRepresentation<ModifiedJulianDay>.Zero;
 
     /// <summary>The fractional number of days since { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }. A negative <see cref="double"/> signifies a <see cref="ModifiedJulianDay"/> before this date.</summary>
-    public double Day => IntegralDay + (double)FractionalDay;
+    public double Day => Representation.Day;
 
-    /// <summary>The integral number of days since { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }. A negative <see cref="int"/> signifies a <see cref="JulianDay"/> before this date.</summary>
-    /// <exception cref="ArgumentOutOfRangeException"/>
+    /// <summary>The integral number of days since { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }. A negative <see cref="int"/> signifies a <see cref="ModifiedJulianDay"/> before this date.</summary>
     public required int IntegralDay
     {
-        get => (int)(IntegralAndFractionalDay >> 32);
-        init
-        {
-            ValidateIntegralDay(value);
-
-            IntegralAndFractionalDay = SetIntegralDay(IntegralAndFractionalDay, value);
-        }
+        get => Representation.IntegralDay;
+        init => Representation = Representation.WithIntegralDay(value);
     }
 
-    /// <summary>The fraction, in the range [0, 1), of the current <see cref="IntegralDay"/> that has elapsed.</summary>
-    /// <remarks>Note that each <see cref="IntegralDay"/> starts at noon - therefore, for example, { 0.75 } indicates { 06:00:00 UTC } of the "next" calendar date.</remarks>
+    /// <summary>The fraction, in the range [ 0, 1 ), that has elapsed of the current <see cref="IntegralDay"/>.</summary>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>
     public float FractionalDay
     {
-        get => BitConverter.UInt32BitsToSingle((uint)(IntegralAndFractionalDay & FractionalDayBitMask));
-        init
-        {
-            ValidateFractionalDay(value);
-
-            IntegralAndFractionalDay = SetFractionalDay(IntegralAndFractionalDay, value);
-        }
+        get => Representation.FractionalDay;
+        init => Representation = Representation.WithFractionalDay(value);
     }
-
-    /// <summary>The integral day and time - with the integral day being described by the 32 most significant bits.</summary>
-    private long IntegralAndFractionalDay { get; init; }
-
-    Instant IEpoch.Instant => Instant.FromJulianDate(ToJulianDay().Day);
 
     /// <inheritdoc cref="ModifiedJulianDay"/>
     public ModifiedJulianDay() { }
 
     /// <inheritdoc cref="ModifiedJulianDay"/>
-    /// <param name="integralDay"><inheritdoc cref="IntegralDay" path="/summary"/></param>
-    /// <exception cref="ArgumentOutOfRangeException"/>
+    /// <param name="integralDay"><inheritdoc cref="IntegralDay" path="/summary"/></param>'
     [SetsRequiredMembers]
     public ModifiedJulianDay(int integralDay)
     {
@@ -92,21 +66,37 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     [SetsRequiredMembers]
     public ModifiedJulianDay(double day)
     {
-        ValidateDay(day);
-
-        var integralDay = (int)Math.Floor(day);
-        var fractionalDay = (float)(day % 1);
-
-        if (fractionalDay < 0)
-        {
-            fractionalDay += 1;
-        }
-
-        IntegralAndFractionalDay = SetIntegralAndFractionalDay(integralDay, fractionalDay);
+        Representation = JulianDayRepresentation<ModifiedJulianDay>.Construct(day);
     }
 
     /// <summary>Converts the <see cref="ModifiedJulianDay"/> to an instance of <see cref="JulianDay"/> representing the same epoch.</summary>
-    public JulianDay ToJulianDay() => new(Day + JulianDayEpoch.Day);
+    /// <exception cref="EpochOutOfBoundsException"/>
+    public JulianDay ToJulianDay()
+    {
+        int integralDay;
+
+        checked
+        {
+            try
+            {
+                integralDay = IntegralDay + JulianDayNumberEpoch.IntegralDay;
+            }
+            catch (OverflowException e)
+            {
+                throw EpochOutOfBoundsException.ToJulianDay<ModifiedJulianDay>(e);
+            }
+        }
+
+        var fractionalDay = FractionalDay + JulianDayNumberEpoch.FractionalDay;
+
+        if (fractionalDay >= 1)
+        {
+            integralDay += 1;
+            fractionalDay -= 1;
+        }
+
+        return new(integralDay, fractionalDay);
+    }
 
     /// <summary>Constructs an instance of <see cref="ModifiedJulianDay"/>, representing the same epoch as <paramref name="julianDay"/>.</summary>
     /// <param name="julianDay">The constructed <see cref="ModifiedJulianDay"/> represents the same epoch as this <see cref="JulianDay"/>.</param>
@@ -116,19 +106,57 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     {
         ArgumentNullException.ThrowIfNull(julianDay);
 
-        try
+        int integralDay;
+
+        checked
         {
-            return new(julianDay.Day - JulianDayEpoch.Day);
+            try
+            {
+                integralDay = julianDay.IntegralDay - JulianDayNumberEpoch.IntegralDay;
+            }
+            catch (OverflowException e)
+            {
+                throw new ArgumentOutOfRangeException($"The {nameof(JulianDay)} {julianDay.Day} could not be represented as a {nameof(ModifiedJulianDay)}.", e);
+            }
         }
-        catch (ArgumentOutOfRangeException e)
+
+        var fractionalDay = julianDay.FractionalDay - JulianDayNumberEpoch.FractionalDay;
+
+        if (fractionalDay < 0)
         {
-            throw new ArgumentOutOfRangeException($"The {nameof(JulianDay)} {julianDay.Day} could not be represented as a {nameof(ModifiedJulianDay)}.", e);
+            integralDay -= 1;
+            fractionalDay += 1;
         }
+
+        return new(integralDay, fractionalDay);
     }
 
-    IEpoch IEpoch.Add(Time difference) => Add(difference);
+    /// <summary>Compares the <see cref="ModifiedJulianDay"/> <see langword="this"/> and <paramref name="other"/>, resulting in:
+    /// <list type="bullet">
+    /// <item><term>+1</term><description> <see langword="this"/> <see cref="ModifiedJulianDay"/> represents a later epoch than the <paramref name="other"/> <see cref="ModifiedJulianDay"/>, or the <paramref name="other"/> <see cref="ModifiedJulianDay"/> is <see langword="null"/>.</description></item>
+    /// <item><term>0</term><description> the two <see cref="ModifiedJulianDay"/> <see langword="this"/> and <paramref name="other"/> represent the same epoch.</description></item>
+    /// <item><term>-1</term><description> <see langword="this"/> <see cref="ModifiedJulianDay"/> represents an earlier epoch than the <paramref name="other"/> <see cref="ModifiedJulianDay"/>.</description></item>
+    /// </list></summary>
+    /// <param name="other">The <see cref="ModifiedJulianDay"/> to which <see langword="this"/> <see cref="ModifiedJulianDay"/> is compared.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.CompareTo(double)"/>, with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public int CompareTo(ModifiedJulianDay? other)
+    {
+        if (other is null)
+        {
+            return 1;
+        }
 
-    /// <inheritdoc/>
+        return Day.CompareTo(other.Day);
+    }
+
+    /// <summary>Compares the <see cref="IEpoch"/> <see langword="this"/> and <paramref name="other"/>, resulting in:
+    /// <list type="bullet">
+    /// <item><term>+1</term><description> <see langword="this"/> <see cref="ModifiedJulianDay"/> represents a later epoch than the <paramref name="other"/> <see cref="IEpoch"/>, or the <paramref name="other"/> <see cref="IEpoch"/> is <see langword="null"/>.</description></item>
+    /// <item><term>0</term><description> the two <see cref="IEpoch"/> <see langword="this"/> and <paramref name="other"/> represent the same epoch.</description></item>
+    /// <item><term>-1</term><description> <see langword="this"/> <see cref="ModifiedJulianDay"/> represents an earlier epoch than the <paramref name="other"/> <see cref="IEpoch"/>.</description></item>
+    /// </list></summary>
+    /// <param name="other">The <see cref="IEpoch"/> to which <see langword="this"/> <see cref="ModifiedJulianDay"/> is compared.</param>
+    /// <exception cref="ArgumentException"/>
     public int CompareTo(IEpoch? other)
     {
         if (other is null)
@@ -136,17 +164,61 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
             return 1;
         }
 
-        return ToJulianDay().CompareTo(other);
+        try
+        {
+            return Day.CompareTo(other.ToJulianDay().Day - JulianDayNumberEpoch.Day);
+        }
+        catch (EpochOutOfBoundsException e)
+        {
+            throw ArgumentExceptionFactory.InternalException<IEpoch>(nameof(other), e);
+        }
     }
 
-    /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }.</summary>
-    /// <param name="initial">The initial <see cref="IEpoch"/>.</param>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Day"/> represented by the <see cref="JulianDay"/>, formatted according to the <see cref="CultureInfo.CurrentCulture"/>.</summary>
+    /// <remarks>The behaviour is consistent with <see cref="double.ToString()"/>, with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public override string ToString() => Day.ToString(CultureInfo.CurrentCulture);
+
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Day"/> represented by the <see cref="JulianDay"/>, formatted according to <paramref name="provider"/>.</summary>
+    /// <param name="provider">Provides culture-specific formatting information.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.ToString(IFormatProvider)"/>, with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public string ToString(IFormatProvider? provider) => Day.ToString(provider);
+
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Day"/> represented by the <see cref="JulianDay"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.CurrentCulture"/>.</summary>
+    /// <param name="format">Provides formatting information.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.ToString(string)"/>, with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public string ToString(string? format) => Day.ToString(format, CultureInfo.CurrentCulture);
+
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Day"/> represented by the <see cref="JulianDay"/>, formatted according to <paramref name="format"/> and <paramref name="provider"/>.</summary>
+    /// <param name="format">Provides formatting information.</param>
+    /// <param name="provider">Provides culture-specific formatting information.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.ToString(string, IFormatProvider)"/>, with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public string ToString(string? format, IFormatProvider? provider) => Day.ToString(format, provider);
+
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Day"/> represented by the <see cref="JulianDay"/>, formatted according to the <see cref="CultureInfo.InvariantCulture"/>.</summary>
+    /// <remarks>The behaviour is consistent with <see cref="double.ToString(IFormatProvider)"/>, with the <see cref="Day"/> representing the <see cref="double"/> and with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
+    public string ToStringInvariant() => Day.ToString(CultureInfo.InvariantCulture);
+
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Day"/> represented by the <see cref="JulianDay"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.InvariantCulture"/>.</summary>
+    /// <param name="format">Provides formatting information.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.ToString(string, IFormatProvider)"/>, with the <see cref="Day"/> representing the <see cref="double"/> and with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
+    public string ToStringInvariant(string? format) => Day.ToString(format, CultureInfo.InvariantCulture);
+
+    /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="ModifiedJulianDay"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
+    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     public Time Difference(IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(initial);
 
-        return ToJulianDay().Difference(initial);
+        try
+        {
+            return (Day - (initial.ToJulianDay().Day - JulianDayNumberEpoch.Day)) * Time.OneDay;
+        }
+        catch (EpochOutOfBoundsException e)
+        {
+            throw ArgumentExceptionFactory.InternalException<ModifiedJulianDay>(nameof(initial), e);
+        }
     }
 
     /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <see langword="this"/> + <paramref name="difference"/> }.</summary>
@@ -167,22 +239,29 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
         }
     }
 
-    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
+    /// <summary>Computes the <see cref="ModifiedJulianDay"/> representing { <see langword="this"/> - <paramref name="difference"/> }.</summary>
+    /// <param name="difference">The <see cref="Time"/> between <see langword="this"/> <see cref="ModifiedJulianDay"/> and the resulting <see cref="ModifiedJulianDay"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="EpochOutOfBoundsException"/>
+    public ModifiedJulianDay Subtract(Time difference)
+    {
+        SharpMeasuresValidation.Validate(difference);
+
+        try
+        {
+            return new(Day - difference.Days);
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            throw EpochOutOfBoundsException.FromSubtraction<ModifiedJulianDay>(difference, e);
+        }
+    }
+
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if the <paramref name="final"/> <see cref="ModifiedJulianDay"/> represents a later epoch than the <paramref name="initial"/> <see cref="ModifiedJulianDay"/>.</summary>
     /// <param name="final">The <see cref="ModifiedJulianDay"/> representing the final epoch.</param>
     /// <param name="initial">The <see cref="ModifiedJulianDay"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentNullException"/>
     public static Time operator -(ModifiedJulianDay final, ModifiedJulianDay initial)
-    {
-        ArgumentNullException.ThrowIfNull(final);
-
-        return final.Difference(initial);
-    }
-
-    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
-    /// <param name="final">The <see cref="ModifiedJulianDay"/> representing the final epoch.</param>
-    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
-    /// <exception cref="ArgumentNullException"/>
-    public static Time operator -(ModifiedJulianDay final, IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(final);
 
@@ -212,8 +291,52 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     {
         ArgumentNullException.ThrowIfNull(initial);
 
-        return initial.Add(-difference);
+        return initial.Subtract(difference);
     }
+
+    /// <summary>Determines the truthfulness of { <paramref name="lhs"/> &lt; <paramref name="rhs"/> }, resulting in:
+    /// <list type="bullet">
+    /// <item><term><see langword="true"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</description></item>
+    /// <item><term><see langword="false"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents the same or a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>, or either <see cref="ModifiedJulianDay"/> is <see langword="null"/>.</description></item>
+    /// </list>
+    /// </summary>
+    /// <param name="lhs">This <see cref="ModifiedJulianDay"/> is assumed to represent an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</param>
+    /// <param name="rhs">This <see cref="ModifiedJulianDay"/> is assumed to represent the same or a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.operator &lt;(double, double)"/>, with with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public static bool operator <(ModifiedJulianDay? lhs, ModifiedJulianDay? rhs) => lhs?.Day < rhs?.Day;
+
+    /// <summary>Determines the truthfulness of { <paramref name="lhs"/> &gt; <paramref name="rhs"/> }, resulting in:
+    /// <list type="bullet">
+    /// <item><term><see langword="true"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</description></item>
+    /// <item><term><see langword="false"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents the same or an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>, or either <see cref="ModifiedJulianDay"/> is <see langword="null"/>.</description></item>
+    /// </list>
+    /// </summary>
+    /// <param name="lhs">This <see cref="ModifiedJulianDay"/> is assumed to represent a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</param>
+    /// <param name="rhs">This <see cref="ModifiedJulianDay"/> is assumed to represent the same or an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.operator >(double, double)"/>, with with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public static bool operator >(ModifiedJulianDay? lhs, ModifiedJulianDay? rhs) => lhs?.Day > rhs?.Day;
+
+    /// <summary>Determines the truthfulness of { <paramref name="lhs"/> ≤ <paramref name="rhs"/> }, resulting in:
+    /// <list type="bullet">
+    /// <item><term><see langword="true"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents the same or an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</description></item>
+    /// <item><term><see langword="false"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>, or either <see cref="ModifiedJulianDay"/> is <see langword="null"/>.</description></item>
+    /// </list>
+    /// </summary>
+    /// <param name="lhs">This <see cref="ModifiedJulianDay"/> is assumed to represent the same or an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</param>
+    /// <param name="rhs">This <see cref="ModifiedJulianDay"/> is assumed to represent a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.operator &lt;=(double, double)"/>, with with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public static bool operator <=(ModifiedJulianDay? lhs, ModifiedJulianDay? rhs) => lhs?.Day <= rhs?.Day;
+
+    /// <summary>Determines the truthfulness of { <paramref name="lhs"/> ≥ <paramref name="rhs"/> }, resulting in:
+    /// <list type="bullet">
+    /// <item><term><see langword="true"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents the same or a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</description></item>
+    /// <item><term><see langword="false"/></term><description> if the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/> represents an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>, or either <see cref="ModifiedJulianDay"/> is <see langword="null"/>.</description></item>
+    /// </list>
+    /// </summary>
+    /// <param name="lhs">This <see cref="ModifiedJulianDay"/> is assumed to represent the same or a later epoch than the <see cref="ModifiedJulianDay"/> <paramref name="rhs"/>.</param>
+    /// <param name="rhs">This <see cref="ModifiedJulianDay"/> is assumed to represent an earlier epoch than the <see cref="ModifiedJulianDay"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="double.operator >=(double, double)"/>, with with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
+    public static bool operator >=(ModifiedJulianDay? lhs, ModifiedJulianDay? rhs) => lhs?.Day >= rhs?.Day;
 
     /// <inheritdoc cref="ModifiedJulianDay"/>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
@@ -229,70 +352,5 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
         ArgumentNullException.ThrowIfNull(modifiedJulianDay);
 
         return modifiedJulianDay.Day;
-    }
-
-    /// <summary>Constructs the <see cref="long"/> describing the fractional day of the <paramref name="original"/> and the <paramref name="integralDay"/>.</summary>
-    /// <param name="original">The original <see cref="long"/>.</param>
-    /// <param name="integralDay">The integral day of the new <see cref="long"/>.</param>
-    private static long SetIntegralDay(long original, int integralDay) => (original & FractionalDayBitMask) | ((long)integralDay << 32);
-
-    /// <summary>Constructs the <see cref="long"/> describing the integral day of the <paramref name="original"/> and the <paramref name="fractionalDay"/>.</summary>
-    /// <param name="original">The original <see cref="long"/>.</param>
-    /// <param name="fractionalDay">The fractional day of the new <see cref="long"/>.</param>
-    private static long SetFractionalDay(long original, float fractionalDay) => (original & IntegralDayBitMask) | BitConverter.SingleToUInt32Bits(fractionalDay);
-
-    /// <summary>Constructs the <see cref="long"/> describing <paramref name="integralDay"/> and <paramref name="fractionalDay"/>.</summary>
-    /// <param name="integralDay">The integral day of the new <see cref="long"/>.</param>
-    /// <param name="fractionalDay">The fractional day of the new <see cref="long"/>.</param>
-    private static long SetIntegralAndFractionalDay(int integralDay, float fractionalDay) => ((long)integralDay << 32) | BitConverter.SingleToUInt32Bits(fractionalDay);
-
-    /// <summary>Validates that <paramref name="integralDay"/> can be used to represent the <see cref="IntegralDay"/>, and throws an exception otherwise.</summary>
-    /// <param name="integralDay">The possibility for this <see cref="int"/> to represent the <see cref="IntegralDay"/> is validated.</param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="integralDay"/>.</param>
-    /// <exception cref="ArgumentOutOfRangeException"/>
-    private static void ValidateIntegralDay(int integralDay, [CallerArgumentExpression(nameof(integralDay))] string? argumentExpression = null)
-    {
-        if (integralDay < int.MinValue || integralDay > UpperIntegralDayLimit)
-        {
-            throw new ArgumentOutOfRangeException(argumentExpression, integralDay, $"The integral part of the value used to represent the day of a {nameof(ModifiedJulianDay)} should be in the range [{int.MinValue}, {UpperIntegralDayLimit}].");
-        }
-    }
-
-    /// <summary>Validates that <paramref name="fractionalDay"/> can be used to represent the <see cref="FractionalDay"/>, and throws an exception otherwise.</summary>
-    /// <param name="fractionalDay">The possibility for this <see cref="float"/> to represent the <see cref="FractionalDay"/> is validated.</param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="fractionalDay"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentOutOfRangeException"/>
-    private static void ValidateFractionalDay(float fractionalDay, [CallerArgumentExpression(nameof(fractionalDay))] string? argumentExpression = null)
-    {
-        if (float.IsNaN(fractionalDay))
-        {
-            throw new ArgumentException($"{double.NaN} cannot be used to represent the fractional day of a {nameof(ModifiedJulianDay)}");
-        }
-
-        if (float.IsInfinity(fractionalDay) || fractionalDay is < 0 or >= 1)
-        {
-            throw new ArgumentOutOfRangeException(argumentExpression, fractionalDay, $"A value in the range [{0}, {1}) should be used to represent the fractional day of a {nameof(ModifiedJulianDay)}.");
-        }
-    }
-
-    /// <summary>Validates that <paramref name="day"/> can be used to represent the <see cref="Day"/>, and throws an exception otherwise.</summary>
-    /// <param name="day">The possibility for this <see cref="double"/> to represent the <see cref="Day"/> is validated.</param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="day"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentOutOfRangeException"/>
-    private static void ValidateDay(double day, [CallerArgumentExpression(nameof(day))] string? argumentExpression = null)
-    {
-        if (day is double.NaN)
-        {
-            throw new ArgumentException($"{day} cannot be used to represent the day of a {nameof(ModifiedJulianDay)}.", argumentExpression);
-        }
-
-        if (day is < int.MinValue or >= (int.MaxValue + (long)1))
-        {
-            throw new ArgumentOutOfRangeException(argumentExpression, day, $"The integral part of the value used to represent the day of a {nameof(ModifiedJulianDay)} should be in the range [{int.MinValue}, {UpperIntegralDayLimit}].");
-        }
-
-        ValidateIntegralDay((int)Math.Floor(day), argumentExpression);
     }
 }

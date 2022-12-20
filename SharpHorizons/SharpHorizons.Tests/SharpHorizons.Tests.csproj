@@ -26,4 +26,8 @@
       <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Identity\" />
+    </ItemGroup>
+
 </Project>

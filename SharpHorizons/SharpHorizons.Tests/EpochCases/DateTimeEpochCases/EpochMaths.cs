@@ -1,5 +1,6 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.DateTimeEpochCases;
 
+using System;
 using System.Collections.Generic;
 
 using Xunit;
@@ -10,38 +11,32 @@ public class EpochMaths
 
     [Theory]
     [MemberData(nameof(Epochs))]
-    public void DateTimeEpochMethod_ApproximateMatch(DateTimeEpoch initialEpoch, DateTimeEpoch finalEpoch)
+    public void Method_ApproximateMatch(DateTimeEpoch initialEpoch, DateTimeEpoch finalEpoch)
     {
         var actual = finalEpoch.Difference(initialEpoch);
 
         Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
     }
 
+    [Fact]
+    public void Method_Null_ArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)).Difference(null!));
+    }
+
     [Theory]
     [MemberData(nameof(Epochs))]
-    public void DateTimeEpochOperator_ApproximateMatch(DateTimeEpoch initialEpoch, DateTimeEpoch finalEpoch)
+    public void Operator_ApproximateMatch(DateTimeEpoch initialEpoch, DateTimeEpoch finalEpoch)
     {
         var actual = finalEpoch - initialEpoch;
 
         Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
     }
 
-    [Theory]
-    [MemberData(nameof(Epochs))]
-    public void IEpochMethod_ApproximateMatch(IEpoch initialEpoch, DateTimeEpoch finalEpoch)
+    [Fact]
+    public void Operator_Null_ArgumentNullException()
     {
-        var actual = finalEpoch.Difference(initialEpoch);
-
-        Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
-    }
-
-    [Theory]
-    [MemberData(nameof(Epochs))]
-    public void IEpochOperator_ApproximateMatch(IEpoch initialEpoch, DateTimeEpoch finalEpoch)
-    {
-        var actual = finalEpoch - initialEpoch;
-
-        Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
+        Assert.Throws<ArgumentNullException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)) - null!);
     }
 
     public static IEnumerable<object[]> Epochs() => new object[][]

@@ -17,4 +17,10 @@ public static class ArgumentExceptionFactory
     /// <param name="argumentExpression">The expression used as the argument which caused the <see cref="ArgumentException"/>.</param>
     /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="ArgumentException"/>.</param>
     public static ArgumentException InvalidState<T>(string? argumentExpression, Exception? innerException = null) => new($"The {typeof(T).Name} does not represent a valid state.", argumentExpression, innerException);
+
+    /// <summary>Constructs a <see cref="ArgumentException"/> describing an internal error of an argument of type <typeparamref name="T"/>.</summary>
+    /// <typeparam name="T">The type of the instance within which the internal error occurred.</typeparam>
+    /// <param name="argumentExpression">The expression used as the argument which caused the <see cref="ArgumentException"/>.</param>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="ArgumentException"/>.</param>
+    public static ArgumentException InternalException<T>(string? argumentExpression, Exception innerException) => new($"An exception occurred within the {typeof(T).Name}.", argumentExpression, innerException);
 }
