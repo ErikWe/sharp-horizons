@@ -36,4 +36,20 @@ public interface IEpoch<TSelf> : IEpoch where TSelf : IEpoch<TSelf>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>
     public static abstract TSelf FromJulianDay(JulianDay julianDay);
+
+    /// <summary>Computes the <typeparamref name="TSelf"/> representing { <paramref name="initial"/> + <paramref name="difference"/> }.</summary>
+    /// <param name="initial">The <typeparamref name="TSelf"/> representing the initial epoch.</param>
+    /// <param name="difference">The <see cref="Time"/> between the <paramref name="initial"/> <typeparamref name="TSelf"/> and the resulting <typeparamref name="TSelf"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="EpochOutOfBoundsException"/>
+    public static abstract TSelf operator +(TSelf initial, Time difference);
+
+    /// <summary>Computes the <typeparamref name="TSelf"/> representing { <paramref name="initial"/> - <paramref name="difference"/> }.</summary>
+    /// <param name="initial">The <typeparamref name="TSelf"/> representing the initial epoch.</param>
+    /// <param name="difference">The <see cref="Time"/> between the <paramref name="initial"/> <typeparamref name="TSelf"/> and the resulting <typeparamref name="TSelf"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="EpochOutOfBoundsException"/>
+    public static abstract TSelf operator -(TSelf initial, Time difference);
 }

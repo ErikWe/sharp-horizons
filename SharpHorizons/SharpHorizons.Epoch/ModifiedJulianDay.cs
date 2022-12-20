@@ -21,7 +21,7 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     private static long FractionalDayBitMask { get; } = ((long)1 << 32) - 1;
 
     /// <summary>The bit mask for retrieving the integral day from <see cref="IntegralAndFractionalDay"/>.</summary>
-    private static long IntegralDayBitMask { get; } = FractionalDayBitMask ^ long.MaxValue;
+    private static long IntegralDayBitMask { get; } = FractionalDayBitMask ^ -1;
 
     /// <summary>The upper boundary for <see cref="int"/> that may represent the <see cref="IntegralDay"/> of a <see cref="ModifiedJulianDay"/>.</summary>
     private static int UpperIntegralDayLimit { get; } = int.MaxValue - JulianDayEpoch.IntegralDay - 1;
@@ -71,9 +71,7 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     [SetsRequiredMembers]
     public ModifiedJulianDay(int integralDay)
     {
-        ValidateIntegralDay(integralDay);
-
-        IntegralAndFractionalDay = SetIntegralDay(IntegralAndFractionalDay, integralDay);
+        IntegralDay = integralDay;
     }
 
     /// <inheritdoc cref="ModifiedJulianDay"/>
@@ -84,10 +82,7 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     [SetsRequiredMembers]
     public ModifiedJulianDay(int integralDay, float fractionalDay) : this(integralDay)
     {
-        ValidateIntegralDay(integralDay);
-        ValidateFractionalDay(fractionalDay);
-
-        IntegralAndFractionalDay = SetFractionalDay(IntegralAndFractionalDay, fractionalDay);
+        FractionalDay = fractionalDay;
     }
 
     /// <inheritdoc cref="ModifiedJulianDay"/>
@@ -172,11 +167,22 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
         }
     }
 
-    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/>.</summary>
-    /// <param name="initial">The <see cref="ModifiedJulianDay"/> representing the initial epoch.</param>
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
     /// <param name="final">The <see cref="ModifiedJulianDay"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="ModifiedJulianDay"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentNullException"/>
     public static Time operator -(ModifiedJulianDay final, ModifiedJulianDay initial)
+    {
+        ArgumentNullException.ThrowIfNull(final);
+
+        return final.Difference(initial);
+    }
+
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
+    /// <param name="final">The <see cref="ModifiedJulianDay"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public static Time operator -(ModifiedJulianDay final, IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(final);
 

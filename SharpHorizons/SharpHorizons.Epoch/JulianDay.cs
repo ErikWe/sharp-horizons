@@ -145,11 +145,22 @@ public sealed record class JulianDay : IEpoch<JulianDay>
         }
     }
 
-    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/>.</summary>
-    /// <param name="initial">The <see cref="JulianDay"/> representing the initial epoch.</param>
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
     /// <param name="final">The <see cref="JulianDay"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="JulianDay"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentNullException"/>
     public static Time operator -(JulianDay final, JulianDay initial)
+    {
+        ArgumentNullException.ThrowIfNull(final);
+
+        return final.Difference(initial);
+    }
+
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
+    /// <param name="final">The <see cref="JulianDay"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public static Time operator -(JulianDay final, IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(final);
 
@@ -243,7 +254,7 @@ public sealed record class JulianDay : IEpoch<JulianDay>
             throw new ArgumentException($"{day} cannot be used to represent the day of a {nameof(JulianDay)}.", argumentExpression);
         }
 
-        if (day is < int.MinValue or >= (int.MaxValue + (long)1))
+        if (day is < int.MinValue or >= (int.MaxValue + 1d))
         {
             throw new ArgumentOutOfRangeException(argumentExpression, day, $"The integral part of the value used to represent the day of a {nameof(JulianDay)} should be in the range [{int.MinValue}, {int.MaxValue}].");
         }

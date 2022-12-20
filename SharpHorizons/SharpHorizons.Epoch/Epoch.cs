@@ -84,11 +84,22 @@ public sealed record class Epoch : IEpoch<Epoch>
         }
     }
 
-    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/>.</summary>
-    /// <param name="initial">The <see cref="Epoch"/> representing the initial epoch.</param>
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
     /// <param name="final">The <see cref="Epoch"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="Epoch"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentNullException"/>
     public static Time operator -(Epoch final, Epoch initial)
+    {
+        ArgumentNullException.ThrowIfNull(final);
+
+        return final.Difference(initial);
+    }
+
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }.</summary>
+    /// <param name="final">The <see cref="Epoch"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public static Time operator -(Epoch final, IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(final);
 
