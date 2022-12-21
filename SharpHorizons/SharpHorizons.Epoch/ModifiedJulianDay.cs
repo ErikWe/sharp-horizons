@@ -164,6 +164,11 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
             return 1;
         }
 
+        if (other is ModifiedJulianDay otherModifiedJulianDay)
+        {
+            return CompareTo(otherModifiedJulianDay);
+        }
+
         try
         {
             return Day.CompareTo(other.ToJulianDay().Day - JulianDayNumberEpoch.Day);
@@ -203,6 +208,16 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     /// <remarks>The behaviour is consistent with <see cref="double.ToString(string, IFormatProvider)"/>, with the <see cref="Day"/> representing the <see cref="double"/> and with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
     public string ToStringInvariant(string? format) => Day.ToString(format, CultureInfo.InvariantCulture);
 
+    /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="ModifiedJulianDay"/> represents a later epoch than the <paramref name="initial"/> <see cref="ModifiedJulianDay"/>.</summary>
+    /// <param name="initial">The <see cref="ModifiedJulianDay"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public Time Difference(ModifiedJulianDay initial)
+    {
+        ArgumentNullException.ThrowIfNull(initial);
+
+        return (Day - initial.Day) * Time.OneDay;
+    }
+
     /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="ModifiedJulianDay"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
     /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentException"/>
@@ -210,6 +225,11 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     public Time Difference(IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(initial);
+
+        if (initial is ModifiedJulianDay initialModifiedJulianDay)
+        {
+            return Difference(initialModifiedJulianDay);
+        }
 
         try
         {

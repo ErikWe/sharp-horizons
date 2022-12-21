@@ -93,6 +93,11 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
             return 1;
         }
 
+        if (other is DateTimeEpoch otherDateTimeEpoch)
+        {
+            return CompareTo(otherDateTimeEpoch);
+        }
+
         return ToJulianDay().CompareTo(other);
     }
 

@@ -84,6 +84,11 @@ public sealed record class Epoch : IEpoch<Epoch>
             return 1;
         }
 
+        if (other is Epoch otherEpoch)
+        {
+            return CompareTo(otherEpoch);
+        }
+
         return ToJulianDay().CompareTo(other);
     }
 
