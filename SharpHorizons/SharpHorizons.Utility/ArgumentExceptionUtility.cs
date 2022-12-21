@@ -1,6 +1,7 @@
 ﻿namespace SharpHorizons;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <summary>Provides utility related to <see cref="ArgumentException"/></summary>
@@ -11,7 +12,7 @@ public static class ArgumentExceptionUtility
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="argument"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    public static void ThrowIfNullOrWhiteSpace(string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentExpression = null)
+    public static void ThrowIfNullOrWhiteSpace([NotNull] string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentExpression = null)
     {
         ArgumentException.ThrowIfNullOrEmpty(argument, argumentExpression);
 
