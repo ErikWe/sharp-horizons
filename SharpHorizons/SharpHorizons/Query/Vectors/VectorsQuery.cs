@@ -209,7 +209,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateOutputFormat(OutputFormat outputFormat, [CallerArgumentExpression(nameof(outputFormat))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(outputFormat, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(outputFormat, argumentExpression);
 
         if (outputFormat is OutputFormat.Unknown)
         {
@@ -223,7 +223,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateObjectDataInclusion(ObjectDataInclusion objectDataInclusion, [CallerArgumentExpression(nameof(objectDataInclusion))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(objectDataInclusion, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(objectDataInclusion, argumentExpression);
     }
 
     /// <summary>Validates that <paramref name="referencePlane"/> represents an <see cref="Query.ReferencePlane"/> supported by Horizons, and throws an exception otherwise.</summary>
@@ -233,7 +233,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateReferencePlane(ReferencePlane referencePlane, [CallerArgumentExpression(nameof(referencePlane))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(referencePlane, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(referencePlane, argumentExpression);
 
         if (referencePlane is ReferencePlane.Unknown)
         {
@@ -248,7 +248,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateReferenceSystem(ReferenceSystem referenceSystem, [CallerArgumentExpression(nameof(referenceSystem))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(referenceSystem, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(referenceSystem, argumentExpression);
 
         if (referenceSystem is ReferenceSystem.Unknown)
         {
@@ -263,7 +263,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateOutputUnits(OutputUnits outputUnits, [CallerArgumentExpression(nameof(outputUnits))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(outputUnits, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(outputUnits, argumentExpression);
 
         if (outputUnits is OutputUnits.Unknown)
         {
@@ -287,7 +287,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateCorrection(VectorCorrection correction, [CallerArgumentExpression(nameof(correction))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(correction, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(correction, argumentExpression);
 
         try
         {
@@ -306,7 +306,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateTimePrecision(TimePrecision timePrecision, [CallerArgumentExpression(nameof(timePrecision))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(timePrecision, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(timePrecision, argumentExpression);
 
         if (timePrecision is TimePrecision.Unknown)
         {
@@ -321,7 +321,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateValueSeparation(ValueSeparation valueSeparation, [CallerArgumentExpression(nameof(valueSeparation))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(valueSeparation, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(valueSeparation, argumentExpression);
 
         if (valueSeparation is ValueSeparation.Unknown)
         {
@@ -335,7 +335,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateOutputLabels(OutputLabels outputLabels, [CallerArgumentExpression(nameof(outputLabels))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(outputLabels, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(outputLabels, argumentExpression);
     }
 
     /// <summary>Validates that <paramref name="timeDeltaInclusion"/> represents an <see cref="Query.TimeDeltaInclusion"/> supported by Horizons, and throws an exception otherwise.</summary>
@@ -344,6 +344,6 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateTimeDeltaInclusion(TimeDeltaInclusion timeDeltaInclusion, [CallerArgumentExpression(nameof(timeDeltaInclusion))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(timeDeltaInclusion, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(timeDeltaInclusion, argumentExpression);
     }
 }

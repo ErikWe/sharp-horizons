@@ -28,7 +28,7 @@ public sealed record class ReferenceEllipsoidInterpretation
         get => longitudeDefinitionField;
         init
         {
-            InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(value);
+            InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(value);
 
             longitudeDefinitionField = value;
         }

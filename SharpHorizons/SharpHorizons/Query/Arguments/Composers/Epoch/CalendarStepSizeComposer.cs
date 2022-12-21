@@ -81,7 +81,7 @@ internal sealed class CalendarStepSizeComposer : IStepSizeComposer<ICalendarStep
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void Validate(CalendarStepSizeUnit unit, [CallerArgumentExpression(nameof(unit))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(unit, argumentExpression);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(unit, argumentExpression);
 
         if (unit is CalendarStepSizeUnit.Unknown)
         {

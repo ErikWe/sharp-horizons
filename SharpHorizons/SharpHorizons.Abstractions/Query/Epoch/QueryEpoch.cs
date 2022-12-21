@@ -110,19 +110,19 @@ public sealed record class QueryEpoch
     /// <param name="format">This <see cref="EpochFormat"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="format"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
-    private static void Validate(EpochFormat format, [CallerArgumentExpression(nameof(format))] string? argumentExpression = null) => InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(format, argumentExpression);
+    private static void Validate(EpochFormat format, [CallerArgumentExpression(nameof(format))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(format, argumentExpression);
 
     /// <summary>Validates that <paramref name="calendar"/> represents a valid <see cref="CalendarType"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="calendar">This <see cref="CalendarType"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="calendar"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
-    private static void Validate(CalendarType calendar, [CallerArgumentExpression(nameof(calendar))] string? argumentExpression = null) => InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(calendar, argumentExpression);
+    private static void Validate(CalendarType calendar, [CallerArgumentExpression(nameof(calendar))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(calendar, argumentExpression);
 
     /// <summary>Validates that <paramref name="timeSystem"/> represents a valid <see cref="Epoch.TimeSystem"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="timeSystem">This <see cref="Epoch.TimeSystem"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="timeSystem"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
-    private static void Validate(TimeSystem timeSystem, [CallerArgumentExpression(nameof(timeSystem))] string? argumentExpression = null) => InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(timeSystem, argumentExpression);
+    private static void Validate(TimeSystem timeSystem, [CallerArgumentExpression(nameof(timeSystem))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(timeSystem, argumentExpression);
 
     /// <summary>Validates that <paramref name="offset"/> represents a valid <see cref="Time"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="offset">This <see cref="Time"/> is validated.</param>

@@ -87,7 +87,7 @@ public sealed class EpochCollectionFactory : IEpochCollectionFactory
     /// <exception cref="InvalidEnumArgumentException"/>
     private static void ValidateEpochFormat(EpochFormat format, [CallerArgumentExpression(nameof(format))] string? argumentExpression = null)
     {
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(format);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(format);
 
         if (format is EpochFormat.Unknown)
         {

@@ -36,7 +36,7 @@ public sealed record class MajorObject
         get => longitudeDefinition;
         init
         {
-            InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(value);
+            InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(value);
 
             longitudeDefinition = value;
         }

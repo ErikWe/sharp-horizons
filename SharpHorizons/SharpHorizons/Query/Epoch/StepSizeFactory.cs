@@ -68,7 +68,7 @@ public sealed class StepSizeFactory : IFixedStepSizeFactory, IUniformStepSizeFac
             throw new ArgumentOutOfRangeException(nameof(count), count, $"A value greater than 0 should be used to represent the count of a {nameof(ICalendarStepSize)}.");
         }
 
-        InvalidEnumArgumentExceptionFactory.ThrowIfUnlisted(unit);
+        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(unit);
 
         if (unit is CalendarStepSizeUnit.Unknown)
         {
