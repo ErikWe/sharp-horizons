@@ -7,7 +7,7 @@ using Xunit;
 public class Construction
 {
     [Theory]
-    [ClassData(typeof(Datasets.ValidDoubles))]
+    [ClassData(typeof(Datasets.ValidJulianDayNumbers))]
     public void Double_Valid_ApproximateMatch(double julianDayNumber)
     {
         JulianDay julianDay = new(julianDayNumber);
@@ -16,7 +16,7 @@ public class Construction
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.ValidPairs))]
+    [ClassData(typeof(Datasets.ValidIntegralAndFractionalDays))]
     public void Pair_Valid_ExactMatch(int integralDay, float fractionalDay)
     {
         JulianDay julianDay = new(integralDay, fractionalDay);
@@ -37,21 +37,21 @@ public class Construction
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.OutOfRangeDoubles))]
+    [ClassData(typeof(Datasets.OutOfRangeJulianDayNumbers))]
     public void Double_OutOfRange_ArgumentOutOfRangeException(double julianDayNumber)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => new JulianDay(julianDayNumber));
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.OutOfRangePairs))]
+    [ClassData(typeof(Datasets.OutOfRangeIntegralAndFractionalDays))]
     public void Pair_OutOfRange_ArgumentOutOfRangeException(int integralDay, float fractionalDay)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => new JulianDay(integralDay, fractionalDay));
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.ValidPairs))]
+    [ClassData(typeof(Datasets.ValidIntegralAndFractionalDays))]
     public void Initialization_Valid_ExactMatch(int integralDay, float fractionalDay)
     {
         JulianDay julianDay = new() { IntegralDay = integralDay, FractionalDay = fractionalDay };
@@ -66,14 +66,14 @@ public class Construction
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.OutOfRangePairs))]
+    [ClassData(typeof(Datasets.OutOfRangeIntegralAndFractionalDays))]
     public void Initialization_OutOfRange_ArgumentOutOfRangeException(int integralDay, float fractionalDay)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => new JulianDay() { IntegralDay = integralDay, FractionalDay = fractionalDay });
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.ValidDoubles))]
+    [ClassData(typeof(Datasets.ValidJulianDayNumbers))]
     public void CastFromDouble_Valid_ApproximateMatch(double julianDayNumber)
     {
         var julianDay = (JulianDay)julianDayNumber;
@@ -88,7 +88,7 @@ public class Construction
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.OutOfRangeDoubles))]
+    [ClassData(typeof(Datasets.OutOfRangeJulianDayNumbers))]
     public void CastFromDouble_OutOfRange_ArgumentOutOfRangeException(double julianDayNumber)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => (JulianDay)julianDayNumber);

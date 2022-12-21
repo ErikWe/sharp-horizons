@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 internal static class Datasets
 {
-    internal class ValidDoubles : IEnumerable<object?[]>
+    internal class ValidJulianDayNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<double> Items => new double[]
         {
@@ -18,11 +18,11 @@ internal static class Datasets
             0
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrapper.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class ValidPairs : IEnumerable<object?[]>
+    internal class ValidIntegralAndFractionalDays : IEnumerable<object?[]>
     {
         public static IEnumerable<(int, float)> Items => new (int, float)[]
         {
@@ -33,11 +33,11 @@ internal static class Datasets
             (0, 0)
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrapper.SeparateAndWrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class OutOfRangeDoubles : IEnumerable<object?[]>
+    internal class OutOfRangeJulianDayNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<double> Items => new double[]
         {
@@ -47,11 +47,11 @@ internal static class Datasets
             int.MinValue - 0.01
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrapper.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class OutOfRangePairs : IEnumerable<object?[]>
+    internal class OutOfRangeIntegralAndFractionalDays : IEnumerable<object?[]>
     {
         public static IEnumerable<(int, float)> Items => new (int, float)[]
         {
@@ -61,7 +61,7 @@ internal static class Datasets
             (0, 1.718f)
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrapper.SeparateAndWrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -71,20 +71,20 @@ internal static class Datasets
         {
             get
             {
-                foreach (var julianDayNumber in ValidDoubles.Items)
+                foreach (var julianDayNumber in ValidJulianDayNumbers.Items)
                 {
                     yield return new JulianDay(julianDayNumber);
                 }
             }
         }
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrapper.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     internal class TwoJulianDays : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrapper.DoubleWrap(JulianDays.Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(JulianDays.Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

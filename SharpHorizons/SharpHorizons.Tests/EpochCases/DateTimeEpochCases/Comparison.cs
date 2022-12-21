@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.DateTimeEpochCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
@@ -14,7 +13,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeEpochs))]
+    [ClassData(typeof(Datasets.TwoDateTimeEpochs))]
     public void EpochMethod_SameSignAsJulianDay(DateTimeEpoch lhs, DateTimeEpoch rhs)
     {
         var expected = Math.Sign(lhs.ToJulianDay().CompareTo(rhs.ToJulianDay()));
@@ -30,13 +29,20 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidIEpochs))]
-    public void IEpochMethod_SameSignAsJulianDay(DateTimeEpoch lhs, IEpoch rhs)
+    [ClassData(typeof(Datasets.DateTimeEpochsAndConvertibleIEpochs))]
+    public void IEpochMethod_Convertible_SameSignAsJulianDay(DateTimeEpoch lhs, IEpoch rhs)
     {
         var expected = Math.Sign(lhs.ToJulianDay().CompareTo(rhs.ToJulianDay()));
         var actual = Math.Sign(lhs.CompareTo(rhs));
 
         Assert.Equal(expected, actual);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.DateTimeEpochsAndUnconvertibleIEpochs))]
+    public void IEpochMethod_Unconvertible_ArgumentException(DateTimeEpoch lhs, IEpoch rhs)
+    {
+        Assert.Throws<ArgumentException>(() => lhs.CompareTo(rhs));
     }
 
     [Fact]
@@ -46,7 +52,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeEpochs))]
+    [ClassData(typeof(Datasets.TwoDateTimeEpochs))]
     public void GreaterThanOperator_MatchJulianDay(DateTimeEpoch lhs, DateTimeEpoch rhs)
     {
         var expected = lhs.ToJulianDay() > rhs.ToJulianDay();
@@ -62,7 +68,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeEpochs))]
+    [ClassData(typeof(Datasets.TwoDateTimeEpochs))]
     public void LessThanOperator_MatchDouble(DateTimeEpoch lhs, DateTimeEpoch rhs)
     {
         var expected = lhs.ToJulianDay() < rhs.ToJulianDay();
@@ -78,7 +84,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeEpochs))]
+    [ClassData(typeof(Datasets.TwoDateTimeEpochs))]
     public void GreaterThanOrEqualOperator_MatchDouble(DateTimeEpoch lhs, DateTimeEpoch rhs)
     {
         var expected = lhs.ToJulianDay() >= rhs.ToJulianDay();
@@ -94,7 +100,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeEpochs))]
+    [ClassData(typeof(Datasets.TwoDateTimeEpochs))]
     public void LessThanOrEqualOperator_MatchDouble(DateTimeEpoch lhs, DateTimeEpoch rhs)
     {
         var expected = lhs.ToJulianDay() <= rhs.ToJulianDay();
@@ -102,18 +108,4 @@ public class Comparison
 
         Assert.Equal(expected, actual);
     }
-
-    public static IEnumerable<object[]> ValidDateTimeEpochs() => new object[][]
-    {
-        new object[] { DateTimeEpoch.FromJulianDay(new JulianDay(4000000)), DateTimeEpoch.FromJulianDay(new JulianDay(2400000)) },
-        new object[] { DateTimeEpoch.FromJulianDay(new JulianDay(2400000)), DateTimeEpoch.FromJulianDay(new JulianDay(4000000)) },
-    };
-
-    public static IEnumerable<object[]> ValidIEpochs() => new object[][]
-    {
-        new object[] { DateTimeEpoch.FromJulianDay(new JulianDay(4000000)), JulianDay.Epoch },
-        new object[] { DateTimeEpoch.FromJulianDay(new JulianDay(4000000)), new JulianDay(int.MaxValue) },
-        new object[] { DateTimeEpoch.FromJulianDay(new JulianDay(2400000)), new JulianDay(int.MinValue) },
-        new object[] { DateTimeEpoch.FromJulianDay(new JulianDay(2400000)), DateTimeEpoch.FromJulianDay(new JulianDay(4000000)) },
-    };
 }

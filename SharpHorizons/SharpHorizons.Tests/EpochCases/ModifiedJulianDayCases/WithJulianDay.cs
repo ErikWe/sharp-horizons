@@ -1,25 +1,22 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.ModifiedJulianDayCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
 public class WithJulianDay
 {
-    private static int Precision { get; } = 5;
-
     [Theory]
-    [MemberData(nameof(Conversions))]
-    public void From_Valid_ApproximatelyOffsetByConstant(JulianDay julianDay, ModifiedJulianDay expected)
+    [ClassData(typeof(Datasets.ConvertibleJulianDays))]
+    public void From_Valid_ApproximatelyOffsetByConstant(JulianDay julianDay)
     {
         var actual = ModifiedJulianDay.FromJulianDay(julianDay);
 
-        Assert.Equal(expected.Day, actual.Day, Precision);
+        Asserter.Approximate(julianDay.Day - 2400000.5, actual.Day);
     }
 
     [Theory]
-    [MemberData(nameof(UnconvertibleJulianDays))]
+    [ClassData(typeof(Datasets.UnconvertibleJulianDays))]
     public void From_OutOfRange_ArgumentOutOfRangeException(JulianDay julianDay)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => ModifiedJulianDay.FromJulianDay(julianDay));
@@ -32,36 +29,18 @@ public class WithJulianDay
     }
 
     [Theory]
-    [MemberData(nameof(Conversions))]
-    public void To_ApproximatelyOffsetByConstant(JulianDay expected, ModifiedJulianDay modifiedJulianDay)
+    [ClassData(typeof(Datasets.ConvertibleModifiedJulianDays))]
+    public void To_ApproximatelyOffsetByConstant(ModifiedJulianDay modifiedJulianDay)
     {
         var actual = modifiedJulianDay.ToJulianDay();
 
-        Assert.Equal(expected.Day, actual.Day, Precision);
+        Asserter.Approximate(modifiedJulianDay.Day + 2400000.5, actual.Day);
     }
 
     [Theory]
-    [MemberData(nameof(UnconvertibleModifiedJulianDays))]
+    [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDays))]
     public void To_OutOfRange_EpochOutOfBoundsException(ModifiedJulianDay modifiedJulianDay)
     {
         Assert.Throws<EpochOutOfBoundsException>(modifiedJulianDay.ToJulianDay);
     }
-
-    public static IEnumerable<object[]> Conversions() => new object[][]
-    {
-        new object[] { JulianDay.Epoch, new ModifiedJulianDay(-2400000.5) },
-        new object[] { new JulianDay(2400000.5), ModifiedJulianDay.Epoch },
-        new object[] { new JulianDay(int.MaxValue + 0.49), new ModifiedJulianDay(int.MaxValue - 2400000.01) },
-        new object[] { new JulianDay(int.MinValue + 2400000.5), new ModifiedJulianDay(int.MinValue) }
-    };
-
-    public static IEnumerable<object[]> UnconvertibleJulianDays() => new object[][]
-    {
-        new object[] { new JulianDay(int.MinValue) }
-    };
-
-    public static IEnumerable<object[]> UnconvertibleModifiedJulianDays() => new object[][]
-    {
-        new object[] { new ModifiedJulianDay(int.MaxValue) }
-    };
 }

@@ -28,7 +28,7 @@ public class WithJulianDay
     }
 
     [Theory]
-    [MemberData(nameof(InvalidJulianDays))]
+    [ClassData(typeof(Datasets.UnconvertibleJulianDays))]
     public void From_OutOfRange_ArgumentOutOfBoundsException(JulianDay julianDay)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => Epoch.FromJulianDay(julianDay));
@@ -78,11 +78,5 @@ public class WithJulianDay
         new object[] { new JulianDay(-1930342.500011574), new Epoch(new LocalDateTime(-9998, 10, 19, 23, 59, 59, 0, CalendarSystem.Gregorian).InUtc().ToInstant()) },
         new object[] { new JulianDay(1721351.45), new Epoch(new LocalDateTime(0, 10, 18, 22, 48, 0, 0, CalendarSystem.Gregorian).InUtc().ToInstant()) },
         new object[] { new JulianDay(1721442.89), new Epoch(new LocalDateTime(1, 1, 18, 9, 21, 36, 0, CalendarSystem.Gregorian).InUtc().ToInstant()) },
-    };
-
-    public static IEnumerable<object[]> InvalidJulianDays() => new object[][]
-    {
-        new object[] { new JulianDay(int.MaxValue) },
-        new object[] { new JulianDay(int.MinValue) }
     };
 }

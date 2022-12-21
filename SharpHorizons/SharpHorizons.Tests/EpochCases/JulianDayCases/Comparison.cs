@@ -30,10 +30,10 @@ public class Comparison
 
     [Theory]
     [ClassData(typeof(Datasets.TwoJulianDays))]
-    public void IEpochMethod_SameSignAsDouble(JulianDay lhs, JulianDay rhs)
+    public void IEpochMethod_SameSignAsDouble(JulianDay lhs, IEpoch rhs)
     {
-        var expected = Math.Sign(lhs.Day.CompareTo(rhs.Day));
-        var actual = Math.Sign(lhs.CompareTo((IEpoch)rhs));
+        var expected = Math.Sign(lhs.Day.CompareTo(rhs.ToJulianDay().Day));
+        var actual = Math.Sign(lhs.CompareTo(rhs));
 
         Assert.Equal(expected, actual);
     }

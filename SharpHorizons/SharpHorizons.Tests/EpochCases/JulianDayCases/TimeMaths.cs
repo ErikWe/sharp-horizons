@@ -9,13 +9,18 @@ using Xunit;
 
 public class TimeMaths
 {
-    private static int Precision { get; } = 5;
-
     [Theory]
     [MemberData(nameof(InvalidTimes))]
     public void AddMethod_Invalid_ArgumentException(Time difference)
     {
         Assert.Throws<ArgumentException>(() => JulianDay.Epoch.Add(difference));
+    }
+
+    [Theory]
+    [MemberData(nameof(InvalidTimes))]
+    public void SubtractMethod_Invalid_ArgumentException(Time difference)
+    {
+        Assert.Throws<ArgumentException>(() => JulianDay.Epoch.Subtract(difference));
     }
 
     [Theory]
@@ -41,6 +46,14 @@ public class TimeMaths
     }
 
     [Fact]
+    public void SubtractMethod_OutOfBounds_EpochOutOfBoundsException()
+    {
+        Time difference = new(double.MaxValue);
+
+        Assert.Throws<EpochOutOfBoundsException>(() => JulianDay.Epoch.Subtract(difference));
+    }
+
+    [Fact]
     public void AddOperator_OutOfBounds_EpochOutOfBoundsException()
     {
         Time difference = new(double.MaxValue);
@@ -62,7 +75,16 @@ public class TimeMaths
     {
         var actual = JulianDay.Epoch.Add(difference);
 
-        Assert.Equal(difference.Days, actual.Day, Precision);
+        Asserter.Approximate(difference.Days, actual.Day);
+    }
+
+    [Theory]
+    [MemberData(nameof(ValidTimes))]
+    public void SubtractMethod_ApproximateMatch(Time difference)
+    {
+        var actual = JulianDay.Epoch.Subtract(difference);
+
+        Asserter.Approximate(-difference.Days, actual.Day);
     }
 
     [Theory]
@@ -71,7 +93,7 @@ public class TimeMaths
     {
         var actual = JulianDay.Epoch + difference;
 
-        Assert.Equal(difference.Days, actual.Day, Precision);
+        Asserter.Approximate(difference.Days, actual.Day);
     }
 
     [Theory]
@@ -80,7 +102,7 @@ public class TimeMaths
     {
         var actual = JulianDay.Epoch - difference;
 
-        Assert.Equal(-difference.Days, actual.Day, Precision);
+        Asserter.Approximate(-difference.Days, actual.Day);
     }
 
     public static IEnumerable<object[]> ValidTimes() => new object[][]

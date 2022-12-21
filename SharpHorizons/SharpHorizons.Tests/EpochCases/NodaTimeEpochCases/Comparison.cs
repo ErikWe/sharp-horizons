@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.NodaTimeEpochCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
@@ -14,7 +13,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidEpochs))]
+    [ClassData(typeof(Datasets.TwoEpochs))]
     public void EpochMethod_SameSignAsJulianDay(Epoch lhs, Epoch rhs)
     {
         var expected = Math.Sign(lhs.ToJulianDay().CompareTo(rhs.ToJulianDay()));
@@ -30,13 +29,20 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidIEpochs))]
-    public void IEpochMethod_SameSignAsJulianDay(Epoch lhs, IEpoch rhs)
+    [ClassData(typeof(Datasets.EpochsAndConvertibleIEpochs))]
+    public void IEpochMethod_Convertible_SameSignAsJulianDay(Epoch lhs, IEpoch rhs)
     {
         var expected = Math.Sign(lhs.ToJulianDay().CompareTo(rhs.ToJulianDay()));
         var actual = Math.Sign(lhs.CompareTo(rhs));
 
         Assert.Equal(expected, actual);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.EpochsAndUnconvertibleIEpochs))]
+    public void IEpochMethod_Unconvertible_ArgumentException(Epoch lhs, IEpoch rhs)
+    {
+        Assert.Throws<ArgumentException>(() => lhs.CompareTo(rhs));
     }
 
     [Fact]
@@ -46,7 +52,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidEpochs))]
+    [ClassData(typeof(Datasets.TwoEpochs))]
     public void GreaterThanOperator_MatchJulianDay(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() > rhs.ToJulianDay();
@@ -62,7 +68,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidEpochs))]
+    [ClassData(typeof(Datasets.TwoEpochs))]
     public void LessThanOperator_MatchDouble(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() < rhs.ToJulianDay();
@@ -78,7 +84,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidEpochs))]
+    [ClassData(typeof(Datasets.TwoEpochs))]
     public void GreaterThanOrEqualOperator_MatchDouble(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() >= rhs.ToJulianDay();
@@ -94,7 +100,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidEpochs))]
+    [ClassData(typeof(Datasets.TwoEpochs))]
     public void LessThanOrEqualOperator_MatchDouble(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() <= rhs.ToJulianDay();
@@ -102,28 +108,4 @@ public class Comparison
 
         Assert.Equal(expected, actual);
     }
-
-    public static IEnumerable<object[]> ValidEpochs() => new object[][]
-    {
-        new object[] { Epoch.FromJulianDay(new JulianDay(1000000)), Epoch.FromJulianDay(new JulianDay(0)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-1000000)), Epoch.FromJulianDay(new JulianDay(0)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(0)), Epoch.FromJulianDay(new JulianDay(1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(0)), Epoch.FromJulianDay(new JulianDay(-1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-10.14)), Epoch.FromJulianDay(new JulianDay(10.14)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(10.14)), Epoch.FromJulianDay(new JulianDay(-10.14)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(10.14)), Epoch.FromJulianDay(new JulianDay(10.14)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-10.14)), Epoch.FromJulianDay(new JulianDay(-10.14)) },
-    };
-
-    public static IEnumerable<object[]> ValidIEpochs() => new object[][]
-    {
-        new object[] { Epoch.FromJulianDay(new JulianDay(1000000)), JulianDay.Epoch },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-1000000)), new JulianDay(int.MaxValue) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(0)), new JulianDay(int.MinValue) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(0)), Epoch.FromJulianDay(new JulianDay(-1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-10.14)), Epoch.FromJulianDay(new JulianDay(10.14)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(10.14)), Epoch.FromJulianDay(new JulianDay(-10.14)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(10.14)), Epoch.FromJulianDay(new JulianDay(10.14)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-10.14)), Epoch.FromJulianDay(new JulianDay(-10.14)) },
-    };
 }

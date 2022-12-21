@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-internal static class DatasetWrapper
+internal static class DatasetWrappers
 {
     public static IEnumerator<object?[]> Wrap<T>(IEnumerable<T> items)
     {
@@ -30,7 +30,7 @@ internal static class DatasetWrapper
         }
     }
 
-    public static IEnumerator<object?[]> DoubleWrap<T>(IEnumerable<T> items)
+    public static IEnumerator<object?[]> DoublePermutate<T>(IEnumerable<T> items)
     {
         return SeparateAndWrap(wrap());
 
@@ -41,6 +41,26 @@ internal static class DatasetWrapper
             while (firstEnumerator.MoveNext())
             {
                 var secondEnumerator = items.GetEnumerator();
+
+                while (secondEnumerator.MoveNext())
+                {
+                    yield return (firstEnumerator.Current, secondEnumerator.Current);
+                }
+            }
+        }
+    }
+
+    public static IEnumerator<object?[]> Permutate<T1, T2>(IEnumerable<T1> firstItems, IEnumerable<T2> secondItems)
+    {
+        return SeparateAndWrap(wrap());
+
+        IEnumerable<(T1, T2)> wrap()
+        {
+            var firstEnumerator = firstItems.GetEnumerator();
+
+            while (firstEnumerator.MoveNext())
+            {
+                var secondEnumerator = secondItems.GetEnumerator();
 
                 while (secondEnumerator.MoveNext())
                 {

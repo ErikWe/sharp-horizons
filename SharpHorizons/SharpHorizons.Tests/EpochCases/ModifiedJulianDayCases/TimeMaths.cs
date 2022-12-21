@@ -9,13 +9,20 @@ using Xunit;
 
 public class TimeMaths
 {
-    private static int Precision { get; } = 5;
+    private static int TimePrecision { get; } = 5;
 
     [Theory]
     [MemberData(nameof(InvalidTimes))]
     public void AddMethod_Invalid_ArgumentException(Time difference)
     {
         Assert.Throws<ArgumentException>(() => ModifiedJulianDay.Epoch.Add(difference));
+    }
+
+    [Theory]
+    [MemberData(nameof(InvalidTimes))]
+    public void SubtractMethod_Invalid_ArgumentException(Time difference)
+    {
+        Assert.Throws<ArgumentException>(() => ModifiedJulianDay.Epoch.Subtract(difference));
     }
 
     [Theory]
@@ -41,6 +48,14 @@ public class TimeMaths
     }
 
     [Fact]
+    public void SubtractMethod_OutOfBounds_EpochOutOfBoundsException()
+    {
+        Time difference = new(double.MaxValue);
+
+        Assert.Throws<EpochOutOfBoundsException>(() => ModifiedJulianDay.Epoch.Subtract(difference));
+    }
+
+    [Fact]
     public void AddOperator_OutOfBounds_EpochOutOfBoundsException()
     {
         Time difference = new(double.MaxValue);
@@ -62,7 +77,16 @@ public class TimeMaths
     {
         var actual = ModifiedJulianDay.Epoch.Add(difference);
 
-        Assert.Equal(difference.Days, actual.Day, Precision);
+        Assert.Equal(difference.Days, actual.Day, TimePrecision);
+    }
+
+    [Theory]
+    [MemberData(nameof(ValidTimes))]
+    public void SubtractMethod_ApproximateMatch(Time difference)
+    {
+        var actual = ModifiedJulianDay.Epoch.Subtract(difference);
+
+        Assert.Equal(-difference.Days, actual.Day, TimePrecision);
     }
 
     [Theory]
@@ -71,7 +95,7 @@ public class TimeMaths
     {
         var actual = ModifiedJulianDay.Epoch + difference;
 
-        Assert.Equal(difference.Days, actual.Day, Precision);
+        Assert.Equal(difference.Days, actual.Day, TimePrecision);
     }
 
     [Theory]
@@ -80,7 +104,7 @@ public class TimeMaths
     {
         var actual = ModifiedJulianDay.Epoch - difference;
 
-        Assert.Equal(-difference.Days, actual.Day, Precision);
+        Assert.Equal(-difference.Days, actual.Day, TimePrecision);
     }
 
     public static IEnumerable<object[]> ValidTimes() => new object[][]

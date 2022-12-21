@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.ModifiedJulianDayCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
@@ -14,7 +13,8 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoConvertibleModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
     public void ModifiedJulianDayMethod_SameSignAsDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = Math.Sign(lhs.Day.CompareTo(rhs.Day));
@@ -30,20 +30,25 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidIEpochs))]
-    public void IEpochMethod_SameSignAsDouble(ModifiedJulianDay lhs, IEpoch rhs)
+    [ClassData(typeof(Datasets.TwoConvertibleModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
+    public void IEpochMethod_ModifiedJulianDay_SameSignAsDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
-        var expected = Math.Sign((lhs.Day + 2400000.5).CompareTo(rhs.ToJulianDay().Day));
-        var actual = Math.Sign(lhs.CompareTo(rhs));
+        var expected = Math.Sign(lhs.Day.CompareTo(rhs.Day));
+        var actual = Math.Sign(lhs.CompareTo((IEpoch)rhs));
 
         Assert.Equal(expected, actual);
     }
 
     [Theory]
-    [MemberData(nameof(InvalidModifiedJulianDays))]
-    public void IEpochMethod_OutOfRange_ArgumentException(ModifiedJulianDay rhs)
+    [ClassData(typeof(Datasets.ConvertibleModifiedJulianDaysAndIEpochs))]
+    [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDaysAndConvertibleIEpochs))]
+    public void IEpochMethod_ConvertibleIEpoch_SameSignAsDouble(ModifiedJulianDay lhs, IEpoch rhs)
     {
-        Assert.Throws<ArgumentException>(() => ModifiedJulianDay.Epoch.CompareTo((IEpoch)rhs));
+        var expected = Math.Sign((lhs.Day + 2400000.5).CompareTo(rhs.ToJulianDay().Day));
+        var actual = Math.Sign(lhs.CompareTo(rhs));
+
+        Assert.Equal(expected, actual);
     }
 
     [Fact]
@@ -53,7 +58,8 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoConvertibleModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
     public void GreaterThanOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day > rhs.Day;
@@ -69,7 +75,8 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoConvertibleModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
     public void LessThanOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day < rhs.Day;
@@ -85,7 +92,8 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoConvertibleModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
     public void GreaterThanOrEqualOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day >= rhs.Day;
@@ -101,7 +109,8 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoConvertibleModifiedJulianDays))]
+    [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
     public void LessThanOrEqualOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day <= rhs.Day;
@@ -109,33 +118,4 @@ public class Comparison
 
         Assert.Equal(expected, actual);
     }
-
-    public static IEnumerable<object[]> ValidModifiedJulianDays() => new object[][]
-    {
-        new object[] { new ModifiedJulianDay(int.MaxValue), new ModifiedJulianDay(0) },
-        new object[] { new ModifiedJulianDay(int.MinValue), new ModifiedJulianDay(0) },
-        new object[] { new ModifiedJulianDay(0), new ModifiedJulianDay(int.MaxValue) },
-        new object[] { new ModifiedJulianDay(0), new ModifiedJulianDay(int.MinValue) },
-        new object[] { new ModifiedJulianDay(-10.14), new ModifiedJulianDay(10.14) },
-        new object[] { new ModifiedJulianDay(10.14), new ModifiedJulianDay(-10.14) },
-        new object[] { new ModifiedJulianDay(10.14), new ModifiedJulianDay(10.14) },
-        new object[] { new ModifiedJulianDay(-10.14), new ModifiedJulianDay(-10.14) },
-    };
-
-    public static IEnumerable<object[]> ValidIEpochs() => new object[][]
-    {
-        new object[] { new ModifiedJulianDay(int.MaxValue), JulianDay.Epoch },
-        new object[] { new ModifiedJulianDay(int.MinValue), new JulianDay(int.MaxValue) },
-        new object[] { new ModifiedJulianDay(0), new JulianDay(int.MinValue) },
-        new object[] { new ModifiedJulianDay(0), new ModifiedJulianDay(int.MinValue) },
-        new object[] { new ModifiedJulianDay(-10.14), new ModifiedJulianDay(10.14) },
-        new object[] { new ModifiedJulianDay(10.14), new ModifiedJulianDay(-10.14) },
-        new object[] { new ModifiedJulianDay(10.14), new ModifiedJulianDay(10.14) },
-        new object[] { new ModifiedJulianDay(-10.14), new ModifiedJulianDay(-10.14) },
-    };
-
-    public static IEnumerable<object[]> InvalidModifiedJulianDays() => new object[][]
-    {
-        new object[] { new ModifiedJulianDay(int.MaxValue) }
-    };
 }

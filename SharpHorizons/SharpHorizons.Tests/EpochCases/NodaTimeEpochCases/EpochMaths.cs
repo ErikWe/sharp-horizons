@@ -1,21 +1,27 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.NodaTimeEpochCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
 public class EpochMaths
 {
-    private static int Precision { get; } = 5;
+    private static int TimePrecision { get; } = 5;
 
     [Theory]
-    [MemberData(nameof(Epochs))]
-    public void Method_ApproximateMatch(Epoch initialEpoch, Epoch finalEpoch)
+    [ClassData(typeof(Datasets.EpochsAndConvertibleIEpochs))]
+    public void Method_Convertible_ApproximateMatch(Epoch finalEpoch, IEpoch initialEpoch)
     {
         var actual = finalEpoch.Difference(initialEpoch);
 
-        Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
+        Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, TimePrecision);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.EpochsAndUnconvertibleIEpochs))]
+    public void Method_Unconvertible_ApproximateMatch(Epoch finalEpoch, IEpoch initialEpoch)
+    {
+        Assert.Throws<ArgumentException>(() => finalEpoch.Difference(initialEpoch));
     }
 
     [Fact]
@@ -25,12 +31,12 @@ public class EpochMaths
     }
 
     [Theory]
-    [MemberData(nameof(Epochs))]
+    [ClassData(typeof(Datasets.TwoEpochs))]
     public void Operator_ApproximateMatch(Epoch initialEpoch, Epoch finalEpoch)
     {
         var actual = finalEpoch - initialEpoch;
 
-        Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
+        Assert.Equal(finalEpoch.ToJulianDay().Day - initialEpoch.ToJulianDay().Day, actual.Days, TimePrecision);
     }
 
     [Fact]
@@ -38,19 +44,4 @@ public class EpochMaths
     {
         Assert.Throws<ArgumentNullException>(() => Epoch.FromJulianDay(new JulianDay(0)) - null!);
     }
-
-    public static IEnumerable<object[]> Epochs() => new object[][]
-    {
-        new object[] { Epoch.FromJulianDay(new JulianDay(0)), Epoch.FromJulianDay(new JulianDay(0)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(1)), Epoch.FromJulianDay(new JulianDay(-1)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-1)), Epoch.FromJulianDay(new JulianDay(1)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(0)), Epoch.FromJulianDay(new JulianDay(-1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(0)), Epoch.FromJulianDay(new JulianDay(1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(1000000)), Epoch.FromJulianDay(new JulianDay(0)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(1000000)), Epoch.FromJulianDay(new JulianDay(-1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(1000000)), Epoch.FromJulianDay(new JulianDay(1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-1000000)), Epoch.FromJulianDay(new JulianDay(-1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-1000000)), Epoch.FromJulianDay(new JulianDay(1000000)) },
-        new object[] { Epoch.FromJulianDay(new JulianDay(-1000000)), Epoch.FromJulianDay(new JulianDay(0)) }
-    };
 }
