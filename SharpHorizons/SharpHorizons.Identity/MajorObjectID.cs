@@ -8,47 +8,47 @@ using System.Globalization;
 public readonly record struct MajorObjectID
 {
     /// <summary>The <see cref="int"/> ID of the <see cref="MajorObject"/>.</summary>
-    public required int ID { get; init; }
+    public required int Value { get; init; }
 
     /// <inheritdoc cref="MajorObjectID"/>
     public MajorObjectID() { }
 
     /// <inheritdoc cref="MajorObjectID"/>
-    /// <param name="id"><inheritdoc cref="ID" path="/summary"/></param>
+    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     [SetsRequiredMembers]
-    public MajorObjectID(int id)
+    public MajorObjectID(int value)
     {
-        ID = id;
+        Value = value;
     }
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="ID"/> represented by the <see cref="MajorObjectID"/>, formatted according to the <see cref="CultureInfo.CurrentCulture"/>.</summary>
-    public override string ToString() => ID.ToString(CultureInfo.CurrentCulture);
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MajorObjectID"/>, formatted according to the <see cref="CultureInfo.CurrentCulture"/>.</summary>
+    public override string ToString() => Value.ToString(CultureInfo.CurrentCulture);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="ID"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="provider"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="provider"/>.</summary>
     /// <param name="provider">Provides culture-specific formatting information.</param>
-    public string ToString(IFormatProvider? provider) => ID.ToString(provider);
+    public string ToString(IFormatProvider? provider) => Value.ToString(provider);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="ID"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.CurrentCulture"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.CurrentCulture"/>.</summary>
     /// <param name="format">Provides formatting information.</param>
-    public string ToString(string? format) => ID.ToString(format, CultureInfo.CurrentCulture);
+    public string ToString(string? format) => Value.ToString(format, CultureInfo.CurrentCulture);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="ID"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="format"/> and <paramref name="provider"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="format"/> and <paramref name="provider"/>.</summary>
     /// <param name="format">Provides formatting information.</param>
     /// <param name="provider">Provides culture-specific formatting information.</param>
-    public string ToString(string? format, IFormatProvider? provider) => ID.ToString(format, provider);
+    public string ToString(string? format, IFormatProvider? provider) => Value.ToString(format, provider);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="ID"/> represented by the <see cref="MajorObjectID"/>, formatted according to the <see cref="CultureInfo.InvariantCulture"/>.</summary>
-    public string ToStringInvariant() => ID.ToString(CultureInfo.InvariantCulture);
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MajorObjectID"/>, formatted according to the <see cref="CultureInfo.InvariantCulture"/>.</summary>
+    public string ToStringInvariant() => Value.ToString(CultureInfo.InvariantCulture);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="ID"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.InvariantCulture"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MajorObjectID"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.InvariantCulture"/>.</summary>
     /// <param name="format">Provides formatting information.</param>
-    public string ToStringInvariant(string? format) => ID.ToString(format, CultureInfo.InvariantCulture);
+    public string ToStringInvariant(string? format) => Value.ToString(format, CultureInfo.InvariantCulture);
 
     /// <inheritdoc cref="MajorObjectID"/>
-    /// <param name="id"><inheritdoc cref="ID" path="/summary"/></param>
-    public static explicit operator MajorObjectID(int id) => new(id);
+    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    public static explicit operator MajorObjectID(int value) => new(value);
 
-    /// <summary>Retrieves the <see cref="ID"/> represented by <paramref name="majorObjectID"/>.</summary>
+    /// <summary>Retrieves the <see cref="Value"/> represented by <paramref name="majorObjectID"/>.</summary>
     /// <param name="majorObjectID"><inheritdoc cref="MajorObjectID" path="/summary"/></param>
-    public static implicit operator int(MajorObjectID majorObjectID) => majorObjectID.ID;
+    public static implicit operator int(MajorObjectID majorObjectID) => majorObjectID.Value;
 }
