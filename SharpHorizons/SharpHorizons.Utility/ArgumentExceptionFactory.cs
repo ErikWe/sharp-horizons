@@ -23,4 +23,9 @@ public static class ArgumentExceptionFactory
     /// <param name="argumentExpression">The expression used as the argument which caused the <see cref="ArgumentException"/>.</param>
     /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="ArgumentException"/>.</param>
     public static ArgumentException InternalException<T>(string? argumentExpression, Exception innerException) => new($"An exception occurred within the {typeof(T).Name}.", argumentExpression, innerException);
+
+    /// <summary>Constructs a <see cref="ArgumentException"/> describing a <see cref="string"/> that unexpectedly consisted of only white-space characters.</summary>
+    /// <param name="argumentExpression">The expression used as the argument which caused the <see cref="ArgumentException"/>.</param>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="ArgumentException"/>.</param>
+    public static ArgumentException WhiteSpace(string? argumentExpression, Exception? innerException = null) => new($"The {nameof(String)} should not consist of only white-space characters.", argumentExpression, innerException);
 }
