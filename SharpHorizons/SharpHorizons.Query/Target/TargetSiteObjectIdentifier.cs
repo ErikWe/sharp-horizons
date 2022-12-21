@@ -17,7 +17,7 @@ public readonly record struct TargetSiteObjectIdentifier
         {
             try
             {
-                ArgumentException.ThrowIfNullOrEmpty(valueField);
+                ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(valueField);
             }
             catch (ArgumentException e)
             {
@@ -28,7 +28,7 @@ public readonly record struct TargetSiteObjectIdentifier
         }
         init
         {
-            ArgumentException.ThrowIfNullOrEmpty(value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
 
             valueField = value;
         }

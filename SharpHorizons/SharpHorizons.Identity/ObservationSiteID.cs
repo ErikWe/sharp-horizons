@@ -18,7 +18,7 @@ public readonly record struct ObservationSiteID
         {
             try
             {
-                ArgumentException.ThrowIfNullOrEmpty(valueField);
+                ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(valueField);
             }
             catch (ArgumentException e)
             {
@@ -29,7 +29,7 @@ public readonly record struct ObservationSiteID
         }
         init
         {
-            ArgumentException.ThrowIfNullOrEmpty(value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
 
             valueField = value;
         }

@@ -15,7 +15,7 @@ public sealed record class ReferenceEllipsoidInterpretation
         get => nameField;
         init
         {
-            ArgumentException.ThrowIfNullOrEmpty(value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
 
             nameField = value;
         }

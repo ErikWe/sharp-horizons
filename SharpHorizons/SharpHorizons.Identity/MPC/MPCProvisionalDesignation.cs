@@ -18,7 +18,7 @@ public readonly partial record struct MPCProvisionalDesignation
         {
             try
             {
-                ArgumentException.ThrowIfNullOrEmpty(valueField);
+                ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(valueField);
             }
             catch (ArgumentException e)
             {
@@ -29,7 +29,7 @@ public readonly partial record struct MPCProvisionalDesignation
         }
         init
         {
-            ArgumentException.ThrowIfNullOrEmpty(value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
 
             valueField = value;
         }

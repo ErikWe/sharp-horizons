@@ -71,7 +71,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         try
         {
             ArgumentNullException.ThrowIfNull(identifier, argumentExpression);
-            ArgumentException.ThrowIfNullOrEmpty(identifier.Identifier);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(identifier.Identifier);
         }
         catch (ArgumentException e)
         {
@@ -92,7 +92,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         try
         {
             ArgumentNullException.ThrowIfNull(argument, argumentExpression);
-            ArgumentException.ThrowIfNullOrEmpty(argument.Value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(argument.Value);
         }
         catch (ArgumentException e)
         {

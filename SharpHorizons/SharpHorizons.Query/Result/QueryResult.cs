@@ -34,7 +34,6 @@ public readonly record struct QueryResult
     }
 
     /// <summary>The content of the <see cref="QueryResult"/>.</summary>
-    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="InvalidOperationException"/>
     public required string Content
@@ -43,7 +42,7 @@ public readonly record struct QueryResult
         {
             try
             {
-                ArgumentException.ThrowIfNullOrEmpty(contentField);
+                ArgumentNullException.ThrowIfNull(contentField);
             }
             catch (ArgumentException e)
             {
@@ -54,7 +53,7 @@ public readonly record struct QueryResult
         }
         init
         {
-            ArgumentException.ThrowIfNullOrEmpty(value);
+            ArgumentNullException.ThrowIfNull(value);
 
             contentField = value;
         }

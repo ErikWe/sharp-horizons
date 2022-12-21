@@ -29,7 +29,7 @@ internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, I
 
         try
         {
-            ArgumentException.ThrowIfNullOrEmpty(argument.Value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(argument.Value);
         }
         catch (ArgumentException e)
         {

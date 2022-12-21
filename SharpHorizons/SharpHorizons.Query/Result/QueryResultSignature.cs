@@ -16,7 +16,7 @@ public readonly record struct QueryResultSignature
         {
             try
             {
-                ArgumentException.ThrowIfNullOrEmpty(sourceField);
+                ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(sourceField);
             }
             catch (ArgumentException e)
             {
@@ -27,7 +27,7 @@ public readonly record struct QueryResultSignature
         }
         init
         {
-            ArgumentException.ThrowIfNullOrEmpty(value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
 
             sourceField = value;
         }
@@ -42,7 +42,7 @@ public readonly record struct QueryResultSignature
         {
             try
             {
-                ArgumentException.ThrowIfNullOrEmpty(versionField);
+                ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(versionField);
             }
             catch (ArgumentException e)
             {
@@ -53,7 +53,7 @@ public readonly record struct QueryResultSignature
         }
         init
         {
-            ArgumentException.ThrowIfNullOrEmpty(value);
+            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
 
             versionField = value;
         }

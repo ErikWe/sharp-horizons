@@ -98,7 +98,7 @@ public readonly record struct EphemerisQuantityIdentifier
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="identifier"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    private static void Validate([NotNull] string? identifier, [CallerArgumentExpression(nameof(identifier))] string? argumentExpression = null) => ArgumentException.ThrowIfNullOrEmpty(identifier, argumentExpression);
+    private static void Validate([NotNull] string? identifier, [CallerArgumentExpression(nameof(identifier))] string? argumentExpression = null) => ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(identifier, argumentExpression);
 
     /// <summary>Validates that <paramref name="characterLength"/> can be used to represent the character length of an <see cref="EphemerisQuantityIdentifier"/>, and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
     /// <param name="characterLength"><inheritdoc cref="CharacterLength" path="/summary"/></param>
