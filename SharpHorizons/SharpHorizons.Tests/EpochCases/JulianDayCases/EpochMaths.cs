@@ -1,21 +1,20 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.JulianDayCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
 public class EpochMaths
 {
-    private static int Precision { get; } = 5;
+    private static int TimePrecision { get; } = 5;
 
     [Theory]
-    [MemberData(nameof(JulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void JulianDayMethod_ApproximateMatch(JulianDay initialJulianDay, JulianDay finalJulianDay)
     {
         var actual = finalJulianDay.Difference(initialJulianDay);
 
-        Assert.Equal(finalJulianDay.Day - initialJulianDay.Day, actual.Days, Precision);
+        Assert.Equal(finalJulianDay.Day - initialJulianDay.Day, actual.Days, TimePrecision);
     }
 
     [Fact]
@@ -25,12 +24,12 @@ public class EpochMaths
     }
 
     [Theory]
-    [MemberData(nameof(JulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void JulianDayOperator_ApproximateMatch(JulianDay initialJulianDay, JulianDay finalJulianDay)
     {
         var actual = finalJulianDay - initialJulianDay;
 
-        Assert.Equal(finalJulianDay.Day - initialJulianDay.Day, actual.Days, Precision);
+        Assert.Equal(finalJulianDay.Day - initialJulianDay.Day, actual.Days, TimePrecision);
     }
 
     [Fact]
@@ -40,12 +39,12 @@ public class EpochMaths
     }
 
     [Theory]
-    [MemberData(nameof(JulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void IEpochMethod_ApproximateMatch(IEpoch initialEpoch, JulianDay finalJulianDay)
     {
         var actual = finalJulianDay.Difference(initialEpoch);
 
-        Assert.Equal(finalJulianDay.Day - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
+        Assert.Equal(finalJulianDay.Day - initialEpoch.ToJulianDay().Day, actual.Days, TimePrecision);
     }
 
     [Fact]
@@ -53,19 +52,4 @@ public class EpochMaths
     {
         Assert.Throws<ArgumentNullException>(() => JulianDay.Epoch.Difference((IEpoch)null!));
     }
-
-    public static IEnumerable<object[]> JulianDays() => new object[][]
-    {
-        new object[] { new JulianDay(0), new JulianDay(0) },
-        new object[] { new JulianDay(1), new JulianDay(-1) },
-        new object[] { new JulianDay(-1), new JulianDay(1) },
-        new object[] { new JulianDay(0), new JulianDay(int.MinValue) },
-        new object[] { new JulianDay(0), new JulianDay(int.MaxValue) },
-        new object[] { new JulianDay(int.MaxValue), new JulianDay(0) },
-        new object[] { new JulianDay(int.MaxValue), new JulianDay(int.MinValue) },
-        new object[] { new JulianDay(int.MaxValue), new JulianDay(int.MaxValue) },
-        new object[] { new JulianDay(int.MinValue), new JulianDay(int.MinValue) },
-        new object[] { new JulianDay(int.MinValue), new JulianDay(int.MaxValue) },
-        new object[] { new JulianDay(int.MinValue), new JulianDay(0) }
-    };
 }

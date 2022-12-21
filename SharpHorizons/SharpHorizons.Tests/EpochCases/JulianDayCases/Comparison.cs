@@ -1,7 +1,6 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.JulianDayCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
@@ -14,7 +13,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidJulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void JulianDayMethod_SameSignAsDouble(JulianDay lhs, JulianDay rhs)
     {
         var expected = Math.Sign(lhs.Day.CompareTo(rhs.Day));
@@ -30,7 +29,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidJulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void IEpochMethod_SameSignAsDouble(JulianDay lhs, JulianDay rhs)
     {
         var expected = Math.Sign(lhs.Day.CompareTo(rhs.Day));
@@ -46,7 +45,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidJulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void GreaterThanOperator_MatchDouble(JulianDay lhs, JulianDay rhs)
     {
         var expected = lhs.Day > rhs.Day;
@@ -62,7 +61,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidJulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void LessThanOperator_MatchDouble(JulianDay lhs, JulianDay rhs)
     {
         var expected = lhs.Day < rhs.Day;
@@ -78,7 +77,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidJulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void GreaterThanOrEqualOperator_MatchDouble(JulianDay lhs, JulianDay rhs)
     {
         var expected = lhs.Day >= rhs.Day;
@@ -94,7 +93,7 @@ public class Comparison
     }
 
     [Theory]
-    [MemberData(nameof(ValidJulianDays))]
+    [ClassData(typeof(Datasets.TwoJulianDays))]
     public void LessThanOrEqualOperator_MatchDouble(JulianDay lhs, JulianDay rhs)
     {
         var expected = lhs.Day <= rhs.Day;
@@ -102,16 +101,4 @@ public class Comparison
 
         Assert.Equal(expected, actual);
     }
-
-    public static IEnumerable<object[]> ValidJulianDays() => new object[][]
-    {
-        new object[] { new JulianDay(int.MaxValue), new JulianDay(0) },
-        new object[] { new JulianDay(int.MinValue), new JulianDay(0) },
-        new object[] { new JulianDay(0), new JulianDay(int.MaxValue) },
-        new object[] { new JulianDay(0), new JulianDay(int.MinValue) },
-        new object[] { new JulianDay(-10.14), new JulianDay(10.14) },
-        new object[] { new JulianDay(10.14), new JulianDay(-10.14) },
-        new object[] { new JulianDay(10.14), new JulianDay(10.14) },
-        new object[] { new JulianDay(-10.14), new JulianDay(-10.14) },
-    };
 }
