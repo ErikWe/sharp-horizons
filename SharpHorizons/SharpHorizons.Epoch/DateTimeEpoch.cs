@@ -222,6 +222,7 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// </summary>
     /// <param name="lhs">This <see cref="DateTimeEpoch"/> is assumed to represent an earlier epoch than the <see cref="DateTimeEpoch"/> <paramref name="rhs"/>.</param>
     /// <param name="rhs">This <see cref="DateTimeEpoch"/> is assumed to represent the same or a later epoch than the <see cref="DateTimeEpoch"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="DateTimeOffset.operator &lt;(DateTimeOffset, DateTimeOffset)"/>.</remarks>
     public static bool operator <(DateTimeEpoch? lhs, DateTimeEpoch? rhs) => lhs?.DateTimeOffset < rhs?.DateTimeOffset;
 
     /// <summary>Determines the truthfulness of { <paramref name="lhs"/> &gt; <paramref name="rhs"/> }, resulting in:
@@ -232,6 +233,7 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// </summary>
     /// <param name="lhs">This <see cref="DateTimeEpoch"/> is assumed to represent a later epoch than the <see cref="DateTimeEpoch"/> <paramref name="rhs"/>.</param>
     /// <param name="rhs">This <see cref="DateTimeEpoch"/> is assumed to represent the same or an earlier epoch than the <see cref="DateTimeEpoch"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="DateTimeOffset.operator >(DateTimeOffset, DateTimeOffset)"/>.</remarks>
     public static bool operator >(DateTimeEpoch? lhs, DateTimeEpoch? rhs) => lhs?.DateTimeOffset > rhs?.DateTimeOffset;
 
     /// <summary>Determines the truthfulness of { <paramref name="lhs"/> ≤ <paramref name="rhs"/> }, resulting in:
@@ -242,6 +244,7 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// </summary>
     /// <param name="lhs">This <see cref="DateTimeEpoch"/> is assumed to represent the same or an earlier epoch than the <see cref="DateTimeEpoch"/> <paramref name="rhs"/>.</param>
     /// <param name="rhs">This <see cref="DateTimeEpoch"/> is assumed to represent a later epoch than the <see cref="DateTimeEpoch"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="DateTimeOffset.operator &lt;=(DateTimeOffset, DateTimeOffset)"/>.</remarks>
     public static bool operator <=(DateTimeEpoch? lhs, DateTimeEpoch? rhs) => lhs?.DateTimeOffset <= rhs?.DateTimeOffset;
 
     /// <summary>Determines the truthfulness of { <paramref name="lhs"/> ≥ <paramref name="rhs"/> }, resulting in:
@@ -252,6 +255,7 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// </summary>
     /// <param name="lhs">This <see cref="DateTimeEpoch"/> is assumed to represent the same or a later epoch than the <see cref="DateTimeEpoch"/> <paramref name="rhs"/>.</param>
     /// <param name="rhs">This <see cref="DateTimeEpoch"/> is assumed to represent an earlier epoch than the <see cref="DateTimeEpoch"/> <paramref name="lhs"/>.</param>
+    /// <remarks>The behaviour is consistent with <see cref="DateTimeOffset.operator >=(DateTimeOffset, DateTimeOffset)"/>.</remarks>
     public static bool operator >=(DateTimeEpoch? lhs, DateTimeEpoch? rhs) => lhs?.DateTimeOffset >= rhs?.DateTimeOffset;
 
     /// <inheritdoc cref="DateTimeEpoch"/>
