@@ -16,8 +16,10 @@ public class Misc
     [Fact]
     public void ToJulianDay_Same()
     {
-        var julianDay = ((IEpoch)JulianDay.Epoch).ToJulianDay();
+        var expected = JulianDay.Epoch;
 
-        Assert.Equal(0, julianDay.Day);
+        var actual = ((IEpoch)expected).ToJulianDay();
+
+        Assert.Equal(expected.Day, actual.Day);
     }
 }

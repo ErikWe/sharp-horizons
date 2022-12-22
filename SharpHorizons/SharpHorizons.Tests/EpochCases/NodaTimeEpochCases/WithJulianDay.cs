@@ -24,14 +24,18 @@ public class WithJulianDay
     [Fact]
     public void From_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => Epoch.FromJulianDay(null!));
+        var exception = Record.Exception(() => Epoch.FromJulianDay(null!));
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.UnconvertibleJulianDays))]
     public void From_OutOfRange_ArgumentOutOfBoundsException(JulianDay julianDay)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Epoch.FromJulianDay(julianDay));
+        var exception = Record.Exception(() => Epoch.FromJulianDay(julianDay));
+
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 
     [Theory]

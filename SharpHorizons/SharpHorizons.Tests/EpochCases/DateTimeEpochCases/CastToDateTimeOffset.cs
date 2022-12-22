@@ -7,17 +7,19 @@ using Xunit;
 public class CastToDateTimeOffset
 {
     [Theory]
-    [ClassData(typeof(Datasets.DateTimeOffsets))]
-    public void Valid(DateTimeOffset offset)
+    [ClassData(typeof(Datasets.DateTimeEpochs))]
+    public void Valid(DateTimeEpoch dateTimeEpoch)
     {
-        var epoch = (DateTimeEpoch)offset;
+        var actual = (DateTimeOffset)dateTimeEpoch;
 
-        Assert.Equal(offset, epoch.DateTimeOffset);
+        Assert.Equal(dateTimeEpoch.DateTimeOffset, actual);
     }
 
     [Fact]
     public void Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => (DateTimeOffset)(DateTimeEpoch)null!);
+        var exception = Record.Exception(() => (DateTimeOffset)(DateTimeEpoch)null!);
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 }

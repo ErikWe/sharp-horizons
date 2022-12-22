@@ -10,6 +10,7 @@ public class WithJulianDay
 {
     private static JulianCalendar JulianCalendar { get; } = new();
     private static GregorianCalendar GregorianCalendar { get; } = new();
+
     private static int Precision { get; } = 5;
 
     [Theory]
@@ -25,14 +26,18 @@ public class WithJulianDay
     [Fact]
     public void From_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => DateTimeEpoch.FromJulianDay(null!));
+        var exception = Record.Exception(() => DateTimeEpoch.FromJulianDay(null!));
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.UnconvertibleJulianDays))]
-    public void From_OutOfRange_ArgumentOutOfBoundsException(JulianDay julianDay)
+    public void From_OutOfRange_ArgumentOutOfRangeException(JulianDay julianDay)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => DateTimeEpoch.FromJulianDay(julianDay));
+        var exception = Record.Exception(() => DateTimeEpoch.FromJulianDay(julianDay));
+
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 
     [Theory]

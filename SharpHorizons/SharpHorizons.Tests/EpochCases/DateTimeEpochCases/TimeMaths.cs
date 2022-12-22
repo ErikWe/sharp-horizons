@@ -15,21 +15,27 @@ public class TimeMaths
     [MemberData(nameof(InvalidTimes))]
     public void AddMethod_Invalid_ArgumentException(Time difference)
     {
-        Assert.Throws<ArgumentException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)).Add(difference));
+        var exception = Record.Exception(() => Datasets.SimpleDateTimeEpoch.Add(difference));
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Theory]
     [MemberData(nameof(InvalidTimes))]
     public void AddOperator_Invalid_ArgumentException(Time difference)
     {
-        Assert.Throws<ArgumentException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)) + difference);
+        var exception = Record.Exception(() => Datasets.SimpleDateTimeEpoch + difference);
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Theory]
     [MemberData(nameof(InvalidTimes))]
     public void SubtractOperator_Invalid_ArgumentException(Time difference)
     {
-        Assert.Throws<ArgumentException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)) - difference);
+        var exception = Record.Exception(() => Datasets.SimpleDateTimeEpoch - difference);
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Fact]
@@ -37,7 +43,9 @@ public class TimeMaths
     {
         Time difference = new(double.MaxValue);
 
-        Assert.Throws<EpochOutOfBoundsException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)).Add(difference));
+        var exception = Record.Exception(() => Datasets.SimpleDateTimeEpoch.Add(difference));
+
+        Assert.IsType<EpochOutOfBoundsException>(exception);
     }
 
     [Fact]
@@ -45,7 +53,9 @@ public class TimeMaths
     {
         Time difference = new(double.MaxValue);
 
-        Assert.Throws<EpochOutOfBoundsException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)) + difference);
+        var exception = Record.Exception(() => Datasets.SimpleDateTimeEpoch + difference);
+
+        Assert.IsType<EpochOutOfBoundsException>(exception);
     }
 
     [Fact]
@@ -53,34 +63,51 @@ public class TimeMaths
     {
         Time difference = new(double.MaxValue);
 
-        Assert.Throws<EpochOutOfBoundsException>(() => DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)) - difference);
+        var exception = Record.Exception(() => Datasets.SimpleDateTimeEpoch - difference);
+
+        Assert.IsType<EpochOutOfBoundsException>(exception);
     }
 
     [Theory]
     [MemberData(nameof(ValidTimes))]
     public void AddMethod_ApproximateMatch(Time difference)
     {
-        var actual = DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)).Add(difference);
+        var julianDay = new JulianDay(2400000);
+        var dateTimeEpoch = DateTimeEpoch.FromJulianDay(julianDay);
 
-        Assert.Equal(2400000.5 + difference.Days, actual.ToJulianDay().Day, Precision);
+        var expected = dateTimeEpoch.ToJulianDay().Day + difference.Days;
+
+        var actual = dateTimeEpoch.Add(difference);
+
+        Assert.Equal(expected, actual.ToJulianDay().Day, Precision);
     }
 
     [Theory]
     [MemberData(nameof(ValidTimes))]
     public void AddOperator_ApproximateMatch(Time difference)
     {
-        var actual = DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)) + difference;
+        var julianDay = new JulianDay(2400000);
+        var dateTimeEpoch = DateTimeEpoch.FromJulianDay(julianDay);
 
-        Assert.Equal(2400000.5 + difference.Days, actual.ToJulianDay().Day, Precision);
+        var expected = dateTimeEpoch.ToJulianDay().Day + difference.Days;
+
+        var actual = dateTimeEpoch + difference;
+
+        Assert.Equal(expected, actual.ToJulianDay().Day, Precision);
     }
 
     [Theory]
     [MemberData(nameof(ValidTimes))]
     public void SubtractOperator_ApproximateMatch(Time difference)
     {
-        var actual = DateTimeEpoch.FromJulianDay(new JulianDay(2400000.5)) - difference;
+        var julianDay = new JulianDay(2400000);
+        var dateTimeEpoch = DateTimeEpoch.FromJulianDay(julianDay);
 
-        Assert.Equal(2400000.5 - difference.Days, actual.ToJulianDay().Day, Precision);
+        var expected = dateTimeEpoch.ToJulianDay().Day - difference.Days;
+
+        var actual = dateTimeEpoch - difference;
+
+        Assert.Equal(expected, actual.ToJulianDay().Day, Precision);
     }
 
     public static IEnumerable<object[]> ValidTimes() => new object[][]

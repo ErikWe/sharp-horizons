@@ -20,7 +20,9 @@ public class EpochMaths
     [Fact]
     public void JulianDayMethod_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => JulianDay.Epoch.Difference(null!));
+        var exception = Record.Exception(() => JulianDay.Epoch.Difference(null!));
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
@@ -35,7 +37,9 @@ public class EpochMaths
     [Fact]
     public void JulianDayOperator_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => JulianDay.Epoch - null!);
+        var exception = Record.Exception(() => JulianDay.Epoch - null!);
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
@@ -50,6 +54,8 @@ public class EpochMaths
     [Fact]
     public void IEpochMethod_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => JulianDay.Epoch.Difference((IEpoch)null!));
+        var exception = Record.Exception(() => JulianDay.Epoch.Difference((IEpoch)null!));
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 }

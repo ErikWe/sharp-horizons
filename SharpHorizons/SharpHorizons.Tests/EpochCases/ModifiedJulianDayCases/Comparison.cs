@@ -9,7 +9,9 @@ public class Comparison
     [Fact]
     public void ModifiedJulianDayMethod_Null_Positive()
     {
-        Assert.True(ModifiedJulianDay.Epoch.CompareTo(null) > 0);
+        var comparison = ModifiedJulianDay.Epoch.CompareTo(null);
+
+        Assert.True(comparison > 0);
     }
 
     [Theory]
@@ -18,6 +20,7 @@ public class Comparison
     public void ModifiedJulianDayMethod_SameSignAsDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = Math.Sign(lhs.Day.CompareTo(rhs.Day));
+
         var actual = Math.Sign(lhs.CompareTo(rhs));
 
         Assert.Equal(expected, actual);
@@ -26,7 +29,9 @@ public class Comparison
     [Fact]
     public void IEpochMethod_Null_Positive()
     {
-        Assert.True(ModifiedJulianDay.Epoch.CompareTo((IEpoch?)null) > 0);
+        var comparison = ModifiedJulianDay.Epoch.CompareTo((IEpoch?)null);
+
+        Assert.True(comparison > 0);
     }
 
     [Theory]
@@ -35,6 +40,7 @@ public class Comparison
     public void IEpochMethod_ModifiedJulianDay_SameSignAsDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = Math.Sign(lhs.Day.CompareTo(rhs.Day));
+
         var actual = Math.Sign(lhs.CompareTo((IEpoch)rhs));
 
         Assert.Equal(expected, actual);
@@ -46,6 +52,7 @@ public class Comparison
     public void IEpochMethod_ConvertibleIEpoch_SameSignAsDouble(ModifiedJulianDay lhs, IEpoch rhs)
     {
         var expected = Math.Sign((lhs.Day + 2400000.5).CompareTo(rhs.ToJulianDay().Day));
+
         var actual = Math.Sign(lhs.CompareTo(rhs));
 
         Assert.Equal(expected, actual);
@@ -54,7 +61,9 @@ public class Comparison
     [Fact]
     public void GreaterThanOperator_Null_False()
     {
-        Assert.False(ModifiedJulianDay.Epoch > null);
+        var comparison = ModifiedJulianDay.Epoch > null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -63,6 +72,7 @@ public class Comparison
     public void GreaterThanOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day > rhs.Day;
+
         var actual = lhs > rhs;
 
         Assert.Equal(expected, actual);
@@ -71,7 +81,9 @@ public class Comparison
     [Fact]
     public void LessThanOperator_Null_False()
     {
-        Assert.False(ModifiedJulianDay.Epoch < null);
+        var comparison = ModifiedJulianDay.Epoch < null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -80,6 +92,7 @@ public class Comparison
     public void LessThanOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day < rhs.Day;
+
         var actual = lhs < rhs;
 
         Assert.Equal(expected, actual);
@@ -88,7 +101,9 @@ public class Comparison
     [Fact]
     public void GreaterThanOrEqualOperator_Null_False()
     {
-        Assert.False(ModifiedJulianDay.Epoch >= null);
+        var comparison = ModifiedJulianDay.Epoch >= null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -97,6 +112,7 @@ public class Comparison
     public void GreaterThanOrEqualOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day >= rhs.Day;
+
         var actual = lhs >= rhs;
 
         Assert.Equal(expected, actual);
@@ -105,7 +121,9 @@ public class Comparison
     [Fact]
     public void LessThanOrEqualOperator_Null_False()
     {
-        Assert.False(ModifiedJulianDay.Epoch <= null);
+        var comparison = ModifiedJulianDay.Epoch <= null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -114,6 +132,7 @@ public class Comparison
     public void LessThanOrEqualOperator_MatchDouble(ModifiedJulianDay lhs, ModifiedJulianDay rhs)
     {
         var expected = lhs.Day <= rhs.Day;
+
         var actual = lhs <= rhs;
 
         Assert.Equal(expected, actual);

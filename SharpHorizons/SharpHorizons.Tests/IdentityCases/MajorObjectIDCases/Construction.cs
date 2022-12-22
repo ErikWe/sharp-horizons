@@ -1,44 +1,33 @@
 ﻿namespace SharpHorizons.Tests.IdentityCases.MajorObjectIDCases;
 
-using System.Collections.Generic;
-
 using Xunit;
 
 public class Construction
 {
     [Theory]
-    [MemberData(nameof(MajorObjectIDs))]
+    [ClassData(typeof(Datasets.MajorObjectIDInts))]
     public void ExactMatch(int id)
     {
-        MajorObjectID majorObjectID = new(id);
+        MajorObjectID actual = new(id);
 
-        Assert.Equal(id, majorObjectID.Value);
+        Assert.Equal(id, actual.Value);
     }
 
     [Theory]
-    [MemberData(nameof(MajorObjectIDs))]
+    [ClassData(typeof(Datasets.MajorObjectIDInts))]
     public void Initialization_ExactMatch(int id)
     {
-        MajorObjectID majorObjectID = new() { Value = id };
+        MajorObjectID actual = new() { Value = id };
 
-        Assert.Equal(id, majorObjectID.Value);
+        Assert.Equal(id, actual.Value);
     }
 
     [Theory]
-    [MemberData(nameof(MajorObjectIDs))]
+    [ClassData(typeof(Datasets.MajorObjectIDInts))]
     public void CastFromInt_ExactMatch(int id)
     {
-        var majorObjectID = (MajorObjectID)id;
+        var actual = (MajorObjectID)id;
 
-        Assert.Equal(id, majorObjectID.Value);
+        Assert.Equal(id, actual.Value);
     }
-
-    public static IEnumerable<object[]> MajorObjectIDs() => new object[][]
-    {
-        new object[] { int.MaxValue },
-        new object[] { int.MinValue },
-        new object[] { 0 },
-        new object[] { 1 },
-        new object[] { -1 }
-    };
 }

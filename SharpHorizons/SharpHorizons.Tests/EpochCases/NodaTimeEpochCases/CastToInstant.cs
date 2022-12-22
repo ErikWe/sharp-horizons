@@ -12,14 +12,16 @@ public class CastToInstant
     [ClassData(typeof(Datasets.Epochs))]
     public void Valid(Instant instant)
     {
-        var epoch = (Epoch)instant;
+        var actual = (Epoch)instant;
 
-        Assert.Equal(instant, epoch.Instant);
+        Assert.Equal(instant, actual.Instant);
     }
 
     [Fact]
     public void Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => (Instant)(Epoch)null!);
+        var exception = Record.Exception(() => (Instant)(Epoch)null!);
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 }

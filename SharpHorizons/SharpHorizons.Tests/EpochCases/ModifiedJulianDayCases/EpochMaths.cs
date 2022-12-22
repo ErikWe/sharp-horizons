@@ -21,7 +21,9 @@ public class EpochMaths
     [Fact]
     public void ModifiedJulianDayMethod_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => ModifiedJulianDay.Epoch.Difference(null!));
+        var exception = Record.Exception(() => ModifiedJulianDay.Epoch.Difference(null!));
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
@@ -29,9 +31,11 @@ public class EpochMaths
     [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDaysAndConvertibleIEpochs))]
     public void IEpochMethod_Valid_ApproximateMatch(ModifiedJulianDay finalModifiedJulianDay, IEpoch initialEpoch)
     {
+        var expected = finalModifiedJulianDay.Day + 2400000.5 - initialEpoch.ToJulianDay().Day;
+
         var actual = finalModifiedJulianDay.Difference(initialEpoch);
 
-        Assert.Equal(finalModifiedJulianDay.Day + 2400000.5 - initialEpoch.ToJulianDay().Day, actual.Days, Precision);
+        Assert.Equal(expected, actual.Days, Precision);
     }
 
     [Theory]
@@ -39,15 +43,19 @@ public class EpochMaths
     [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
     public void IEpochMethod_WithModifiedJulianDay_ApproximateMatch(ModifiedJulianDay initialModifiedJulianDay, ModifiedJulianDay finalModifiedJulianDay)
     {
+        var expected = finalModifiedJulianDay.Day - initialModifiedJulianDay.Day;
+
         var actual = finalModifiedJulianDay.Difference((IEpoch)initialModifiedJulianDay);
 
-        Assert.Equal(finalModifiedJulianDay.Day - initialModifiedJulianDay.Day, actual.Days, Precision);
+        Assert.Equal(expected, actual.Days, Precision);
     }
 
     [Fact]
     public void IEpochMethod_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => ModifiedJulianDay.Epoch.Difference(null!));
+        var exception = Record.Exception(() => ModifiedJulianDay.Epoch.Difference(null!));
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
@@ -55,14 +63,18 @@ public class EpochMaths
     [ClassData(typeof(Datasets.TwoUnconvertibleModifiedJulianDays))]
     public void Operator_ApproximateMatch(ModifiedJulianDay initialModifiedJulianDay, ModifiedJulianDay finalModifiedJulianDay)
     {
+        var expected = finalModifiedJulianDay.Day - initialModifiedJulianDay.Day;
+
         var actual = finalModifiedJulianDay - initialModifiedJulianDay;
 
-        Assert.Equal(finalModifiedJulianDay.Day - initialModifiedJulianDay.Day, actual.Days, Precision);
+        Assert.Equal(expected, actual.Days, Precision);
     }
 
     [Fact]
     public void Operator_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => ModifiedJulianDay.Epoch - null!);
+        var exception = Record.Exception(() => ModifiedJulianDay.Epoch - null!);
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 }

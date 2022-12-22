@@ -18,6 +18,8 @@ public class CastToDouble
     [Fact]
     public void Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => (double)(JulianDay)null!);
+        var exception = Record.Exception(() => (double)(JulianDay)null!);
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 }

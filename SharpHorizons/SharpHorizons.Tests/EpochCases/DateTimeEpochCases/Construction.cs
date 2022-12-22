@@ -1,59 +1,44 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.DateTimeEpochCases;
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 
 using Xunit;
 
 public class Construction
 {
-    private static JulianCalendar JulianCalendar { get; } = new();
-    private static GregorianCalendar GregorianCalendar { get; } = new();
-
     [Theory]
-    [MemberData(nameof(ValidDateTimeOffsets))]
+    [ClassData(typeof(Datasets.DateTimeOffsets))]
     public void Constructor_Combined_Valid(DateTimeOffset offset)
     {
-        DateTimeEpoch epoch = new(offset);
+        DateTimeEpoch actual = new(offset);
 
-        Assert.Equal(offset, epoch.DateTimeOffset);
+        Assert.Equal(offset, actual.DateTimeOffset);
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeOffsets))]
+    [ClassData(typeof(Datasets.DateTimeOffsets))]
     public void Constructor_Partwise_Valid(DateTimeOffset offset)
     {
-        DateTimeEpoch epoch = new(offset.DateTime, offset.Offset);
+        DateTimeEpoch actual = new(offset.DateTime, offset.Offset);
 
-        Assert.Equal(offset, epoch.DateTimeOffset);
+        Assert.Equal(offset, actual.DateTimeOffset);
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeOffsets))]
+    [ClassData(typeof(Datasets.DateTimeOffsets))]
     public void Initialization_Combined_Valid(DateTimeOffset offset)
     {
-        DateTimeEpoch epoch = new() { DateTimeOffset = offset };
+        DateTimeEpoch actual = new() { DateTimeOffset = offset };
 
-        Assert.Equal(offset, epoch.DateTimeOffset);
+        Assert.Equal(offset, actual.DateTimeOffset);
     }
 
     [Theory]
-    [MemberData(nameof(ValidDateTimeOffsets))]
+    [ClassData(typeof(Datasets.DateTimeOffsets))]
     public void CastFromOffset_Valid(DateTimeOffset offset)
     {
-        var epoch = (DateTimeEpoch)offset;
+        var actual = (DateTimeEpoch)offset;
 
-        Assert.Equal(offset, epoch.DateTimeOffset);
+        Assert.Equal(offset, actual.DateTimeOffset);
     }
-
-    public static IEnumerable<object[]> ValidDateTimeOffsets() => new object[][]
-    {
-        new object[] { new DateTimeOffset(new DateTime(5, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero) },
-        new object[] { new DateTimeOffset(new DateTime(2022, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero) },
-        new object[] { new DateTimeOffset(new DateTime(9999, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero) },
-        new object[] { new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero) },
-        new object[] { new DateTimeOffset(new DateTime(2022, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero) },
-        new object[] { new DateTimeOffset(new DateTime(9999, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero) },
-    };
 }

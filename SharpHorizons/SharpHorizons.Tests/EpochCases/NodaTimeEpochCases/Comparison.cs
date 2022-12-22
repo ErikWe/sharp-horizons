@@ -9,7 +9,9 @@ public class Comparison
     [Fact]
     public void EpochMethod_Null_Positive()
     {
-        Assert.True(Epoch.FromJulianDay(new JulianDay(0)).CompareTo(null) > 0);
+        var comparison = Epoch.FromJulianDay(JulianDay.Epoch).CompareTo(null);
+
+        Assert.True(comparison > 0);
     }
 
     [Theory]
@@ -17,6 +19,7 @@ public class Comparison
     public void EpochMethod_SameSignAsJulianDay(Epoch lhs, Epoch rhs)
     {
         var expected = Math.Sign(lhs.ToJulianDay().CompareTo(rhs.ToJulianDay()));
+
         var actual = Math.Sign(lhs.CompareTo(rhs));
 
         Assert.Equal(expected, actual);
@@ -25,7 +28,9 @@ public class Comparison
     [Fact]
     public void IEpochMethod_Null_Positive()
     {
-        Assert.True(Epoch.FromJulianDay(new JulianDay(0)).CompareTo((IEpoch?)null) > 0);
+        var comparison = Epoch.FromJulianDay(JulianDay.Epoch).CompareTo((IEpoch?)null);
+
+        Assert.True(comparison > 0);
     }
 
     [Theory]
@@ -33,6 +38,7 @@ public class Comparison
     public void IEpochMethod_Convertible_SameSignAsJulianDay(Epoch lhs, IEpoch rhs)
     {
         var expected = Math.Sign(lhs.ToJulianDay().CompareTo(rhs.ToJulianDay()));
+
         var actual = Math.Sign(lhs.CompareTo(rhs));
 
         Assert.Equal(expected, actual);
@@ -42,13 +48,17 @@ public class Comparison
     [ClassData(typeof(Datasets.EpochsAndUnconvertibleIEpochs))]
     public void IEpochMethod_Unconvertible_ArgumentException(Epoch lhs, IEpoch rhs)
     {
-        Assert.Throws<ArgumentException>(() => lhs.CompareTo(rhs));
+        var exception = Record.Exception(() => lhs.CompareTo(rhs));
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Fact]
     public void GreaterThanOperator_Null_False()
     {
-        Assert.False(Epoch.FromJulianDay(new JulianDay(0)) > null);
+        var comparison = Epoch.FromJulianDay(JulianDay.Epoch) > null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -56,6 +66,7 @@ public class Comparison
     public void GreaterThanOperator_MatchJulianDay(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() > rhs.ToJulianDay();
+
         var actual = lhs > rhs;
 
         Assert.Equal(expected, actual);
@@ -64,7 +75,9 @@ public class Comparison
     [Fact]
     public void LessThanOperator_Null_False()
     {
-        Assert.False(Epoch.FromJulianDay(new JulianDay(0)) < null);
+        var comparison = Epoch.FromJulianDay(JulianDay.Epoch) < null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -72,6 +85,7 @@ public class Comparison
     public void LessThanOperator_MatchDouble(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() < rhs.ToJulianDay();
+
         var actual = lhs < rhs;
 
         Assert.Equal(expected, actual);
@@ -80,7 +94,9 @@ public class Comparison
     [Fact]
     public void GreaterThanOrEqualOperator_Null_False()
     {
-        Assert.False(Epoch.FromJulianDay(new JulianDay(0)) >= null);
+        var comparison = Epoch.FromJulianDay(JulianDay.Epoch) >= null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -88,6 +104,7 @@ public class Comparison
     public void GreaterThanOrEqualOperator_MatchDouble(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() >= rhs.ToJulianDay();
+
         var actual = lhs >= rhs;
 
         Assert.Equal(expected, actual);
@@ -96,7 +113,9 @@ public class Comparison
     [Fact]
     public void LessThanOrEqualOperator_Null_False()
     {
-        Assert.False(Epoch.FromJulianDay(new JulianDay(0)) <= null);
+        var comparison = Epoch.FromJulianDay(JulianDay.Epoch) <= null;
+
+        Assert.False(comparison);
     }
 
     [Theory]
@@ -104,6 +123,7 @@ public class Comparison
     public void LessThanOrEqualOperator_MatchDouble(Epoch lhs, Epoch rhs)
     {
         var expected = lhs.ToJulianDay() <= rhs.ToJulianDay();
+
         var actual = lhs <= rhs;
 
         Assert.Equal(expected, actual);

@@ -10,26 +10,26 @@ public class Construction
     [ClassData(typeof(Datasets.Instants))]
     public void Constructor_Valid(Instant instant)
     {
-        Epoch epoch = new(instant);
+        Epoch actual = new(instant);
 
-        Assert.Equal(instant, epoch.Instant);
+        Assert.Equal(instant, actual.Instant);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.Instants))]
     public void Initialization_Valid(Instant instant)
     {
-        Epoch epoch = new() { Instant = instant };
+        Epoch actual = new() { Instant = instant };
 
-        Assert.Equal(instant, epoch.Instant);
+        Assert.Equal(instant, actual.Instant);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.Instants))]
     public void CastFromInstant_Valid(Instant instant)
     {
-        var epoch = (Epoch)instant;
+        var actual = (Epoch)instant;
 
-        Assert.Equal(instant, epoch.Instant);
+        Assert.Equal(instant, actual.Instant);
     }
 }

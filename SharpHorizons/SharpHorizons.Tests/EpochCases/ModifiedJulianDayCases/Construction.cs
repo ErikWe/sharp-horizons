@@ -9,47 +9,55 @@ public class Construction
     [Theory]
     [ClassData(typeof(Datasets.ConvertibleModifiedJulianDayNumbers))]
     [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayNumbers))]
-    public void Combined_Valid_ApproximateMatch(double modifiedJulianDayNumber)
+    public void Double_Valid_ApproximateMatch(double modifiedJulianDayNumber)
     {
-        ModifiedJulianDay modifiedJulianDay = new(modifiedJulianDayNumber);
+        ModifiedJulianDay actual = new(modifiedJulianDayNumber);
 
-        Asserter.Approximate(modifiedJulianDayNumber, modifiedJulianDay.Day);
+        Asserter.Approximate(modifiedJulianDayNumber, actual.Day);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.ConvertibleIntegralAndFractionalDays))]
     [ClassData(typeof(Datasets.UnconvertibleIntegralAndFractionalDays))]
-    public void Partwise_Valid_ExactMatch(int integralDay, float fractionalDay)
+    public void Pair_Valid_ExactMatch(int integralDay, float fractionalDay)
     {
-        ModifiedJulianDay modifiedJulianDay = new(integralDay, fractionalDay);
+        ModifiedJulianDay actual = new(integralDay, fractionalDay);
 
-        Asserter.Exact(integralDay, fractionalDay, modifiedJulianDay.IntegralDay, modifiedJulianDay.FractionalDay);
+        Asserter.Exact(integralDay, fractionalDay, actual.IntegralDay, actual.FractionalDay);
     }
 
     [Fact]
-    public void Combined_NaN_ArgumentException()
+    public void Double_NaN_ArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => new ModifiedJulianDay(double.NaN));
+        var exception = Record.Exception(() => new ModifiedJulianDay(double.NaN));
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Fact]
-    public void Partwise_NaN_ArgumentException()
+    public void Pair_NaN_ArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => new ModifiedJulianDay(0, float.NaN));
+        var exception = Record.Exception(() => new ModifiedJulianDay(0, float.NaN));
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.OutOfRangeModifiedJulianDayNumbers))]
-    public void Combined_OutOfRange_ArgumentOutOfRangeException(double modifiedJulianDayNumber)
+    public void Double_OutOfRange_ArgumentOutOfRangeException(double modifiedJulianDayNumber)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new ModifiedJulianDay(modifiedJulianDayNumber));
+        var exception = Record.Exception(() => new ModifiedJulianDay(modifiedJulianDayNumber));
+
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.OutOfRangeIntegralAndFractionalDays))]
-    public void Partwise_OutOfRange_ArgumentOutOfRangeException(int integralDay, float fractionalDay)
+    public void Pair_OutOfRange_ArgumentOutOfRangeException(int integralDay, float fractionalDay)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new ModifiedJulianDay(integralDay, fractionalDay));
+        var exception = Record.Exception(() => new ModifiedJulianDay(integralDay, fractionalDay));
+
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 
     [Theory]
@@ -57,22 +65,26 @@ public class Construction
     [ClassData(typeof(Datasets.UnconvertibleIntegralAndFractionalDays))]
     public void Initialization_Valid_ExactMatch(int integralDay, float fractionalDay)
     {
-        ModifiedJulianDay modifiedJulianDay = new() { IntegralDay = integralDay, FractionalDay = fractionalDay };
+        ModifiedJulianDay actual = new() { IntegralDay = integralDay, FractionalDay = fractionalDay };
 
-        Asserter.Exact(integralDay, fractionalDay, modifiedJulianDay.IntegralDay, modifiedJulianDay.FractionalDay);
+        Asserter.Exact(integralDay, fractionalDay, actual.IntegralDay, actual.FractionalDay);
     }
 
     [Fact]
     public void Initialization_NaN_ArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => new ModifiedJulianDay() { IntegralDay = 0, FractionalDay = float.NaN });
+        var exception = Record.Exception(() => new ModifiedJulianDay() { IntegralDay = 0, FractionalDay = float.NaN });
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.OutOfRangeIntegralAndFractionalDays))]
     public void Initialization_OutOfRange_ArgumentOutOfRangeException(int integralDay, float fractionalDay)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new ModifiedJulianDay() { IntegralDay = integralDay, FractionalDay = fractionalDay });
+        var exception = Record.Exception(() => new ModifiedJulianDay() { IntegralDay = integralDay, FractionalDay = fractionalDay });
+
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 
     [Theory]
@@ -80,21 +92,25 @@ public class Construction
     [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayNumbers))]
     public void CastFromDouble_Valid_ApproximateMatch(double modifiedJulianDayNumber)
     {
-        var modifiedJulianDay = (ModifiedJulianDay)modifiedJulianDayNumber;
+        var actual = (ModifiedJulianDay)modifiedJulianDayNumber;
 
-        Asserter.Approximate(modifiedJulianDayNumber, modifiedJulianDay.Day);
+        Asserter.Approximate(modifiedJulianDayNumber, actual.Day);
     }
 
     [Fact]
     public void CastFromDouble_NaN_ArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => (ModifiedJulianDay)double.NaN);
+        var exception = Record.Exception(() => (ModifiedJulianDay)double.NaN);
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.OutOfRangeModifiedJulianDayNumbers))]
     public void CastFromDouble_OutOfRange_ArgumentOutOfRangeException(double modifiedJulianDayNumber)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => (ModifiedJulianDay)modifiedJulianDayNumber);
+        var exception = Record.Exception(() => (ModifiedJulianDay)modifiedJulianDayNumber);
+
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 }

@@ -9,10 +9,12 @@ using System.Globalization;
 
 internal static class Datasets
 {
+    public static DateTimeEpoch SimpleDateTimeEpoch { get; } = DateTimeEpoch.FromJulianDay(new JulianDay(2400000));
+
     private static JulianCalendar JulianCalendar { get; } = new();
     private static GregorianCalendar GregorianCalendar { get; } = new();
 
-    internal class DateTimeOffsets : IEnumerable<object?[]>
+    public class DateTimeOffsets : IEnumerable<object?[]>
     {
         public static IEnumerable<DateTimeOffset> Items => new DateTimeOffset[]
         {
@@ -28,7 +30,7 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class DateTimeEpochs : IEnumerable<object?[]>
+    public class DateTimeEpochs : IEnumerable<object?[]>
     {
         public static IEnumerable<DateTimeEpoch> Items
         {
@@ -45,13 +47,13 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class TwoDateTimeEpochs : IEnumerable<object?[]>
+    public class TwoDateTimeEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(DateTimeEpochs.Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class ConvertibleIEpochs : IEnumerable<object?[]>
+    public class ConvertibleIEpochs : IEnumerable<object?[]>
     {
         public static IEnumerable<IEpoch> Items => new IEpoch[]
         {
@@ -64,7 +66,7 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class UnconvertibleIEpochs : IEnumerable<object?[]>
+    public class UnconvertibleIEpochs : IEnumerable<object?[]>
     {
         public static IEnumerable<IEpoch> Items => new IEpoch[]
         {
@@ -75,19 +77,19 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class DateTimeEpochsAndConvertibleIEpochs : IEnumerable<object?[]>
+    public class DateTimeEpochsAndConvertibleIEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(DateTimeEpochs.Items, ConvertibleIEpochs.Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class DateTimeEpochsAndUnconvertibleIEpochs : IEnumerable<object?[]>
+    public class DateTimeEpochsAndUnconvertibleIEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(DateTimeEpochs.Items, UnconvertibleIEpochs.Items);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    internal class UnconvertibleJulianDays : IEnumerable<object?[]>
+    public class UnconvertibleJulianDays : IEnumerable<object?[]>
     {
         public static IEnumerable<JulianDay> Items => new JulianDay[]
         {

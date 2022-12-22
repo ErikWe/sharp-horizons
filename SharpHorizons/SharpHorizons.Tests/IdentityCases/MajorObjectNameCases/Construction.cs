@@ -1,79 +1,86 @@
 ﻿namespace SharpHorizons.Tests.IdentityCases.MajorObjectNameCases;
 
 using System;
-using System.Collections.Generic;
 
 using Xunit;
 
 public class Construction
 {
     [Theory]
-    [MemberData(nameof(ValidMajorObjectNames))]
+    [ClassData(typeof(Datasets.ValidMajorObjectNameStrings))]
     public void Valid_ExactMatch(string name)
     {
-        MajorObjectName majorObjectName = new(name);
+        MajorObjectName actual = new(name);
 
-        Assert.Equal(name, majorObjectName.Value);
+        Assert.Equal(name, actual.Value);
     }
 
-    [Fact]
-    public void EmptyString_ArgumentException()
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidMajorObjectNameStrings))]
+    public void Invalid_ArgumentException(string name)
     {
-        Assert.Throws<ArgumentException>(() => new MajorObjectName(string.Empty));
+        var exception = Record.Exception(() => new MajorObjectName(name));
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Fact]
     public void Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new MajorObjectName(null!));
+        var exception = Record.Exception(() => new MajorObjectName(null!));
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
-    [MemberData(nameof(ValidMajorObjectNames))]
+    [ClassData(typeof(Datasets.ValidMajorObjectNameStrings))]
     public void Initialization_Valid_ExactMatch(string name)
     {
-        MajorObjectName majorObjectName = new() { Value = name };
+        MajorObjectName actual = new() { Value = name };
 
-        Assert.Equal(name, majorObjectName.Value);
+        Assert.Equal(name, actual.Value);
     }
 
-    [Fact]
-    public void Initialization_EmptyString_ArgumentException()
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidMajorObjectNameStrings))]
+    public void Initialization_Invalid_ArgumentException(string name)
     {
-        Assert.Throws<ArgumentException>(() => new MajorObjectName() { Value = string.Empty });
+        var exception = Record.Exception(() => new MajorObjectName() { Value = name });
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Fact]
     public void Initialization_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new MajorObjectName() { Value = null! });
+        var exception = Record.Exception(() => new MajorObjectName() { Value = null! });
+
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Theory]
-    [MemberData(nameof(ValidMajorObjectNames))]
+    [ClassData(typeof(Datasets.ValidMajorObjectNameStrings))]
     public void CastFromInt_ExactMatch(string name)
     {
-        var majorObjectName = (MajorObjectName)name;
+        var actual = (MajorObjectName)name;
 
-        Assert.Equal(name, majorObjectName.Value);
+        Assert.Equal(name, actual.Value);
     }
 
-    [Fact]
-    public void CastFromInt_EmptyString_ArgumentException()
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidMajorObjectNameStrings))]
+    public void CastFromInt_Invalid_ArgumentException(string name)
     {
-        Assert.Throws<ArgumentException>(() => (MajorObjectName)string.Empty);
+        var exception = Record.Exception(() => (MajorObjectName)name);
+
+        Assert.IsType<ArgumentException>(exception);
     }
 
     [Fact]
     public void CastFromInt_Null_ArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => (MajorObjectName)null!);
-    }
+        var exception = Record.Exception(() => (MajorObjectName)null!);
 
-    public static IEnumerable<object[]> ValidMajorObjectNames() => new object[][]
-    {
-        new object[] { "Earth" },
-        new object[] { "Earth Barycenter" },
-        new object[] { "*-0a +?!&%" }
-    };
+        Assert.IsType<ArgumentNullException>(exception);
+    }
 }
