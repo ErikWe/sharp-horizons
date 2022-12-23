@@ -3,7 +3,6 @@
 using SharpHorizons.MPC;
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Represents an object classified as a major object in Horizons - typically a planet, a moon, or a spacecraft.</summary>
@@ -29,19 +28,6 @@ public sealed record class MajorObject
         }
     }
 
-    /// <summary>Describes how longitude is defined for the <see cref="MajorObject"/>.</summary>
-    /// <exception cref="InvalidEnumArgumentException"/>
-    public LongitudeDefinition LongitudeDefinition
-    {
-        get => longitudeDefinition;
-        init
-        {
-            InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(value);
-
-            longitudeDefinition = value;
-        }
-    }
-
     /// <inheritdoc cref="MajorObject"/>
     public MajorObject() { }
 
@@ -58,20 +44,11 @@ public sealed record class MajorObject
     /// <param name="name"><inheritdoc cref="Name" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     [SetsRequiredMembers]
-    public MajorObject(MajorObjectID id, MajorObjectName? name)
+    public MajorObject(MajorObjectID id, MajorObjectName? name) : this(id)
     {
-        if (name is not null)
-        {
-            MajorObjectName.Validate(name.Value);
-        }
-
-        ID = id;
         Name = name;
     }
 
     /// <summary>Backing field for <see cref="Name"/>. Should not be used elsewhere.</summary>
     private readonly MajorObjectName? name = null;
-
-    /// <summary>Backing field for <see cref="LongitudeDefinition"/>. Should not be used elsewhere.</summary>
-    private readonly LongitudeDefinition longitudeDefinition = LongitudeDefinition.Unknown;
 }
