@@ -26,6 +26,15 @@ public class Construction
 
     [Theory]
     [ClassData(typeof(Datasets.Instants))]
+    public void Reinitialization_Valid(Instant instant)
+    {
+        var actual = Epoch.FromJulianDay(JulianDay.Epoch) with { Instant = instant };
+
+        Assert.Equal(instant, actual.Instant);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.Instants))]
     public void CastFromInstant_Valid(Instant instant)
     {
         var actual = (Epoch)instant;

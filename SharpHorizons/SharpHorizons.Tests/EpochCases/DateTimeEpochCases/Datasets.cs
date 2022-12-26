@@ -18,15 +18,15 @@ internal static class Datasets
     {
         public static IEnumerable<DateTimeOffset> Items => new DateTimeOffset[]
         {
-            new DateTimeOffset(new DateTime(5, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero),
-            new DateTimeOffset(new DateTime(2022, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero),
-            new DateTimeOffset(new DateTime(9999, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero),
-            new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero),
-            new DateTimeOffset(new DateTime(2022, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero),
-            new DateTimeOffset(new DateTime(9999, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero),
+            new(new DateTime(5, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero),
+            new(new DateTime(2022, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero),
+            new(new DateTime(9999, 1, 1, 0, 0, 0, 0, JulianCalendar), TimeSpan.Zero),
+            new(new DateTime(1, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero),
+            new(new DateTime(2022, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero),
+            new(new DateTime(9999, 1, 1, 0, 0, 0, 0, GregorianCalendar), TimeSpan.Zero),
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -43,13 +43,13 @@ internal static class Datasets
             }
         }
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class TwoDateTimeEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(DateTimeEpochs.Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(DateTimeEpochs.Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -62,7 +62,7 @@ internal static class Datasets
             new ModifiedJulianDay(double.Pi)
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -73,19 +73,19 @@ internal static class Datasets
             new ModifiedJulianDay(int.MaxValue)
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class DateTimeEpochsAndConvertibleIEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(DateTimeEpochs.Items, ConvertibleIEpochs.Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(DateTimeEpochs.Items, ConvertibleIEpochs.Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class DateTimeEpochsAndUnconvertibleIEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(DateTimeEpochs.Items, UnconvertibleIEpochs.Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(DateTimeEpochs.Items, UnconvertibleIEpochs.Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -93,11 +93,11 @@ internal static class Datasets
     {
         public static IEnumerable<JulianDay> Items => new JulianDay[]
         {
-            new JulianDay(int.MaxValue),
-            new JulianDay(int.MinValue)
+            new(int.MaxValue),
+            new(int.MinValue)
         };
 
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items);
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

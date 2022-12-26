@@ -1,44 +1,46 @@
-﻿namespace SharpHorizons.Tests.IdentityCases.MajorObjectNameCases;
+﻿namespace SharpHorizons.Tests.IdentityCases.MPCCases.MPCSequentialNumberCases;
+
+using SharpHorizons.MPC;
 
 using System.Collections;
 using System.Collections.Generic;
 
 internal static class Datasets
 {
-    public class ValidMajorObjectNameStrings : IEnumerable<object?[]>
+    public class ValidMPCSequentialNumberInts : IEnumerable<object?[]>
     {
-        public static IEnumerable<string> Items => new string[]
+        public static IEnumerable<int> Items => new int[]
         {
-            "Earth",
-            "Voyager 1 (spacecraft)"
+            int.MaxValue,
+            1
         };
 
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMajorObjectNameStrings : IEnumerable<object?[]>
+    public class InvalidMPCSequentialNumberInts : IEnumerable<object?[]>
     {
-        public static IEnumerable<string> Items => new string[]
+        public static IEnumerable<int> Items => new int[]
         {
-            string.Empty,
-            " ",
-            "  "
+            int.MinValue,
+            0,
+            -1
         };
 
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidMajorObjectNames : IEnumerable<object?[]>
+    public class MPCSequentialNumbers : IEnumerable<object?[]>
     {
-        public static IEnumerable<MajorObjectName> Items
+        public static IEnumerable<MPCSequentialNumber> Items
         {
             get
             {
-                foreach (var name in ValidMajorObjectNameStrings.Items)
+                foreach (var number in ValidMPCSequentialNumberInts.Items)
                 {
-                    yield return new(name);
+                    yield return new(number);
                 }
             }
         }

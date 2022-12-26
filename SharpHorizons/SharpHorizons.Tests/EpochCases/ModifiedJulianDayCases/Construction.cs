@@ -88,6 +88,33 @@ public class Construction
     }
 
     [Theory]
+    [ClassData(typeof(Datasets.ConvertibleIntegralAndFractionalDays))]
+    [ClassData(typeof(Datasets.UnconvertibleIntegralAndFractionalDays))]
+    public void Reinitialization_Valid_ExactMatch(int integralDay, float fractionalDay)
+    {
+        var actual = ModifiedJulianDay.Epoch with { IntegralDay = integralDay, FractionalDay = fractionalDay };
+
+        Asserter.Exact(integralDay, fractionalDay, actual.IntegralDay, actual.FractionalDay);
+    }
+
+    [Fact]
+    public void Reinitialization_NaN_ArgumentException()
+    {
+        var exception = Record.Exception(() => ModifiedJulianDay.Epoch with { IntegralDay = 0, FractionalDay = float.NaN });
+
+        Assert.IsType<ArgumentException>(exception);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.OutOfRangeIntegralAndFractionalDays))]
+    public void Reinitialization_OutOfRange_ArgumentOutOfRangeException(int integralDay, float fractionalDay)
+    {
+        var exception = Record.Exception(() => ModifiedJulianDay.Epoch with { IntegralDay = integralDay, FractionalDay = fractionalDay });
+
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
+    }
+
+    [Theory]
     [ClassData(typeof(Datasets.ConvertibleModifiedJulianDayNumbers))]
     [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayNumbers))]
     public void CastFromDouble_Valid_ApproximateMatch(double modifiedJulianDayNumber)

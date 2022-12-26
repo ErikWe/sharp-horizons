@@ -1,23 +1,25 @@
-﻿namespace SharpHorizons.Tests.IdentityCases.MajorObjectNameCases;
+﻿namespace SharpHorizons.Tests.IdentityCases.MPCCases.MPCCometNameCases;
+
+using SharpHorizons.MPC;
 
 using System.Collections;
 using System.Collections.Generic;
 
 internal static class Datasets
 {
-    public class ValidMajorObjectNameStrings : IEnumerable<object?[]>
+    public class ValidMPCCometNameStrings : IEnumerable<object?[]>
     {
         public static IEnumerable<string> Items => new string[]
         {
-            "Earth",
-            "Voyager 1 (spacecraft)"
+            "Halley",
+            "Hale-Bopp"
         };
 
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMajorObjectNameStrings : IEnumerable<object?[]>
+    public class InvalidMPCCometNameStrings : IEnumerable<object?[]>
     {
         public static IEnumerable<string> Items => new string[]
         {
@@ -30,13 +32,13 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidMajorObjectNames : IEnumerable<object?[]>
+    public class ValidMPCCometNames : IEnumerable<object?[]>
     {
-        public static IEnumerable<MajorObjectName> Items
+        public static IEnumerable<MPCCometName> Items
         {
             get
             {
-                foreach (var name in ValidMajorObjectNameStrings.Items)
+                foreach (var name in ValidMPCCometNameStrings.Items)
                 {
                     yield return new(name);
                 }

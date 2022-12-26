@@ -24,6 +24,15 @@ public class Construction
 
     [Theory]
     [ClassData(typeof(Datasets.MajorObjectIDInts))]
+    public void Reinitialization_ExactMatch(int id)
+    {
+        var actual = new MajorObjectID(0) with { Value = id };
+
+        Assert.Equal(id, actual.Value);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.MajorObjectIDInts))]
     public void CastFromInt_ExactMatch(int id)
     {
         var actual = (MajorObjectID)id;

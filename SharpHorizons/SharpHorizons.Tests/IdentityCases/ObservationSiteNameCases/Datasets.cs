@@ -1,23 +1,23 @@
-﻿namespace SharpHorizons.Tests.IdentityCases.MajorObjectNameCases;
+﻿namespace SharpHorizons.Tests.IdentityCases.ObservationSiteNameCases;
 
 using System.Collections;
 using System.Collections.Generic;
 
 internal static class Datasets
 {
-    public class ValidMajorObjectNameStrings : IEnumerable<object?[]>
+    public class ValidObservationSiteNameStrings : IEnumerable<object?[]>
     {
         public static IEnumerable<string> Items => new string[]
         {
-            "Earth",
-            "Voyager 1 (spacecraft)"
+            "Arecibo",
+            "Sardinia Radio Telescope (SRT 64-m)"
         };
 
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMajorObjectNameStrings : IEnumerable<object?[]>
+    public class InvalidObservationSiteNameStrings : IEnumerable<object?[]>
     {
         public static IEnumerable<string> Items => new string[]
         {
@@ -30,13 +30,13 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidMajorObjectNames : IEnumerable<object?[]>
+    public class ValidObservationSiteNames : IEnumerable<object?[]>
     {
-        public static IEnumerable<MajorObjectName> Items
+        public static IEnumerable<ObservationSiteName> Items
         {
             get
             {
-                foreach (var name in ValidMajorObjectNameStrings.Items)
+                foreach (var name in ValidObservationSiteNameStrings.Items)
                 {
                     yield return new(name);
                 }
