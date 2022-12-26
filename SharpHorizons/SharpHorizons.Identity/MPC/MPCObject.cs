@@ -8,14 +8,24 @@ using System.Diagnostics.CodeAnalysis;
 public sealed record class MPCObject
 {
     /// <summary>The <see cref="MPCSequentialNumber"/> of the <see cref="MPCObject"/>.</summary>
-    public MPCSequentialNumber SequentialNumber { get; init; }
+    /// <exception cref="ArgumentException"/>
+    public MPCSequentialNumber SequentialNumber
+    {
+        get => sequentialNumberField;
+        init
+        {
+            MPCSequentialNumber.Validate(value);
+
+            sequentialNumberField = value;
+        }
+    }
 
     /// <summary>The <see cref="MPCName"/> of the <see cref="MPCObject"/>, or <see langword="null"/> if the <see cref="MPCObject"/> was not assigned one.</summary>
     /// <remarks>If the <see cref="MPCObject"/> was not assigned a <see cref="MPCName"/>, <see cref="ProvisionalDesignation"/> is used.</remarks>
     /// <exception cref="ArgumentException"/>
     public MPCName? Name
     {
-        get => name;
+        get => nameField;
         init
         {
             if (value is not null)
@@ -23,7 +33,12 @@ public sealed record class MPCObject
                 MPCName.Validate(value.Value);
             }
 
-            name = value;
+            if (value is null && ProvisionalDesignation is null)
+            {
+                throw new ArgumentException($"The {nameof(Name)} of the {nameof(MPCObject)} cannot be set to null, as the {nameof(ProvisionalDesignation)} of the {nameof(MPCObject)} already is null.");
+            }
+
+            nameField = value;
         }
     }
 
@@ -31,7 +46,7 @@ public sealed record class MPCObject
     /// <exception cref="ArgumentException"/>
     public MPCProvisionalDesignation? ProvisionalDesignation
     {
-        get => provisionalDesignation;
+        get => provisionalDesignationField;
         init
         {
             if (value is not null)
@@ -39,7 +54,12 @@ public sealed record class MPCObject
                 MPCProvisionalDesignation.Validate(value.Value);
             }
 
-            provisionalDesignation = value;
+            if (value is null && Name is null)
+            {
+                throw new ArgumentException($"The {nameof(ProvisionalDesignation)} of the {nameof(MPCObject)} cannot be set to null, as the {nameof(Name)} of the {nameof(MPCObject)} already is null.");
+            }
+
+            provisionalDesignationField = value;
         }
     }
 
@@ -53,20 +73,30 @@ public sealed record class MPCObject
     /// <param name="name"><inheritdoc cref="Name" path="/summary"/></param>
     /// <param name="provisionalDesignation"><inheritdoc cref="ProvisionalDesignation" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
-    private MPCObject(MPCSequentialNumber sequentialNumber, MPCName? name, MPCProvisionalDesignation? provisionalDesignation)
+    private MPCObject(MPCSequentialNumber sequentialNumber, MPCName name, MPCProvisionalDesignation provisionalDesignation)
     {
-        if (name is not null)
-        {
-            MPCName.Validate(name.Value);
-        }
-
-        if (provisionalDesignation is not null)
-        {
-            MPCProvisionalDesignation.Validate(provisionalDesignation.Value);
-        }
-
         SequentialNumber = sequentialNumber;
         Name = name;
+        ProvisionalDesignation = provisionalDesignation;
+    }
+
+    /// <inheritdoc cref="MPCObject"/>
+    /// <param name="sequentialNumber"><inheritdoc cref="SequentialNumber" path="/summary"/></param>
+    /// <param name="name"><inheritdoc cref="Name" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    private MPCObject(MPCSequentialNumber sequentialNumber, MPCName name)
+    {
+        SequentialNumber = sequentialNumber;
+        Name = name;
+    }
+
+    /// <inheritdoc cref="MPCObject"/>
+    /// <param name="sequentialNumber"><inheritdoc cref="SequentialNumber" path="/summary"/></param>
+    /// <param name="provisionalDesignation"><inheritdoc cref="ProvisionalDesignation" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    private MPCObject(MPCSequentialNumber sequentialNumber, MPCProvisionalDesignation provisionalDesignation)
+    {
+        SequentialNumber = sequentialNumber;
         ProvisionalDesignation = provisionalDesignation;
     }
 
@@ -74,7 +104,7 @@ public sealed record class MPCObject
     /// <param name="sequentialNumber">The <see cref="MPCSequentialNumber"/> of the object.</param>
     /// <param name="name">The <see cref="MPCName"/> of the object.</param>
     /// <exception cref="ArgumentException"/>
-    public static MPCObject Named(MPCSequentialNumber sequentialNumber, MPCName name) => new(sequentialNumber, name, null);
+    public static MPCObject Named(MPCSequentialNumber sequentialNumber, MPCName name) => new(sequentialNumber, name);
 
     /// <summary>Constructs an <see cref="MPCObject"/>, representing a non-provisional object { <paramref name="sequentialNumber"/>, <paramref name="name"/>, <paramref name="provisionalDesignation"/> } in the MPC catalogue of minor planets.</summary>
     /// <param name="sequentialNumber">The <see cref="MPCSequentialNumber"/> of the object.</param>
@@ -87,10 +117,12 @@ public sealed record class MPCObject
     /// <param name="sequentialNumber">The <see cref="MPCSequentialNumber"/> of the object.</param>
     /// <param name="provisionalDesignation">The <see cref="MPCProvisionalDesignation"/> of the object.</param>
     /// <exception cref="ArgumentException"/>
-    public static MPCObject Unnamed(MPCSequentialNumber sequentialNumber, MPCProvisionalDesignation provisionalDesignation) => new(sequentialNumber, null, provisionalDesignation);
+    public static MPCObject Unnamed(MPCSequentialNumber sequentialNumber, MPCProvisionalDesignation provisionalDesignation) => new(sequentialNumber, provisionalDesignation);
 
+    /// <summary>Backing field for <see cref="SequentialNumber"/>. Should not be used elsewhere.</summary>
+    private readonly MPCSequentialNumber sequentialNumberField;
     /// <summary>Backing field for <see cref="Name"/>. Should not be used elsewhere.</summary>
-    private readonly MPCName? name;
+    private readonly MPCName? nameField;
     /// <summary>Backing field for <see cref="ProvisionalDesignation"/>. Should not be used elsewhere.</summary>
-    private readonly MPCProvisionalDesignation? provisionalDesignation;
+    private readonly MPCProvisionalDesignation? provisionalDesignationField;
 }

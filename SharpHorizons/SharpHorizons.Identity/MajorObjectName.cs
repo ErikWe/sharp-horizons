@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-/// <summary>Represents the name of a <see cref="MajorObject"/>.</summary>
+/// <summary>Represents the <see cref="string"/> name of a <see cref="MajorObject"/>.</summary>
 public readonly record struct MajorObjectName
 {
     /// <summary>The <see cref="string"/> name of the <see cref="MajorObject"/>.</summary>

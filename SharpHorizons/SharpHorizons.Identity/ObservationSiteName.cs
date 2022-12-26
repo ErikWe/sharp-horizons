@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-/// <summary>Represents the name of a <see cref="ObservationSite"/>.</summary>
+/// <summary>Represents the <see cref="string"/> name of an <see cref="ObservationSite"/>.</summary>
 public readonly record struct ObservationSiteName
 {
     /// <summary>The <see cref="string"/> name of the <see cref="ObservationSite"/>.</summary>

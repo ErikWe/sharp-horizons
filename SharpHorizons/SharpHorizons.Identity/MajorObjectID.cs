@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-/// <summary>Represents the ID of a <see cref="MajorObject"/>.</summary>
+/// <summary>Represents the <see cref="int"/> ID of a <see cref="MajorObject"/>.</summary>
 public readonly record struct MajorObjectID
 {
     /// <summary>The <see cref="int"/> ID of the <see cref="MajorObject"/>.</summary>

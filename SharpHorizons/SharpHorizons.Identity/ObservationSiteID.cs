@@ -5,7 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-/// <summary>Represents the <see cref="string"/> ID of a <see cref="ObservationSite"/>.</summary>
+/// <summary>Represents the <see cref="string"/> ID of an <see cref="ObservationSite"/>.</summary>
+/// <remarks>An <see cref="ObservationSiteID"/> represents a value in the range [-99, 999], or a single alphabetical letter followed by a value in the range [0, 99].</remarks>
 public readonly record struct ObservationSiteID
 {
     /// <summary>The <see cref="string"/> ID of the <see cref="ObservationSite"/>.</summary>
@@ -18,9 +19,9 @@ public readonly record struct ObservationSiteID
         {
             try
             {
-                ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(valueField);
+                ArgumentNullException.ThrowIfNull(valueField);
             }
-            catch (ArgumentException e)
+            catch (ArgumentNullException e)
             {
                 throw InvalidOperationExceptionFactory.InvalidState<ObservationSiteID>(e);
             }
@@ -29,7 +30,7 @@ public readonly record struct ObservationSiteID
         }
         init
         {
-            ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
+            Validate(value);
 
             valueField = value;
         }
@@ -49,9 +50,15 @@ public readonly record struct ObservationSiteID
     }
 
     /// <inheritdoc cref="ObservationSiteID"/>
-    /// <param name="value">The <see cref="int"/> ID of the <see cref="ObservationSite"/>. This <see cref="int"/> is formatted as a <see cref="string"/> using the <see cref="CultureInfo.InvariantCulture"/>.</param>
+    /// <param name="value">The <see cref="int"/> ID of the <see cref="ObservationSite"/>. The <see cref="string"/> ID of the <see cref="ObservationSite"/> is this <see cref="int"/> formatted using the <see cref="CultureInfo.InvariantCulture"/>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     [SetsRequiredMembers]
-    public ObservationSiteID(int value) : this(value.ToString(CultureInfo.InvariantCulture)) { }
+    public ObservationSiteID(int value)
+    {
+        Validate(value);
+
+        Value = value.ToString(CultureInfo.InvariantCulture);
+    }
 
     /// <summary>Retrieves the <see cref="Value"/> represented by the <see cref="ObservationSiteID"/>.</summary>
     /// <exception cref="InvalidOperationException"/>
@@ -84,6 +91,53 @@ public readonly record struct ObservationSiteID
             throw ArgumentExceptionFactory.InvalidState<ObservationSiteID>(nameof(observationSiteID), e);
         }
     }
+
+    /// <summary>Validates that the <see cref="string"/>-representation of <paramref name="value"/> can be used to represent the <see cref="Value"/> of an <see cref="ObservationSite"/>, and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
+    /// <param name="value">The <see cref="int"/> ID of the <see cref="ObservationSite"/>. The <see cref="string"/> ID of the <see cref="ObservationSite"/> is this <see cref="int"/> formatted using the <see cref="CultureInfo.InvariantCulture"/>.</param>
+    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
+    /// <exception cref="ArgumentOutOfRangeException"/>
+    private static void Validate(int value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null)
+    {
+        if (value is < -99 or > 999)
+        {
+            throw new ArgumentOutOfRangeException(argumentExpression, value, ExceptionMessage(value));
+        }
+    }
+
+    /// <summary>Validates that <paramref name="value"/> can be used to represent the <see cref="Value"/> of an <see cref="ObservationSite"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    private static void Validate([NotNull] string? value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null)
+    {
+        ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value, argumentExpression);
+
+        if (value.Length > 3)
+        {
+            throw new ArgumentException(ExceptionMessage(value), argumentExpression);
+        }
+
+        if (int.TryParse(value, out _))
+        {
+            return;
+        }
+
+        if (value[0] is (>= 'A' and <= 'Z') or (>= 'a' and <= 'z') && int.TryParse(value[1..], out _))
+        {
+            return;
+        }
+
+        throw new ArgumentException(ExceptionMessage(value), argumentExpression);
+    }
+
+    /// <summary>Constructs the <see cref="string"/> message of the <see cref="ArgumentOutOfRangeException"/> caused by an invalid argument <paramref name="value"/>.</summary>
+    /// <param name="value">The value of the invalid argument.</param>
+    private static string ExceptionMessage(int value) => $"A value in the range [-99, 999] should be used to describe the {nameof(Value)} of an {nameof(ObservationSiteID)}.";
+
+    /// <summary>Constructs the <see cref="string"/> message of the <see cref="ArgumentException"/> caused by an invalid argument <paramref name="value"/>.</summary>
+    /// <param name="value">The value of the invalid argument.</param>
+    private static string ExceptionMessage(string value) => $"A value in the range [-99, 999], or a single alphabetical letter followed by a value in the range [0, 99], should be used to describe the {nameof(Value)} of an {nameof(ObservationSiteID)}.";
 
     /// <summary>Validates the <see cref="ObservationSiteID"/> <paramref name="id"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="id">This <see cref="ObservationSiteID"/> is validated.</param>

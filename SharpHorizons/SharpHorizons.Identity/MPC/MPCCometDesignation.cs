@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-/// <summary>Represents the designation of an <see cref="MPCComet"/>.</summary>
+/// <summary>Represents the <see cref="string"/> designation of an <see cref="MPCComet"/>.</summary>
 public readonly record struct MPCCometDesignation
 {
     /// <summary>The <see cref="string"/> designation of the <see cref="MPCComet"/>.</summary>

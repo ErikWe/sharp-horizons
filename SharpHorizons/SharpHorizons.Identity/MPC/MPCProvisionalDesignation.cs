@@ -4,11 +4,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-/// <summary>Represents the provisional designation of an object in the MPC catalogue of minor planets.</summary>
+/// <summary>Represents the <see cref="string"/> provisional designation of an object in the MPC catalogue of minor planets.</summary>
 /// <remarks>The provisional designation may be used also for non-provisional objects - especially if they are not given a <see cref="MPCName"/>.</remarks>
 public readonly partial record struct MPCProvisionalDesignation
 {
-    /// <summary>The provisional designation of the object in the MPC catalogue of minor planets.</summary>
+    /// <summary>The <see cref="string"/> provisional designation of the object in the MPC catalogue of minor planets.</summary>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="InvalidOperationException"/>
