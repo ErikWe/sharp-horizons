@@ -70,5 +70,10 @@ internal sealed class MPCTargetFactory : IMPCTargetFactory
         return new MPCProvisionalDesignationTarget(mpcDesignation, ProvisionalDesignationComposer);
     }
 
-    ITarget IMPCTargetFactory.Create(MPCSequentialNumber mpcNumber) => new MPCSequentialNumberTarget(mpcNumber, SequentialNumberComposer);
+    ITarget IMPCTargetFactory.Create(MPCSequentialNumber mpcNumber)
+    {
+        MPCSequentialNumber.Validate(mpcNumber);
+
+        return new MPCSequentialNumberTarget(mpcNumber, SequentialNumberComposer);
+    }
 }

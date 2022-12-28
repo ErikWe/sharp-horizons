@@ -29,5 +29,6 @@ public interface IMPCTargetFactory
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as the center of an <see cref="MPCObject"/> identified by <paramref name="mpcNumber"/>.</summary>
     /// <param name="mpcNumber">The <see cref="MPCSequentialNumber"/> of an <see cref="MPCObject"/>, the center of which represents the <see cref="ITarget"/> in a query.</param>
+    /// <exception cref="ArgumentException"/>
     public abstract ITarget Create(MPCSequentialNumber mpcNumber);
 }
