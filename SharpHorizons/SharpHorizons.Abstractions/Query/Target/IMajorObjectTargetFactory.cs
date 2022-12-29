@@ -36,6 +36,12 @@ public interface IMajorObjectTargetFactory
     /// <exception cref="ArgumentNullException"/>
     public abstract ITarget Create(MajorObject majorObject, GeodeticCoordinate coordinate);
 
+    /// <summary>Describes the <see cref="ITarget"/> in a query as a some <paramref name="site"/> associated with <paramref name="majorObject"/>.</summary>
+    /// <param name="majorObject">The <see cref="MajorObject"/>, associated with <paramref name="site"/>.</param>
+    /// <param name="site">Some <see cref="ITargetSite"/>, associated with <paramref name="majorObject"/>, which represents the <see cref="ITarget"/> in a query.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public abstract ITarget Create(MajorObject majorObject, ITargetSite site);
+
     /// <summary>Describes the <see cref="ITarget"/> in a query as <paramref name="coordinate"/> relative to the center of a <see cref="MajorObject"/> identified by <paramref name="majorObjectID"/>.</summary>
     /// <param name="majorObjectID">The <see cref="MajorObjectID"/> of a <see cref="MajorObject"/>, relative to which <paramref name="coordinate"/> is expressed.</param>
     /// <param name="coordinate">The custom <see cref="CylindricalCoordinate"/>, relative to a <see cref="MajorObject"/> identified by <paramref name="majorObjectID"/>, which represents the <see cref="ITarget"/> in a query.</param>
@@ -47,6 +53,12 @@ public interface IMajorObjectTargetFactory
     /// <param name="coordinate">The custom <see cref="GeodeticCoordinate"/>, relative to a <see cref="MajorObject"/> identified by <paramref name="majorObjectID"/>, which represents the <see cref="ITarget"/> in a query.</param>
     /// <exception cref="ArgumentException"/>
     public abstract ITarget Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate);
+
+    /// <summary>Describes the <see cref="ITarget"/> in a query as some <paramref name="site"/> associated with a <see cref="MajorObject"/> identified by <paramref name="majorObjectID"/>.</summary>
+    /// <param name="majorObjectID">The <see cref="MajorObjectID"/> of a <see cref="MajorObject"/>, associated with <paramref name="site"/>.</param>
+    /// <param name="site">Some <see cref="ITargetSite"/>, associated with a <see cref="MajorObject"/> identified by <paramref name="majorObjectID"/>, which represents the <see cref="ITarget"/> in a query.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public abstract ITarget Create(MajorObjectID majorObjectID, ITargetSite site);
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as <paramref name="coordinate"/> relative to the center of a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>.</summary>
     /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of a <see cref="MajorObject"/>, relative to which <paramref name="coordinate"/> is expressed.</param>
@@ -61,4 +73,12 @@ public interface IMajorObjectTargetFactory
     /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
     /// <exception cref="ArgumentException"/>
     public abstract ITarget Create(MajorObjectName majorObjectName, GeodeticCoordinate coordinate);
+
+    /// <summary>Describes the <see cref="ITarget"/> in a query as some <paramref name="site"/> associated with a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>.</summary>
+    /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of a <see cref="MajorObject"/>, associated with <paramref name="site"/>.</param>
+    /// <param name="site">Some <see cref="ITargetSite"/>, associated with a <see cref="MajorObject"/> identified by <paramref name="majorObjectName"/>, which represents the <see cref="ITarget"/> in a query.</param>
+    /// <remarks>Prefer using the <see cref="MajorObjectID"/> of the <see cref="MajorObject"/>, if known - as using the <see cref="MajorObjectName"/> can result in multiple matches.</remarks>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    public abstract ITarget Create(MajorObjectName majorObjectName, ITargetSite site);
 }

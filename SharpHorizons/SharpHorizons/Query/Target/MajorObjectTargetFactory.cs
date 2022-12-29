@@ -86,6 +86,14 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
         return CreateTarget(SiteObjectFactory.Create(majorObject), SiteFactory.Create(coordinate));
     }
 
+    ITarget IMajorObjectTargetFactory.Create(MajorObject majorObject, ITargetSite site)
+    {
+        ArgumentNullException.ThrowIfNull(majorObject);
+        ArgumentNullException.ThrowIfNull(site);
+
+        return CreateTarget(SiteObjectFactory.Create(majorObject), site);
+    }
+
     ITarget IMajorObjectTargetFactory.Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate)
     {
         SharpMeasuresValidation.Validate(coordinate);
@@ -98,6 +106,13 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
         SharpMeasuresValidation.Validate(coordinate);
 
         return CreateTarget(SiteObjectFactory.Create(majorObjectID), SiteFactory.Create(coordinate));
+    }
+
+    ITarget IMajorObjectTargetFactory.Create(MajorObjectID majorObjectID, ITargetSite site)
+    {
+        ArgumentNullException.ThrowIfNull(site);
+
+        return CreateTarget(SiteObjectFactory.Create(majorObjectID), site);
     }
 
     ITarget IMajorObjectTargetFactory.Create(MajorObjectName majorObjectName, CylindricalCoordinate coordinate)
@@ -114,6 +129,14 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
         SharpMeasuresValidation.Validate(coordinate);
 
         return CreateTarget(SiteObjectFactory.Create(majorObjectName), SiteFactory.Create(coordinate));
+    }
+
+    ITarget IMajorObjectTargetFactory.Create(MajorObjectName majorObjectName, ITargetSite site)
+    {
+        ArgumentNullException.ThrowIfNull(site);
+        MajorObjectName.Validate(majorObjectName);
+
+        return CreateTarget(SiteObjectFactory.Create(majorObjectName), site);
     }
 
     /// <summary>Describes the <see cref="ITarget"/> in a query as the center of <paramref name="majorObject"/>.</summary>

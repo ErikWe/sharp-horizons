@@ -126,6 +126,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<IMajorObjectTargetFactory, MajorObjectTargetFactory>();
         services.AddSingleton<IMPCTargetFactory, MPCTargetFactory>();
+        services.AddSingleton<IMPCCometTargetFactory, MPCCometTargetFactory>();
 
         services.AddSingleton<ITargetSiteComposer<CylindricalCoordinate>, Query.Arguments.Composers.Target.CylindricalCoordinateComposer>();
         services.AddSingleton<ITargetSiteComposer<GeodeticCoordinate>, Query.Arguments.Composers.Target.GeodeticCoordinateComposer>();
