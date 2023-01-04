@@ -57,6 +57,21 @@ public interface IVectorsQuery
     /// <summary>Determines whether the <see cref="Time"/> difference between <see cref="TimeSystem.TDB"/> and <see cref="TimeSystem.UT"/> is included in the result of the query.</summary>
     public abstract TimeDeltaInclusion TimeDeltaInclusion { get; }
 
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="Target"/>.</summary>
+    /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
+    /// <exception cref="ArgumentNullException"/>
+    public abstract IVectorsQuery WithTarget(ITarget target);
+
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="Origin"/>.</summary>
+    /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
+    /// <exception cref="ArgumentNullException"/>
+    public abstract IVectorsQuery WithOrigin(IOrigin origin);
+
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="Epochs"/>.</summary>
+    /// <param name="epochSelection"><inheritdoc cref="Epochs" path="/summary"/></param>
+    /// <exception cref="ArgumentNullException"/>
+    public abstract IVectorsQuery WithEpochSelection(IEpochSelection epochSelection);
+
     /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="OutputFormat"/>.</summary>
     /// <param name="outputFormat"><inheritdoc cref="OutputFormat" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>

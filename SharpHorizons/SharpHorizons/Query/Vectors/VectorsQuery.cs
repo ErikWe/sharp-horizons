@@ -53,6 +53,27 @@ internal sealed record class VectorsQuery : IVectorsQuery
         Epochs = epochs;
     }
 
+    IVectorsQuery IVectorsQuery.WithTarget(ITarget target)
+    {
+        ArgumentNullException.ThrowIfNull(target);
+
+        return this with { Target = target };
+    }
+
+    IVectorsQuery IVectorsQuery.WithOrigin(IOrigin origin)
+    {
+        ArgumentNullException.ThrowIfNull(origin);
+
+        return this with { Origin = origin };
+    }
+
+    IVectorsQuery IVectorsQuery.WithEpochSelection(IEpochSelection epochSelection)
+    {
+        ArgumentNullException.ThrowIfNull(epochSelection);
+
+        return this with { Epochs = epochSelection };
+    }
+
     IVectorsQuery IVectorsQuery.WithConfiguration(OutputFormat outputFormat)
     {
         ValidateOutputFormat(outputFormat);
