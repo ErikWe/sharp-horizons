@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>SharpHorizons</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SharpHorizons.Query.Abstractions\SharpHorizons.Query.Abstractions.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" />
+    </ItemGroup>
+
+</Project>

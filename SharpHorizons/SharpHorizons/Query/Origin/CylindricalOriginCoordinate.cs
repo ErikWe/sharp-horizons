@@ -7,9 +7,10 @@ using SharpMeasures.Astronomy;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <inheritdoc cref="ICylindricalOriginCoordinate"/>
-internal sealed record class CylindricalOriginCoordinate : ICylindricalOriginCoordinate
+/// <summary>Represents the coordinate of the <see cref="IOrigin"/>, relative to some <see cref="IOriginObject"/>, expressed as a <see cref="CylindricalCoordinate"/>.</summary>
+internal sealed record class CylindricalOriginCoordinate : IOriginCoordinate
 {
+    /// <summary>The <see cref="CylindricalCoordinate"/>, describing the <see cref="IOriginCoordinate"/>.</summary>
     public required CylindricalCoordinate Coordinate { get; init; }
 
     /// <summary>Used to compose a <see cref="IOriginCoordinateArgument"/> describing <see langword="this"/>.</summary>

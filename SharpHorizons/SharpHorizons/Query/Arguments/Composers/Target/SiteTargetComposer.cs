@@ -12,7 +12,7 @@ internal sealed class SiteTargetComposer : ITargetComposer<ISiteTarget>
     {
         Validate(obj);
 
-        return new QueryArgument($"{obj.TargetSite.ComposeIdentifier()}@{obj.TargetSiteObject.ComposeIdentifier()}");
+        return new QueryArgument($"{obj.TargetSite.ComposeIdentifier()}@{obj.TargetObject.ComposeIdentifier()}");
     }
 
     ICommandArgument IArgumentComposer<ICommandArgument, ISiteTarget>.Compose(ISiteTarget obj) => ((IArgumentComposer<ITargetArgument, ISiteTarget>)this).Compose(obj);
@@ -29,7 +29,7 @@ internal sealed class SiteTargetComposer : ITargetComposer<ISiteTarget>
         try
         {
             ArgumentNullException.ThrowIfNull(siteTarget.TargetSite);
-            ArgumentNullException.ThrowIfNull(siteTarget.TargetSiteObject);
+            ArgumentNullException.ThrowIfNull(siteTarget.TargetObject);
         }
         catch (ArgumentException e)
         {

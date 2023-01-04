@@ -1,10 +1,10 @@
 ﻿namespace SharpHorizons.Query;
 
-/// <summary>Specifies whether the individual values in a query result are labelled.</summary>
+/// <summary>Specifies whether individual values are labelled in the result of a query.</summary>
 public enum OutputLabels
 {
-    /// <summary>The individual values are not labelled.</summary>
+    /// <summary>Individual values are not labelled in the result of a query.</summary>
     Disable,
-    /// <summary>The individual values are labelled.</summary>
+    /// <summary>Individual values are labelled in the result of a query.</summary>
     Enable
 }

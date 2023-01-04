@@ -3,8 +3,6 @@
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 
-using SharpMeasures.Astronomy;
-
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -40,26 +38,41 @@ internal sealed class OriginStage : IOriginStage
     {
         ArgumentNullException.ThrowIfNull(origin);
 
-        return EpochStageFactory.Create(Target, origin);
+        return CreateEpochStage(origin);
     }
 
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject) => Create(OriginFactory.Create(majorObject));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID) => Create(OriginFactory.Create(majorObjectID));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName) => Create(OriginFactory.Create(majorObjectName));
+    IEpochStage IOriginStage.WithOrigin(IOriginStage.DOriginFactory originFactoryDelegate)
+    {
+        ArgumentNullException.ThrowIfNull(originFactoryDelegate);
 
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObject, coordinate));
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObject, coordinate));
+        var origin = InvokeOriginFactoryDelegate(originFactoryDelegate);
 
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObjectID, coordinate));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObjectID, coordinate));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => Create(OriginFactory.Create(majorObjectName, coordinate));
+        try
+        {
+            return CreateEpochStage(origin);
+        }
+        catch (ArgumentNullException e)
+        {
+            throw new ArgumentException($"The {nameof(IOriginStage.DOriginFactory)} produced a null {nameof(IOrigin)}.", nameof(originFactoryDelegate), e);
+        }
+    }
 
-    IEpochStage IOriginStage.WithOrigin(MajorObject majorObject, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObject, observationSiteID));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectID majorObjectID, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObjectID, observationSiteID));
-    IEpochStage IOriginStage.WithOrigin(MajorObjectName majorObjectName, ObservationSiteID observationSiteID) => Create(OriginFactory.Create(majorObjectName, observationSiteID));
+    /// <summary>Invokes the <see cref="IOriginStage.DOriginFactory"/> <paramref name="originFactoryDelegate"/>, resulting in an <see cref="IOrigin"/>.</summary>
+    /// <param name="originFactoryDelegate">This <see cref="IOriginStage.DOriginFactory"/> is invoked.</param>
+    /// <exception cref="ArgumentException"/>
+    private IOrigin InvokeOriginFactoryDelegate(IOriginStage.DOriginFactory originFactoryDelegate)
+    {
+        try
+        {
+            return originFactoryDelegate(OriginFactory);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException($"The {nameof(IOriginStage.DOriginFactory)} encountered an error while producing an {nameof(IOrigin)}.", nameof(originFactoryDelegate), e);
+        }
+    }
 
-    /// <summary>Selects <paramref name="origin"/> as the <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</summary>
+    /// <summary>Selects <paramref name="origin"/> as the <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>, and proceeds to the <see cref="IEpochStage"/>.</summary>
     /// <param name="origin">The <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</param>
-    private IEpochStage Create(IOrigin origin) => EpochStageFactory.Create(Target, origin);
+    private IEpochStage CreateEpochStage(IOrigin origin) => EpochStageFactory.Create(Target, origin);
 }

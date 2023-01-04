@@ -1,16 +1,20 @@
 ﻿namespace SharpHorizons.Query;
 
-/// <summary>Specifies an ephemeris type.</summary>
+using SharpHorizons.Ephemeris;
+using SharpHorizons.Ephemeris.Elements;
+using SharpHorizons.Ephemeris.Vectors;
+
+/// <summary>Specifies the type of <see cref="IEphemeris{TEntry}"/> that is generated.</summary>
 public enum EphemerisType
 {
     /// <summary>The <see cref="EphemerisType"/> is unknown.</summary>
     Unknown,
-    /// <summary>Ephemeris of observable states.</summary>
+    /// <summary>An <see cref="IEphemeris{TEntry}"/> of observable states is generated.</summary>
     Observables,
-    /// <summary>Ephemeris of orbital state vectors.</summary>
+    /// <summary>An <see cref="IEphemeris{TEntry}"/> of <see cref="IOrbitalStateVectors"/>-related properties is generated.</summary>
     Vectors,
-    /// <summary>Ephemeris of osculating orbital elements.</summary>
+    /// <summary>An <see cref="IEphemeris{TEntry}"/> of <see cref="IOsculatingOrbitalElements"/>-related properties is generated.</summary>
     Elements,
-    /// <summary>Ephemeris of close approaches.</summary>
+    /// <summary>An <see cref="IEphemeris{TEntry}"/> of close approaches is generated.</summary>
     CloseApproach
 }

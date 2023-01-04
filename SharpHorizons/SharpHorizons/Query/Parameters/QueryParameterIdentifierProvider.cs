@@ -8,12 +8,11 @@ using SharpHorizons.Settings.Query.Parameters;
 internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifierProvider
 {
     public ICommandParameterIdentifier Command { get; }
-    public IElementLabelsParameterIdentifier ElementLabels { get; }
     public IEphemerisTypeParameterIdentifier EphemerisType { get; }
     public ICalendarTypeParameterIdentifier EpochCalendar { get; }
     public IEpochCollectionParameterIdentifier EpochCollection { get; }
     public IEpochCollectionFormatParameterIdentifier EpochCollectionFormat { get; }
-    public IGenerateEphemeridesParameterIdentifier GenerateEphemerides { get; }
+    public IGenerateEphemerisParameterIdentifier GenerateEphemeris { get; }
     public IObjectDataInclusionParameterIdentifier ObjectDataInclusion { get; }
     public IOriginParameterIdentifier Origin { get; }
     public IOriginCoordinateParameterIdentifier OriginCoordinate { get; }
@@ -39,12 +38,11 @@ internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifi
     public QueryParameterIdentifierProvider(IOptions<ParameterIdentifierOptions> parameterIdentifierOptions)
     {
         Command = new QueryParameterIdentifier(parameterIdentifierOptions.Value.Command);
-        ElementLabels = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ElementLabels);
         EphemerisType = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EphemerisType);
         EpochCalendar = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCalendar);
         EpochCollection = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCollection);
         EpochCollectionFormat = new QueryParameterIdentifier(parameterIdentifierOptions.Value.EpochCollectionFormat);
-        GenerateEphemerides = new QueryParameterIdentifier(parameterIdentifierOptions.Value.GenerateEphemerides);
+        GenerateEphemeris = new QueryParameterIdentifier(parameterIdentifierOptions.Value.GenerateEphemeris);
         ObjectDataInclusion = new QueryParameterIdentifier(parameterIdentifierOptions.Value.ObjectDataInclusion);
         Origin = new QueryParameterIdentifier(parameterIdentifierOptions.Value.Origin);
         OriginCoordinate = new QueryParameterIdentifier(parameterIdentifierOptions.Value.OriginCoordinate);

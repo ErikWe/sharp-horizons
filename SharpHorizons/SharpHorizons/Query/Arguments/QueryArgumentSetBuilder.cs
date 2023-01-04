@@ -34,11 +34,11 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
         return this;
     }
 
-    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IGenerateEphemeridesArgument generateEphemerides)
+    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IGenerateEphemerisArgument generateEphemeris)
     {
-        QueryArgument.Validate(generateEphemerides);
+        QueryArgument.Validate(generateEphemeris);
 
-        ArgumentSet.GenerateEphemerides = OptionalQueryArgument.Construct(generateEphemerides);
+        ArgumentSet.GenerateEphemeris = OptionalQueryArgument.Construct(generateEphemeris);
 
         return this;
     }
@@ -223,15 +223,6 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
         return this;
     }
 
-    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IElementLabelsArgument elementLabels)
-    {
-        QueryArgument.Validate(elementLabels);
-
-        ArgumentSet.ElementLabels = OptionalQueryArgument.Construct(elementLabels);
-
-        return this;
-    }
-
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.Specify(IVectorLabelsArgument vectorLabels)
     {
         QueryArgument.Validate(vectorLabels);
@@ -255,7 +246,7 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
     {
         public ICommandArgument Command { get; set; } = null!;
         public OptionalQueryArgument<IEphemerisTypeArgument> EphemerisType { get; set; }
-        public OptionalQueryArgument<IGenerateEphemeridesArgument> GenerateEphemerides { get; set; }
+        public OptionalQueryArgument<IGenerateEphemerisArgument> GenerateEphemeris { get; set; }
         public OptionalQueryArgument<IOutputFormatArgument> OutputFormat { get; set; }
         public OptionalQueryArgument<IObjectDataInclusionArgument> ObjectDataInclusion { get; set; }
         public OptionalQueryArgument<IOriginArgument> Origin { get; set; }
@@ -276,7 +267,6 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
         public OptionalQueryArgument<IVectorCorrectionArgument> VectorCorrection { get; set; }
         public OptionalQueryArgument<ITimeDeltaInclusionArgument> TimeDeltaInclusion { get; set; }
         public OptionalQueryArgument<IVectorTableContentArgument> VectorTableContent { get; set; }
-        public OptionalQueryArgument<IElementLabelsArgument> ElementLabels { get; set; }
         public OptionalQueryArgument<IVectorLabelsArgument> VectorLabels { get; set; }
         public OptionalQueryArgument<IValueSeparationArgument> ValueSeparation { get; set; }
     }

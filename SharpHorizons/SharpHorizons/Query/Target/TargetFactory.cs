@@ -21,6 +21,9 @@ public sealed class TargetFactory : ITargetFactory
     /// <inheritdoc cref="IMPCCometTargetFactory"/>
     private IMPCCometTargetFactory MPCCometFactory { get; }
 
+    /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="IBodyCentricTarget"/>.</summary>
+    private ITargetComposer<IBodyCentricTarget> BodyCentricComposer { get; }
+
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="ISiteTarget"/>.</summary>
     private ITargetComposer<ISiteTarget> SiteComposer { get; }
 
@@ -31,14 +34,16 @@ public sealed class TargetFactory : ITargetFactory
     /// <param name="majorObjectFactory"><inheritdoc cref="MajorObjectFactory" path="/summary"/></param>
     /// <param name="mpcFactory"><inheritdoc cref="MPCFactory" path="/summary"/></param>
     /// <param name="mpcCometFactory"><inheritdoc cref="MPCCometFactory" path="/summary"/></param>
+    /// <param name="bodyCentricComposer"><inheritdoc cref="BodyCentricComposer" path="/summary"/></param>
     /// <param name="siteComposer"><inheritdoc cref="SiteComposer" path="/summary"/></param>
     /// <param name="siteFactory"><inheritdoc cref="SiteFactory" path="/summary"/></param>
-    public TargetFactory(IMajorObjectTargetFactory? majorObjectFactory = null, IMPCTargetFactory? mpcFactory = null, IMPCCometTargetFactory? mpcCometFactory = null, ITargetComposer<ISiteTarget>? siteComposer = null, ITargetSiteFactory? siteFactory = null)
+    public TargetFactory(IMajorObjectTargetFactory? majorObjectFactory = null, IMPCTargetFactory? mpcFactory = null, IMPCCometTargetFactory? mpcCometFactory = null, ITargetComposer<IBodyCentricTarget>? bodyCentricComposer = null, ITargetComposer<ISiteTarget>? siteComposer = null, ITargetSiteFactory? siteFactory = null)
     {
         MajorObjectFactory = majorObjectFactory ?? new MajorObjectTargetFactory();
         MPCFactory = mpcFactory ?? new MPCTargetFactory();
         MPCCometFactory = mpcCometFactory ?? new MPCCometTargetFactory();
 
+        BodyCentricComposer = bodyCentricComposer ?? new BodyCentricComposer();
         SiteComposer = siteComposer ?? new SiteTargetComposer();
 
         SiteFactory = siteFactory ?? new TargetSiteFactory();
@@ -105,7 +110,15 @@ public sealed class TargetFactory : ITargetFactory
     public ITarget Create(MPCCometDesignation mpcCometDesignation) => MPCCometFactory.Create(mpcCometDesignation);
 
     /// <inheritdoc/>
-    public ITarget Create(ITargetSiteObject targetObject, CylindricalCoordinate coordinate)
+    public ITarget Create(ITargetObject targetObject)
+    {
+        ArgumentNullException.ThrowIfNull(targetObject);
+
+        return new BodyCentricTarget(targetObject, BodyCentricComposer);
+    }
+
+    /// <inheritdoc/>
+    public ITarget Create(ITargetObject targetObject, CylindricalCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(targetObject);
         SharpMeasuresValidation.Validate(coordinate);
@@ -114,7 +127,7 @@ public sealed class TargetFactory : ITargetFactory
     }
 
     /// <inheritdoc/>
-    public ITarget Create(ITargetSiteObject targetObject, GeodeticCoordinate coordinate)
+    public ITarget Create(ITargetObject targetObject, GeodeticCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(targetObject);
         SharpMeasuresValidation.Validate(coordinate);
@@ -123,7 +136,7 @@ public sealed class TargetFactory : ITargetFactory
     }
 
     /// <inheritdoc/>
-    public ITarget Create(ITargetSiteObject targetObject, ITargetSite site)
+    public ITarget Create(ITargetObject targetObject, ITargetSite site)
     {
         ArgumentNullException.ThrowIfNull(targetObject);
         ArgumentNullException.ThrowIfNull(site);
@@ -131,8 +144,8 @@ public sealed class TargetFactory : ITargetFactory
         return CreateTarget(targetObject, site);
     }
 
-    /// <summary>Describes the <see cref="ITarget"/> in a query as a <paramref name="targetSite"/> assocaited with <paramref name="targetSiteObject"/>.</summary>
-    /// <param name="targetSiteObject">The <see cref="ITargetSiteObject"/> associated with <paramref name="targetSite"/>.</param>
-    /// <param name="targetSite">The <see cref="ITargetSite"/> associated with <paramref name="targetSiteObject"/>.</param>
-    private ITarget CreateTarget(ITargetSiteObject targetSiteObject, ITargetSite targetSite) => new SiteTarget(targetSiteObject, targetSite, SiteComposer);
+    /// <summary>Describes the <see cref="ITarget"/> in a query as some <paramref name="targetSite"/> associated with some <paramref name="targetObject"/>.</summary>
+    /// <param name="targetObject">The <see cref="ITargetObject"/> associated with some <paramref name="targetSite"/>.</param>
+    /// <param name="targetSite">The <see cref="ITargetSite"/> associated with some <paramref name="targetObject"/>.</param>
+    private ITarget CreateTarget(ITargetObject targetObject, ITargetSite targetSite) => new SiteTarget(targetObject, targetSite, SiteComposer);
 }

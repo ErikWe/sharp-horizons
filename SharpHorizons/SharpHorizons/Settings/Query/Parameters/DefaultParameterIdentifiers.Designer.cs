@@ -12,7 +12,7 @@ namespace SharpHorizons.Settings.Query.Parameters {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
     internal sealed partial class DefaultParameterIdentifiers : global::System.Configuration.ApplicationSettingsBase {
         
         private static DefaultParameterIdentifiers defaultInstance = ((DefaultParameterIdentifiers)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new DefaultParameterIdentifiers())));
@@ -71,9 +71,9 @@ namespace SharpHorizons.Settings.Query.Parameters {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MAKE_EPHEM")]
-        public string GenerateEphemerides {
+        public string GenerateEphemeris {
             get {
-                return ((string)(this["GenerateEphemerides"]));
+                return ((string)(this["GenerateEphemeris"]));
             }
         }
         

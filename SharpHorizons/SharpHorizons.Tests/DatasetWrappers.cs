@@ -43,66 +43,36 @@ internal static class DatasetWrappers
         }
     }
 
-    public static IEnumerable<object?[]> DoublePermutate<T>(IEnumerable<T> items)
+    public static IEnumerable<(T1, T2)> Permutate<T1, T2>(IEnumerable<T1> firstItems, IEnumerable<T2> secondItems)
     {
-        return SeparateAndWrap(wrap());
+        var firstEnumerator = firstItems.GetEnumerator();
 
-        IEnumerable<(T, T)> wrap()
+        while (firstEnumerator.MoveNext())
         {
-            var firstEnumerator = items.GetEnumerator();
+            var secondEnumerator = secondItems.GetEnumerator();
 
-            while (firstEnumerator.MoveNext())
+            while (secondEnumerator.MoveNext())
             {
-                var secondEnumerator = items.GetEnumerator();
-
-                while (secondEnumerator.MoveNext())
-                {
-                    yield return (firstEnumerator.Current, secondEnumerator.Current);
-                }
+                yield return (firstEnumerator.Current, secondEnumerator.Current);
             }
         }
     }
 
-    public static IEnumerable<object?[]> Permutate<T1, T2>(IEnumerable<T1> firstItems, IEnumerable<T2> secondItems)
+    public static IEnumerable<(T1, T2, T3)> Permutate<T1, T2, T3>(IEnumerable<T1> firstItems, IEnumerable<T2> secondItems, IEnumerable<T3> thirdItems)
     {
-        return SeparateAndWrap(wrap());
+        var firstEnumerator = firstItems.GetEnumerator();
 
-        IEnumerable<(T1, T2)> wrap()
+        while (firstEnumerator.MoveNext())
         {
-            var firstEnumerator = firstItems.GetEnumerator();
+            var secondEnumerator = secondItems.GetEnumerator();
 
-            while (firstEnumerator.MoveNext())
+            while (secondEnumerator.MoveNext())
             {
-                var secondEnumerator = secondItems.GetEnumerator();
+                var thirdEnumerator = thirdItems.GetEnumerator();
 
-                while (secondEnumerator.MoveNext())
+                while (thirdEnumerator.MoveNext())
                 {
-                    yield return (firstEnumerator.Current, secondEnumerator.Current);
-                }
-            }
-        }
-    }
-
-    public static IEnumerable<object?[]> Permutate<T1, T2, T3>(IEnumerable<T1> firstItems, IEnumerable<T2> secondItems, IEnumerable<T3> thirdItems)
-    {
-        return SeparateAndWrap(wrap());
-
-        IEnumerable<(T1, T2, T3)> wrap()
-        {
-            var firstEnumerator = firstItems.GetEnumerator();
-
-            while (firstEnumerator.MoveNext())
-            {
-                var secondEnumerator = secondItems.GetEnumerator();
-
-                while (secondEnumerator.MoveNext())
-                {
-                    var thirdEnumerator = thirdItems.GetEnumerator();
-
-                    while (thirdEnumerator.MoveNext())
-                    {
-                        yield return (firstEnumerator.Current, secondEnumerator.Current, thirdEnumerator.Current);
-                    }
+                    yield return (firstEnumerator.Current, secondEnumerator.Current, thirdEnumerator.Current);
                 }
             }
         }

@@ -1,14 +1,14 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-/// <summary>Specifies a time-system.</summary>
+/// <summary>Specifies in what time-system <see cref="IEpoch"/> are expressed in a query.</summary>
 public enum TimeSystem
 {
     /// <summary>The <see cref="TimeSystem"/> is unknown.</summary>
     Unknown,
-    /// <summary>Universal time.</summary>
+    /// <summary><see cref="IEpoch"/> are expressed in UT, Universal Time.</summary>
     UT,
-    /// <summary>Terrestial time.</summary>
+    /// <summary><see cref="IEpoch"/> are expressed in TT, Terrestial Time.</summary>
     TT,
-    /// <summary>Barycentric dynamical time.</summary>
+    /// <summary><see cref="IEpoch"/> are expressed in TDB, Barycentric Dynamical Time.</summary>
     TDB
 }

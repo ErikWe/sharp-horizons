@@ -4,9 +4,9 @@ using System;
 using System.Runtime.CompilerServices;
 
 /// <inheritdoc cref="IQueryArgument"/>
-internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, IElementLabelsArgument, IEphemerisTypeArgument, ICalendarTypeArgument, IEpochCollectionArgument, IEpochCollectionFormatArgument, IGenerateEphemeridesArgument,
-    IObjectDataInclusionArgument, IOriginArgument, IOriginCoordinateArgument, IOriginCoordinateTypeArgument, IOutputFormatArgument, IOutputUnitsArgument, IReferencePlaneArgument, IReferenceSystemArgument,
-    IStartEpochArgument, IStepSizeArgument, IStopEpochArgument, ITargetArgument, ITimeDeltaInclusionArgument, ITimePrecisionArgument, ITimeSystemArgument, ITimeZoneArgument, IValueSeparationArgument, IVectorCorrectionArgument, IVectorLabelsArgument, IVectorTableContentArgument
+internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, IEphemerisTypeArgument, ICalendarTypeArgument, IEpochCollectionArgument, IEpochCollectionFormatArgument, IGenerateEphemerisArgument, IObjectDataInclusionArgument, IOriginArgument,
+    IOriginCoordinateArgument, IOriginCoordinateTypeArgument, IOutputFormatArgument, IOutputUnitsArgument, IReferencePlaneArgument, IReferenceSystemArgument, IStartEpochArgument, IStepSizeArgument, IStopEpochArgument, ITargetArgument, ITimeDeltaInclusionArgument,
+    ITimePrecisionArgument, ITimeSystemArgument, ITimeZoneArgument, IValueSeparationArgument, IVectorCorrectionArgument, IVectorLabelsArgument, IVectorTableContentArgument
 {
     public string Value { get; }
 

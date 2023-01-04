@@ -2,8 +2,6 @@
 
 using NodaTime;
 
-using SharpHorizons.Tests;
-
 using System.Collections;
 using System.Collections.Generic;
 
@@ -43,7 +41,7 @@ internal static class Datasets
 
     public class TwoEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(Epochs.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(Epochs.Items, Epochs.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -73,13 +71,13 @@ internal static class Datasets
 
     public class EpochsAndConvertibleIEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(Epochs.Items, ConvertibleIEpochs.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(Epochs.Items, ConvertibleIEpochs.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class EpochsAndUnconvertibleIEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(Epochs.Items, UnconvertibleIEpochs.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(Epochs.Items, UnconvertibleIEpochs.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 

@@ -23,20 +23,16 @@ public sealed class OriginFactory : IOriginFactory
     /// <inheritdoc cref="IOriginObjectFactory"/>
     private IOriginObjectFactory OriginObjectFactory { get; }
 
-    /// <summary>Handles construction of <see cref="IOriginCoordinate"/> describing <see cref="CylindricalCoordinate"/>.</summary>
-    private IOriginCoordinateFactory<CylindricalCoordinate> CylindricalCoordinateFactory { get; }
-
-    /// <summary>Handles construction of <see cref="IOriginCoordinate"/> describing <see cref="GeodeticCoordinate"/>.</summary>
-    private IOriginCoordinateFactory<GeodeticCoordinate> GeodeticCoordinateFactory { get; }
+    /// <summary><inheritdoc cref="IOriginCoordinateFactory"/></summary>
+    private IOriginCoordinateFactory OriginCoordinateFactory { get; }
 
     /// <inheritdoc cref="OriginFactory"/>
     /// <param name="bodyCentricComposer"><inheritdoc cref="BodyCentricComposer" path="/summary"/></param>
     /// <param name="coordinateComposer"><inheritdoc cref="CoordinateComposer" path="/summary"/></param>
     /// <param name="observationSiteComoser"><inheritdoc cref="ObservationSiteComposer" path="/summary"/></param>
     /// <param name="originObjectFactory"><inheritdoc cref="OriginObjectFactory" path="/summary"/></param>
-    /// <param name="cylindricalCoordinateFactory"><inheritdoc cref="CylindricalCoordinateFactory" path="/summary"/></param>
-    /// <param name="geodeticCoordinateFactory"><inheritdoc cref="GeodeticCoordinateFactory" path="/summary"/></param>
-    public OriginFactory(IOriginComposer<IBodyCentricOrigin>? bodyCentricComposer = null, IOriginComposer<ICoordinateOrigin>? coordinateComposer = null, IOriginComposer<IObservationSiteOrigin>? observationSiteComoser = null, IOriginObjectFactory? originObjectFactory = null, IOriginCoordinateFactory<CylindricalCoordinate>? cylindricalCoordinateFactory = null, IOriginCoordinateFactory<GeodeticCoordinate>? geodeticCoordinateFactory = null)
+    /// <param name="originCoordinateFactory"><inheritdoc cref="OriginCoordinateFactory" path="/summary"/></param>
+    public OriginFactory(IOriginComposer<IBodyCentricOrigin>? bodyCentricComposer = null, IOriginComposer<ICoordinateOrigin>? coordinateComposer = null, IOriginComposer<IObservationSiteOrigin>? observationSiteComoser = null, IOriginObjectFactory? originObjectFactory = null, IOriginCoordinateFactory? originCoordinateFactory = null)
     {
         BodyCentricComposer = bodyCentricComposer ?? new BodyCentricOriginComposer();
         CoordinateComposer = coordinateComposer ?? new CoordinateOriginComposer();
@@ -44,8 +40,7 @@ public sealed class OriginFactory : IOriginFactory
 
         OriginObjectFactory = originObjectFactory ?? new OriginObjectFactory();
 
-        CylindricalCoordinateFactory = cylindricalCoordinateFactory ?? new CylindricalOriginCoordinateFactory();
-        GeodeticCoordinateFactory = geodeticCoordinateFactory ?? new GeodeticOriginCoordinateFactory();
+        OriginCoordinateFactory = originCoordinateFactory ?? new OriginCoordinateFactory();
     }
 
     /// <inheritdoc/>
@@ -68,6 +63,14 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
+    public IOrigin Create(IOriginObject originObject)
+    {
+        ArgumentNullException.ThrowIfNull(originObject);
+
+        return CreateOrigin(originObject);
+    }
+
+    /// <inheritdoc/>
     public IOrigin Create(MajorObject majorObject, CylindricalCoordinate coordinate)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
@@ -86,18 +89,36 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
+    public IOrigin Create(MajorObject majorObject, IOriginCoordinate coordinate)
+    {
+        ArgumentNullException.ThrowIfNull(majorObject);
+        ArgumentNullException.ThrowIfNull(coordinate);
+
+        return CreateOrigin(CreateOriginObject(majorObject), coordinate);
+    }
+
+    /// <inheritdoc/>
     public IOrigin Create(MajorObjectID majorObjectID, CylindricalCoordinate coordinate)
     {
         SharpMeasuresValidation.Validate(coordinate);
 
         return CreateOrigin(CreateOriginObject(majorObjectID), CreateOriginCoordinate(coordinate));
     }
+
     /// <inheritdoc/>
     public IOrigin Create(MajorObjectID majorObjectID, GeodeticCoordinate coordinate)
     {
         SharpMeasuresValidation.Validate(coordinate);
 
         return CreateOrigin(CreateOriginObject(majorObjectID), CreateOriginCoordinate(coordinate));
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(MajorObjectID majorObjectID, IOriginCoordinate coordinate)
+    {
+        ArgumentNullException.ThrowIfNull(coordinate);
+
+        return CreateOrigin(CreateOriginObject(majorObjectID), coordinate);
     }
 
     /// <inheritdoc/>
@@ -116,6 +137,42 @@ public sealed class OriginFactory : IOriginFactory
         SharpMeasuresValidation.Validate(coordinate);
 
         return CreateOrigin(CreateOriginObject(majorObjectName), CreateOriginCoordinate(coordinate));
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(MajorObjectName majorObjectName, IOriginCoordinate coordinate)
+    {
+        ArgumentNullException.ThrowIfNull(coordinate);
+        MajorObjectName.Validate(majorObjectName);
+
+        return CreateOrigin(CreateOriginObject(majorObjectName), coordinate);
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(IOriginObject originObject, CylindricalCoordinate coordinate)
+    {
+        ArgumentNullException.ThrowIfNull(originObject);
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateOrigin(originObject, CreateOriginCoordinate(coordinate));
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(IOriginObject originObject, GeodeticCoordinate coordinate)
+    {
+        ArgumentNullException.ThrowIfNull(originObject);
+        SharpMeasuresValidation.Validate(coordinate);
+
+        return CreateOrigin(originObject, CreateOriginCoordinate(coordinate));
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(IOriginObject originObject, IOriginCoordinate coordinate)
+    {
+        ArgumentNullException.ThrowIfNull(originObject);
+        ArgumentNullException.ThrowIfNull(coordinate);
+
+        return CreateOrigin(originObject, coordinate);
     }
 
     /// <inheritdoc/>
@@ -145,6 +202,15 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
+    public IOrigin Create(IOriginObject originObject, ObservationSiteID observationSiteID)
+    {
+        ArgumentNullException.ThrowIfNull(originObject);
+        ObservationSiteID.Validate(observationSiteID);
+
+        return CreateOrigin(originObject, observationSiteID);
+    }
+
+    /// <inheritdoc/>
     public IOrigin Create(MajorObject majorObject, ObservationSite observationSite)
     {
         ArgumentNullException.ThrowIfNull(majorObject);
@@ -164,10 +230,19 @@ public sealed class OriginFactory : IOriginFactory
     /// <inheritdoc/>
     public IOrigin Create(MajorObjectName majorObjectName, ObservationSite observationSite)
     {
-        MajorObjectName.Validate(majorObjectName);
         ArgumentNullException.ThrowIfNull(observationSite);
+        MajorObjectName.Validate(majorObjectName);
 
         return Create(majorObjectName, observationSite.ID);
+    }
+
+    /// <inheritdoc/>
+    public IOrigin Create(IOriginObject originObject, ObservationSite observationsite)
+    {
+        ArgumentNullException.ThrowIfNull(originObject);
+        ArgumentNullException.ThrowIfNull(observationsite);
+
+        return Create(originObject, observationsite.ID);
     }
 
     /// <summary>Describes the <see cref="IOrigin"/> in a query as the center of <paramref name="originObject"/>.</summary>
@@ -195,9 +270,9 @@ public sealed class OriginFactory : IOriginFactory
 
     /// <summary>Describes the <see cref="IOriginCoordinate"/> in a query as <paramref name="coordinate"/>.</summary>
     /// <param name="coordinate">This <see cref="CylindricalCoordinate"/> represents the <see cref="IOriginCoordinate"/> in a query.</param>
-    private IOriginCoordinate CreateOriginCoordinate(CylindricalCoordinate coordinate) => CylindricalCoordinateFactory.Create(coordinate);
+    private IOriginCoordinate CreateOriginCoordinate(CylindricalCoordinate coordinate) => OriginCoordinateFactory.Create(coordinate);
 
     /// <summary>Describes the <see cref="IOriginCoordinate"/> in a query as <paramref name="coordinate"/>.</summary>
     /// <param name="coordinate">This <see cref="GeodeticCoordinate"/> represents the <see cref="IOriginCoordinate"/> in a query.</param>
-    private IOriginCoordinate CreateOriginCoordinate(GeodeticCoordinate coordinate) => GeodeticCoordinateFactory.Create(coordinate);
+    private IOriginCoordinate CreateOriginCoordinate(GeodeticCoordinate coordinate) => OriginCoordinateFactory.Create(coordinate);
 }

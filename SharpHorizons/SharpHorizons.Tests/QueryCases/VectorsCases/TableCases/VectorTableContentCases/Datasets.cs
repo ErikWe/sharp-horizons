@@ -68,7 +68,7 @@ internal static class Datasets
 
     public class ValidCombinations : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(ValidVectorTableQuantities.Items, ValidVectorTableUncertainties.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidVectorTableQuantities.Items, ValidVectorTableUncertainties.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -80,7 +80,9 @@ internal static class Datasets
             var invalidLHS = DatasetWrappers.Permutate(InvalidVectorTableQuantities.Items, ValidVectorTableUncertainties.Items);
             var bothInvalid = DatasetWrappers.Permutate(InvalidVectorTableQuantities.Items, InvalidVectorTableUncertainties.Items);
 
-            return invalidRHS.Concat(invalidLHS).Concat(bothInvalid).GetEnumerator();
+            var eitherInvalid = invalidRHS.Concat(invalidLHS).Concat(bothInvalid);
+
+            return DatasetWrappers.SeparateAndWrap(eitherInvalid).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

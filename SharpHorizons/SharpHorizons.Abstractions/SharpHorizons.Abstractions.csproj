@@ -15,4 +15,8 @@
 		<ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Interpretation\" />
+	</ItemGroup>
+
 </Project>

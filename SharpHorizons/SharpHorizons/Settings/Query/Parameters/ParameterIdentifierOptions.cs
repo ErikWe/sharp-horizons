@@ -15,9 +15,6 @@ internal sealed class ParameterIdentifierOptions
     /// <summary>The identifier associated with the <see cref="ICommandArgument"/>.</summary>
     public string Command { get; set; } = null!;
 
-    /// <summary>The identifier associated with the <see cref="IElementLabelsArgument"/>.</summary>
-    public string ElementLabels { get; set; } = null!;
-
     /// <summary>The identifier associated with the <see cref="IEphemerisTypeArgument"/>.</summary>
     public string EphemerisType { get; set; } = null!;
 
@@ -30,8 +27,8 @@ internal sealed class ParameterIdentifierOptions
     /// <summary>The identifier associated with the <see cref="IEpochCollectionFormatArgument"/>.</summary>
     public string EpochCollectionFormat { get; set; } = null!;
 
-    /// <summary>The identifier associated with the <see cref="IGenerateEphemeridesArgument"/>.</summary>
-    public string GenerateEphemerides { get; set; } = null!;
+    /// <summary>The identifier associated with the <see cref="IGenerateEphemerisArgument"/>.</summary>
+    public string GenerateEphemeris { get; set; } = null!;
 
     /// <summary>The identifier associated with the <see cref="IObjectDataInclusionArgument"/>.</summary>
     public string ObjectDataInclusion { get; set; } = null!;
@@ -95,12 +92,11 @@ internal sealed class ParameterIdentifierOptions
     public static void ApplyDefaults(ParameterIdentifierOptions options)
     {
         options.Command = DefaultParameterIdentifiers.Default.Command;
-        options.ElementLabels = DefaultParameterIdentifiers.Default.ElementLabels;
         options.EphemerisType = DefaultParameterIdentifiers.Default.EphemerisType;
         options.EpochCalendar = DefaultParameterIdentifiers.Default.EpochCalendar;
         options.EpochCollection = DefaultParameterIdentifiers.Default.EpochCollection;
         options.EpochCollectionFormat = DefaultParameterIdentifiers.Default.EpochCollectionFormat;
-        options.GenerateEphemerides = DefaultParameterIdentifiers.Default.GenerateEphemerides;
+        options.GenerateEphemeris = DefaultParameterIdentifiers.Default.GenerateEphemeris;
         options.ObjectDataInclusion = DefaultParameterIdentifiers.Default.ObjectDataInclusion;
         options.Origin = DefaultParameterIdentifiers.Default.Origin;
         options.OriginCoordinate = DefaultParameterIdentifiers.Default.OriginCoordinate;

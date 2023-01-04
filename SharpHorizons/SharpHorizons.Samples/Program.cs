@@ -43,7 +43,7 @@ internal class Program
         var headerInterpreter = host.Services.GetRequiredService<IVectorsHeaderInterpreter>();
         var orbitalStateVectorsInterpreter = host.Services.GetRequiredService<IOrbitalStateVectorsEphemerisInterpreter>();
 
-        var query = queryFactory.Build(target, origin, epochSelection).WithConfiguration(outputFormat: OutputFormat.JSON, tableContent: new(VectorTableQuantities.StateVectors, VectorTableUncertainties.All), outputLabels: OutputLabels.Enable);
+        var query = queryFactory.Create(target, origin, epochSelection).WithConfiguration(outputFormat: OutputFormat.JSON, tableContent: new(VectorTableQuantities.StateVectors, VectorTableUncertainties.All), outputLabels: OutputLabels.Enable);
         var uri = vectorsComposer.Compose(query);
         var httpResult = httpQueryHandler.RequestAsync(uri).Result;
         var textResult = await httpTextExtractor.ExtractAsync(httpResult);

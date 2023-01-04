@@ -3,9 +3,8 @@
 using System.ComponentModel;
 
 /// <inheritdoc cref="IVectorLabelsComposer"/>
-internal sealed class OutputLabelsComposer : IElementLabelsComposer, IVectorLabelsComposer
+internal sealed class OutputLabelsComposer : IVectorLabelsComposer
 {
-    IElementLabelsArgument IArgumentComposer<IElementLabelsArgument, OutputLabels>.Compose(OutputLabels obj) => new QueryArgument(Compose(obj));
     IVectorLabelsArgument IArgumentComposer<IVectorLabelsArgument, OutputLabels>.Compose(OutputLabels obj) => new QueryArgument(Compose(obj));
 
     /// <summary>Composes a <see cref="string"/> describing <paramref name="outputLabels"/>.</summary>

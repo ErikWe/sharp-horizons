@@ -1,14 +1,14 @@
 ﻿namespace SharpHorizons.Query;
 
 using SharpHorizons;
-using SharpHorizons.Query.Target;
+using SharpHorizons.Ephemeris;
 
 /// <summary>Specifies the command associated with a query.</summary>
 public enum QueryCommand
 {
     /// <summary>The <see cref="QueryCommand"/> is unknown.</summary>
     Unknown,
-    /// <summary>Retrieve an ephemeris for a <see cref="ITarget"/>.</summary>
+    /// <summary>Generate an <see cref="IEphemeris{TEntry}"/>.</summary>
     Ephemeris,
     /// <summary>Retrieve a list of <see cref="MajorObject"/>.</summary>
     MajorBodyList,

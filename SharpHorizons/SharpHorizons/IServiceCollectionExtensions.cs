@@ -122,7 +122,7 @@ public static class IServiceCollectionExtensions
     {
         services.AddSingleton<ITargetFactory, TargetFactory>();
         services.AddSingleton<ITargetSiteFactory, TargetSiteFactory>();
-        services.AddSingleton<ITargetSiteObjectFactory, TargetSiteObjectFactory>();
+        services.AddSingleton<ITargetObjectFactory, TargetObjectFactory>();
 
         services.AddSingleton<IMajorObjectTargetFactory, MajorObjectTargetFactory>();
         services.AddSingleton<IMPCTargetFactory, MPCTargetFactory>();
@@ -131,9 +131,9 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<ITargetSiteComposer<CylindricalCoordinate>, Query.Arguments.Composers.Target.CylindricalCoordinateComposer>();
         services.AddSingleton<ITargetSiteComposer<GeodeticCoordinate>, Query.Arguments.Composers.Target.GeodeticCoordinateComposer>();
 
-        services.AddSingleton<ITargetSiteObjectComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
-        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetSiteObjectComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetObjectComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
+        services.AddSingleton<ITargetObjectComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
+        services.AddSingleton<ITargetObjectComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
 
         return services;
     }
@@ -145,8 +145,7 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IOriginFactory, OriginFactory>();
         services.AddSingleton<IOriginObjectFactory, OriginObjectFactory>();
 
-        services.AddSingleton<IOriginCoordinateFactory<CylindricalCoordinate>, CylindricalOriginCoordinateFactory>();
-        services.AddSingleton<IOriginCoordinateFactory<GeodeticCoordinate>, GeodeticOriginCoordinateFactory>();
+        services.AddSingleton<IOriginCoordinateFactory, OriginCoordinateFactory>();
 
         services.AddSingleton<IOriginObjectComposer<MajorObject>, Query.Arguments.Composers.Origin.MajorObjectComposer>();
         services.AddSingleton<IOriginObjectComposer<MajorObjectID>, Query.Arguments.Composers.Origin.MajorObjectIDComposer>();
@@ -161,6 +160,7 @@ public static class IServiceCollectionExtensions
     {
         services.AddSingleton<IEpochCollectionFactory, EpochCollectionFactory>();
 
+        services.AddSingleton<IEpochRangeFactory, EpochRangeFactory>();
         services.AddSingleton<IFixedEpochRangeFactory, EpochRangeFactory>();
         services.AddSingleton<IUniformEpochRangeFactory, EpochRangeFactory>();
         services.AddSingleton<ICalendarEpochRangeFactory, EpochRangeFactory>();
@@ -237,9 +237,8 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IStepSizeComposer<ICalendarStepSize>, CalendarStepSizeComposer>();
         services.AddSingleton<IStepSizeComposer<IAngularStepSize>, AngularStepSizeComposer>();
 
-        services.AddSingleton<IElementLabelsComposer, OutputLabelsComposer>();
         services.AddSingleton<IEphemerisTypeComposer, EphemerisTypeComposer>();
-        services.AddSingleton<IGenerateEphemeridesComposer, GenerateEphemeridesComposer>();
+        services.AddSingleton<IGenerateEphemerisComposer, GenerateEphemerisComposer>();
         services.AddSingleton<IObjectDataInclusionComposer, ObjectDataInclusionComposer>();
         services.AddSingleton<IOutputFormatComposer, OutputFormatComposer>();
         services.AddSingleton<IOutputUnitsComposer, OutputUnitsComposer>();

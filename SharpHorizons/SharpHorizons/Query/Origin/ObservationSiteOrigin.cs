@@ -21,8 +21,8 @@ internal sealed record class ObservationSiteOrigin : IObservationSiteOrigin
     public ObservationSiteOrigin() { }
 
     /// <inheritdoc cref="ObservationSiteOrigin"/>
-    /// <param name="originobject">The <see cref="IOriginObject"/>, associated with <paramref name="observationSiteID"/>.</param>
-    /// <param name="observationSiteID">The <see cref="ObservationSiteID"/> associated with <paramref name="originobject"/>.</param>
+    /// <param name="originobject"><inheritdoc cref="OriginObject" path="/summary"/></param>
+    /// <param name="observationSiteID"><inheritdoc cref="ObservationSiteID" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     [SetsRequiredMembers]
     public ObservationSiteOrigin(IOriginObject originobject, ObservationSiteID observationSiteID, IOriginComposer<IObservationSiteOrigin> composer)

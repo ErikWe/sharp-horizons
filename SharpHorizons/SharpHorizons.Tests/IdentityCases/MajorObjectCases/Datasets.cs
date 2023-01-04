@@ -42,13 +42,13 @@ internal static class Datasets
 
     public class ValidCombinations : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(MajorObjectIDs.Items, ValidMajorObjectNames.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(MajorObjectIDs.Items, ValidMajorObjectNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class InvalidCombinations : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(MajorObjectIDs.Items, InvalidMajorObjectNames.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(MajorObjectIDs.Items, InvalidMajorObjectNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -2,7 +2,7 @@
 
 using SharpHorizons.Query.Arguments;
 
-/// <summary>Represents the coordinate, relative to some <see cref="IOriginObject"/>, in a query.</summary>
+/// <summary>Represents the coordinate of the <see cref="IOrigin"/>, relative to some <see cref="IOriginObject"/>.</summary>
 public interface IOriginCoordinate
 {
     /// <summary>Composes a <see cref="IOriginCoordinateArgument"/> describing the <see cref="IOriginCoordinate"/>.</summary>

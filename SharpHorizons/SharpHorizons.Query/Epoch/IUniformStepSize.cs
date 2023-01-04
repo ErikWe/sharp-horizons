@@ -4,5 +4,6 @@
 public interface IUniformStepSize : IStepSize
 {
     /// <summary>The total number of steps.</summary>
+    /// <remarks>As the <see cref="IStartEpoch"/> is not considered a step, the number of <see cref="IEpoch"/> in an <see cref="IEpochRange"/> would be { <see cref="StepCount"/> + 1 }.</remarks>
     public abstract int StepCount { get; }
 }

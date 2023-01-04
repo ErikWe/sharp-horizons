@@ -1,6 +1,5 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
-using SharpHorizons.Query.Elements;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
@@ -17,8 +16,8 @@ public interface IQueryArgumentSet
     /// <summary>The optional <see cref="IEphemerisTypeArgument"/>, describing the <see cref="Query.EphemerisType"/>.</summary>
     public abstract OptionalQueryArgument<IEphemerisTypeArgument> EphemerisType { get; }
 
-    /// <summary>The optional <see cref="IGenerateEphemeridesArgument"/>, describing <see cref="Query.GenerateEphemerides"/>.</summary>
-    public abstract OptionalQueryArgument<IGenerateEphemeridesArgument> GenerateEphemerides { get; }
+    /// <summary>The optional <see cref="IGenerateEphemerisArgument"/>, describing <see cref="Query.GenerateEphemeris"/>.</summary>
+    public abstract OptionalQueryArgument<IGenerateEphemerisArgument> GenerateEphemeris { get; }
 
     /// <summary>The optional <see cref="IOutputFormatArgument"/>, describing the <see cref="Query.OutputFormat"/>.</summary>
     public abstract OptionalQueryArgument<IOutputFormatArgument> OutputFormat { get; }
@@ -38,10 +37,10 @@ public interface IQueryArgumentSet
     /// <summary>The optional <see cref="IEpochCollectionArgument"/>, describing the <see cref="IEpochSelection"/> when using <see cref="EpochSelectionMode.Collection"/>.</summary>
     public abstract OptionalQueryArgument<IEpochCollectionArgument> EpochCollection { get; }
 
-    /// <summary>The optional <see cref="IEpochCollectionFormatArgument"/>, describing the <see cref="Epoch.EpochFormat"/> of the individual <see cref="IEpoch"/> of the <see cref="EpochCollection"/>.</summary>
+    /// <summary>The optional <see cref="IEpochCollectionFormatArgument"/>, describing the <see cref="EpochFormat"/> of the individual <see cref="IEpoch"/> of the <see cref="EpochCollection"/>.</summary>
     public abstract OptionalQueryArgument<IEpochCollectionFormatArgument> EpochCollectionFormat { get; }
 
-    /// <summary>The optional <see cref="ICalendarTypeArgument"/>, describing the <see cref="Epoch.CalendarType"/>.</summary>
+    /// <summary>The optional <see cref="ICalendarTypeArgument"/>, describing the <see cref="CalendarType"/>.</summary>
     public abstract OptionalQueryArgument<ICalendarTypeArgument> EpochCalendar { get; }
 
     /// <summary>The optional <see cref="ITimeSystemArgument"/>, describing the <see cref="Epoch.TimeSystem"/>.</summary>
@@ -79,9 +78,6 @@ public interface IQueryArgumentSet
 
     /// <summary>The optional <see cref="IVectorTableContentArgument"/>, describing the <see cref="Vectors.Table.VectorTableContent"/>.</summary>
     public abstract OptionalQueryArgument<IVectorTableContentArgument> VectorTableContent { get; }
-
-    /// <summary>The optional <see cref="IElementLabelsArgument"/>, describing the <see cref="OutputLabels"/> in an <see cref="IElementsQuery"/>.</summary>
-    public abstract OptionalQueryArgument<IElementLabelsArgument> ElementLabels { get; }
 
     /// <summary>The optional <see cref="IVectorLabelsArgument"/>, describing the <see cref="OutputLabels"/> in a <see cref="IVectorsQuery"/>.</summary>
     public abstract OptionalQueryArgument<IVectorLabelsArgument> VectorLabels { get; }

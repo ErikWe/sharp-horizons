@@ -111,7 +111,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
 
     IVectorsQuery IVectorsQuery.WithConfiguration(ValueSeparation valueSeparation)
     {
-        ValidateValueSeparation(ValueSeparation);
+        ValidateValueSeparation(valueSeparation);
 
         return this with { ValueSeparation = valueSeparation };
     }
@@ -202,7 +202,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         };
     }
 
-    /// <summary>Validates that <paramref name="outputFormat"/> represents an <see cref="Query.OutputFormat"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="outputFormat"/> represents an <see cref="Query.OutputFormat"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="outputFormat">This <see cref="Query.OutputFormat"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="outputFormat"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -213,11 +213,11 @@ internal sealed record class VectorsQuery : IVectorsQuery
 
         if (outputFormat is OutputFormat.Unknown)
         {
-            ArgumentExceptionFactory.UnsupportedEnumValue(outputFormat, argumentExpression);
+            throw ArgumentExceptionFactory.UnsupportedEnumValue(outputFormat, argumentExpression);
         }
     }
 
-    /// <summary>Validates that <paramref name="objectDataInclusion"/> represents an <see cref="Query.ObjectDataInclusion"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="objectDataInclusion"/> represents an <see cref="Query.ObjectDataInclusion"/> supported by Horizons, and throws an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
     /// <param name="objectDataInclusion">This <see cref="Query.ObjectDataInclusion"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="objectDataInclusion"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
@@ -226,7 +226,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(objectDataInclusion, argumentExpression);
     }
 
-    /// <summary>Validates that <paramref name="referencePlane"/> represents an <see cref="Query.ReferencePlane"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="referencePlane"/> represents an <see cref="Query.ReferencePlane"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="referencePlane">This <see cref="Query.ReferencePlane"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="referencePlane"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -241,7 +241,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         }
     }
 
-    /// <summary>Validates that <paramref name="referenceSystem"/> represents an <see cref="Query.ReferenceSystem"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="referenceSystem"/> represents an <see cref="Query.ReferenceSystem"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="referenceSystem">This <see cref="Query.ReferenceSystem"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="referenceSystem"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -256,7 +256,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         }
     }
 
-    /// <summary>Validates that <paramref name="outputUnits"/> represents an <see cref="Query.OutputUnits"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="outputUnits"/> represents an <see cref="Query.OutputUnits"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="outputUnits">This <see cref="Query.OutputUnits"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="outputUnits"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -271,7 +271,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         }
     }
 
-    /// <summary>Validates that <paramref name="tableContent"/> represents a <see cref="VectorTableContent"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="tableContent"/> represents a <see cref="VectorTableContent"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="tableContent">This <see cref="VectorTableContent"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="tableContent"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -280,7 +280,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         TableContentValidator.ThrowIfUnsupported(tableContent, argumentExpression);
     }
 
-    /// <summary>Validates that <paramref name="correction"/> represents an <see cref="VectorCorrection"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="correction"/> represents an <see cref="VectorCorrection"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="correction">This <see cref="VectorCorrection"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="correction"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -299,7 +299,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         }
     }
 
-    /// <summary>Validates that <paramref name="timePrecision"/> represents an <see cref="Query.TimePrecision"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="timePrecision"/> represents an <see cref="Query.TimePrecision"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="timePrecision">This <see cref="Query.TimePrecision"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="timePrecision"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -314,7 +314,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         }
     }
 
-    /// <summary>Validates that <paramref name="valueSeparation"/> represents an <see cref="Query.ValueSeparation"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="valueSeparation"/> represents an <see cref="Query.ValueSeparation"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="valueSeparation">This <see cref="Query.ValueSeparation"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="valueSeparation"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -329,7 +329,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         }
     }
 
-    /// <summary>Validates that <paramref name="outputLabels"/> represents an <see cref="Query.OutputLabels"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="outputLabels"/> represents an <see cref="Query.OutputLabels"/> supported by Horizons, and throws an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
     /// <param name="outputLabels">This <see cref="Query.OutputLabels"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="outputLabels"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
@@ -338,7 +338,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
         InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(outputLabels, argumentExpression);
     }
 
-    /// <summary>Validates that <paramref name="timeDeltaInclusion"/> represents an <see cref="Query.TimeDeltaInclusion"/> supported by Horizons, and throws an exception otherwise.</summary>
+    /// <summary>Validates that <paramref name="timeDeltaInclusion"/> represents an <see cref="Query.TimeDeltaInclusion"/> supported by Horizons, and throws an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
     /// <param name="timeDeltaInclusion">This <see cref="Query.TimeDeltaInclusion"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="timeDeltaInclusion"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>

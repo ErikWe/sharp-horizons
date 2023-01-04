@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 /// <inheritdoc cref="ISiteTarget"/>
 internal sealed record class SiteTarget : ISiteTarget
 {
-    public required ITargetSiteObject TargetSiteObject { get; init; }
+    public required ITargetObject TargetObject { get; init; }
     public required ITargetSite TargetSite { get; init; }
 
     /// <summary>Used to compose a <see cref="ITargetArgument"/> describing <see langword="this"/>.</summary>
@@ -18,13 +18,13 @@ internal sealed record class SiteTarget : ISiteTarget
     public SiteTarget() { }
 
     /// <inheritdoc cref="SiteTarget"/>
-    /// <param name="targetSiteObject">Describes the <see cref="ITargetSiteObject"/> associated with <paramref name="targetSite"/>.</param>
-    /// <param name="targetSite">Describes the <see cref="ITargetSite"/> associated with <paramref name="targetSiteObject"/>.</param>
+    /// <param name="targetObject"><inheritdoc cref="TargetObject" path="/summary"/></param>
+    /// <param name="targetSite"><inheritdoc cref="TargetSite" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public SiteTarget(ITargetSiteObject targetSiteObject, ITargetSite targetSite, ITargetComposer<ISiteTarget> composer)
+    public SiteTarget(ITargetObject targetObject, ITargetSite targetSite, ITargetComposer<ISiteTarget> composer)
     {
-        TargetSiteObject = targetSiteObject;
+        TargetObject = targetObject;
         TargetSite = targetSite;
 
         Composer = composer;

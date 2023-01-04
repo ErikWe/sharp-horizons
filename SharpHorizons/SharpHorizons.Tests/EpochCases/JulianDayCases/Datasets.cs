@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.JulianDayCases;
 
-using SharpHorizons.Tests;
-
 using System.Collections;
 using System.Collections.Generic;
 
@@ -84,7 +82,7 @@ internal static class Datasets
 
     public class TwoJulianDays : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(JulianDays.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(JulianDays.Items, JulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

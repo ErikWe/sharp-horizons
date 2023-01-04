@@ -28,7 +28,7 @@ public sealed class VectorsQueryFactory : IVectorsQueryFactory
     }
 
     /// <inheritdoc/>
-    public IVectorsQuery Build(ITarget target, IOrigin origin, IEpochSelection epochs)
+    public IVectorsQuery Create(ITarget target, IOrigin origin, IEpochSelection epochs)
     {
         ArgumentNullException.ThrowIfNull(target);
         ArgumentNullException.ThrowIfNull(origin);
@@ -37,6 +37,6 @@ public sealed class VectorsQueryFactory : IVectorsQueryFactory
         return new VectorsQuery(VectorTableContentValidator, target, origin, epochs);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Start the process of fluently constructing a <see cref="IVectorsQuery"/>.</summary>
     public ITargetStage Fluent() => TargetStageFactory.Create();
 }

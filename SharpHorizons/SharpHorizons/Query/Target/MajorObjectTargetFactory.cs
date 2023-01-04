@@ -23,8 +23,8 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="ISiteTarget"/>.</summary>
     private ITargetComposer<ISiteTarget> SiteComposer { get; }
 
-    /// <inheritdoc cref="ITargetSiteObjectFactory"/>
-    private ITargetSiteObjectFactory SiteObjectFactory { get; }
+    /// <inheritdoc cref="ITargetObjectFactory"/>
+    private ITargetObjectFactory SiteObjectFactory { get; }
 
     /// <inheritdoc cref="ITargetSiteFactory"/>
     private ITargetSiteFactory SiteFactory { get; }
@@ -36,7 +36,7 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     /// <param name="siteComposer"><inheritdoc cref="SiteComposer" path="/summary"/></param>
     /// <param name="siteObjectFactory"><inheritdoc cref="SiteObjectFactory" path="/summary"/></param>
     /// <param name="siteFactory"><inheritdoc cref="SiteFactory" path="/summary"/></param>
-    public MajorObjectTargetFactory(ITargetComposer<MajorObject>? majorObjectComposer = null, ITargetComposer<MajorObjectID>? majorObjectIDComposer = null, ITargetComposer<MajorObjectName>? majorObjectNameComposer = null, ITargetComposer<ISiteTarget>? siteComposer = null, ITargetSiteObjectFactory? siteObjectFactory = null, ITargetSiteFactory? siteFactory = null)
+    public MajorObjectTargetFactory(ITargetComposer<MajorObject>? majorObjectComposer = null, ITargetComposer<MajorObjectID>? majorObjectIDComposer = null, ITargetComposer<MajorObjectName>? majorObjectNameComposer = null, ITargetComposer<ISiteTarget>? siteComposer = null, ITargetObjectFactory? siteObjectFactory = null, ITargetSiteFactory? siteFactory = null)
     {
         MajorObjectIDComposer? defaultMajorObjectIDComposer = null;
 
@@ -51,7 +51,7 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
 
         SiteComposer = siteComposer ?? new SiteTargetComposer();
 
-        SiteObjectFactory = siteObjectFactory ?? new TargetSiteObjectFactory();
+        SiteObjectFactory = siteObjectFactory ?? new TargetObjectFactory();
         SiteFactory = siteFactory ?? new TargetSiteFactory();
     }
 
@@ -151,8 +151,8 @@ internal sealed class MajorObjectTargetFactory : IMajorObjectTargetFactory
     /// <param name="majorObjectName">The <see cref="MajorObjectName"/> of an object, the center of which represents the <see cref="ITarget"/> in a query.</param>
     private ITarget CreateTarget(MajorObjectName majorObjectName) => new MajorObjectNameTarget(majorObjectName, MajorObjectNameComposer);
 
-    /// <summary>Describes the <see cref="ITarget"/> in a query as a <paramref name="targetSite"/> assocaited with <paramref name="targetSiteObject"/>.</summary>
-    /// <param name="targetSiteObject">The <see cref="ITargetSiteObject"/> associated with <paramref name="targetSite"/>.</param>
-    /// <param name="targetSite">The <see cref="ITargetSite"/> associated with <paramref name="targetSiteObject"/>.</param>
-    private ITarget CreateTarget(ITargetSiteObject targetSiteObject, ITargetSite targetSite) => new SiteTarget(targetSiteObject, targetSite, SiteComposer);
+    /// <summary>Describes the <see cref="ITarget"/> in a query as some <paramref name="targetSite"/> associated with some <paramref name="targetObject"/>.</summary>
+    /// <param name="targetObject">Some <see cref="ITargetObject"/> associated with some <paramref name="targetSite"/>.</param>
+    /// <param name="targetSite">Some <see cref="ITargetSite"/> associated with some <paramref name="targetObject"/>.</param>
+    private ITarget CreateTarget(ITargetObject targetObject, ITargetSite targetSite) => new SiteTarget(targetObject, targetSite, SiteComposer);
 }

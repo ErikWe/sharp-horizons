@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Tests.EpochCases.ModifiedJulianDayCases;
 
-using SharpHorizons.Tests;
-
 using System.Collections;
 using System.Collections.Generic;
 
@@ -123,25 +121,25 @@ internal static class Datasets
 
     public class TwoConvertibleModifiedJulianDays : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(ConvertibleModifiedJulianDays.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ConvertibleModifiedJulianDays.Items, ConvertibleModifiedJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class TwoUnconvertibleModifiedJulianDays : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.DoublePermutate(UnconvertibleModifiedJulianDays.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(UnconvertibleModifiedJulianDays.Items, UnconvertibleModifiedJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class ConvertibleModifiedJulianDaysAndIEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(ConvertibleModifiedJulianDays.Items, ConvertibleJulianDays.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ConvertibleModifiedJulianDays.Items, ConvertibleJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class UnconvertibleModifiedJulianDaysAndConvertibleIEpochs : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(UnconvertibleModifiedJulianDays.Items, ConvertibleJulianDays.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(UnconvertibleModifiedJulianDays.Items, ConvertibleJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 

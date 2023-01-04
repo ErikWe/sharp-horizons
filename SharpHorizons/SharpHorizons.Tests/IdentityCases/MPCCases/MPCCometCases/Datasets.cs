@@ -56,7 +56,7 @@ internal static class Datasets
 
     public class ValidCombinations : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(ValidMPCCometDesignations.Items, ValidMPCCometNames.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCCometDesignations.Items, ValidMPCCometNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -68,7 +68,9 @@ internal static class Datasets
             var invalidLHS = DatasetWrappers.Permutate(InvalidMPCCometDesignations.Items, ValidMPCCometNames.Items);
             var bothInvalid = DatasetWrappers.Permutate(InvalidMPCCometDesignations.Items, InvalidMPCCometNames.Items);
 
-            return invalidRHS.Concat(invalidLHS).Concat(bothInvalid).GetEnumerator();
+            var eitherInvalid = invalidRHS.Concat(invalidLHS).Concat(bothInvalid);
+
+            return DatasetWrappers.SeparateAndWrap(eitherInvalid).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

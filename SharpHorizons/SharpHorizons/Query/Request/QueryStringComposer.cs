@@ -29,7 +29,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         builder.AppendParameter(ValidateIdentifier(ParameterProvider.Command), ValidateArgument(queryParameters.Command), QueryBuilderOptions.CommonFirst);
 
         builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.EphemerisType), ValidateArgument(queryParameters.EphemerisType), QueryBuilderOptions.Simple);
-        builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.GenerateEphemerides), ValidateArgument(queryParameters.GenerateEphemerides), QueryBuilderOptions.Simple);
+        builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.GenerateEphemeris), ValidateArgument(queryParameters.GenerateEphemeris), QueryBuilderOptions.Simple);
 
         builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.OutputFormat), ValidateArgument(queryParameters.OutputFormat), QueryBuilderOptions.Simple);
         builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.ObjectDataInclusion), ValidateArgument(queryParameters.ObjectDataInclusion), QueryBuilderOptions.Simple);
@@ -54,7 +54,6 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.TimeDeltaInclusion), ValidateArgument(queryParameters.TimeDeltaInclusion), QueryBuilderOptions.Simple);
         builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.VectorTableContent), ValidateArgument(queryParameters.VectorTableContent), QueryBuilderOptions.Simple);
 
-        builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.ElementLabels), ValidateArgument(queryParameters.ElementLabels), QueryBuilderOptions.Simple);
         builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.VectorLabels), ValidateArgument(queryParameters.VectorLabels), QueryBuilderOptions.Simple);
         builder.AppendParameterIfProvided(ValidateIdentifier(ParameterProvider.ValueSeparation), ValidateArgument(queryParameters.ValueSeparation), QueryBuilderOptions.Simple);
 

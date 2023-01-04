@@ -1,12 +1,12 @@
 ﻿namespace SharpHorizons.Query;
 
-/// <summary>Specifies how a query result is formatted.</summary>
+/// <summary>Specifies the format of the result of a query.</summary>
 public enum OutputFormat
 {
     /// <summary>The <see cref="OutputFormat"/> is unknown.</summary>
     Unknown,
-    /// <summary>Formatted as raw text.</summary>
+    /// <summary>The result of a query is formatted as raw text.</summary>
     Text,
-    /// <summary>Formatted as JSON.</summary>
+    /// <summary>The result of a query is formatted as JSON.</summary>
     JSON
 }

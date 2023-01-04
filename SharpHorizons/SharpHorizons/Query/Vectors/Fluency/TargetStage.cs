@@ -1,9 +1,6 @@
 ﻿namespace SharpHorizons.Query.Vectors.Fluency;
 
-using SharpHorizons.MPC;
 using SharpHorizons.Query.Target;
-
-using SharpMeasures.Astronomy;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -34,33 +31,41 @@ internal sealed class TargetStage : ITargetStage
     {
         ArgumentNullException.ThrowIfNull(target);
 
-        return Create(target);
+        return CreateOriginStage(target);
     }
 
-    IOriginStage ITargetStage.WithTarget(MajorObject majorObject) => Create(TargetFactory.Create(majorObject));
+    IOriginStage ITargetStage.WithTarget(ITargetStage.DTargetFactory targetFactoryDelegate)
+    {
+        ArgumentNullException.ThrowIfNull(targetFactoryDelegate);
 
-    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID) => Create(TargetFactory.Create(majorObjectID));
-    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName) => Create(TargetFactory.Create(majorObjectName));
+        var target = InvokeTargetFactoryDelegate(targetFactoryDelegate);
 
-    IOriginStage ITargetStage.WithTarget(MajorObject majorObject, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObject, coordinate));
-    IOriginStage ITargetStage.WithTarget(MajorObject majorObject, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObject, coordinate));
+        try
+        {
+            return CreateOriginStage(target);
+        }
+        catch (ArgumentNullException e)
+        {
+            throw new ArgumentException($"The {nameof(ITargetStage.DTargetFactory)} produced a null {nameof(ITarget)}.", nameof(targetFactoryDelegate), e);
+        }
+    }
 
-    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObjectID, coordinate));
-    IOriginStage ITargetStage.WithTarget(MajorObjectID majorObjectID, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObjectID, coordinate));
-    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName, CylindricalCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
-    IOriginStage ITargetStage.WithTarget(MajorObjectName majorObjectName, GeodeticCoordinate coordinate) => Create(TargetFactory.Create(majorObjectName, coordinate));
+    /// <summary>Invokes the <see cref="ITargetStage.DTargetFactory"/> <paramref name="targetFactoryDelegate"/>, resulting in a <see cref="ITarget"/>.</summary>
+    /// <param name="targetFactoryDelegate">This <see cref="ITargetStage.DTargetFactory"/> is invoked.</param>
+    /// <exception cref="ArgumentException"/>
+    private ITarget InvokeTargetFactoryDelegate(ITargetStage.DTargetFactory targetFactoryDelegate)
+    {
+        try
+        {
+            return targetFactoryDelegate(TargetFactory);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException($"The {nameof(ITargetStage.DTargetFactory)} encountered an error while producing a {nameof(ITarget)}.", nameof(targetFactoryDelegate), e);
+        }
+    }
 
-    IOriginStage ITargetStage.WithTarget(MPCObject mpcObject) => Create(TargetFactory.Create(mpcObject));
-    IOriginStage ITargetStage.WithTarget(MPCProvisionalObject mpcObject) => Create(TargetFactory.Create(mpcObject));
-    IOriginStage ITargetStage.WithTarget(MPCName mpcName) => Create(TargetFactory.Create(mpcName));
-    IOriginStage ITargetStage.WithTarget(MPCProvisionalDesignation mpcDesignation) => Create(TargetFactory.Create(mpcDesignation));
-    IOriginStage ITargetStage.WithTarget(MPCSequentialNumber mpcNumber) => Create(TargetFactory.Create(mpcNumber));
-
-    IOriginStage ITargetStage.WithTarget(MPCComet mpcComet) => Create(TargetFactory.Create(mpcComet));
-    IOriginStage ITargetStage.WithTarget(MPCCometName mpcCometName) => Create(TargetFactory.Create(mpcCometName));
-    IOriginStage ITargetStage.WithTarget(MPCCometDesignation mpcCometDesignation) => Create(TargetFactory.Create(mpcCometDesignation));
-
-    /// <summary>Selects <paramref name="target"/> as the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</summary>
+    /// <summary>Selects <paramref name="target"/> as the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>, and proceeds to the <see cref="IOriginStage"/>.</summary>
     /// <param name="target">The <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>
-    private IOriginStage Create(ITarget target) => OriginStageFactory.Create(target);
+    private IOriginStage CreateOriginStage(ITarget target) => OriginStageFactory.Create(target);
 }

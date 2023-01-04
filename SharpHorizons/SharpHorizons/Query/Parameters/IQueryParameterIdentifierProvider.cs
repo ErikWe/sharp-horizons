@@ -6,9 +6,6 @@ public interface IQueryParameterIdentifierProvider
     /// <inheritdoc cref="ICommandParameterIdentifier"/>
     public abstract ICommandParameterIdentifier Command { get; }
 
-    /// <inheritdoc cref="IElementLabelsParameterIdentifier"/>
-    public abstract IElementLabelsParameterIdentifier ElementLabels { get; }
-
     /// <inheritdoc cref="IEphemerisTypeParameterIdentifier"/>
     public abstract IEphemerisTypeParameterIdentifier EphemerisType { get; }
 
@@ -21,8 +18,8 @@ public interface IQueryParameterIdentifierProvider
     /// <inheritdoc cref="ICommandParameterIdentifier"/>
     public abstract IEpochCollectionFormatParameterIdentifier EpochCollectionFormat { get; }
 
-    /// <inheritdoc cref="IGenerateEphemeridesParameterIdentifier"/>
-    public abstract IGenerateEphemeridesParameterIdentifier GenerateEphemerides { get; }
+    /// <inheritdoc cref="IGenerateEphemerisParameterIdentifier"/>
+    public abstract IGenerateEphemerisParameterIdentifier GenerateEphemeris { get; }
 
     /// <inheritdoc cref="IObjectDataInclusionParameterIdentifier"/>
     public abstract IObjectDataInclusionParameterIdentifier ObjectDataInclusion { get; }

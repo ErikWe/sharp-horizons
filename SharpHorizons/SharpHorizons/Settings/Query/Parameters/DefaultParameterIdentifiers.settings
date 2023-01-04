@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Query.Parameters" GeneratedClassName="DefaultParameterIdentifiers">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Settings.Query.Parameters" GeneratedClassName="DefaultParameterIdentifiers">
   <Profiles />
   <Settings>
     <Setting Name="Command" Type="System.String" Scope="Application">
@@ -17,7 +17,7 @@
     <Setting Name="EpochCollectionFormat" Type="System.String" Scope="Application">
       <Value Profile="(Default)">TLIST_TYPE</Value>
     </Setting>
-    <Setting Name="GenerateEphemerides" Type="System.String" Scope="Application">
+    <Setting Name="GenerateEphemeris" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MAKE_EPHEM</Value>
     </Setting>
     <Setting Name="ObjectDataInclusion" Type="System.String" Scope="Application">

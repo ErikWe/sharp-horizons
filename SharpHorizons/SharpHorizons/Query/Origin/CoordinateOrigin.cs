@@ -18,8 +18,8 @@ internal sealed record class CoordinateOrigin : ICoordinateOrigin
     public CoordinateOrigin() { }
 
     /// <inheritdoc cref="CoordinateOrigin"/>
-    /// <param name="originObject">The <see cref="IOriginObject"/>, relative to which <paramref name="originCoordinate"/> is expressed.</param>
-    /// <param name="originCoordinate">The <see cref="IOriginCoordinate"/> relative to <paramref name="originObject"/>.</param>
+    /// <param name="originObject"><inheritdoc cref="OriginObject" path="/summary"/></param>
+    /// <param name="originCoordinate"><inheritdoc cref="OriginCoordinate" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     [SetsRequiredMembers]
     public CoordinateOrigin(IOriginObject originObject, IOriginCoordinate originCoordinate, IOriginComposer<ICoordinateOrigin> composer)

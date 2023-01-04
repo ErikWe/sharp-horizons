@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>SharpHorizons.Interpretation</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SharpMeasures.Astronomy" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SharpHorizons.Interpretation\SharpHorizons.Interpretation.csproj" />
+    </ItemGroup>
+
+</Project>

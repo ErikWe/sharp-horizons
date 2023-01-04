@@ -79,19 +79,19 @@ internal static class Datasets
 
     public class ValidNumberNameCombinations : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCNames.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class ValidNumberDesignationCombinations : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCProvisionalDesignations.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCProvisionalDesignations.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class ValidNumberNameDesignationCombinations : IEnumerable<object?[]>
     {
-        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCNames.Items, ValidMPCProvisionalDesignations.Items).GetEnumerator();
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCNames.Items, ValidMPCProvisionalDesignations.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
@@ -103,7 +103,9 @@ internal static class Datasets
             var invalidLHS = DatasetWrappers.Permutate(InvalidMPCSequentialNumbers.Items, ValidMPCNames.Items);
             var bothInvalid = DatasetWrappers.Permutate(InvalidMPCSequentialNumbers.Items, InvalidMPCNames.Items);
 
-            return invalidRHS.Concat(invalidLHS).Concat(bothInvalid).GetEnumerator();
+            var eitherInvalid = invalidRHS.Concat(invalidLHS).Concat(bothInvalid);
+
+            return DatasetWrappers.SeparateAndWrap(eitherInvalid).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -117,7 +119,9 @@ internal static class Datasets
             var invalidLHS = DatasetWrappers.Permutate(InvalidMPCSequentialNumbers.Items, ValidMPCProvisionalDesignations.Items);
             var bothInvalid = DatasetWrappers.Permutate(InvalidMPCSequentialNumbers.Items, InvalidMPCProvisionalDesignations.Items);
 
-            return invalidRHS.Concat(invalidLHS).Concat(bothInvalid).GetEnumerator();
+            var eitherInvalid = invalidRHS.Concat(invalidLHS).Concat(bothInvalid);
+
+            return DatasetWrappers.SeparateAndWrap(eitherInvalid).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -135,7 +139,9 @@ internal static class Datasets
             var invalidNamesAndNumbers = DatasetWrappers.Permutate(InvalidMPCSequentialNumbers.Items, InvalidMPCNames.Items, ValidMPCProvisionalDesignations.Items);
             var allInvalid = DatasetWrappers.Permutate(InvalidMPCSequentialNumbers.Items, InvalidMPCNames.Items, InvalidMPCProvisionalDesignations.Items);
 
-            return invalidDesignations.Concat(invalidNames).Concat(invalidNumbers).Concat(invalidDesignationsAndNames).Concat(invalidDesignationsAndNumbers).Concat(invalidNamesAndNumbers).Concat(allInvalid).GetEnumerator();
+            var anyInvalid = invalidDesignations.Concat(invalidNames).Concat(invalidNumbers).Concat(invalidDesignationsAndNames).Concat(invalidDesignationsAndNumbers).Concat(invalidNamesAndNumbers).Concat(allInvalid);
+
+            return DatasetWrappers.SeparateAndWrap(anyInvalid).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

@@ -4,19 +4,19 @@ using SharpHorizons.Query.Target;
 
 using System;
 
-/// <summary>Composes <see cref="ITargetArgument"/> and <see cref="TargetSiteObjectIdentifier"/> that describe <see cref="MajorObject"/>.</summary>
-internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITargetSiteObjectComposer<MajorObject>
+/// <summary>Composes <see cref="ITargetArgument"/> and <see cref="TargetObjectIdentifier"/> that describe <see cref="MajorObject"/>.</summary>
+internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITargetObjectComposer<MajorObject>
 {
     /// <summary>Used to compose a <see cref="ITargetArgument"/> that describe the <see cref="MajorObjectID"/> associated with a <see cref="MajorObject"/>.</summary>
     private ITargetComposer<MajorObjectID> IDComposer { get; }
 
-    /// <summary>Used to compose a <see cref="TargetSiteObjectIdentifier"/> that describe the <see cref="MajorObjectID"/> associated with a <see cref="MajorObject"/>.</summary>
-    private ITargetSiteObjectComposer<MajorObjectID> IDSiteObjectComposer { get; }
+    /// <summary>Used to compose a <see cref="TargetObjectIdentifier"/> that describe the <see cref="MajorObjectID"/> associated with a <see cref="MajorObject"/>.</summary>
+    private ITargetObjectComposer<MajorObjectID> IDSiteObjectComposer { get; }
 
     /// <inheritdoc cref="MajorObjectComposer"/>
     /// <param name="idComposer"><inheritdoc cref="IDComposer" path="/summary"/></param>
     /// <param name="idSiteObjectComposer"><inheritdoc cref="IDSiteObjectComposer" path="/summary"/></param>
-    public MajorObjectComposer(ITargetComposer<MajorObjectID> idComposer, ITargetSiteObjectComposer<MajorObjectID> idSiteObjectComposer)
+    public MajorObjectComposer(ITargetComposer<MajorObjectID> idComposer, ITargetObjectComposer<MajorObjectID> idSiteObjectComposer)
     {
         IDComposer = idComposer;
         IDSiteObjectComposer = idSiteObjectComposer;
@@ -42,7 +42,7 @@ internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITarge
 
     ICommandArgument IArgumentComposer<ICommandArgument, MajorObject>.Compose(MajorObject obj) => ((IArgumentComposer<ITargetArgument, MajorObject>)this).Compose(obj);
 
-    TargetSiteObjectIdentifier ITargetSiteObjectComposer<MajorObject>.Compose(MajorObject obj)
+    TargetObjectIdentifier ITargetObjectComposer<MajorObject>.Compose(MajorObject obj)
     {
         ArgumentNullException.ThrowIfNull(obj);
 
@@ -50,11 +50,11 @@ internal sealed class MajorObjectComposer : ITargetComposer<MajorObject>, ITarge
 
         try
         {
-            TargetSiteObjectIdentifier.Validate(identifier);
+            TargetObjectIdentifier.Validate(identifier);
         }
         catch (ArgumentException e)
         {
-            throw new InvalidOperationException($"The {nameof(ITargetSiteObjectComposer<MajorObjectID>)} for {nameof(MajorObjectID)} provided an invalid {nameof(TargetSiteObjectIdentifier)}.", e);
+            throw new InvalidOperationException($"The {nameof(ITargetObjectComposer<MajorObjectID>)} for {nameof(MajorObjectID)} provided an invalid {nameof(TargetObjectIdentifier)}.", e);
         }
 
         return identifier;

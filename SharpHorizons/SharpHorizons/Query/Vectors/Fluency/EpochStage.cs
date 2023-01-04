@@ -5,10 +5,7 @@ using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors.Table;
 
-using SharpMeasures;
-
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IEpochStage"/>
@@ -23,17 +20,11 @@ internal sealed class EpochStage : IEpochStage
     /// <inheritdoc cref="IVectorTableContentValidator"/>
     public required IVectorTableContentValidator TableContentValidator { private get; init; }
 
-    /// <inheritdoc cref="IFixedEpochRangeFactory"/>
-    public required IFixedEpochRangeFactory FixedRangeFactory { private get; init; }
-
-    /// <inheritdoc cref="IUniformEpochRangeFactory"/>
-    public required IUniformEpochRangeFactory UniformRangeFactory { private get; init; }
-
-    /// <inheritdoc cref="ICalendarEpochRangeFactory"/>
-    public required ICalendarEpochRangeFactory CalendarRangeFactory { private get; init; }
+    /// <inheritdoc cref="IEpochRangeFactory"/>
+    public required IEpochRangeFactory EpochRangeFactory { private get; init; }
 
     /// <inheritdoc cref="IEpochCollectionFactory"/>
-    public required IEpochCollectionFactory CollectionFactory { private get; init; }
+    public required IEpochCollectionFactory EpochCollectionFactory { private get; init; }
 
     /// <inheritdoc cref="EpochStage"/>
     public EpochStage() { }
@@ -42,43 +33,91 @@ internal sealed class EpochStage : IEpochStage
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
     /// <param name="tableContentValidator"><inheritdoc cref="TableContentValidator" path="/summary"/></param>
-    /// <param name="fixedRangeFactory"><inheritdoc cref="FixedRangeFactory" path="/summary"/></param>
-    /// <param name="uniformRangeFactory"><inheritdoc cref="UniformRangeFactory" path="/summary"/></param>
-    /// <param name="calendarRangeFactory"><inheritdoc cref="CalendarRangeFactory" path="/summary"/></param>
-    /// <param name="collectionFactory"><inheritdoc cref="CollectionFactory" path="/summary"/></param>
+    /// <param name="epochRangeFactory"><inheritdoc cref="EpochRangeFactory" path="/summary"/></param>
+    /// <param name="epochCollectionFactory"><inheritdoc cref="EpochCollectionFactory" path="/summary"/></param>
     [SetsRequiredMembers]
-    public EpochStage(ITarget target, IOrigin origin, IVectorTableContentValidator tableContentValidator, IFixedEpochRangeFactory fixedRangeFactory, IUniformEpochRangeFactory uniformRangeFactory, ICalendarEpochRangeFactory calendarRangeFactory, IEpochCollectionFactory collectionFactory)
+    public EpochStage(ITarget target, IOrigin origin, IVectorTableContentValidator tableContentValidator, IEpochRangeFactory epochRangeFactory, IEpochCollectionFactory epochCollectionFactory)
     {
         Target = target;
         Origin = origin;
 
         TableContentValidator = tableContentValidator;
 
-        FixedRangeFactory = fixedRangeFactory;
-        UniformRangeFactory = uniformRangeFactory;
-        CalendarRangeFactory = calendarRangeFactory;
+        EpochRangeFactory = epochRangeFactory;
 
-        CollectionFactory = collectionFactory;
+        EpochCollectionFactory = epochCollectionFactory;
     }
 
-    IVectorsQuery IEpochStage.WithEpochs(IEpochSelection epochSelection)
+    IVectorsQuery IEpochStage.WithEpochSelection(IEpochSelection epochSelection)
     {
         ArgumentNullException.ThrowIfNull(epochSelection);
 
-        return Create(epochSelection);
+        return CreateVectorsQuery(epochSelection);
     }
 
-    IVectorsQuery IEpochStage.WithEpochs(IEnumerable<IEpoch> epochs, EpochFormat format) => Create(CollectionFactory.Create(epochs, format));
-    IVectorsQuery IEpochStage.WithEpochs(IEnumerable<IEpoch> epochs) => Create(CollectionFactory.Create(epochs));
+    IVectorsQuery IEpochStage.WithEpochRange(IEpochStage.DEpochRangeFactory epochRangeFactoryDelegate)
+    {
+        ArgumentNullException.ThrowIfNull(epochRangeFactoryDelegate);
 
-    IVectorsQuery IEpochStage.WithEpochs(EpochFormat format, params IEpoch[] epochs) => Create(CollectionFactory.Create(format, epochs));
-    IVectorsQuery IEpochStage.WithEpochs(params IEpoch[] epochs) => Create(CollectionFactory.Create(epochs));
+        var epochSelection = InvokeEpochRangeFactoryDelegate(epochRangeFactoryDelegate);
 
-    IVectorsQuery IEpochStage.WithFixedEpochRange(IEpoch startEpoch, IEpoch stopEpoch, Time deltaTime) => Create(FixedRangeFactory.Create(startEpoch, stopEpoch, deltaTime));
-    IVectorsQuery IEpochStage.WithUniformEpochRange(IEpoch startEpoch, IEpoch stopEpoch, int stepCount) => Create(UniformRangeFactory.Create(startEpoch, stopEpoch, stepCount));
-    IVectorsQuery IEpochStage.WithCalendarEpochRange(IEpoch startEpoch, IEpoch stopEpoch, int count, CalendarStepSizeUnit unit) => Create(CalendarRangeFactory.Create(startEpoch, stopEpoch, count, unit));
+        try
+        {
+            return CreateVectorsQuery(epochSelection);
+        }
+        catch (ArgumentNullException e)
+        {
+            throw new ArgumentException($"The {nameof(IEpochStage.DEpochRangeFactory)} produced a null {nameof(IEpochSelection)}.", nameof(epochRangeFactoryDelegate), e);
+        }
+    }
 
-    /// <summary>Uses <paramref name="epochSelection"/> as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</summary>
+    IVectorsQuery IEpochStage.WithEpochCollection(IEpochStage.DEpochCollectionFactory epochCollectionFactoryDelegate)
+    {
+        ArgumentNullException.ThrowIfNull(epochCollectionFactoryDelegate);
+
+        var epochSelection = InvokeEpochCollectionFactoryDelegate(epochCollectionFactoryDelegate);
+
+        try
+        {
+            return CreateVectorsQuery(epochSelection);
+        }
+        catch (ArgumentNullException e)
+        {
+            throw new ArgumentException($"The {nameof(IEpochStage.DEpochCollectionFactory)} produced a null {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
+        }
+    }
+
+    /// <summary>Invokes the <see cref="IEpochStage.DEpochRangeFactory"/> <paramref name="epochCollectionFactoryDelegate"/>, resulting in an <see cref="IEpochSelection"/>.</summary>
+    /// <param name="epochCollectionFactoryDelegate">This <see cref="IEpochStage.DEpochRangeFactory"/> is invoked.</param>
+    /// <exception cref="ArgumentException"/>
+    private IEpochSelection InvokeEpochRangeFactoryDelegate(IEpochStage.DEpochRangeFactory epochCollectionFactoryDelegate)
+    {
+        try
+        {
+            return epochCollectionFactoryDelegate(EpochRangeFactory);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException($"The {nameof(IEpochStage.DEpochRangeFactory)} encountered an error while producing an {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
+        }
+    }
+
+    /// <summary>Invokes the <see cref="IEpochStage.DEpochCollectionFactory"/> <paramref name="epochCollectionFactoryDelegate"/>, resulting in an <see cref="IEpochSelection"/>.</summary>
+    /// <param name="epochCollectionFactoryDelegate">This <see cref="IEpochStage.DEpochCollectionFactory"/> is invoked.</param>
+    /// <exception cref="ArgumentException"/>
+    private IEpochSelection InvokeEpochCollectionFactoryDelegate(IEpochStage.DEpochCollectionFactory epochCollectionFactoryDelegate)
+    {
+        try
+        {
+            return epochCollectionFactoryDelegate(EpochCollectionFactory);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException($"The {nameof(IEpochStage.DEpochCollectionFactory)} encountered an error while producing an {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
+        }
+    }
+
+    /// <summary>Uses <paramref name="epochSelection"/> as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>, and constructs the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochSelection">The <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</param>
-    private IVectorsQuery Create(IEpochSelection epochSelection) => new VectorsQuery(TableContentValidator, Target, Origin, epochSelection);
+    private IVectorsQuery CreateVectorsQuery(IEpochSelection epochSelection) => new VectorsQuery(TableContentValidator, Target, Origin, epochSelection);
 }

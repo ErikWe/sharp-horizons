@@ -7,9 +7,10 @@ using SharpMeasures.Astronomy;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <inheritdoc cref="IGeodeticOriginCoordinate"/>
-internal sealed record class GeodeticOriginCoordinate : IGeodeticOriginCoordinate
+/// <summary>Represents the coordinate of the <see cref="IOrigin"/>, relative to some <see cref="IOriginObject"/>, expressed as a <see cref="GeodeticCoordinate"/>.</summary>
+internal sealed record class GeodeticOriginCoordinate : IOriginCoordinate
 {
+    /// <summary>The <see cref="GeodeticCoordinate"/>, describing the <see cref="IOriginCoordinate"/>.</summary>
     public required GeodeticCoordinate Coordinate { get; init; }
 
     /// <summary>Used to compose a <see cref="IOriginCoordinateArgument"/> describing <see langword="this"/>.</summary>
