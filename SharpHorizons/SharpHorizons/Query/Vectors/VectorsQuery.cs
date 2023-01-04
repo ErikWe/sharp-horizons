@@ -18,7 +18,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
 
     public required ITarget Target { get; init; }
     public required IOrigin Origin { get; init; }
-    public required IEpochSelection Epochs { get; init; }
+    public required IEpochSelection EpochSelection { get; init; }
 
     public OutputFormat OutputFormat { get; init; } = OutputFormat.JSON;
     public ObjectDataInclusion ObjectDataInclusion { get; init; } = ObjectDataInclusion.Disable;
@@ -43,14 +43,14 @@ internal sealed record class VectorsQuery : IVectorsQuery
     /// <param name="tableContentValidator"><inheritdoc cref="TableContentValidator" path="/summary"/></param>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
-    /// <param name="epochs"><inheritdoc cref="Epochs" path="/summary"/></param>
+    /// <param name="epochs"><inheritdoc cref="EpochSelection" path="/summary"/></param>
     [SetsRequiredMembers]
     public VectorsQuery(IVectorTableContentValidator tableContentValidator, ITarget target, IOrigin origin, IEpochSelection epochs) : this(tableContentValidator)
     {
         Target = target;
         Origin = origin;
 
-        Epochs = epochs;
+        EpochSelection = epochs;
     }
 
     IVectorsQuery IVectorsQuery.WithTarget(ITarget target)
@@ -71,7 +71,7 @@ internal sealed record class VectorsQuery : IVectorsQuery
     {
         ArgumentNullException.ThrowIfNull(epochSelection);
 
-        return this with { Epochs = epochSelection };
+        return this with { EpochSelection = epochSelection };
     }
 
     IVectorsQuery IVectorsQuery.WithConfiguration(OutputFormat outputFormat)

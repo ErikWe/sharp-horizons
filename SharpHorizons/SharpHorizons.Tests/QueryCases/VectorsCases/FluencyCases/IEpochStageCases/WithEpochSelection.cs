@@ -42,7 +42,7 @@ public class WithEpochSelection
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);
-        Assert.Equal(epochSelection, actual.Epochs);
+        Assert.Equal(epochSelection, actual.EpochSelection);
 
         Assert.Equal(OutputFormat.JSON, actual.OutputFormat);
         Assert.Equal(ObjectDataInclusion.Disable, actual.ObjectDataInclusion);

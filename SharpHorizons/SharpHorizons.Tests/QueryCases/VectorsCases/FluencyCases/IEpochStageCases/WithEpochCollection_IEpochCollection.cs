@@ -42,7 +42,7 @@ public class WithEpochCollection_IEpochCollection
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);
-        Assert.Equal(epochCollection, actual.Epochs);
+        Assert.Equal(epochCollection, actual.EpochSelection);
 
         Assert.Equal(OutputFormat.JSON, actual.OutputFormat);
         Assert.Equal(ObjectDataInclusion.Disable, actual.ObjectDataInclusion);

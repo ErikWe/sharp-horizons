@@ -21,8 +21,8 @@ public interface IVectorsQuery
     /// <summary>The <see cref="IOrigin"/>, relative to which the <see cref="ITarget"/> is described in the resulting <see cref="IEphemeris{TEntry}"/>.</summary>
     public abstract IOrigin Origin { get; }
 
-    /// <summary>The <see cref="IEpochSelection"/>, describing the <see cref="IEpoch"/> of the <see cref="IEphemerisEntry"/> in the resulting <see cref="IEphemeris{TEntry}"/>.</summary>
-    public abstract IEpochSelection Epochs { get; }
+    /// <summary>The <see cref="IEpochSelection"/>, describing the <see cref="IEpoch"/> of the individual <see cref="IEphemerisEntry"/> in the resulting <see cref="IEphemeris{TEntry}"/>.</summary>
+    public abstract IEpochSelection EpochSelection { get; }
 
     /// <summary>Determines how the result of the <see cref="IVectorsQuery"/> is formatted.</summary>
     public abstract OutputFormat OutputFormat { get; }
@@ -57,79 +57,79 @@ public interface IVectorsQuery
     /// <summary>Determines whether the <see cref="Time"/> difference between <see cref="TimeSystem.TDB"/> and <see cref="TimeSystem.UT"/> is included in the result of the query.</summary>
     public abstract TimeDeltaInclusion TimeDeltaInclusion { get; }
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="Target"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="Target"/>.</summary>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IVectorsQuery WithTarget(ITarget target);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="Origin"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="Origin"/>.</summary>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IVectorsQuery WithOrigin(IOrigin origin);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="Epochs"/>.</summary>
-    /// <param name="epochSelection"><inheritdoc cref="Epochs" path="/summary"/></param>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="EpochSelection"/>.</summary>
+    /// <param name="epochSelection"><inheritdoc cref="EpochSelection" path="/summary"/></param>
     /// <exception cref="ArgumentNullException"/>
     public abstract IVectorsQuery WithEpochSelection(IEpochSelection epochSelection);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="OutputFormat"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="OutputFormat"/>.</summary>
     /// <param name="outputFormat"><inheritdoc cref="OutputFormat" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(OutputFormat outputFormat);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="ObjectDataInclusion"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="ObjectDataInclusion"/>.</summary>
     /// <param name="objectDataInclusion"><inheritdoc cref="ObjectDataInclusion" path="/summary"/></param>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(ObjectDataInclusion objectDataInclusion);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="ReferencePlane"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="ReferencePlane"/>.</summary>
     /// <param name="referencePlane"><inheritdoc cref="ReferencePlane" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(ReferencePlane referencePlane);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="ReferenceSystem"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="ReferenceSystem"/>.</summary>
     /// <param name="referenceSystem"><inheritdoc cref="ReferenceSystem" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(ReferenceSystem referenceSystem);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="OutputUnits"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="OutputUnits"/>.</summary>
     /// <param name="outputUnits"><inheritdoc cref="OutputUnits" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(OutputUnits outputUnits);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="TableContent"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="TableContent"/>.</summary>
     /// <param name="tableContent"><inheritdoc cref="TableContent" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(VectorTableContent tableContent);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="Correction"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="Correction"/>.</summary>
     /// <param name="correction"><inheritdoc cref="Correction" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(VectorCorrection correction);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="TimePrecision"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="TimePrecision"/>.</summary>
     /// <param name="timePrecision"><inheritdoc cref="TimePrecision" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(TimePrecision timePrecision);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="ValueSeparation"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="ValueSeparation"/>.</summary>
     /// <param name="valueSeparation"><inheritdoc cref="ValueSeparation" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(ValueSeparation valueSeparation);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="OutputLabels"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="OutputLabels"/>.</summary>
     /// <param name="outputLabels"><inheritdoc cref="OutputLabels" path="/summary"/></param>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(OutputLabels outputLabels);
 
-    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with a modified <see cref="TimeDeltaInclusion"/>.</summary>
+    /// <summary>Constructs a new <see cref="IVectorsQuery"/> with modified <see cref="TimeDeltaInclusion"/>.</summary>
     /// <param name="timeDeltaInclusion"><inheritdoc cref="TimeDeltaInclusion" path="/summary"/></param>
     /// <exception cref="InvalidEnumArgumentException"/>
     public abstract IVectorsQuery WithConfiguration(TimeDeltaInclusion timeDeltaInclusion);

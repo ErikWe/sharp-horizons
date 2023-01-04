@@ -75,7 +75,7 @@ public class Create
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);
-        Assert.Equal(epochs, actual.Epochs);
+        Assert.Equal(epochs, actual.EpochSelection);
 
         Assert.Equal(OutputFormat.JSON, actual.OutputFormat);
         Assert.Equal(ObjectDataInclusion.Disable, actual.ObjectDataInclusion);

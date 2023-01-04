@@ -104,17 +104,17 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
             builder.Specify(query.Origin.ComposeCoordinateTypeArgument());
         }
 
-        if (query.Epochs.Selection is Epoch.EpochSelectionMode.Collection)
+        if (query.EpochSelection.Selection is Epoch.EpochSelectionMode.Collection)
         {
-            builder.Specify(query.Epochs.ComposeCollectionArgument());
-            builder.Specify(query.Epochs.ComposeCollectionFormatArgument());
+            builder.Specify(query.EpochSelection.ComposeCollectionArgument());
+            builder.Specify(query.EpochSelection.ComposeCollectionFormatArgument());
         }
 
-        if (query.Epochs.Selection is Epoch.EpochSelectionMode.Range)
+        if (query.EpochSelection.Selection is Epoch.EpochSelectionMode.Range)
         {
-            builder.Specify(query.Epochs.ComposeStartTimeArgument());
-            builder.Specify(query.Epochs.ComposeStopTimeArgument());
-            builder.Specify(query.Epochs.ComposeStepSizeArgument());
+            builder.Specify(query.EpochSelection.ComposeStartTimeArgument());
+            builder.Specify(query.EpochSelection.ComposeStopTimeArgument());
+            builder.Specify(query.EpochSelection.ComposeStepSizeArgument());
         }
 
         builder.Specify(ReferencePlaneComposer.Compose(query.ReferencePlane));

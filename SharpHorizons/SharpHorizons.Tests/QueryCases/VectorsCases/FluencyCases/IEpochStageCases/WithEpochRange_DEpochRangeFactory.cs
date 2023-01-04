@@ -55,7 +55,7 @@ public class WithEpochRange_DEpochRangeFactory
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);
-        Assert.Equal(epochRange, actual.Epochs);
+        Assert.Equal(epochRange, actual.EpochSelection);
 
         Assert.Equal(OutputFormat.JSON, actual.OutputFormat);
         Assert.Equal(ObjectDataInclusion.Disable, actual.ObjectDataInclusion);
