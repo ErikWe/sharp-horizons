@@ -29,10 +29,13 @@ public class WithConfiguration_TimeDeltaInclusion
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var timeDeltaInclusion = GetValidTimeDeltaInclusion();
+        var previous = vectorsQuery.TimeDeltaInclusion;
+
+        var timeDeltaInclusion = GetDifferentTimeDeltaInclusion(previous);
 
         var actual = vectorsQuery.WithConfiguration(timeDeltaInclusion);
 
+        Assert.NotEqual(previous, timeDeltaInclusion);
         Assert.Equal(timeDeltaInclusion, actual.TimeDeltaInclusion);
     }
 
@@ -41,14 +44,14 @@ public class WithConfiguration_TimeDeltaInclusion
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.TimeDeltaInclusion;
+        var previous = vectorsQuery.TimeDeltaInclusion;
 
-        var timeDeltaInclusion = GetValidTimeDeltaInclusion();
+        var timeDeltaInclusion = GetDifferentTimeDeltaInclusion(previous);
 
         vectorsQuery.WithConfiguration(timeDeltaInclusion);
 
-        Assert.NotEqual(expected, timeDeltaInclusion);
-        Assert.Equal(expected, vectorsQuery.TimeDeltaInclusion);
+        Assert.NotEqual(previous, timeDeltaInclusion);
+        Assert.Equal(previous, vectorsQuery.TimeDeltaInclusion);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -80,5 +83,10 @@ public class WithConfiguration_TimeDeltaInclusion
     }
 
     private static TimeDeltaInclusion GetInvalidTimeDeltaInclusion() => (TimeDeltaInclusion)(-1);
-    private static TimeDeltaInclusion GetValidTimeDeltaInclusion() => TimeDeltaInclusion.Enable;
+    private static TimeDeltaInclusion GetDifferentTimeDeltaInclusion(TimeDeltaInclusion timeDeltaInclusion) => timeDeltaInclusion switch
+    {
+        TimeDeltaInclusion.Enable => TimeDeltaInclusion.Disable,
+        TimeDeltaInclusion.Disable => TimeDeltaInclusion.Enable,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

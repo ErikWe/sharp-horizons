@@ -42,10 +42,13 @@ public class WithConfiguration_VectorCorrection
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var vectorCorrection = GetValidVectorCorrection();
+        var previous = vectorsQuery.Correction;
+
+        var vectorCorrection = GetDifferentVectorCorrection(previous);
 
         var actual = vectorsQuery.WithConfiguration(vectorCorrection);
 
+        Assert.NotEqual(previous, vectorCorrection);
         Assert.Equal(vectorCorrection, actual.Correction);
     }
 
@@ -54,14 +57,14 @@ public class WithConfiguration_VectorCorrection
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.Correction;
+        var previous = vectorsQuery.Correction;
 
-        var vectorCorrection = GetValidVectorCorrection();
+        var vectorCorrection = GetDifferentVectorCorrection(previous);
 
         vectorsQuery.WithConfiguration(vectorCorrection);
 
-        Assert.NotEqual(expected, vectorCorrection);
-        Assert.Equal(expected, vectorsQuery.Correction);
+        Assert.NotEqual(previous, vectorCorrection);
+        Assert.Equal(previous, vectorsQuery.Correction);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -94,5 +97,11 @@ public class WithConfiguration_VectorCorrection
 
     private static VectorCorrection GetInvalidVectorCorrection() => (VectorCorrection)(-1);
     private static VectorCorrection GetForbiddenVectorCorrection() => VectorCorrection.Aberration;
-    private static VectorCorrection GetValidVectorCorrection() => VectorCorrection.LightTime;
+    private static VectorCorrection GetDifferentVectorCorrection(VectorCorrection vectorCorrection) => vectorCorrection switch
+    {
+        VectorCorrection.None => VectorCorrection.LightTime,
+        VectorCorrection.LightTime => VectorCorrection.All,
+        VectorCorrection.All => VectorCorrection.None,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

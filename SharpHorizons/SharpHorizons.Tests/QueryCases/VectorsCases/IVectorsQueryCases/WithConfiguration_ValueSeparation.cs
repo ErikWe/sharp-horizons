@@ -43,10 +43,13 @@ public class WithConfiguration_ValueSeparation
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var valueSeparation = GetValidValueSeparation();
+        var previous = vectorsQuery.ValueSeparation;
+
+        var valueSeparation = GetDifferentValueSeparation(previous);
 
         var actual = vectorsQuery.WithConfiguration(valueSeparation);
 
+        Assert.NotEqual(previous, valueSeparation);
         Assert.Equal(valueSeparation, actual.ValueSeparation);
     }
 
@@ -55,14 +58,14 @@ public class WithConfiguration_ValueSeparation
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.ValueSeparation;
+        var previous = vectorsQuery.ValueSeparation;
 
-        var valueSeparation = GetValidValueSeparation();
+        var valueSeparation = GetDifferentValueSeparation(previous);
 
         vectorsQuery.WithConfiguration(valueSeparation);
 
-        Assert.NotEqual(expected, valueSeparation);
-        Assert.Equal(expected, vectorsQuery.ValueSeparation);
+        Assert.NotEqual(previous, valueSeparation);
+        Assert.Equal(previous, vectorsQuery.ValueSeparation);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -95,5 +98,10 @@ public class WithConfiguration_ValueSeparation
 
     private static ValueSeparation GetInvalidValueSeparation() => (ValueSeparation)(-1);
     private static ValueSeparation GetForbiddenValueSeparation() => ValueSeparation.Unknown;
-    private static ValueSeparation GetValidValueSeparation() => ValueSeparation.CommaSeparation;
+    private static ValueSeparation GetDifferentValueSeparation(ValueSeparation valueSeparation) => valueSeparation switch
+    {
+        ValueSeparation.WhitespaceSeparation => ValueSeparation.CommaSeparation,
+        ValueSeparation.CommaSeparation => ValueSeparation.WhitespaceSeparation,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

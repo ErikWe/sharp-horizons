@@ -43,10 +43,13 @@ public class WithConfiguration_ReferenceSystem
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var referenceSystem = GetValidReferenceSystem();
+        var previous = vectorsQuery.ReferenceSystem;
+
+        var referenceSystem = GetDifferentReferenceSystem(previous);
 
         var actual = vectorsQuery.WithConfiguration(referenceSystem);
 
+        Assert.NotEqual(previous, referenceSystem);
         Assert.Equal(referenceSystem, actual.ReferenceSystem);
     }
 
@@ -55,14 +58,14 @@ public class WithConfiguration_ReferenceSystem
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.ReferenceSystem;
+        var previous = vectorsQuery.ReferenceSystem;
 
-        var referenceSystem = GetValidReferenceSystem();
+        var referenceSystem = GetDifferentReferenceSystem(previous);
 
         vectorsQuery.WithConfiguration(referenceSystem);
 
-        Assert.NotEqual(expected, referenceSystem);
-        Assert.Equal(expected, vectorsQuery.ReferenceSystem);
+        Assert.NotEqual(previous, referenceSystem);
+        Assert.Equal(previous, vectorsQuery.ReferenceSystem);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -95,5 +98,10 @@ public class WithConfiguration_ReferenceSystem
 
     private static ReferenceSystem GetInvalidReferenceSystem() => (ReferenceSystem)(-1);
     private static ReferenceSystem GetForbiddenReferenceSystem() => ReferenceSystem.Unknown;
-    private static ReferenceSystem GetValidReferenceSystem() => ReferenceSystem.B1950;
+    private static ReferenceSystem GetDifferentReferenceSystem(ReferenceSystem referenceSystem) => referenceSystem switch
+    {
+        ReferenceSystem.ICRF => ReferenceSystem.B1950,
+        ReferenceSystem.B1950 => ReferenceSystem.ICRF,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

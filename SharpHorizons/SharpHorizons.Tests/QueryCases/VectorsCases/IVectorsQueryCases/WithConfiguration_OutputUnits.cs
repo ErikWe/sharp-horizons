@@ -43,10 +43,13 @@ public class WithConfiguration_OutputUnits
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var outputUnits = GetValidOutputUnits();
+        var previous = vectorsQuery.OutputUnits;
+
+        var outputUnits = GetDifferentOutputUnits(previous);
 
         var actual = vectorsQuery.WithConfiguration(outputUnits);
 
+        Assert.NotEqual(previous, outputUnits);
         Assert.Equal(outputUnits, actual.OutputUnits);
     }
 
@@ -55,14 +58,14 @@ public class WithConfiguration_OutputUnits
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.OutputUnits;
+        var previous = vectorsQuery.OutputUnits;
 
-        var outputUnits = GetValidOutputUnits();
+        var outputUnits = GetDifferentOutputUnits(previous);
 
         vectorsQuery.WithConfiguration(outputUnits);
 
-        Assert.NotEqual(expected, outputUnits);
-        Assert.Equal(expected, vectorsQuery.OutputUnits);
+        Assert.NotEqual(previous, outputUnits);
+        Assert.Equal(previous, vectorsQuery.OutputUnits);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -95,5 +98,11 @@ public class WithConfiguration_OutputUnits
 
     private static OutputUnits GetInvalidOutputUnits() => (OutputUnits)(-1);
     private static OutputUnits GetForbiddenOutputUnits() => OutputUnits.Unknown;
-    private static OutputUnits GetValidOutputUnits() => OutputUnits.AstronomicalUnitsAndDays;
+    private static OutputUnits GetDifferentOutputUnits(OutputUnits outputUnits) => outputUnits switch
+    {
+        OutputUnits.KilometresAndSeconds => OutputUnits.KilometresAndDays,
+        OutputUnits.KilometresAndDays => OutputUnits.AstronomicalUnitsAndDays,
+        OutputUnits.AstronomicalUnitsAndDays => OutputUnits.KilometresAndSeconds,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

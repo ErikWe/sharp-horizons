@@ -43,10 +43,13 @@ public class WithConfiguration_OutputFormat
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var outputFormat = GetValidOutputFormat();
+        var previous = vectorsQuery.OutputFormat;
+
+        var outputFormat = GetDifferentOutputFormat(previous);
 
         var actual = vectorsQuery.WithConfiguration(outputFormat);
 
+        Assert.NotEqual(previous, outputFormat);
         Assert.Equal(outputFormat, actual.OutputFormat);
     }
 
@@ -55,14 +58,14 @@ public class WithConfiguration_OutputFormat
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.OutputFormat;
+        var previous = vectorsQuery.OutputFormat;
 
-        var outputFormat = GetValidOutputFormat();
+        var outputFormat = GetDifferentOutputFormat(previous);
 
         vectorsQuery.WithConfiguration(outputFormat);
 
-        Assert.NotEqual(expected, outputFormat);
-        Assert.Equal(expected, vectorsQuery.OutputFormat);
+        Assert.NotEqual(previous, outputFormat);
+        Assert.Equal(previous, vectorsQuery.OutputFormat);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -95,5 +98,10 @@ public class WithConfiguration_OutputFormat
 
     private static OutputFormat GetInvalidOutputFormat() => (OutputFormat)(-1);
     private static OutputFormat GetForbiddenOutputFormat() => OutputFormat.Unknown;
-    private static OutputFormat GetValidOutputFormat() => OutputFormat.Text;
+    private static OutputFormat GetDifferentOutputFormat(OutputFormat outputFormat) => outputFormat switch
+    {
+        OutputFormat.JSON => OutputFormat.Text,
+        OutputFormat.Text => OutputFormat.JSON,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

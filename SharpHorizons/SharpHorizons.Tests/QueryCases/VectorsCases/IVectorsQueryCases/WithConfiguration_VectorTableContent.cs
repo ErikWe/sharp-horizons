@@ -7,6 +7,7 @@ using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.Vectors.Table;
 
 using System;
+using System.ComponentModel;
 
 using Xunit;
 
@@ -29,10 +30,13 @@ public class WithConfiguration_VectorTableContent
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var vectorTableContent = GetValidVectorTableContent();
+        var previous = vectorsQuery.TableContent;
+
+        var vectorTableContent = GetDifferentVectorTableContent(previous);
 
         var actual = vectorsQuery.WithConfiguration(vectorTableContent);
 
+        Assert.NotEqual(previous, vectorTableContent);
         Assert.Equal(vectorTableContent, actual.TableContent);
     }
 
@@ -41,14 +45,14 @@ public class WithConfiguration_VectorTableContent
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.TableContent;
+        var previous = vectorsQuery.TableContent;
 
-        var vectorTableContent = GetValidVectorTableContent();
+        var vectorTableContent = GetDifferentVectorTableContent(previous);
 
         vectorsQuery.WithConfiguration(vectorTableContent);
 
-        Assert.NotEqual(expected, vectorTableContent);
-        Assert.Equal(expected, vectorsQuery.TableContent);
+        Assert.NotEqual(previous, vectorTableContent);
+        Assert.Equal(previous, vectorsQuery.TableContent);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -80,5 +84,16 @@ public class WithConfiguration_VectorTableContent
     }
 
     private static VectorTableContent GetInvalidVectorTableContent() => new(VectorTableQuantities.All, VectorTableUncertainties.XYZ);
-    private static VectorTableContent GetValidVectorTableContent() => new(VectorTableQuantities.All);
+    private static VectorTableContent GetDifferentVectorTableContent(VectorTableContent vectorTableContent) => new(GetDifferentVectorTableQuantities(vectorTableContent.Quantities));
+
+    private static VectorTableQuantities GetDifferentVectorTableQuantities(VectorTableQuantities vectorTableQuantities) => vectorTableQuantities switch
+    {
+        VectorTableQuantities.Position => VectorTableQuantities.Velocity,
+        VectorTableQuantities.Velocity => VectorTableQuantities.Distance,
+        VectorTableQuantities.Distance => VectorTableQuantities.StateVectors,
+        VectorTableQuantities.StateVectors => VectorTableQuantities.Position | VectorTableQuantities.Distance,
+        VectorTableQuantities.Position | VectorTableQuantities.Distance => VectorTableQuantities.All,
+        VectorTableQuantities.All => VectorTableQuantities.Position,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

@@ -43,10 +43,13 @@ public class WithConfiguration_TimePrecision
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var timePrecision = GetValidTimePrecision();
+        var previous = vectorsQuery.TimePrecision;
+
+        var timePrecision = GetDifferentTimePrecision(previous);
 
         var actual = vectorsQuery.WithConfiguration(timePrecision);
 
+        Assert.NotEqual(previous, timePrecision);
         Assert.Equal(timePrecision, actual.TimePrecision);
     }
 
@@ -55,14 +58,14 @@ public class WithConfiguration_TimePrecision
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.TimePrecision;
+        var previous = vectorsQuery.TimePrecision;
 
-        var timePrecision = GetValidTimePrecision();
+        var timePrecision = GetDifferentTimePrecision(previous);
 
         vectorsQuery.WithConfiguration(timePrecision);
 
-        Assert.NotEqual(expected, timePrecision);
-        Assert.Equal(expected, vectorsQuery.TimePrecision);
+        Assert.NotEqual(previous, timePrecision);
+        Assert.Equal(previous, vectorsQuery.TimePrecision);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -95,5 +98,11 @@ public class WithConfiguration_TimePrecision
 
     private static TimePrecision GetInvalidTimePrecision() => (TimePrecision)(-1);
     private static TimePrecision GetForbiddenTimePrecision() => TimePrecision.Unknown;
-    private static TimePrecision GetValidTimePrecision() => TimePrecision.Minute;
+    private static TimePrecision GetDifferentTimePrecision(TimePrecision timePrecision) => timePrecision switch
+    {
+        TimePrecision.Second => TimePrecision.Millisecond,
+        TimePrecision.Millisecond => TimePrecision.Minute,
+        TimePrecision.Minute => TimePrecision.Second,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

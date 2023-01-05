@@ -43,10 +43,13 @@ public class WithConfiguration_ReferencePlane
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var referencePlane = GetValidReferencePlane();
+        var previous = vectorsQuery.ReferencePlane;
+
+        var referencePlane = GetDifferentReferencePlane(previous);
 
         var actual = vectorsQuery.WithConfiguration(referencePlane);
 
+        Assert.NotEqual(previous, referencePlane);
         Assert.Equal(referencePlane, actual.ReferencePlane);
     }
 
@@ -55,14 +58,14 @@ public class WithConfiguration_ReferencePlane
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.ReferencePlane;
+        var previous = vectorsQuery.ReferencePlane;
 
-        var referencePlane = GetValidReferencePlane();
+        var referencePlane = GetDifferentReferencePlane(previous);
 
         vectorsQuery.WithConfiguration(referencePlane);
 
-        Assert.NotEqual(expected, referencePlane);
-        Assert.Equal(expected, vectorsQuery.ReferencePlane);
+        Assert.NotEqual(previous, referencePlane);
+        Assert.Equal(previous, vectorsQuery.ReferencePlane);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -95,5 +98,11 @@ public class WithConfiguration_ReferencePlane
 
     private static ReferencePlane GetInvalidReferencePlane() => (ReferencePlane)(-1);
     private static ReferencePlane GetForbiddenReferencePlane() => ReferencePlane.Unknown;
-    private static ReferencePlane GetValidReferencePlane() => ReferencePlane.BodyEquator;
+    private static ReferencePlane GetDifferentReferencePlane(ReferencePlane referencePlane) => referencePlane switch
+    {
+        ReferencePlane.Ecliptic => ReferencePlane.Frame,
+        ReferencePlane.Frame => ReferencePlane.BodyEquator,
+        ReferencePlane.BodyEquator => ReferencePlane.Ecliptic,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

@@ -29,10 +29,13 @@ public class WithConfiguration_ObjectDataInclusion
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var objectDataInclusion = GetValidObjectDataInclusion();
+        var previous = vectorsQuery.ObjectDataInclusion;
+
+        var objectDataInclusion = GetDifferentObjectDataInclusion(previous);
 
         var actual = vectorsQuery.WithConfiguration(objectDataInclusion);
 
+        Assert.NotEqual(previous, objectDataInclusion);
         Assert.Equal(objectDataInclusion, actual.ObjectDataInclusion);
     }
 
@@ -41,14 +44,14 @@ public class WithConfiguration_ObjectDataInclusion
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var expected = vectorsQuery.ObjectDataInclusion;
+        var previous = vectorsQuery.ObjectDataInclusion;
 
-        var objectDataInclusion = GetValidObjectDataInclusion();
+        var objectDataInclusion = GetDifferentObjectDataInclusion(previous);
 
         vectorsQuery.WithConfiguration(objectDataInclusion);
 
-        Assert.NotEqual(expected, objectDataInclusion);
-        Assert.Equal(expected, vectorsQuery.ObjectDataInclusion);
+        Assert.NotEqual(previous, objectDataInclusion);
+        Assert.Equal(previous, vectorsQuery.ObjectDataInclusion);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -80,5 +83,10 @@ public class WithConfiguration_ObjectDataInclusion
     }
 
     private static ObjectDataInclusion GetInvalidObjectDataInclusion() => (ObjectDataInclusion)(-1);
-    private static ObjectDataInclusion GetValidObjectDataInclusion() => ObjectDataInclusion.Enable;
+    private static ObjectDataInclusion GetDifferentObjectDataInclusion(ObjectDataInclusion objectDataInclusion) => objectDataInclusion switch
+    {
+        ObjectDataInclusion.Enable => ObjectDataInclusion.Disable,
+        ObjectDataInclusion.Disable => ObjectDataInclusion.Enable,
+        _ => throw new InvalidEnumArgumentException()
+    };
 }

@@ -1,27 +1,26 @@
 ﻿namespace SharpHorizons.Tests.QueryCases.VectorsCases.IVectorsQueryCases;
 
-using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 
-using System.ComponentModel;
+using System;
 
 using Xunit;
 
-public class WithConfiguration_OutputLabels
+public class WithTarget
 {
     [Fact]
-    public void Invalid_InvalidEnumArgumentException()
+    public void Null_ArgumentNullException()
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var outputLabels = GetInvalidOutputLabels();
+        var target = GetInvalidTarget();
 
-        var exception = Record.Exception(() => vectorsQuery.WithConfiguration(outputLabels));
+        var exception = Record.Exception(() => vectorsQuery.WithTarget(target));
 
-        Assert.IsType<InvalidEnumArgumentException>(exception);
+        Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Fact]
@@ -29,14 +28,14 @@ public class WithConfiguration_OutputLabels
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var previous = vectorsQuery.OutputLabels;
+        var previous = vectorsQuery.Target;
 
-        var outputLabels = GetDifferentOutputLabels(previous);
+        var target = GetDifferentTarget();
 
-        var actual = vectorsQuery.WithConfiguration(outputLabels);
+        var actual = vectorsQuery.WithTarget(target);
 
-        Assert.NotEqual(previous, outputLabels);
-        Assert.Equal(outputLabels, actual.OutputLabels);
+        Assert.NotEqual(previous, target);
+        Assert.Equal(target, actual.Target);
     }
 
     [Fact]
@@ -44,14 +43,14 @@ public class WithConfiguration_OutputLabels
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var previous = vectorsQuery.OutputLabels;
+        var previous = vectorsQuery.Target;
 
-        var outputLabels = GetDifferentOutputLabels(previous);
+        var target = GetDifferentTarget();
 
-        vectorsQuery.WithConfiguration(outputLabels);
+        vectorsQuery.WithTarget(target);
 
-        Assert.NotEqual(previous, outputLabels);
-        Assert.Equal(previous, vectorsQuery.OutputLabels);
+        Assert.NotEqual(previous, target);
+        Assert.Equal(previous, vectorsQuery.Target);
     }
 
     private static IVectorsQuery GetVectorsQuery()
@@ -61,11 +60,19 @@ public class WithConfiguration_OutputLabels
         return factory.Create(GetValidTarget(), GetValidOrigin(), GetValidEpochSelection());
     }
 
+    private static ITarget GetInvalidTarget() => null!;
     private static ITarget GetValidTarget()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetFactory>();
 
         return factory.Create(new MajorObjectID(301));
+    }
+
+    private static ITarget GetDifferentTarget()
+    {
+        var factory = DependencyInjection.GetRequiredService<ITargetFactory>();
+
+        return factory.Create(new MajorObjectID(499));
     }
 
     private static IOrigin GetValidOrigin()
@@ -81,12 +88,4 @@ public class WithConfiguration_OutputLabels
 
         return factory.Create(JulianDay.Epoch);
     }
-
-    private static OutputLabels GetInvalidOutputLabels() => (OutputLabels)(-1);
-    private static OutputLabels GetDifferentOutputLabels(OutputLabels outputLabels) => outputLabels switch
-    {
-        OutputLabels.Enable => OutputLabels.Disable,
-        OutputLabels.Disable => OutputLabels.Enable,
-        _ => throw new InvalidEnumArgumentException()
-    };
 }
