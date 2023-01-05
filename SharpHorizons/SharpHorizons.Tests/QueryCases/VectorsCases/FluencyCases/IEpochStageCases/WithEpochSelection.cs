@@ -38,7 +38,7 @@ public class WithEpochSelection
 
         var epochSelection = GetValidEpochSelection();
 
-        var actual = epochStage.WithEpochSelection(epochSelection);
+        var actual = epochStage.WithEpochSelection(epochSelection).Build();
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);

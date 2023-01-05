@@ -9,10 +9,13 @@ internal sealed class VectorTableContentValidator : IVectorTableContentValidator
     private IVectorTableQuantitiesValidator TableQuantitiesValidator { get; }
 
     /// <inheritdoc cref="VectorTableContentValidator"/>
+    public VectorTableContentValidator() : this(new VectorTableQuantitiesValidator()) { }
+
+    /// <inheritdoc cref="VectorTableContentValidator"/>
     /// <param name="tableQuantitiesValidator"><inheritdoc cref="TableQuantitiesValidator" path="/summary"/></param>
-    public VectorTableContentValidator(IVectorTableQuantitiesValidator? tableQuantitiesValidator = null)
+    public VectorTableContentValidator(IVectorTableQuantitiesValidator tableQuantitiesValidator)
     {
-        TableQuantitiesValidator = tableQuantitiesValidator ?? new VectorTableQuantitiesValidator();
+        TableQuantitiesValidator = tableQuantitiesValidator;
     }
 
     bool IVectorTableContentValidator.CheckSupport(VectorTableContent content) => CheckUncertaintiesValidity(content.Uncertainties) && TableQuantitiesValidator.CheckSupport(content.Quantities) && CheckCombinationSupport(content);

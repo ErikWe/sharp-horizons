@@ -22,27 +22,27 @@ public interface IEpochStage
     /// <summary>Uses <paramref name="epochSelection"/> as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochSelection">The <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public abstract IVectorsQuery WithEpochSelection(IEpochSelection epochSelection);
+    public abstract IVectorsQueryBuilder WithEpochSelection(IEpochSelection epochSelection);
 
     /// <summary>Uses <paramref name="epochRange"/> as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochRange">This <see cref="IEpochRange"/> is used as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public virtual IVectorsQuery WithEpochRange(IEpochRange epochRange) => WithEpochSelection(epochRange);
+    public virtual IVectorsQueryBuilder WithEpochRange(IEpochRange epochRange) => WithEpochSelection(epochRange);
 
     /// <summary>Delegates the production of an <see cref="IEpochSelection"/> to an <see cref="IEpochRangeFactory"/>, and constructs the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochRangeFactoryDelegate"><inheritdoc cref="DEpochRangeFactory" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    public abstract IVectorsQuery WithEpochRange(DEpochRangeFactory epochRangeFactoryDelegate);
+    public abstract IVectorsQueryBuilder WithEpochRange(DEpochRangeFactory epochRangeFactoryDelegate);
 
     /// <summary>Uses <paramref name="epochCollection"/> as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochCollection">This <see cref="IEpochCollection"/> is used as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public virtual IVectorsQuery WithEpochCollection(IEpochCollection epochCollection) => WithEpochSelection(epochCollection);
+    public virtual IVectorsQueryBuilder WithEpochCollection(IEpochCollection epochCollection) => WithEpochSelection(epochCollection);
 
     /// <summary>Delegates the production of an <see cref="IEpochSelection"/> to an <see cref="IEpochCollectionFactory"/>, and constructs the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochCollectionFactoryDelegate"><inheritdoc cref="DEpochCollectionFactory" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    public abstract IVectorsQuery WithEpochCollection(DEpochCollectionFactory epochCollectionFactoryDelegate);
+    public abstract IVectorsQueryBuilder WithEpochCollection(DEpochCollectionFactory epochCollectionFactoryDelegate);
 }

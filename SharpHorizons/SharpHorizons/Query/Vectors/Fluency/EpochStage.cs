@@ -3,59 +3,53 @@
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
-using SharpHorizons.Query.Vectors.Table;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IEpochStage"/>
 internal sealed class EpochStage : IEpochStage
 {
     /// <summary>The <see cref="ITarget"/> selected for the <see cref="IVectorsQuery"/>.</summary>
-    public required ITarget Target { private get; init; }
+    private ITarget Target { get; }
 
     /// <summary>The <see cref="IOrigin"/> selected for the <see cref="IVectorsQuery"/>.</summary>
-    public required IOrigin Origin { private get; init; }
+    private IOrigin Origin { get; }
 
-    /// <inheritdoc cref="IVectorTableContentValidator"/>
-    public required IVectorTableContentValidator TableContentValidator { private get; init; }
+    /// <inheritdoc cref="IVectorsQueryValidator"/>
+    private IVectorsQueryValidator VectorsQueryValidator { get; }
 
     /// <inheritdoc cref="IEpochRangeFactory"/>
-    public required IEpochRangeFactory EpochRangeFactory { private get; init; }
+    private IEpochRangeFactory EpochRangeFactory { get; }
 
     /// <inheritdoc cref="IEpochCollectionFactory"/>
-    public required IEpochCollectionFactory EpochCollectionFactory { private get; init; }
-
-    /// <inheritdoc cref="EpochStage"/>
-    public EpochStage() { }
+    private IEpochCollectionFactory EpochCollectionFactory { get; }
 
     /// <inheritdoc cref="EpochStage"/>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
-    /// <param name="tableContentValidator"><inheritdoc cref="TableContentValidator" path="/summary"/></param>
+    /// <param name="vectorsQueryValidator"><inheritdoc cref="VectorsQueryValidator" path="/summary"/></param>
     /// <param name="epochRangeFactory"><inheritdoc cref="EpochRangeFactory" path="/summary"/></param>
     /// <param name="epochCollectionFactory"><inheritdoc cref="EpochCollectionFactory" path="/summary"/></param>
-    [SetsRequiredMembers]
-    public EpochStage(ITarget target, IOrigin origin, IVectorTableContentValidator tableContentValidator, IEpochRangeFactory epochRangeFactory, IEpochCollectionFactory epochCollectionFactory)
+    public EpochStage(ITarget target, IOrigin origin, IVectorsQueryValidator vectorsQueryValidator, IEpochRangeFactory epochRangeFactory, IEpochCollectionFactory epochCollectionFactory)
     {
         Target = target;
         Origin = origin;
 
-        TableContentValidator = tableContentValidator;
+        VectorsQueryValidator = vectorsQueryValidator;
 
         EpochRangeFactory = epochRangeFactory;
 
         EpochCollectionFactory = epochCollectionFactory;
     }
 
-    IVectorsQuery IEpochStage.WithEpochSelection(IEpochSelection epochSelection)
+    IVectorsQueryBuilder IEpochStage.WithEpochSelection(IEpochSelection epochSelection)
     {
         ArgumentNullException.ThrowIfNull(epochSelection);
 
-        return CreateVectorsQuery(epochSelection);
+        return CreateVectorsQueryBuilder(epochSelection);
     }
 
-    IVectorsQuery IEpochStage.WithEpochRange(IEpochStage.DEpochRangeFactory epochRangeFactoryDelegate)
+    IVectorsQueryBuilder IEpochStage.WithEpochRange(IEpochStage.DEpochRangeFactory epochRangeFactoryDelegate)
     {
         ArgumentNullException.ThrowIfNull(epochRangeFactoryDelegate);
 
@@ -63,7 +57,7 @@ internal sealed class EpochStage : IEpochStage
 
         try
         {
-            return CreateVectorsQuery(epochSelection);
+            return CreateVectorsQueryBuilder(epochSelection);
         }
         catch (ArgumentNullException e)
         {
@@ -71,7 +65,7 @@ internal sealed class EpochStage : IEpochStage
         }
     }
 
-    IVectorsQuery IEpochStage.WithEpochCollection(IEpochStage.DEpochCollectionFactory epochCollectionFactoryDelegate)
+    IVectorsQueryBuilder IEpochStage.WithEpochCollection(IEpochStage.DEpochCollectionFactory epochCollectionFactoryDelegate)
     {
         ArgumentNullException.ThrowIfNull(epochCollectionFactoryDelegate);
 
@@ -79,7 +73,7 @@ internal sealed class EpochStage : IEpochStage
 
         try
         {
-            return CreateVectorsQuery(epochSelection);
+            return CreateVectorsQueryBuilder(epochSelection);
         }
         catch (ArgumentNullException e)
         {
@@ -119,5 +113,5 @@ internal sealed class EpochStage : IEpochStage
 
     /// <summary>Uses <paramref name="epochSelection"/> as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>, and constructs the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochSelection">The <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</param>
-    private IVectorsQuery CreateVectorsQuery(IEpochSelection epochSelection) => new VectorsQuery(TableContentValidator, Target, Origin, epochSelection);
+    private IVectorsQueryBuilder CreateVectorsQueryBuilder(IEpochSelection epochSelection) => new VectorsQueryBuilder(VectorsQueryValidator, Target, Origin, epochSelection);
 }

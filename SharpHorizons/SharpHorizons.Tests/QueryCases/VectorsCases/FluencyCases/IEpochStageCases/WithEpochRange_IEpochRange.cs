@@ -38,7 +38,7 @@ public class WithEpochRange_IEpochRange
 
         var epochRange = GetValidEpochRange();
 
-        var actual = epochStage.WithEpochRange(epochRange);
+        var actual = epochStage.WithEpochRange(epochRange).Build();
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);

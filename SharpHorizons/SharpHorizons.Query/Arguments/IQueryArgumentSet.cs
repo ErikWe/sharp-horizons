@@ -40,8 +40,8 @@ public interface IQueryArgumentSet
     /// <summary>The optional <see cref="IEpochCollectionFormatArgument"/>, describing the <see cref="EpochFormat"/> of the individual <see cref="IEpoch"/> of the <see cref="EpochCollection"/>.</summary>
     public abstract OptionalQueryArgument<IEpochCollectionFormatArgument> EpochCollectionFormat { get; }
 
-    /// <summary>The optional <see cref="ICalendarTypeArgument"/>, describing the <see cref="CalendarType"/>.</summary>
-    public abstract OptionalQueryArgument<ICalendarTypeArgument> EpochCalendar { get; }
+    /// <summary>The optional <see cref="ICalendarTypeArgument"/>, describing the <see cref="Epoch.CalendarType"/>.</summary>
+    public abstract OptionalQueryArgument<ICalendarTypeArgument> CalendarType { get; }
 
     /// <summary>The optional <see cref="ITimeSystemArgument"/>, describing the <see cref="Epoch.TimeSystem"/>.</summary>
     public abstract OptionalQueryArgument<ITimeSystemArgument> TimeSystem { get; }

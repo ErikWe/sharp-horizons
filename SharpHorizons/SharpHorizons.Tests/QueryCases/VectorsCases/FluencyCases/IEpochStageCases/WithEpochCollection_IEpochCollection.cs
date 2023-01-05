@@ -38,7 +38,7 @@ public class WithEpochCollection_IEpochCollection
 
         var epochCollection = GetValidEpochCollection();
 
-        var actual = epochStage.WithEpochCollection(epochCollection);
+        var actual = epochStage.WithEpochCollection(epochCollection).Build();
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);

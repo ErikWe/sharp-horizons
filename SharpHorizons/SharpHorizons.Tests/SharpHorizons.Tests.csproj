@@ -18,6 +18,10 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" PrivateAssets="all" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Moq" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="xunit" PrivateAssets="all" />

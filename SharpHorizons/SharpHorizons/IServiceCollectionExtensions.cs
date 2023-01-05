@@ -50,7 +50,7 @@ public static class IServiceCollectionExtensions
         services.AddSingleton(DateTimeZoneProviders.Tzdb);
 
         services.AddTransient<IQueryArgumentSetBuilder, QueryArgumentSetBuilder>();
-        services.AddSingleton<IQueryArgumentSetBuilderFactory, QueryArgumentSetBuilderFactory>();
+        services.AddSingleton<IQueryArgumentSetFactory, QueryArgumentSetBuilderFactory>();
 
         services.AddSingleton<ITimeSystemOffsetProvider, ZeroTimeSystemOffsetProvider>();
 
@@ -179,6 +179,7 @@ public static class IServiceCollectionExtensions
     private static IServiceCollection AddSharpHorizonsVectors(this IServiceCollection services)
     {
         services.AddSingleton<IVectorsQueryFactory, VectorsQueryFactory>();
+        services.AddSingleton<IVectorsQueryValidator, VectorsQueryValidator>();
 
         services.AddSingleton<IVectorsQueryArgumentComposer, VectorsQueryArgumentComposer>();
         services.AddSingleton<IVectorsQueryComposer, VectorsQueryComposer>();

@@ -4,28 +4,23 @@ using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IOriginStage"/>
 internal sealed class OriginStage : IOriginStage
 {
     /// <summary>The <see cref="ITarget"/> selected for the <see cref="IVectorsQuery"/>.</summary>
-    public required ITarget Target { private get; init; }
+    private ITarget Target { get; }
 
     /// <inheritdoc cref="IOriginFactory"/>
-    public required IOriginFactory OriginFactory { private get; init; }
+    private IOriginFactory OriginFactory { get; }
 
     /// <inheritdoc cref="IEpochStageFactory"/>
-    public required IEpochStageFactory EpochStageFactory { private get; init; }
-
-    /// <inheritdoc cref="OriginStage"/>
-    public OriginStage() { }
+    private IEpochStageFactory EpochStageFactory { get; }
 
     /// <inheritdoc cref="OriginStage"/>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="originFactory"><inheritdoc cref="OriginFactory" path="/summary"/></param>
     /// <param name="epochStageFactory"><inheritdoc cref="EpochStageFactory" path="/summary"/></param>
-    [SetsRequiredMembers]
     public OriginStage(ITarget target, IOriginFactory originFactory, IEpochStageFactory epochStageFactory)
     {
         Target = target;

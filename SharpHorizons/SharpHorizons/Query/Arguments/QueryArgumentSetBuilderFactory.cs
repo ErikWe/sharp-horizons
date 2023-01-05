@@ -1,16 +1,30 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
-/// <inheritdoc cref="IQueryArgumentSetBuilderFactory"/>
-internal sealed class QueryArgumentSetBuilderFactory : IQueryArgumentSetBuilderFactory
+using System;
+
+/// <inheritdoc cref="IQueryArgumentSetFactory"/>
+internal sealed class QueryArgumentSetBuilderFactory : IQueryArgumentSetFactory
 {
-    IQueryArgumentSetBuilder IQueryArgumentSetBuilderFactory.Create(ICommandArgument command)
+    IQueryArgumentSetBuilder IQueryArgumentSetFactory.CreateBuilder(ICommandArgument command)
     {
         QueryArgument.Validate(command);
 
-        IQueryArgumentSetBuilder builder = new QueryArgumentSetBuilder();
+        return new QueryArgumentSetBuilder(command);
+    }
 
-        builder.Specify(command);
+    IQueryArgumentSetBuilder IQueryArgumentSetFactory.CreateBuilder(IQueryArgumentSet argumentSet)
+    {
+        ArgumentNullException.ThrowIfNull(argumentSet);
 
-        return builder;
+        try
+        {
+            QueryArgument.Validate(argumentSet.Command);
+        }
+        catch (ArgumentException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<IQueryArgumentSet>(nameof(argumentSet), e);
+        }
+
+        return new QueryArgumentSetBuilder(argumentSet);
     }
 }

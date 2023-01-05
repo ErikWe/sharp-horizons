@@ -51,7 +51,7 @@ public class WithEpochRange_DEpochRangeFactory
 
         var epochRange = GetValidEpochRange();
 
-        var actual = epochStage.WithEpochRange(epochRangeFactoryDelegate);
+        var actual = epochStage.WithEpochRange(epochRangeFactoryDelegate).Build();
 
         Assert.Equal(target, actual.Target);
         Assert.Equal(origin, actual.Origin);

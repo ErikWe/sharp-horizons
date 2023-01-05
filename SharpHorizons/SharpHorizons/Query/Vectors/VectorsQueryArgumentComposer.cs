@@ -9,8 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 /// <inheritdoc cref="IVectorsQueryArgumentComposer"/>
 internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentComposer
 {
-    /// <inheritdoc cref="IQueryArgumentSetBuilderFactory"/>
-    public required IQueryArgumentSetBuilderFactory BuilderFactory { private get; init; }
+    /// <inheritdoc cref="IQueryArgumentSetFactory"/>
+    public required IQueryArgumentSetFactory BuilderFactory { private get; init; }
 
     /// <inheritdoc cref="IOutputFormatComposer"/>
     public required IOutputFormatComposer OutputFormatComposer { private get; init; }
@@ -66,7 +66,7 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
     /// <param name="outputLabelsComposer"><inheritdoc cref="OutputLabelsComposer" path="/summary"/></param>
     /// <param name="valueSeparationComposer"><inheritdoc cref="ValueSeparationComposer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public VectorsQueryArgumentComposer(IQueryArgumentSetBuilderFactory builderFactory, IEphemerisTypeComposer ephemerisTypeComposer, IOutputFormatComposer outputFormatComposer, IObjectDataInclusionComposer objectDataInclusionComposer, IReferencePlaneComposer referencePlaneComposer, IReferenceSystemComposer referenceSystemComposer,
+    public VectorsQueryArgumentComposer(IQueryArgumentSetFactory builderFactory, IEphemerisTypeComposer ephemerisTypeComposer, IOutputFormatComposer outputFormatComposer, IObjectDataInclusionComposer objectDataInclusionComposer, IReferencePlaneComposer referencePlaneComposer, IReferenceSystemComposer referenceSystemComposer,
         ITimePrecisionComposer timePrecisionComposer, IVectorCorrectionComposer correctionComposer, ITimeDeltaInclusionComposer timeDeltaInclusionComposer, IVectorTableContentComposer tableContentComposer, IOutputUnitsComposer outputUnitsComposer, IVectorLabelsComposer outputLabelsComposer, IValueSeparationComposer valueSeparationComposer)
     {
         BuilderFactory = builderFactory;
@@ -90,43 +90,43 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
     {
         ArgumentNullException.ThrowIfNull(query);
 
-        var builder = BuilderFactory.Create(query.Target.ComposeArgument());
+        var builder = BuilderFactory.CreateBuilder(query.Target.ComposeArgument());
 
-        builder.Specify(EphemerisTypeArgument);
-        builder.Specify(OutputFormatComposer.Compose(query.OutputFormat));
-        builder.Specify(ObjectDataInclusionComposer.Compose(query.ObjectDataInclusion));
+        builder.SpecifyEphemerisType(EphemerisTypeArgument);
+        builder.SpecifyOutputFormat(OutputFormatComposer.Compose(query.OutputFormat));
+        builder.SpecifyObjectDataInclusion(ObjectDataInclusionComposer.Compose(query.ObjectDataInclusion));
 
-        builder.Specify(query.Origin.ComposeArgument());
+        builder.SpecifyOrigin(query.Origin.ComposeArgument());
 
         if (query.Origin.UsesCoordinate)
         {
-            builder.Specify(query.Origin.ComposeCoordinateArgument());
-            builder.Specify(query.Origin.ComposeCoordinateTypeArgument());
+            builder.SpecifyOriginCoordinate(query.Origin.ComposeCoordinateArgument());
+            builder.SpecifyOriginCoordinateType(query.Origin.ComposeCoordinateTypeArgument());
         }
 
         if (query.EpochSelection.Selection is Epoch.EpochSelectionMode.Collection)
         {
-            builder.Specify(query.EpochSelection.ComposeCollectionArgument());
-            builder.Specify(query.EpochSelection.ComposeCollectionFormatArgument());
+            builder.SpecifyEpochCollection(query.EpochSelection.ComposeCollectionArgument());
+            builder.SpecifyEpochCollectionFormat(query.EpochSelection.ComposeCollectionFormatArgument());
         }
 
         if (query.EpochSelection.Selection is Epoch.EpochSelectionMode.Range)
         {
-            builder.Specify(query.EpochSelection.ComposeStartTimeArgument());
-            builder.Specify(query.EpochSelection.ComposeStopTimeArgument());
-            builder.Specify(query.EpochSelection.ComposeStepSizeArgument());
+            builder.SpecifyStartEpoch(query.EpochSelection.ComposeStartTimeArgument());
+            builder.SpecifyStopEpoch(query.EpochSelection.ComposeStopTimeArgument());
+            builder.SpecifyStepSize(query.EpochSelection.ComposeStepSizeArgument());
         }
 
-        builder.Specify(ReferencePlaneComposer.Compose(query.ReferencePlane));
-        builder.Specify(ReferenceSystemComposer.Compose(query.ReferenceSystem));
+        builder.SpecifyReferencePlane(ReferencePlaneComposer.Compose(query.ReferencePlane));
+        builder.SpecifyReferenceSystem(ReferenceSystemComposer.Compose(query.ReferenceSystem));
 
-        builder.Specify(TimePrecisionComposer.Compose(query.TimePrecision));
-        builder.Specify(CorrectionComposer.Compose(query.Correction));
-        builder.Specify(TimeDeltaInclusionComposer.Compose(query.TimeDeltaInclusion));
-        builder.Specify(TableContentComposer.Compose(query.TableContent));
-        builder.Specify(OutputUnitsComposer.Compose(query.OutputUnits));
-        builder.Specify(OutputLabelsComposer.Compose(query.OutputLabels));
-        builder.Specify(ValueSeparationComposer.Compose(query.ValueSeparation));
+        builder.SpecifyTimePrecision(TimePrecisionComposer.Compose(query.TimePrecision));
+        builder.SpecifyVectorCorrection(CorrectionComposer.Compose(query.Correction));
+        builder.SpecifyTimeDeltaInclusion(TimeDeltaInclusionComposer.Compose(query.TimeDeltaInclusion));
+        builder.SpecifyVectorTableContent(TableContentComposer.Compose(query.TableContent));
+        builder.SpecifyOutputUnits(OutputUnitsComposer.Compose(query.OutputUnits));
+        builder.SpecifyVectorLabels(OutputLabelsComposer.Compose(query.OutputLabels));
+        builder.SpecifyValueSeparation(ValueSeparationComposer.Compose(query.ValueSeparation));
 
         return builder.Build();
     }

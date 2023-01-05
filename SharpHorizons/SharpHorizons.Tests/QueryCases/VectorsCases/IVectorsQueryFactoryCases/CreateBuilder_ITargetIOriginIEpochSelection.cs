@@ -1,17 +1,15 @@
 ﻿namespace SharpHorizons.Tests.QueryCases.VectorsCases.IVectorsQueryFactoryCases;
 
-using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
-using SharpHorizons.Query.Vectors.Table;
 
 using System;
 
 using Xunit;
 
-public class Create
+public class CreateBuilder_ITargetIOriginIEpochSelection
 {
     [Fact]
     public void NullTarget_ArgumentNullException()
@@ -57,13 +55,13 @@ public class Create
     {
         var factory = GetService();
 
-        var exception = Record.Exception(() => factory.Create(target, origin, epochSelection));
+        var exception = Record.Exception(() => factory.CreateBuilder(target, origin, epochSelection));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
 
     [Fact]
-    public void Valid_ExactMatch()
+    public void Valid_NotNull()
     {
         var factory = GetService();
 
@@ -71,23 +69,9 @@ public class Create
         var origin = GetValidOrigin();
         var epochSelection = GetValidEpochSelection();
 
-        var actual = factory.Create(target, origin, epochSelection);
+        var actual = factory.CreateBuilder(target, origin, epochSelection);
 
-        Assert.Equal(target, actual.Target);
-        Assert.Equal(origin, actual.Origin);
-        Assert.Equal(epochSelection, actual.EpochSelection);
-
-        Assert.Equal(OutputFormat.JSON, actual.OutputFormat);
-        Assert.Equal(ObjectDataInclusion.Disable, actual.ObjectDataInclusion);
-        Assert.Equal(ReferencePlane.Ecliptic, actual.ReferencePlane);
-        Assert.Equal(ReferenceSystem.ICRF, actual.ReferenceSystem);
-        Assert.Equal(OutputUnits.KilometresAndSeconds, actual.OutputUnits);
-        Assert.Equal(new VectorTableContent(VectorTableQuantities.StateVectors, VectorTableUncertainties.None), actual.TableContent);
-        Assert.Equal(VectorCorrection.None, actual.Correction);
-        Assert.Equal(TimePrecision.Second, actual.TimePrecision);
-        Assert.Equal(ValueSeparation.WhitespaceSeparation, actual.ValueSeparation);
-        Assert.Equal(OutputLabels.Disable, actual.OutputLabels);
-        Assert.Equal(TimeDeltaInclusion.Disable, actual.TimeDeltaInclusion);
+        Assert.NotNull(actual);
     }
 
     private static IVectorsQueryFactory GetService() => DependencyInjection.GetRequiredService<IVectorsQueryFactory>();
