@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
+using System;
+
 /// <inheritdoc cref="IQueryArgumentSetBuilder"/>
 internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 {
@@ -10,7 +12,7 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
     {
         if (ArgumentSet.Command is null)
         {
-            throw new QueryArgumentRequireCommandException();
+            throw new InvalidOperationException($"The {nameof(ICommandArgument)} of the {nameof(IQueryArgumentSet)} was never specified by the {nameof(IQueryArgumentSetBuilder)}.");
         }
 
         return ArgumentSet;

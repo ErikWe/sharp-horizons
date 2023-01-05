@@ -6,7 +6,7 @@ using System;
 public interface IQueryArgumentSetBuilder
 {
     /// <summary>Constructs the <see cref="IQueryArgumentSet"/>.</summary>
-    /// <exception cref="QueryArgumentRequireCommandException"/>
+    /// <exception cref="InvalidOperationException"/>
     public abstract IQueryArgumentSet Build();
 
     /// <summary>Specifies the <see cref="ICommandArgument"/> of the <see cref="IQueryArgumentSet"/>.</summary>
