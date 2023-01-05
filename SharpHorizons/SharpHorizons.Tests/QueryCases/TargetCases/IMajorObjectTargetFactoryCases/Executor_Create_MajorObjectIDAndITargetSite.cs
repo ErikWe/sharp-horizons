@@ -13,7 +13,7 @@ internal static class Executor_Create_MajorObjectIDAndITargetSite
     public static void NullCoordinate_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
         var target = GetValidMajorObjectID();
-        var site = GetInvalidTargetSite();
+        var site = GetNullTargetSite();
 
         var exception = Record.Exception(() => factory.Create(target, site));
 
@@ -32,7 +32,7 @@ internal static class Executor_Create_MajorObjectIDAndITargetSite
 
     private static MajorObjectID GetValidMajorObjectID() => new(301);
 
-    private static ITargetSite GetInvalidTargetSite() => null!;
+    private static ITargetSite GetNullTargetSite() => null!;
     private static ITargetSite GetValidTargetSite()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetSiteFactory>();

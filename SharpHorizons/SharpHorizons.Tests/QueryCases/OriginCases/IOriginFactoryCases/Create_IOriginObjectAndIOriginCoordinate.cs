@@ -13,7 +13,7 @@ public class Create_IOriginObjectAndIOriginCoordinate
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
+        var origin = GetNullOriginObject();
         var coordinate = GetValidCoordinate();
 
         EitherNull_ArgumentNullException(origin, coordinate);
@@ -23,7 +23,7 @@ public class Create_IOriginObjectAndIOriginCoordinate
     public void NullCoordinate_ArgumentNullException()
     {
         var origin = GetValidOriginObject();
-        var coordinate = GetInvalidCoordinate();
+        var coordinate = GetNullCoordinate();
 
         EitherNull_ArgumentNullException(origin, coordinate);
     }
@@ -31,8 +31,8 @@ public class Create_IOriginObjectAndIOriginCoordinate
     [Fact]
     public void NullObjectAndInvalidCoordinate_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
-        var coordinate = GetInvalidCoordinate();
+        var origin = GetNullOriginObject();
+        var coordinate = GetNullCoordinate();
 
         EitherNull_ArgumentNullException(origin, coordinate);
     }
@@ -61,7 +61,7 @@ public class Create_IOriginObjectAndIOriginCoordinate
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static IOriginObject GetInvalidOriginObject() => null!;
+    private static IOriginObject GetNullOriginObject() => null!;
     private static IOriginObject GetValidOriginObject()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginObjectFactory>();
@@ -69,7 +69,7 @@ public class Create_IOriginObjectAndIOriginCoordinate
         return factory.Create(new MajorObjectID(399));
     }
 
-    private static IOriginCoordinate GetInvalidCoordinate() => null!;
+    private static IOriginCoordinate GetNullCoordinate() => null!;
     private static IOriginCoordinate GetValidCoordinate()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginCoordinateFactory>();

@@ -13,7 +13,7 @@ public class Create
     [Fact]
     public void NullStartEpoch_ArgumentNullException()
     {
-        var startEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
         var stopEpoch = GetValidStopEpoch();
         var stepCount = GetValidStepCount();
 
@@ -24,7 +24,7 @@ public class Create
     public void NullStopEpoch_ArgumentNullException()
     {
         var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var stopEpoch = GetNullEpoch();
         var stepCount = GetValidStepCount();
 
         AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepCount);
@@ -33,8 +33,8 @@ public class Create
     [Fact]
     public void NullStartAndStopEpochs_ArgumentNullException()
     {
-        var startEpoch = GetInvalidEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
+        var stopEpoch = GetNullEpoch();
         var stepCount = GetValidStepCount();
 
         AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepCount);
@@ -73,8 +73,8 @@ public class Create
     [Fact]
     public void NullStartAndStopEpochsAndOutOfRangeStepCount_ArgumentOutOfRangeException()
     {
-        var startEpoch = GetInvalidEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
+        var stopEpoch = GetNullEpoch();
         var stepCount = GetOutOfRangeStepCount();
 
         AnyError_TException<ArgumentOutOfRangeException>(startEpoch, stopEpoch, stepCount);
@@ -115,7 +115,7 @@ public class Create
     private static int GetOutOfRangeStepCount() => 0;
     private static int GetValidStepCount() => 1;
 
-    private static IEpoch GetInvalidEpoch() => null!;
+    private static IEpoch GetNullEpoch() => null!;
     private static IEpoch GetValidStartEpoch() => new JulianDay(0);
     private static IEpoch GetValidStopEpoch() => new JulianDay(1);
     private static IEpoch GetEarlierStopEpoch() => new JulianDay(-1);

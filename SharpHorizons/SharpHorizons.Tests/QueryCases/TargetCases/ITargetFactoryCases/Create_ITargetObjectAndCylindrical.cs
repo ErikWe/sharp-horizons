@@ -14,7 +14,7 @@ public class Create_ITargetObjectAndCylindrical
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var targetObject = GetInvalidTargetObject();
+        var targetObject = GetNullTargetObject();
         var coordinate = GetValidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(targetObject, coordinate);
@@ -32,7 +32,7 @@ public class Create_ITargetObjectAndCylindrical
     [Fact]
     public void NullObjectAndInvalidCoordinate_ArgumentNullException()
     {
-        var targetObject = GetInvalidTargetObject();
+        var targetObject = GetNullTargetObject();
         var coordinate = GetInvalidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(targetObject, coordinate);
@@ -62,7 +62,7 @@ public class Create_ITargetObjectAndCylindrical
 
     private static ITargetFactory GetService() => DependencyInjection.GetRequiredService<ITargetFactory>();
 
-    private static ITargetObject GetInvalidTargetObject() => null!;
+    private static ITargetObject GetNullTargetObject() => null!;
     private static ITargetObject GetValidTargetObject()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetObjectFactory>();

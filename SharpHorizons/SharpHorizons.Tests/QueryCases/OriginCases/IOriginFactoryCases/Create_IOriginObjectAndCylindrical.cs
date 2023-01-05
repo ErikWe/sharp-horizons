@@ -14,7 +14,7 @@ public class Create_IOriginObjectAndCylindrical
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
+        var origin = GetNullOriginObject();
         var coordinate = GetValidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, coordinate);
@@ -32,7 +32,7 @@ public class Create_IOriginObjectAndCylindrical
     [Fact]
     public void NullObjectAndInvalidCoordinate_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
+        var origin = GetNullOriginObject();
         var coordinate = GetInvalidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, coordinate);
@@ -62,7 +62,7 @@ public class Create_IOriginObjectAndCylindrical
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static IOriginObject GetInvalidOriginObject() => null!;
+    private static IOriginObject GetNullOriginObject() => null!;
     private static IOriginObject GetValidOriginObject()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginObjectFactory>();

@@ -21,7 +21,7 @@ public class Create_MajorObjectNameAndObservationSite
     public void NullSite_ArgumentNullException()
     {
         var origin = GetValidMajorObjectName();
-        var site = GetInvalidObservationSite();
+        var site = GetNullObservationSite();
 
         EitherInvalidOrNull_TException<ArgumentNullException>(origin, site);
     }
@@ -30,7 +30,7 @@ public class Create_MajorObjectNameAndObservationSite
     public void InvalidNameAndNullSite_ArgumentNullException()
     {
         var origin = GetInvalidMajorObjectName();
-        var site = GetInvalidObservationSite();
+        var site = GetNullObservationSite();
 
         EitherInvalidOrNull_TException<ArgumentNullException>(origin, site);
     }
@@ -62,6 +62,6 @@ public class Create_MajorObjectNameAndObservationSite
     private static MajorObjectName GetInvalidMajorObjectName() => default;
     private static MajorObjectName GetValidMajorObjectName() => new("Earth");
 
-    private static ObservationSite GetInvalidObservationSite() => null!;
+    private static ObservationSite GetNullObservationSite() => null!;
     private static ObservationSite GetValidObservationSite() => new(new ObservationSiteID("-1"), new ObservationSiteName("Arecibo"));
 }

@@ -14,7 +14,7 @@ public class Create_MajorObjectAndCylindrical
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
         var coordinate = GetValidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, coordinate);
@@ -32,7 +32,7 @@ public class Create_MajorObjectAndCylindrical
     [Fact]
     public void NullObjectAndInvalidCoordinate_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
         var coordinate = GetInvalidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, coordinate);
@@ -62,7 +62,7 @@ public class Create_MajorObjectAndCylindrical
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(399));
 
     private static CylindricalCoordinate GetInvalidCylindrical() => new(new Distance(double.NaN), new Azimuth(double.NaN), new Height(double.NaN));

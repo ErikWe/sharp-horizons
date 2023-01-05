@@ -13,7 +13,7 @@ internal static class Executor_Create_MajorObjectAndGeodetic
 {
     public static void NullMajorObject_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
-        var target = GetInvalidMajorObject();
+        var target = GetNullMajorObject();
         var coordinate = GetValidGeodetic();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(factory, target, coordinate);
@@ -29,7 +29,7 @@ internal static class Executor_Create_MajorObjectAndGeodetic
 
     public static void NullMajorObjectAndInvalidCoordinate_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
-        var target = GetInvalidMajorObject();
+        var target = GetNullMajorObject();
         var coordinate = GetInvalidGeodetic();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(factory, target, coordinate);
@@ -52,7 +52,7 @@ internal static class Executor_Create_MajorObjectAndGeodetic
         Assert.NotNull(actual);
     }
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(301));
 
     private static GeodeticCoordinate GetInvalidGeodetic() => new(new Longitude(double.NaN), new Latitude(double.NaN), new Height(double.NaN));

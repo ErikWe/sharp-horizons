@@ -10,7 +10,7 @@ internal static class Executor_Create_MajorObject
 {
     public static void Null_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
-        var target = GetInvalidMajorObject();
+        var target = GetNullMajorObject();
 
         var exception = Record.Exception(() => factory.Create(target));
 
@@ -26,6 +26,6 @@ internal static class Executor_Create_MajorObject
         Assert.NotNull(actual);
     }
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(301));
 }

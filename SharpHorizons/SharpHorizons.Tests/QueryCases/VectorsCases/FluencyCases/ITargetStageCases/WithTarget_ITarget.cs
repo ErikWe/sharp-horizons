@@ -14,7 +14,7 @@ public class WithTarget_ITarget
     {
         var targetStage = GetTargetStage();
 
-        var target = GetInvalidTarget();
+        var target = GetNullTarget();
 
         var exception = Record.Exception(() => targetStage.WithTarget(target));
 
@@ -35,7 +35,7 @@ public class WithTarget_ITarget
 
     private static ITargetStage GetTargetStage() => DependencyInjection.GetRequiredService<ITargetStageFactory>().Create();
 
-    private static ITarget GetInvalidTarget() => null!;
+    private static ITarget GetNullTarget() => null!;
     private static ITarget GetValidTarget()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetFactory>();

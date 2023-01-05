@@ -14,7 +14,7 @@ public class Create
     [Fact]
     public void NullStartEpoch_ArgumentNullException()
     {
-        var startEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
         var stopEpoch = GetValidStopEpoch();
         var count = GetValidCount();
         var unit = GetValidUnit();
@@ -26,7 +26,7 @@ public class Create
     public void NullStopEpoch_ArgumentNullException()
     {
         var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var stopEpoch = GetNullEpoch();
         var count = GetValidCount();
         var unit = GetValidUnit();
 
@@ -36,8 +36,8 @@ public class Create
     [Fact]
     public void NullStartAndStopEpochs_ArgumentNullException()
     {
-        var startEpoch = GetInvalidEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
+        var stopEpoch = GetNullEpoch();
         var count = GetValidCount();
         var unit = GetValidUnit();
 
@@ -102,8 +102,8 @@ public class Create
     [Fact]
     public void NullStartAndStopEpochsAndOutOfRangeCount_ArgumentOutOfRangeException()
     {
-        var startEpoch = GetInvalidEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
+        var stopEpoch = GetNullEpoch();
         var count = GetOutOfRangeCount();
         var unit = GetValidUnit();
 
@@ -113,8 +113,8 @@ public class Create
     [Fact]
     public void NullStartAndStopEpochsAndForbiddenUnit_ArgumentException()
     {
-        var startEpoch = GetInvalidEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
+        var stopEpoch = GetNullEpoch();
         var count = GetValidCount();
         var unit = GetForbiddenUnit();
 
@@ -159,7 +159,7 @@ public class Create
     private static CalendarStepSizeUnit GetValidUnit() => CalendarStepSizeUnit.Month;
     private static CalendarStepSizeUnit GetForbiddenUnit() => CalendarStepSizeUnit.Unknown;
 
-    private static IEpoch GetInvalidEpoch() => null!;
+    private static IEpoch GetNullEpoch() => null!;
     private static IEpoch GetValidStartEpoch() => new JulianDay(0);
     private static IEpoch GetValidStopEpoch() => new JulianDay(1);
     private static IEpoch GetEarlierStopEpoch() => new JulianDay(-1);

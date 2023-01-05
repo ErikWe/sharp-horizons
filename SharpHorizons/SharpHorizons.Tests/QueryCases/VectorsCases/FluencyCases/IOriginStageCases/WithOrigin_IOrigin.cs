@@ -15,7 +15,7 @@ public class WithOrigin_IOrigin
     {
         var originStage = GetOriginStage();
 
-        var origin = GetInvalidOrigin();
+        var origin = GetNullOrigin();
 
         var exception = Record.Exception(() => originStage.WithOrigin(origin));
 
@@ -43,7 +43,7 @@ public class WithOrigin_IOrigin
         return factory.Create(new MajorObjectID(301));
     }
 
-    private static IOrigin GetInvalidOrigin() => null!;
+    private static IOrigin GetNullOrigin() => null!;
     private static IOrigin GetValidOrigin()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginFactory>();

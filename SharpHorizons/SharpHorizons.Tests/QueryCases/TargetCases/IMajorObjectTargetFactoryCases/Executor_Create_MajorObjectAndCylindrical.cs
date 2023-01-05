@@ -13,7 +13,7 @@ internal static class Executor_Create_MajorObjectAndCylindrical
 {
     public static void NullObject_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
-        var target = GetInvalidMajorObject();
+        var target = GetNullMajorObject();
         var coordinate = GetValidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(factory, target, coordinate);
@@ -29,7 +29,7 @@ internal static class Executor_Create_MajorObjectAndCylindrical
 
     public static void NullObjectAndInvalidCoordinate_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
-        var target = GetInvalidMajorObject();
+        var target = GetNullMajorObject();
         var coordinate = GetInvalidCylindrical();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(factory, target, coordinate);
@@ -52,7 +52,7 @@ internal static class Executor_Create_MajorObjectAndCylindrical
         Assert.NotNull(actual);
     }
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(301));
 
     private static CylindricalCoordinate GetInvalidCylindrical() => new(new Distance(double.NaN), new Azimuth(double.NaN), new Height(double.NaN));

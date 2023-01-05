@@ -16,7 +16,7 @@ public class Create_Params
     {
         var factory = GetService();
 
-        var collection = GetInvalidCollection();
+        var collection = GetNullCollection();
 
         var exception = Record.Exception(() => factory.Create(collection));
 
@@ -43,6 +43,6 @@ public class Create_Params
 
     private static IEpochCollectionFactory GetService() => DependencyInjection.GetRequiredService<IEpochCollectionFactory>();
 
-    private static IEpoch[] GetInvalidCollection() => null!;
+    private static IEpoch[] GetNullCollection() => null!;
     private static IEpoch[] GetValidCollection() => new[] { JulianDay.Epoch };
 }

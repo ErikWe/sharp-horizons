@@ -14,7 +14,7 @@ public class Offset
     [Fact]
     public void NullEpoch_ArgumentNullException()
     {
-        var epoch = GetInvalidEpoch();
+        var epoch = GetNullEpoch();
         var origin = GetValidTimeSystem();
         var target = GetValidTimeSystem();
 
@@ -64,7 +64,7 @@ public class Offset
     [Fact]
     public void NullEpochAndInvalidOriginAndTarget_ArgumentNullException()
     {
-        var epoch = GetInvalidEpoch();
+        var epoch = GetNullEpoch();
         var origin = GetInvalidTimeSystem();
         var target = GetInvalidTimeSystem();
 
@@ -130,7 +130,7 @@ public class Offset
 
     private static ITimeSystemOffsetProvider GetService() => DependencyInjection.GetRequiredService<ITimeSystemOffsetProvider>();
 
-    private static IEpoch GetInvalidEpoch() => null!;
+    private static IEpoch GetNullEpoch() => null!;
     private static IEpoch GetValidEpoch() => JulianDay.Epoch;
 
     private static TimeSystem GetInvalidTimeSystem() => (TimeSystem)4;

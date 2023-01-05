@@ -16,7 +16,7 @@ public class WithEpochSelection
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var epochSelection = GetInvalidEpochSelection();
+        var epochSelection = GetNullEpochSelection();
 
         var exception = Record.Exception(() => vectorsQuery.WithEpochSelection(epochSelection));
 
@@ -74,7 +74,7 @@ public class WithEpochSelection
         return factory.Create(new MajorObjectID(399));
     }
 
-    private static IEpochSelection GetInvalidEpochSelection() => null!;
+    private static IEpochSelection GetNullEpochSelection() => null!;
     private static IEpochSelection GetValidEpochSelection()
     {
         var factory = DependencyInjection.GetRequiredService<IEpochCollectionFactory>();

@@ -16,7 +16,7 @@ public class Create_MajorObjectIDAndIOriginCoordinate
         var factory = GetService();
 
         var origin = GetValidMajorObjectID();
-        var coordinate = GetInvalidCoordinate();
+        var coordinate = GetNullCoordinate();
 
         var exception = Record.Exception(() => factory.Create(origin, coordinate));
 
@@ -40,7 +40,7 @@ public class Create_MajorObjectIDAndIOriginCoordinate
 
     private static MajorObjectID GetValidMajorObjectID() => new(399);
 
-    private static IOriginCoordinate GetInvalidCoordinate() => null!;
+    private static IOriginCoordinate GetNullCoordinate() => null!;
     private static IOriginCoordinate GetValidCoordinate()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginCoordinateFactory>();

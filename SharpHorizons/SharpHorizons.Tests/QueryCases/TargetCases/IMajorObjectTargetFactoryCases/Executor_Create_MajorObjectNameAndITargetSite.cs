@@ -21,7 +21,7 @@ internal static class Executor_Create_MajorObjectNameAndITargetSite
     public static void NullSite_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
         var target = GetValidMajorObjectName();
-        var site = GetInvalidTargetSite();
+        var site = GetNullTargetSite();
 
         EitherInvalidOrNull_TException<ArgumentNullException>(factory, target, site);
     }
@@ -29,7 +29,7 @@ internal static class Executor_Create_MajorObjectNameAndITargetSite
     public static void InvalidNameAndNullSite_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
         var target = GetInvalidMajorObjectName();
-        var site = GetInvalidTargetSite();
+        var site = GetNullTargetSite();
 
         EitherInvalidOrNull_TException<ArgumentNullException>(factory, target, site);
     }
@@ -54,7 +54,7 @@ internal static class Executor_Create_MajorObjectNameAndITargetSite
     private static MajorObjectName GetInvalidMajorObjectName() => default;
     private static MajorObjectName GetValidMajorObjectName() => new("Moon");
 
-    private static ITargetSite GetInvalidTargetSite() => null!;
+    private static ITargetSite GetNullTargetSite() => null!;
     private static ITargetSite GetValidTargetSite()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetSiteFactory>();

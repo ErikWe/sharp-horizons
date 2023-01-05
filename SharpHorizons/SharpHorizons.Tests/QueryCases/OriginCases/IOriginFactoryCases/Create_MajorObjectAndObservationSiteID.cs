@@ -11,7 +11,7 @@ public class Create_MajorObjectAndObservationSiteID
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
         var site = GetValidObservationSiteID();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, site);
@@ -29,7 +29,7 @@ public class Create_MajorObjectAndObservationSiteID
     [Fact]
     public void NullObjectAndInvalidSite_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
         var site = GetInvalidObservationSiteID();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, site);
@@ -59,7 +59,7 @@ public class Create_MajorObjectAndObservationSiteID
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(399));
 
     private static ObservationSiteID GetInvalidObservationSiteID() => default;

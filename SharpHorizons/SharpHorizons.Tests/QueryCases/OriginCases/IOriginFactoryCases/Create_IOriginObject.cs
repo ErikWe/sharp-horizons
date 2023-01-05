@@ -13,7 +13,7 @@ public class Create_IOriginObject
     {
         var factory = GetService();
 
-        var origin = GetInvalidOriginObject();
+        var origin = GetNullOriginObject();
 
         var exception = Record.Exception(() => factory.Create(origin));
 
@@ -34,7 +34,7 @@ public class Create_IOriginObject
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static IOriginObject GetInvalidOriginObject() => null!;
+    private static IOriginObject GetNullOriginObject() => null!;
     private static IOriginObject GetValidOriginObject()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginObjectFactory>();

@@ -11,7 +11,7 @@ public class Create_IOriginObjectAndObservationSiteID
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
+        var origin = GetNullOriginObject();
         var site = GetValidObservationSiteID();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, site);
@@ -29,7 +29,7 @@ public class Create_IOriginObjectAndObservationSiteID
     [Fact]
     public void NullObjectAndInvalidSite_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
+        var origin = GetNullOriginObject();
         var site = GetInvalidObservationSiteID();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, site);
@@ -59,7 +59,7 @@ public class Create_IOriginObjectAndObservationSiteID
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static IOriginObject GetInvalidOriginObject() => null!;
+    private static IOriginObject GetNullOriginObject() => null!;
     private static IOriginObject GetValidOriginObject()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginObjectFactory>();

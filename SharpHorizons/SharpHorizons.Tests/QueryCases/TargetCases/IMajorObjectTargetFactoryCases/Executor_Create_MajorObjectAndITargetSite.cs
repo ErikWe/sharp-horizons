@@ -12,7 +12,7 @@ internal static class Executor_Create_MajorObjectAndITargetSite
 {
     public static void NullObject_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
-        var target = GetInvalidMajorObject();
+        var target = GetNullMajorObject();
         var site = GetValidTargetSite();
 
         MajorObjectAndITargetSite_EitherNull_ArgumentNullException(factory, target, site);
@@ -21,15 +21,15 @@ internal static class Executor_Create_MajorObjectAndITargetSite
     public static void NullSite_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
         var target = GetValidMajorObject();
-        var site = GetInvalidTargetSite();
+        var site = GetNullTargetSite();
 
         MajorObjectAndITargetSite_EitherNull_ArgumentNullException(factory, target, site);
     }
 
     public static void NullObjectAndSite_ArgumentNullException(IMajorObjectTargetFactory factory)
     {
-        var target = GetInvalidMajorObject();
-        var site = GetInvalidTargetSite();
+        var target = GetNullMajorObject();
+        var site = GetNullTargetSite();
 
         MajorObjectAndITargetSite_EitherNull_ArgumentNullException(factory, target, site);
     }
@@ -51,10 +51,10 @@ internal static class Executor_Create_MajorObjectAndITargetSite
         Assert.NotNull(actual);
     }
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(301));
 
-    private static ITargetSite GetInvalidTargetSite() => null!;
+    private static ITargetSite GetNullTargetSite() => null!;
     private static ITargetSite GetValidTargetSite()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetSiteFactory>();

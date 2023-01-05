@@ -11,7 +11,7 @@ internal static class Executor_Create_MPCObject
 {
     public static void Null_ArgumentNullException(ITargetFactory factory)
     {
-        var target = GetInvalidMPCObject();
+        var target = GetNullMPCObject();
 
         var exception = Record.Exception(() => factory.Create(target));
 
@@ -27,6 +27,6 @@ internal static class Executor_Create_MPCObject
         Assert.NotNull(actual);
     }
 
-    private static MPCObject GetInvalidMPCObject() => null!;
+    private static MPCObject GetNullMPCObject() => null!;
     private static MPCObject GetValidMPCObject() => MPCObject.Named(new MPCSequentialNumber(1), new MPCName("Ceres"));
 }

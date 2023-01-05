@@ -11,7 +11,7 @@ public class Create_IOriginObjectAndObservationSite
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
+        var origin = GetNullOriginObject();
         var site = GetValidObservationSite();
 
         EitherNull_ArgumentNullException(origin, site);
@@ -21,7 +21,7 @@ public class Create_IOriginObjectAndObservationSite
     public void NullSite_ArgumentNullException()
     {
         var origin = GetValidOriginObject();
-        var site = GetInvalidObservationSite();
+        var site = GetNullObservationSite();
 
         EitherNull_ArgumentNullException(origin, site);
     }
@@ -29,8 +29,8 @@ public class Create_IOriginObjectAndObservationSite
     [Fact]
     public void NullObjectAndSite_ArgumentNullException()
     {
-        var origin = GetInvalidOriginObject();
-        var site = GetInvalidObservationSite();
+        var origin = GetNullOriginObject();
+        var site = GetNullObservationSite();
 
         EitherNull_ArgumentNullException(origin, site);
     }
@@ -59,7 +59,7 @@ public class Create_IOriginObjectAndObservationSite
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static IOriginObject GetInvalidOriginObject() => null!;
+    private static IOriginObject GetNullOriginObject() => null!;
     private static IOriginObject GetValidOriginObject()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginObjectFactory>();
@@ -67,6 +67,6 @@ public class Create_IOriginObjectAndObservationSite
         return factory.Create(new MajorObjectID(399));
     }
 
-    private static ObservationSite GetInvalidObservationSite() => null!;
+    private static ObservationSite GetNullObservationSite() => null!;
     private static ObservationSite GetValidObservationSite() => new(new ObservationSiteID("-1"), new ObservationSiteName("Arecibo"));
 }

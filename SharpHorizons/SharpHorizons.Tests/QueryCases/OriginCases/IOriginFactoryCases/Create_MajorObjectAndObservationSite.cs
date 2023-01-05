@@ -11,7 +11,7 @@ public class Create_MajorObjectAndObservationSite
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
         var site = GetValidObservationSite();
 
         EitherNull_ArgumentNullException(origin, site);
@@ -21,7 +21,7 @@ public class Create_MajorObjectAndObservationSite
     public void NullSite_ArgumentNullException()
     {
         var origin = GetValidMajorObject();
-        var site = GetInvalidObservationSite();
+        var site = GetNullObservationSite();
 
         EitherNull_ArgumentNullException(origin, site);
     }
@@ -29,8 +29,8 @@ public class Create_MajorObjectAndObservationSite
     [Fact]
     public void NullObjectAndSite_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
-        var site = GetInvalidObservationSite();
+        var origin = GetNullMajorObject();
+        var site = GetNullObservationSite();
 
         EitherNull_ArgumentNullException(origin, site);
     }
@@ -59,9 +59,9 @@ public class Create_MajorObjectAndObservationSite
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(399));
 
-    private static ObservationSite GetInvalidObservationSite() => null!;
+    private static ObservationSite GetNullObservationSite() => null!;
     private static ObservationSite GetValidObservationSite() => new(new ObservationSiteID("-1"), new ObservationSiteName("Arecibo"));
 }

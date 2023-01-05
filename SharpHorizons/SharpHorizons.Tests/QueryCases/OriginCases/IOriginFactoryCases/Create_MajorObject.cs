@@ -13,7 +13,7 @@ public class Create_MajorObject
     {
         var factory = GetService();
 
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
 
         var exception = Record.Exception(() => factory.Create(origin));
 
@@ -34,6 +34,6 @@ public class Create_MajorObject
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(399));
 }

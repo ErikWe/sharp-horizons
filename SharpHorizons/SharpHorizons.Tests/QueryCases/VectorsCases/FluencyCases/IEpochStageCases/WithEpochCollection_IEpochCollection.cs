@@ -19,7 +19,7 @@ public class WithEpochCollection_IEpochCollection
     {
         var epochStage = GetEpochStage();
 
-        var epochCollection = GetInvalidEpochCollection();
+        var epochCollection = GetNullEpochCollection();
 
         var exception = Record.Exception(() => epochStage.WithEpochCollection(epochCollection));
 
@@ -74,7 +74,7 @@ public class WithEpochCollection_IEpochCollection
         return factory.Create(new MajorObjectID(399));
     }
 
-    private static IEpochCollection GetInvalidEpochCollection() => null!;
+    private static IEpochCollection GetNullEpochCollection() => null!;
     private static IEpochCollection GetValidEpochCollection()
     {
         var factory = DependencyInjection.GetRequiredService<IEpochCollectionFactory>();

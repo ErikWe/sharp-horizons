@@ -13,7 +13,7 @@ public class Create
     [Fact]
     public void NullTarget_ArgumentNullException()
     {
-        var target = GetInvalidTarget();
+        var target = GetNullTarget();
         var origin = GetValidOrigin();
 
         EitherNull_ArgumentNullException(target, origin);
@@ -23,7 +23,7 @@ public class Create
     public void NullOrigin_ArgumentNullException()
     {
         var target = GetValidTarget();
-        var origin = GetInvalidOrigin();
+        var origin = GetNullOrigin();
 
         EitherNull_ArgumentNullException(target, origin);
     }
@@ -31,8 +31,8 @@ public class Create
     [Fact]
     public void NullOriginAndTarget_ArgumentNullException()
     {
-        var target = GetInvalidTarget();
-        var origin = GetInvalidOrigin();
+        var target = GetNullTarget();
+        var origin = GetNullOrigin();
 
         EitherNull_ArgumentNullException(target, origin);
     }
@@ -61,7 +61,7 @@ public class Create
 
     private static IEpochStageFactory GetService() => DependencyInjection.GetRequiredService<IEpochStageFactory>();
 
-    private static ITarget GetInvalidTarget() => null!;
+    private static ITarget GetNullTarget() => null!;
     private static ITarget GetValidTarget()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetFactory>();
@@ -69,7 +69,7 @@ public class Create
         return factory.Create(new MajorObjectID(301));
     }
 
-    private static IOrigin GetInvalidOrigin() => null!;
+    private static IOrigin GetNullOrigin() => null!;
     private static IOrigin GetValidOrigin()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginFactory>();

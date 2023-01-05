@@ -13,7 +13,7 @@ public class Create
     [Fact]
     public void NullStartEpoch_ArgumentNullException()
     {
-        var startEpoch = GetInvalidEpoch();
+        var startEpoch = GetNullEpoch();
         var stopEpoch = GetValidStopEpoch();
         var stepSize = GetValidStepSize();
 
@@ -24,7 +24,7 @@ public class Create
     public void NullStopEpoch_ArgumentNullException()
     {
         var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetInvalidEpoch();
+        var stopEpoch = GetNullEpoch();
         var stepSize = GetValidStepSize();
 
         AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepSize);
@@ -35,7 +35,7 @@ public class Create
     {
         var startEpoch = GetValidStartEpoch();
         var stopEpoch = GetValidStopEpoch();
-        var stepSize = GetInvalidStepSize();
+        var stepSize = GetNullStepSize();
 
         AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepSize);
     }
@@ -45,7 +45,7 @@ public class Create
     {
         var startEpoch = GetValidStartEpoch();
         var stopEpoch = GetEarlierStopEpoch();
-        var stepSize = GetInvalidStepSize();
+        var stepSize = GetNullStepSize();
 
         AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepSize);
     }
@@ -102,12 +102,12 @@ public class Create
 
     private static IEpochRangeFactory GetService() => DependencyInjection.GetRequiredService<IEpochRangeFactory>();
 
-    private static IEpoch GetInvalidEpoch() => null!;
+    private static IEpoch GetNullEpoch() => null!;
     private static IEpoch GetValidStartEpoch() => new JulianDay(0);
     private static IEpoch GetValidStopEpoch() => new JulianDay(1);
     private static IEpoch GetEarlierStopEpoch() => new JulianDay(-1);
 
-    private static IStepSize GetInvalidStepSize() => null!;
+    private static IStepSize GetNullStepSize() => null!;
     private static IStepSize GetValidStepSize()
     {
         var factory = DependencyInjection.GetRequiredService<IUniformStepSizeFactory>();

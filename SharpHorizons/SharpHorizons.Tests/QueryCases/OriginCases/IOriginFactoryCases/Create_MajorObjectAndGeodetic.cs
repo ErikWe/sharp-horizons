@@ -14,7 +14,7 @@ public class Create_MajorObjectAndGeodetic
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
         var coordinate = GetValidGeodetic();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, coordinate);
@@ -32,7 +32,7 @@ public class Create_MajorObjectAndGeodetic
     [Fact]
     public void NullObjectAndInvalidCoordinate_ArgumentNullException()
     {
-        var origin = GetInvalidMajorObject();
+        var origin = GetNullMajorObject();
         var coordinate = GetInvalidGeodetic();
 
         EitherNullOrInvalid_TException<ArgumentNullException>(origin, coordinate);
@@ -62,7 +62,7 @@ public class Create_MajorObjectAndGeodetic
 
     private static IOriginFactory GetService() => DependencyInjection.GetRequiredService<IOriginFactory>();
 
-    private static MajorObject GetInvalidMajorObject() => null!;
+    private static MajorObject GetNullMajorObject() => null!;
     private static MajorObject GetValidMajorObject() => new(new MajorObjectID(399));
 
     private static GeodeticCoordinate GetInvalidGeodetic() => new(new Longitude(double.NaN), new Latitude(double.NaN), new Height(double.NaN));

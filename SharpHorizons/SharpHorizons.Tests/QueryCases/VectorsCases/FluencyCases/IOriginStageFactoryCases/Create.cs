@@ -14,7 +14,7 @@ public class Create
     {
         var factory = GetService();
 
-        var target = GetInvalidTarget();
+        var target = GetNullTarget();
 
         var exception = Record.Exception(() => factory.Create(target));
 
@@ -35,7 +35,7 @@ public class Create
 
     private static IOriginStageFactory GetService() => DependencyInjection.GetRequiredService<IOriginStageFactory>();
 
-    private static ITarget GetInvalidTarget() => null!;
+    private static ITarget GetNullTarget() => null!;
     private static ITarget GetValidTarget()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetFactory>();

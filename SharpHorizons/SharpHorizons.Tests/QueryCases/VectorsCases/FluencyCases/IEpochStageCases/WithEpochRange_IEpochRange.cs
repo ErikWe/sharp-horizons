@@ -19,7 +19,7 @@ public class WithEpochRange_IEpochRange
     {
         var epochStage = GetEpochStage();
 
-        var epochRange = GetInvalidEpochRange();
+        var epochRange = GetNullEpochRange();
 
         var exception = Record.Exception(() => epochStage.WithEpochRange(epochRange));
 
@@ -74,7 +74,7 @@ public class WithEpochRange_IEpochRange
         return factory.Create(new MajorObjectID(399));
     }
 
-    private static IEpochRange GetInvalidEpochRange() => null!;
+    private static IEpochRange GetNullEpochRange() => null!;
     private static IEpochRange GetValidEpochRange()
     {
         var factory = DependencyInjection.GetRequiredService<IEpochRangeFactory>();

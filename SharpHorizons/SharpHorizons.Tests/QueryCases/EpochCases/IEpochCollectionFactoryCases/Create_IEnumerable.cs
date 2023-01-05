@@ -17,7 +17,7 @@ public class Create_IEnumerable
     {
         var factory = GetService();
 
-        var collection = GetInvalidCollection();
+        var collection = GetNullCollection();
 
         var exception = Record.Exception(() => factory.Create(collection));
 
@@ -44,6 +44,6 @@ public class Create_IEnumerable
 
     private static IEpochCollectionFactory GetService() => DependencyInjection.GetRequiredService<IEpochCollectionFactory>();
 
-    private static IEnumerable<IEpoch> GetInvalidCollection() => null!;
+    private static IEnumerable<IEpoch> GetNullCollection() => null!;
     private static IEnumerable<IEpoch> GetValidCollection() => new[] { JulianDay.Epoch };
 }

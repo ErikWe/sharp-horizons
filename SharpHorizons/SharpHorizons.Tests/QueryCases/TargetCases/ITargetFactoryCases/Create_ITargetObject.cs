@@ -13,7 +13,7 @@ public class Create_ITargetObject
     {
         var factory = GetService();
 
-        var targetObject = GetInvalidTargetObject();
+        var targetObject = GetNullTargetObject();
 
         var exception = Record.Exception(() => factory.Create(targetObject));
 
@@ -34,7 +34,7 @@ public class Create_ITargetObject
 
     private static ITargetFactory GetService() => DependencyInjection.GetRequiredService<ITargetFactory>();
 
-    private static ITargetObject GetInvalidTargetObject() => null!;
+    private static ITargetObject GetNullTargetObject() => null!;
     private static ITargetObject GetValidTargetObject()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetObjectFactory>();

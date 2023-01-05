@@ -16,7 +16,7 @@ public class Create
     [Fact]
     public void NullTarget_ArgumentNullException()
     {
-        var target = GetInvalidTarget();
+        var target = GetNullTarget();
         var origin = GetValidOrigin();
         var epochs = GetValidEpochSelection();
 
@@ -27,7 +27,7 @@ public class Create
     public void NullOrigin_ArgumentNullException()
     {
         var target = GetValidTarget();
-        var origin = GetInvalidOrigin();
+        var origin = GetNullOrigin();
         var epochs = GetValidEpochSelection();
 
         AnyNull_ArgumentNullException(target, origin, epochs);
@@ -38,7 +38,7 @@ public class Create
     {
         var target = GetValidTarget();
         var origin = GetValidOrigin();
-        var epochs = GetInvalidEpochSelection();
+        var epochs = GetNullEpochSelection();
 
         AnyNull_ArgumentNullException(target, origin, epochs);
     }
@@ -46,9 +46,9 @@ public class Create
     [Fact]
     public void NullTargetOriginAndEpochSelection_ArgumentNullException()
     {
-        var target = GetInvalidTarget();
-        var origin = GetInvalidOrigin();
-        var epochs = GetInvalidEpochSelection();
+        var target = GetNullTarget();
+        var origin = GetNullOrigin();
+        var epochs = GetNullEpochSelection();
 
         AnyNull_ArgumentNullException(target, origin, epochs);
     }
@@ -92,7 +92,7 @@ public class Create
 
     private static IVectorsQueryFactory GetService() => DependencyInjection.GetRequiredService<IVectorsQueryFactory>();
 
-    private static ITarget GetInvalidTarget() => null!;
+    private static ITarget GetNullTarget() => null!;
     private static ITarget GetValidTarget()
     {
         var targetFactory = DependencyInjection.GetRequiredService<ITargetFactory>();
@@ -100,7 +100,7 @@ public class Create
         return targetFactory.Create(new MajorObjectID(301));
     }
 
-    private static IOrigin GetInvalidOrigin() => null!;
+    private static IOrigin GetNullOrigin() => null!;
     private static IOrigin GetValidOrigin()
     {
         var originFactory = DependencyInjection.GetRequiredService<IOriginFactory>();
@@ -108,7 +108,7 @@ public class Create
         return originFactory.Create(new MajorObjectID(399));
     }
 
-    private static IEpochSelection GetInvalidEpochSelection() => null!;
+    private static IEpochSelection GetNullEpochSelection() => null!;
     private static IEpochSelection GetValidEpochSelection()
     {
         var epochSelectionFactory = DependencyInjection.GetRequiredService<IEpochCollectionFactory>();

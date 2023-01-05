@@ -23,7 +23,7 @@ public class Create_MajorObjectNameAndIOriginCoordinate
     public void NullCoordinate_ArgumentNullException()
     {
         var origin = GetValidMajorObjectName();
-        var coordinate = GetInvalidCoordinate();
+        var coordinate = GetNullCoordinate();
 
         EitherInvalidOrNull_TException<ArgumentNullException>(origin, coordinate);
     }
@@ -32,7 +32,7 @@ public class Create_MajorObjectNameAndIOriginCoordinate
     public void InvalidNameAndNullCoordinate_ArgumentNullException()
     {
         var origin = GetInvalidMajorObjectName();
-        var coordinate = GetInvalidCoordinate();
+        var coordinate = GetNullCoordinate();
 
         EitherInvalidOrNull_TException<ArgumentNullException>(origin, coordinate);
     }
@@ -64,7 +64,7 @@ public class Create_MajorObjectNameAndIOriginCoordinate
     private static MajorObjectName GetInvalidMajorObjectName() => default;
     private static MajorObjectName GetValidMajorObjectName() => new("Earth");
 
-    private static IOriginCoordinate GetInvalidCoordinate() => null!;
+    private static IOriginCoordinate GetNullCoordinate() => null!;
     private static IOriginCoordinate GetValidCoordinate()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginCoordinateFactory>();

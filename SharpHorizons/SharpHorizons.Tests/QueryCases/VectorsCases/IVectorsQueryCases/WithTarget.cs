@@ -16,7 +16,7 @@ public class WithTarget
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var target = GetInvalidTarget();
+        var target = GetNullTarget();
 
         var exception = Record.Exception(() => vectorsQuery.WithTarget(target));
 
@@ -60,7 +60,7 @@ public class WithTarget
         return factory.Create(GetValidTarget(), GetValidOrigin(), GetValidEpochSelection());
     }
 
-    private static ITarget GetInvalidTarget() => null!;
+    private static ITarget GetNullTarget() => null!;
     private static ITarget GetValidTarget()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetFactory>();

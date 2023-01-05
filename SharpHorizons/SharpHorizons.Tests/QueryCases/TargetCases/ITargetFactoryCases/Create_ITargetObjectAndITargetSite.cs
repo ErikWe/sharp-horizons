@@ -13,7 +13,7 @@ public class Create_ITargetObjectAndITargetSite
     [Fact]
     public void NullObject_ArgumentNullException()
     {
-        var targetObject = GetInvalidTargetObject();
+        var targetObject = GetNullTargetObject();
         var site = GetValidTargetSite();
 
         EitherNull_ArgumentNullException(targetObject, site);
@@ -23,7 +23,7 @@ public class Create_ITargetObjectAndITargetSite
     public void NullSite_ArgumentNullException()
     {
         var targetObject = GetValidTargetObject();
-        var site = GetInvalidTargetSite();
+        var site = GetNullTargetSite();
 
         EitherNull_ArgumentNullException(targetObject, site);
     }
@@ -31,8 +31,8 @@ public class Create_ITargetObjectAndITargetSite
     [Fact]
     public void NullObjectAndSite_ArgumentNullException()
     {
-        var targetObject = GetInvalidTargetObject();
-        var site = GetInvalidTargetSite();
+        var targetObject = GetNullTargetObject();
+        var site = GetNullTargetSite();
 
         EitherNull_ArgumentNullException(targetObject, site);
     }
@@ -61,7 +61,7 @@ public class Create_ITargetObjectAndITargetSite
 
     private static ITargetFactory GetService() => DependencyInjection.GetRequiredService<ITargetFactory>();
 
-    private static ITargetObject GetInvalidTargetObject() => null!;
+    private static ITargetObject GetNullTargetObject() => null!;
     private static ITargetObject GetValidTargetObject()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetObjectFactory>();
@@ -69,7 +69,7 @@ public class Create_ITargetObjectAndITargetSite
         return factory.Create(new MajorObjectID(301));
     }
 
-    private static ITargetSite GetInvalidTargetSite() => null!;
+    private static ITargetSite GetNullTargetSite() => null!;
     private static ITargetSite GetValidTargetSite()
     {
         var factory = DependencyInjection.GetRequiredService<ITargetSiteFactory>();

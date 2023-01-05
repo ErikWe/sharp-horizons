@@ -16,7 +16,7 @@ public class WithOrigin
     {
         var vectorsQuery = GetVectorsQuery();
 
-        var origin = GetInvalidOrigin();
+        var origin = GetNullOrigin();
 
         var exception = Record.Exception(() => vectorsQuery.WithOrigin(origin));
 
@@ -67,7 +67,7 @@ public class WithOrigin
         return factory.Create(new MajorObjectID(301));
     }
 
-    private static IOrigin GetInvalidOrigin() => null!;
+    private static IOrigin GetNullOrigin() => null!;
     private static IOrigin GetValidOrigin()
     {
         var factory = DependencyInjection.GetRequiredService<IOriginFactory>();

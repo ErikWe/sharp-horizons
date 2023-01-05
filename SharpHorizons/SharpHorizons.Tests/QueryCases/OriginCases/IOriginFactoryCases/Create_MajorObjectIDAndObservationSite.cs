@@ -14,7 +14,7 @@ public class Create_MajorObjectIDAndObservationSite
         var factory = GetService();
 
         var origin = GetValidMajorObjectID();
-        var site = GetInvalidObservationSite();
+        var site = GetNullObservationSite();
 
         var exception = Record.Exception(() => factory.Create(origin, site));
 
@@ -38,6 +38,6 @@ public class Create_MajorObjectIDAndObservationSite
 
     private static MajorObjectID GetValidMajorObjectID() => new(399);
 
-    private static ObservationSite GetInvalidObservationSite() => null!;
+    private static ObservationSite GetNullObservationSite() => null!;
     private static ObservationSite GetValidObservationSite() => new(new ObservationSiteID("-1"), new ObservationSiteName("Arecibo"));
 }

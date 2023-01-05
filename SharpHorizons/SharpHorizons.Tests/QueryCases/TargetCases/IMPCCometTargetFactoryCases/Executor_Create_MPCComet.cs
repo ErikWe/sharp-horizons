@@ -11,7 +11,7 @@ internal static class Executor_Create_MPCComet
 {
     public static void Null_ArgumentNullException(IMPCCometTargetFactory factory)
     {
-        var target = GetInvalidMPCComet();
+        var target = GetNullMPCComet();
 
         var exception = Record.Exception(() => factory.Create(target));
 
@@ -27,6 +27,6 @@ internal static class Executor_Create_MPCComet
         Assert.NotNull(actual);
     }
 
-    private static MPCComet GetInvalidMPCComet() => null!;
+    private static MPCComet GetNullMPCComet() => null!;
     private static MPCComet GetValidMPCComet() => new(new MPCCometDesignation("1P"));
 }
