@@ -139,7 +139,7 @@ internal sealed record class EpochRange : IEpochRange
     IStopEpochArgument IEpochSelection.ComposeStopTimeArgument() => StopEpochComposer.Compose(this);
     IStepSizeArgument IEpochSelection.ComposeStepSizeArgument() => StepSize.ComposeArgument();
 
-    /// <summary>Validates that <paramref name="format"/> represents an <see cref="EpochFormat"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates the <see cref="EpochFormat"/> <paramref name="format"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="format">This <see cref="EpochFormat"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="format"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -154,7 +154,7 @@ internal sealed record class EpochRange : IEpochRange
         }
     }
 
-    /// <summary>Validates that <paramref name="calendar"/> represents a <see cref="CalendarType"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates the <see cref="CalendarType"/> <paramref name="calendar"/>, throwing an <see cref="InvalidEnumArgumentException"/> if invalid.</summary>
     /// <param name="calendar">This <see cref="CalendarType"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="calendar"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
@@ -168,7 +168,7 @@ internal sealed record class EpochRange : IEpochRange
         }
     }
 
-    /// <summary>Validates that <paramref name="timeSystem"/> represents a <see cref="Epoch.TimeSystem"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates the <see cref="Epoch.TimeSystem"/> <paramref name="timeSystem"/>, throwing an <see cref="InvalidEnumArgumentException"/> if invalid.</summary>
     /// <param name="timeSystem">This <see cref="Epoch.TimeSystem"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="timeSystem"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
@@ -182,7 +182,7 @@ internal sealed record class EpochRange : IEpochRange
         }
     }
 
-    /// <summary>Validates that <paramref name="offset"/> represents a valid <see cref="Time"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates the <see cref="Time"/> <paramref name="offset"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="offset">This <see cref="Time"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="offset"/>.</param>
     /// <exception cref="ArgumentException"/>

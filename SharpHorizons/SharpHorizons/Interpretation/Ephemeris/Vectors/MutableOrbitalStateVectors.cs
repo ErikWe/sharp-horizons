@@ -4,7 +4,7 @@ using SharpHorizons.Ephemeris.Vectors;
 
 using SharpMeasures;
 
-/// <inheritdoc cref="IOrbitalStateVectors"/>
+/// <summary>A mutable <see cref="IOrbitalStateVectors"/>.</summary>
 internal sealed record class MutableOrbitalStateVectors : IOrbitalStateVectors
 {
     public IEpoch Epoch { get; set; } = null!;
@@ -30,7 +30,7 @@ internal sealed record class MutableOrbitalStateVectors : IOrbitalStateVectors
     Position3 IObjectPosition.Position => new(PositionX!.Value, PositionY!.Value, PositionZ!.Value);
     Velocity3 IObjectVelocity.Velocity => new(VelocityX!.Value, VelocityY!.Value, VelocityZ!.Value);
 
-    /// <summary>Validates that <paramref name="vectors"/> represents a valid <see cref="IOrbitalStateVectors"/>.</summary>
-    /// <param name="vectors">This <see cref="IOrbitalStateVectors"/> is validated.</param>
-    public static bool Validate(MutableOrbitalStateVectors vectors) => vectors.Epoch is not null && vectors.PositionX is not null && vectors.PositionY is not null && vectors.PositionZ is not null && vectors.VelocityX is not null && vectors.VelocityY is not null && vectors.VelocityZ is not null;
+    /// <summary>Determines the validity of the <see cref="MutableOrbitalStateVectors"/> <paramref name="ephemerisEntry"/></summary>
+    /// <param name="ephemerisEntry">This <see cref="MutableOrbitalStateVectors"/> is validated.</param>
+    public static bool Validate(MutableOrbitalStateVectors ephemerisEntry) => ephemerisEntry.Epoch is not null && ephemerisEntry.PositionX is not null && ephemerisEntry.PositionY is not null && ephemerisEntry.PositionZ is not null && ephemerisEntry.VelocityX is not null && ephemerisEntry.VelocityY is not null && ephemerisEntry.VelocityZ is not null;
 }

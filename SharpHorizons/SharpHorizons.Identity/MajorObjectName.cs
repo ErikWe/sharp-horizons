@@ -75,7 +75,7 @@ public readonly record struct MajorObjectName
         }
     }
 
-    /// <summary>Validates the <see cref="MajorObjectName"/> <paramref name="name"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="MajorObjectName"/> <paramref name="name"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="name">This <see cref="MajorObjectName"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="name"/>.</param>
     /// <exception cref="ArgumentException"/>

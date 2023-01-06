@@ -17,7 +17,7 @@ internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, I
         Value = value;
     }
 
-    /// <summary>Validates the <see cref="IQueryArgument"/> <paramref name="argument"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IQueryArgument"/> <paramref name="argument"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <typeparam name="TArgument">The type of the validated <see cref="IQueryArgument"/>, <paramref name="argument"/>.</typeparam>
     /// <param name="argument">This <see cref="IQueryArgument"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="argument"/>.</param>

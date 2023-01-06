@@ -17,7 +17,7 @@ internal sealed class SiteTargetComposer : ITargetComposer<ISiteTarget>
 
     ICommandArgument IArgumentComposer<ICommandArgument, ISiteTarget>.Compose(ISiteTarget obj) => ((IArgumentComposer<ITargetArgument, ISiteTarget>)this).Compose(obj);
 
-    /// <summary>Validates the <see cref="ISiteTarget"/> <paramref name="siteTarget"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="ISiteTarget"/> <paramref name="siteTarget"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="siteTarget">This <see cref="ISiteTarget"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="siteTarget"/>.</param>
     /// <exception cref="ArgumentException"/>

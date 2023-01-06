@@ -19,7 +19,7 @@ internal sealed class QueryCommandComposer : ICommandComposer<QueryCommand>
         });
     }
 
-    /// <summary>Validates that <paramref name="command"/> does not represent <see cref="QueryCommand.Ephemeris"/>, and throws an <see cref="ArgumentException"/> if that is the case.</summary>
+    /// <summary>Validates that the <see cref="QueryCommand"/> <paramref name="command"/> does not represent <see cref="QueryCommand.Ephemeris"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="command">This <see cref="QueryCommand"/> is validated not to represent <see cref="QueryCommand.Ephemeris"/>.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="command"/>.</param>
     /// <exception cref="ArgumentException"/>

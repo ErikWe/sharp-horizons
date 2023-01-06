@@ -93,15 +93,15 @@ public readonly record struct EphemerisQuantityIdentifier
     /// <summary>Backing field for <see cref="CharacterLength"/>. Should not be used elsewhere.</summary>
     private readonly int? characterLengthField;
 
-    /// <summary>Validates that <paramref name="identifier"/> can be used to represent the identifier of an <see cref="EphemerisQuantityIdentifier"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="identifier"><inheritdoc cref="Identifier" path="/summary"/></param>
+    /// <summary>Validates that the <see cref="string"/> <paramref name="identifier"/> can be represent the <see cref="Identifier"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <param name="identifier">This <see cref="string"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="identifier"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     private static void Validate([NotNull] string? identifier, [CallerArgumentExpression(nameof(identifier))] string? argumentExpression = null) => ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(identifier, argumentExpression);
 
-    /// <summary>Validates that <paramref name="characterLength"/> can be used to represent the character length of an <see cref="EphemerisQuantityIdentifier"/>, and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
-    /// <param name="characterLength"><inheritdoc cref="CharacterLength" path="/summary"/></param>
+    /// <summary>Validates that the <see cref="int"/> <paramref name="characterLength"/> can represent the <see cref="CharacterLength"/>, throwing an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
+    /// <param name="characterLength">This <see cref="int"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="characterLength"/>.</param>
     /// <exception cref="ArgumentOutOfRangeException"/>
     private static void Validate(int? characterLength, [CallerArgumentExpression(nameof(characterLength))] string? argumentExpression = null)
@@ -112,7 +112,7 @@ public readonly record struct EphemerisQuantityIdentifier
         }
     }
 
-    /// <summary>Validates the <see cref="EphemerisQuantityIdentifier"/> <paramref name="quantity"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="EphemerisQuantityIdentifier"/> <paramref name="quantity"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="quantity">This <see cref="EphemerisQuantityIdentifier"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="quantity"/>.</param>
     /// <exception cref="ArgumentException"/>

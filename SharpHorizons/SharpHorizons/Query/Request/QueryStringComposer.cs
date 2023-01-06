@@ -60,7 +60,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         return builder.Extract();
     }
 
-    /// <summary>Validates the <see cref="IQueryParameterIdentifier"/> <paramref name="identifier"/>, and throws an <see cref="InvalidOperationException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IQueryParameterIdentifier"/> <paramref name="identifier"/>, throwing an <see cref="InvalidOperationException"/> if invalid.</summary>
     /// <typeparam name="TIdentifier">The type of the <see cref="IQueryParameterIdentifier"/> that is validated, <paramref name="identifier"/>.</typeparam>
     /// <param name="identifier">This <see cref="IQueryParameterIdentifier"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="identifier"/>.</param>
@@ -80,7 +80,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         return identifier;
     }
 
-    /// <summary>Validates the <see cref="IQueryArgument"/> <paramref name="argument"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IQueryArgument"/> <paramref name="argument"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <typeparam name="TArgument">The type of the <see cref="IQueryArgument"/> that is validated, <paramref name="argument"/>.</typeparam>
     /// <param name="argument">This <see cref="IQueryArgument"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="argument"/>.</param>
@@ -101,7 +101,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         return argument;
     }
 
-    /// <summary>Validates the <see cref="IQueryArgument"/> <paramref name="argument"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IQueryArgument"/> <paramref name="argument"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <typeparam name="TArgument">The type of the <see cref="IQueryArgument"/> that is validated, <paramref name="argument"/>.</typeparam>
     /// <param name="argument">This <see cref="IQueryArgument"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="argument"/>.</param>

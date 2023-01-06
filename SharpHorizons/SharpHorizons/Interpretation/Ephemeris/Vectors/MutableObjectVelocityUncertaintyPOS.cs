@@ -4,7 +4,7 @@ using SharpHorizons.Ephemeris.Vectors;
 
 using SharpMeasures;
 
-/// <inheritdoc cref="IObjectVelocityUncertaintyPOS"/>
+/// <summary>A mutable <see cref="IObjectVelocityUncertaintyPOS"/>.</summary>
 internal sealed record class MutableObjectVelocityUncertaintyPOS : IObjectVelocityUncertaintyPOS
 {
     public IEpoch Epoch { get; set; } = null!;
@@ -22,7 +22,7 @@ internal sealed record class MutableObjectVelocityUncertaintyPOS : IObjectVeloci
     Speed IObjectVelocityUncertaintyPOS.RightAscension => RightAscension!.Value;
     Speed IObjectVelocityUncertaintyPOS.Declination => Declination!.Value;
 
-    /// <summary>Validates that <paramref name="vectors"/> represents a valid <see cref="IObjectVelocityUncertaintyPOS"/>.</summary>
-    /// <param name="vectors">This <see cref="IObjectVelocityUncertaintyPOS"/> is validated.</param>
-    public static bool Validate(MutableObjectVelocityUncertaintyPOS vectors) => vectors.Epoch is not null && vectors.Radial is not null && vectors.RightAscension is not null && vectors.Declination is not null;
+    /// <summary>Determines the validity of the <see cref="MutableObjectVelocityUncertaintyPOS"/> <paramref name="ephemerisEntry"/></summary>
+    /// <param name="ephemerisEntry">This <see cref="MutableObjectVelocityUncertaintyPOS"/> is validated.</param>
+    public static bool Validate(MutableObjectVelocityUncertaintyPOS ephemerisEntry) => ephemerisEntry.Epoch is not null && ephemerisEntry.Radial is not null && ephemerisEntry.RightAscension is not null && ephemerisEntry.Declination is not null;
 }

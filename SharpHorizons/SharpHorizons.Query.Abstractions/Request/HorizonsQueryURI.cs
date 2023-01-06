@@ -68,7 +68,7 @@ public readonly record struct HorizonsQueryURI
         }
     }
 
-    /// <summary>Validates the <see cref="HorizonsQueryURI"/> <paramref name="queryURI"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="HorizonsQueryURI"/> <paramref name="queryURI"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="queryURI">This <see cref="HorizonsQueryURI"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="queryURI"/>.</param>
     /// <exception cref="ArgumentException"/>

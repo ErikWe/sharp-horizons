@@ -77,8 +77,8 @@ internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : I
         return new((IntegralAndFractionalDay & IntegralDayBitMask) | BitConverter.SingleToUInt32Bits(fractionalDay));
     }
 
-    /// <summary>Validates that <paramref name="fractionalDay"/> can represent the <see cref="FractionalDay"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="fractionalDay">The possibility of this <see cref="float"/> representing the <see cref="FractionalDay"/> is validated.</param>
+    /// <summary>Validates that the <see cref="float"/> <paramref name="fractionalDay"/> can represent the <see cref="FractionalDay"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <param name="fractionalDay">This <see cref="float"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="fractionalDay"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>
@@ -95,8 +95,8 @@ internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : I
         }
     }
 
-    /// <summary>Validates that <paramref name="day"/> can represent the <see cref="Day"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="day">The possibility of this <see cref="double"/> representing the <see cref="Day"/> is validated.</param>
+    /// <summary>Validates that the <see cref="double"/> <paramref name="day"/> can represent the <see cref="Day"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <param name="day">This <see cref="double"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="day"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>

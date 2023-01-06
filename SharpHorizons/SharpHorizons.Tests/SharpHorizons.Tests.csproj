@@ -32,4 +32,9 @@
       <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="QueryCases\VectorsCases\IVectorsQueryValidatorCases\" />
+      <Folder Include="QueryCases\VectorsCases\IVectorsQueryBuilderCases\" />
+    </ItemGroup>
+
 </Project>

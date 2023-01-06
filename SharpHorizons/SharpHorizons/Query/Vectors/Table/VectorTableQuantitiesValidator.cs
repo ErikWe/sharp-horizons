@@ -30,11 +30,11 @@ internal sealed class VectorTableQuantitiesValidator : IVectorTableQuantitiesVal
     /// <summary>A <see cref="string"/> describing an <see cref="UnsupportedVectorTableQuantitiesException"/>.</summary>
     private static string UnsupportedQuantitiesExceptionMessage => $"The {nameof(VectorTableQuantities)} does not represent a configuration supported by Horizons. Try using \"{VectorTableQuantities.All}\".";
 
-    /// <summary>Checks whether <paramref name="quantities"/> represents a valid <see cref="VectorTableQuantities"/>.</summary>
+    /// <summary>Determines the validity of the <see cref="VectorTableQuantities"/> <paramref name="quantities"/>.</summary>
     /// <param name="quantities">This <see cref="VectorTableQuantities"/> is validated.</param>
     private static bool CheckValidity(VectorTableQuantities quantities) => (quantities & VectorTableQuantities.All) == quantities;
 
-    /// <summary>Checks whether <paramref name="quantities"/> represents a <see cref="VectorTableQuantities"/> supported by Horizons.</summary>
+    /// <summary>Determines whether the <see cref="VectorTableQuantities"/> <paramref name="quantities"/> is supported by Horizons.</summary>
     /// <param name="quantities">This <see cref="VectorTableQuantities"/> is validated.</param>
     private static bool CheckSupport(VectorTableQuantities quantities) => UnsupportedQuantities.Contains(quantities) is false;
 }

@@ -18,7 +18,7 @@ internal sealed class FixedStepSizeComposer : IStepSizeComposer<IFixedStepSize>
         return new QueryArgument($"{obj.DeltaTime.Minutes.Round().ToString("F0", CultureInfo.InvariantCulture)}m");
     }
 
-    /// <summary>Validates the <see cref="IFixedStepSize"/> <paramref name="stepSize"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IFixedStepSize"/> <paramref name="stepSize"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="stepSize">This <see cref="IFixedStepSize"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="stepSize"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -37,7 +37,7 @@ internal sealed class FixedStepSizeComposer : IStepSizeComposer<IFixedStepSize>
         }
     }
 
-    /// <summary>Validates that the <see cref="Time"/> <paramref name="deltaTime"/> represents a valid delta time of a <see cref="IFixedStepSize"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="Time"/> <paramref name="deltaTime"/> represents a <see cref="IFixedStepSize.DeltaTime"/> supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="deltaTime">This <see cref="Time"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="deltaTime"/>.</param>
     /// <exception cref="ArgumentException"/>

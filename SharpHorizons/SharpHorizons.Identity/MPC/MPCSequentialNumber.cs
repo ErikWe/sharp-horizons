@@ -81,7 +81,7 @@ public readonly record struct MPCSequentialNumber
     /// <param name="sequentialNumber"><inheritdoc cref="MPCName" path="/summary"/></param>
     public static implicit operator int(MPCSequentialNumber sequentialNumber) => sequentialNumber.Value;
 
-    /// <summary>Validates that the <see cref="string"/>-representation of <paramref name="value"/> can be used to represent the <see cref="Value"/> of an <see cref="MPCSequentialNumber"/>, and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="string"/>-representation of <paramref name="value"/> can represent the <see cref="Value"/>, throwing an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
     /// <exception cref="ArgumentOutOfRangeException"/>
@@ -93,7 +93,7 @@ public readonly record struct MPCSequentialNumber
         }
     }
 
-    /// <summary>Validates the <see cref="MPCSequentialNumber"/> <paramref name="sequentialNumber"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="MPCSequentialNumber"/> <paramref name="sequentialNumber"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="sequentialNumber">This <see cref="MPCSequentialNumber"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="sequentialNumber"/>.</param>
     /// <exception cref="ArgumentException"/>

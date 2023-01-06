@@ -4,7 +4,7 @@ using SharpHorizons.Ephemeris.Vectors;
 
 using SharpMeasures;
 
-/// <inheritdoc cref="IObjectVelocityUncertaintyXYZ"/>
+/// <summary>A mutable <see cref="IObjectVelocityUncertaintyXYZ"/>.</summary>
 internal sealed record class MutableObjectVelocityUncertaintyXYZ : IObjectVelocityUncertaintyXYZ
 {
     public IEpoch Epoch { get; set; } = null!;
@@ -20,7 +20,7 @@ internal sealed record class MutableObjectVelocityUncertaintyXYZ : IObjectVeloci
 
     Velocity3 IObjectVelocityUncertaintyXYZ.UncertaintyXYZ => new(UncertaintyX!.Value, UncertaintyY!.Value, UncertaintyZ!.Value);
 
-    /// <summary>Validates that <paramref name="vectors"/> represents a valid <see cref="IObjectVelocityUncertaintyXYZ"/>.</summary>
-    /// <param name="vectors">This <see cref="IObjectVelocityUncertaintyXYZ"/> is validated.</param>
-    public static bool Validate(MutableObjectVelocityUncertaintyXYZ vectors) => vectors.Epoch is not null && vectors.UncertaintyX is not null && vectors.UncertaintyY is not null && vectors.UncertaintyZ is not null;
+    /// <summary>Determines the validity of the <see cref="MutableObjectVelocityUncertaintyXYZ"/> <paramref name="ephemerisEntry"/></summary>
+    /// <param name="ephemerisEntry">This <see cref="MutableObjectVelocityUncertaintyXYZ"/> is validated.</param>
+    public static bool Validate(MutableObjectVelocityUncertaintyXYZ ephemerisEntry) => ephemerisEntry.Epoch is not null && ephemerisEntry.UncertaintyX is not null && ephemerisEntry.UncertaintyY is not null && ephemerisEntry.UncertaintyZ is not null;
 }

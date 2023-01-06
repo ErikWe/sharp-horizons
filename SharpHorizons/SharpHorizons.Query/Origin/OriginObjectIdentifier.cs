@@ -71,7 +71,7 @@ public readonly record struct OriginObjectIdentifier
         }
     }
 
-    /// <summary>Validates the <see cref="OriginObjectIdentifier"/> <paramref name="identifier"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="OriginObjectIdentifier"/> <paramref name="identifier"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="identifier">This <see cref="OriginObjectIdentifier"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="identifier"/>.</param>
     /// <exception cref="ArgumentException"/>

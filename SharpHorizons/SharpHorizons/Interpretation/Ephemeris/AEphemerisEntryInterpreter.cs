@@ -55,7 +55,7 @@ internal abstract class AEphemerisEntryInterpreter<TEphemerisEntry, THeader> whe
     /// <summary>Constructs a blank <typeparamref name="TEphemerisEntry"/>.</summary>
     protected abstract TEphemerisEntry CreateEntry();
 
-    /// <summary>Checks that <paramref name="entry"/> represents a valid <typeparamref name="TEphemerisEntry"/>.</summary>
+    /// <summary>Determines the validity of the <typeparamref name="TEphemerisEntry"/> <paramref name="entry"/>.</summary>
     /// <param name="entry">This <typeparamref name="TEphemerisEntry"/> is validated.</param>
     protected virtual bool ValidateEntry(TEphemerisEntry entry) => true;
 

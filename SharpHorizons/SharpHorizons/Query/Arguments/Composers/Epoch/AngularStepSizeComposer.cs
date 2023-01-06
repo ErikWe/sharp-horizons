@@ -18,7 +18,7 @@ internal sealed class AngularStepSizeComposer : IStepSizeComposer<IAngularStepSi
         return new QueryArgument($"VAR{obj.DeltaAngle.Arcseconds.Round().ToString("F0", CultureInfo.InvariantCulture)}");
     }
 
-    /// <summary>Validates the <see cref="IAngularStepSize"/> <paramref name="stepSize"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IAngularStepSize"/> <paramref name="stepSize"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="stepSize">This <see cref="IAngularStepSize"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="stepSize"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -37,7 +37,7 @@ internal sealed class AngularStepSizeComposer : IStepSizeComposer<IAngularStepSi
         }
     }
 
-    /// <summary>Validates that the <see cref="Angle"/> <paramref name="deltaAngle"/> represents a valid delta angle of a <see cref="IAngularStepSize"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="Angle"/> <paramref name="deltaAngle"/> represents a <see cref="IAngularStepSize.DeltaAngle"/> supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="deltaAngle">This <see cref="Angle"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="deltaAngle"/>.</param>
     /// <exception cref="ArgumentException"/>

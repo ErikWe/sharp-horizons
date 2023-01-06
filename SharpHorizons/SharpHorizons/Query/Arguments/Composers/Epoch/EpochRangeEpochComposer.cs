@@ -23,14 +23,14 @@ internal sealed class EpochRangeEpochComposer : IStartEpochComposer<IEpochRange>
 
     IStartEpochArgument IArgumentComposer<IStartEpochArgument, IEpochRange>.Compose(IEpochRange obj)
     {
-        ValidateWithStartEpoch(obj);
+        ValidateStartEpoch(obj);
 
         return new QueryArgument(Compose(obj, obj.StartEpoch.Epoch));
     }
 
     IStopEpochArgument IArgumentComposer<IStopEpochArgument, IEpochRange>.Compose(IEpochRange obj)
     {
-        ValidateWithStopEpoch(obj);
+        ValidateStopEpoch(obj);
 
         return new QueryArgument(Compose(obj, obj.StopEpoch.Epoch));
     }
@@ -91,12 +91,12 @@ internal sealed class EpochRangeEpochComposer : IStartEpochComposer<IEpochRange>
         return composed;
     }
 
-    /// <summary>Validates the <see cref="IEpochRange"/> <paramref name="epochRange"/>, together with the <see cref="IStartEpoch"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validate the <see cref="IEpochRange.StartEpoch"/> of the <see cref="IEpochRange"/> <paramref name="epochRange"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="epochRange">This <see cref="IEpochRange"/> is validated, together with the <see cref="IStartEpoch"/> of the <see cref="IEpochRange"/>.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="epochRange"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    private static void ValidateWithStartEpoch(IEpochRange epochRange, [CallerArgumentExpression(nameof(epochRange))] string? argumentExpression = null)
+    private static void ValidateStartEpoch(IEpochRange epochRange, [CallerArgumentExpression(nameof(epochRange))] string? argumentExpression = null)
     {
         ArgumentNullException.ThrowIfNull(epochRange, argumentExpression);
 
@@ -110,12 +110,12 @@ internal sealed class EpochRangeEpochComposer : IStartEpochComposer<IEpochRange>
         }
     }
 
-    /// <summary>Validates the <see cref="IEpochRange"/> <paramref name="epochRange"/>, together with the <see cref="IStopEpoch"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IEpochRange.StopEpoch"/> of the <see cref="IEpochRange"/> <paramref name="epochRange"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="epochRange">This <see cref="IEpochRange"/> is validated, together with the <see cref="IStopEpoch"/> of the <see cref="IEpochRange"/>.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="epochRange"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    private static void ValidateWithStopEpoch(IEpochRange epochRange, [CallerArgumentExpression(nameof(epochRange))] string? argumentExpression = null)
+    private static void ValidateStopEpoch(IEpochRange epochRange, [CallerArgumentExpression(nameof(epochRange))] string? argumentExpression = null)
     {
         ArgumentNullException.ThrowIfNull(epochRange, argumentExpression);
 
@@ -129,7 +129,7 @@ internal sealed class EpochRangeEpochComposer : IStartEpochComposer<IEpochRange>
         }
     }
 
-    /// <summary>Validates the <see cref="IStartEpoch"/> <paramref name="startEpoch"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IStartEpoch"/> <paramref name="startEpoch"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="startEpoch">This <see cref="IStartEpoch"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="startEpoch"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -148,7 +148,7 @@ internal sealed class EpochRangeEpochComposer : IStartEpochComposer<IEpochRange>
         }
     }
 
-    /// <summary>Validates the <see cref="IStopEpoch"/> <paramref name="stopEpoch"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IStopEpoch"/> <paramref name="stopEpoch"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="stopEpoch">This <see cref="IStopEpoch"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="stopEpoch"/>.</param>
     /// <exception cref="ArgumentException"/>

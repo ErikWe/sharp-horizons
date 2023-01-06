@@ -16,7 +16,7 @@ internal sealed class UniformStepSizeComposer : IStepSizeComposer<IUniformStepSi
         return new QueryArgument(obj.StepCount.ToString(CultureInfo.InvariantCulture));
     }
 
-    /// <summary>Validates the <see cref="IUniformStepSize"/> <paramref name="stepSize"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="IUniformStepSize"/> <paramref name="stepSize"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="stepSize">This <see cref="IUniformStepSize"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="stepSize"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -35,7 +35,7 @@ internal sealed class UniformStepSizeComposer : IStepSizeComposer<IUniformStepSi
         }
     }
 
-    /// <summary>Validates that the <see cref="int"/> <paramref name="stepCount"/> represents a valid step count of a <see cref="IUniformStepSize"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="int"/> <paramref name="stepCount"/> represents a <see cref="IUniformStepSize.StepCount"/> supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="stepCount">This <see cref="int"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="stepCount"/>.</param>
     /// <exception cref="ArgumentOutOfRangeException"/>

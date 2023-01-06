@@ -79,7 +79,7 @@ public readonly record struct QueryResult
     /// <summary>Backing field for <see cref="Content"/>. Should not be used elsewhere.</summary>
     private readonly string contentField = null!;
 
-    /// <summary>Validates the <see cref="QueryResult"/> <paramref name="result"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="QueryResult"/> <paramref name="result"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="result">This <see cref="QueryResult"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="result"/>.</param>
     /// <exception cref="ArgumentException"/>

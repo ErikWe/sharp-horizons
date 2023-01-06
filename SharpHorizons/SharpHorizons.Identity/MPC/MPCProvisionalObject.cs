@@ -36,7 +36,7 @@ public readonly record struct MPCProvisionalObject
     /// <summary>Backing field for <see cref="Designation"/>. Should not be used elsewhere.</summary>
     private readonly MPCProvisionalDesignation designation;
 
-    /// <summary>Validates the <see cref="MPCProvisionalObject"/> <paramref name="mpcObject"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="MPCProvisionalObject"/> <paramref name="mpcObject"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="mpcObject">This <see cref="MPCProvisionalObject"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="mpcObject"/>.</param>
     /// <exception cref="ArgumentException"/>

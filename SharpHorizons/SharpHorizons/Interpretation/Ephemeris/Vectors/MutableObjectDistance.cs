@@ -4,7 +4,7 @@ using SharpHorizons.Ephemeris.Vectors;
 
 using SharpMeasures;
 
-/// <inheritdoc cref="IObjectDistance"/>
+/// <summary>A mutable <see cref="IObjectDistance"/>.</summary>
 internal sealed record class MutableObjectDistance : IObjectDistance
 {
     public IEpoch Epoch { get; set; } = null!;
@@ -22,7 +22,7 @@ internal sealed record class MutableObjectDistance : IObjectDistance
     Speed IObjectDistance.RadialSpeed => RadialSpeed!.Value;
     Time IObjectDistance.LightTime => LightTime!.Value;
 
-    /// <summary>Validates that <paramref name="vectors"/> represents a valid <see cref="IObjectDistance"/>.</summary>
-    /// <param name="vectors">This <see cref="IObjectDistance"/> is validated.</param>
-    public static bool Validate(MutableObjectDistance vectors) => vectors.Epoch is not null && vectors.Distance is not null && vectors.RadialSpeed is not null && vectors.LightTime is not null;
+    /// <summary>Determines the validity of the <see cref="MutableObjectDistance"/> <paramref name="ephemerisEntry"/>.</summary>
+    /// <param name="ephemerisEntry">This <see cref="MutableObjectDistance"/> is validated.</param>
+    public static bool Validate(MutableObjectDistance ephemerisEntry) => ephemerisEntry.Epoch is not null && ephemerisEntry.Distance is not null && ephemerisEntry.RadialSpeed is not null && ephemerisEntry.LightTime is not null;
 }

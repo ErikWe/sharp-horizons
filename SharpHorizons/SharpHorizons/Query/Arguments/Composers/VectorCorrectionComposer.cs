@@ -21,7 +21,7 @@ internal sealed class VectorCorrectionComposer : IVectorCorrectionComposer
         });
     }
 
-    /// <summary>Validates that the <see cref="VectorCorrection"/> <paramref name="correction"/> does not represent <paramref name="correction"/>, and throws an <see cref="ArgumentException"/> if that is the case.</summary>
+    /// <summary>Validates that the <see cref="VectorCorrection"/> <paramref name="correction"/> does not represent <see cref="VectorCorrection.Aberration"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="correction">This <see cref="VectorCorrection"/> is validated not to represent <see cref="VectorCorrection.Aberration"/>.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="correction"/>.</param>
     /// <exception cref="ArgumentException"/>

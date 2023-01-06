@@ -4,7 +4,7 @@ using SharpHorizons.Ephemeris.Vectors;
 
 using SharpMeasures;
 
-/// <inheritdoc cref="IObjectVelocity"/>
+/// <summary>A mutable <see cref="IObjectVelocity"/>.</summary>
 internal sealed record class MutableObjectVelocity : IObjectVelocity
 {
     public IEpoch Epoch { get; set; } = null!;
@@ -20,7 +20,7 @@ internal sealed record class MutableObjectVelocity : IObjectVelocity
 
     Velocity3 IObjectVelocity.Velocity => new(VelocityX!.Value, VelocityY!.Value, VelocityZ!.Value);
 
-    /// <summary>Validates that <paramref name="vectors"/> represents a valid <see cref="IObjectVelocity"/>.</summary>
-    /// <param name="vectors">This <see cref="IObjectVelocity"/> is validated.</param>
-    public static bool Validate(MutableObjectVelocity vectors) => vectors.Epoch is not null && vectors.VelocityX is not null && vectors.VelocityY is not null && vectors.VelocityZ is not null;
+    /// <summary>Determines the validity of the <see cref="MutableObjectVelocity"/> <paramref name="ephemerisEntry"/>.</summary>
+    /// <param name="ephemerisEntry">This <see cref="MutableObjectVelocity"/> is validated.</param>
+    public static bool Validate(MutableObjectVelocity ephemerisEntry) => ephemerisEntry.Epoch is not null && ephemerisEntry.VelocityX is not null && ephemerisEntry.VelocityY is not null && ephemerisEntry.VelocityZ is not null;
 }

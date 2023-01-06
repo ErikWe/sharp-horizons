@@ -92,8 +92,8 @@ public readonly record struct ObservationSiteID
         }
     }
 
-    /// <summary>Validates that the <see cref="string"/>-representation of <paramref name="value"/> can be used to represent the <see cref="Value"/> of an <see cref="ObservationSite"/>, and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
-    /// <param name="value">The <see cref="int"/> ID of the <see cref="ObservationSite"/>. The <see cref="string"/> ID of the <see cref="ObservationSite"/> is this <see cref="int"/> formatted using the <see cref="CultureInfo.InvariantCulture"/>.</param>
+    /// <summary>Validates that the <see cref="string"/>-representation of the <see cref="int"/> <paramref name="value"/> can represent the <see cref="Value"/>, throwing an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
+    /// <param name="value">This <see cref="int"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
     /// <exception cref="ArgumentOutOfRangeException"/>
     private static void Validate(int value, [CallerArgumentExpression(nameof(value))] string? argumentExpression = null)
@@ -104,8 +104,8 @@ public readonly record struct ObservationSiteID
         }
     }
 
-    /// <summary>Validates that <paramref name="value"/> can be used to represent the <see cref="Value"/> of an <see cref="ObservationSite"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
-    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    /// <summary>Validates that the <see cref="string"/> <paramref name="value"/> can represent the <see cref="Value"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <param name="value">This <see cref="string"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
@@ -139,7 +139,7 @@ public readonly record struct ObservationSiteID
     /// <param name="value">The value of the invalid argument.</param>
     private static string ExceptionMessage(string value) => $"A value in the range [-99, 999], or a single alphabetical letter followed by a value in the range [0, 99], should be used to describe the {nameof(Value)} of an {nameof(ObservationSiteID)}.";
 
-    /// <summary>Validates the <see cref="ObservationSiteID"/> <paramref name="id"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="ObservationSiteID"/> <paramref name="id"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="id">This <see cref="ObservationSiteID"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="id"/>.</param>
     /// <exception cref="ArgumentException"/>

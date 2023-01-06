@@ -4,7 +4,7 @@ using SharpHorizons.Ephemeris.Vectors;
 
 using SharpMeasures;
 
-/// <inheritdoc cref="IObjectVelocityUncertaintyRTN"/>
+/// <summary>A mutable <see cref="IObjectVelocityUncertaintyRTN"/>.</summary>
 internal sealed record class MutableObjectVelocityUncertaintyRTN : IObjectVelocityUncertaintyRTN
 {
     public IEpoch Epoch { get; set; } = null!;
@@ -22,7 +22,7 @@ internal sealed record class MutableObjectVelocityUncertaintyRTN : IObjectVeloci
     Speed IObjectVelocityUncertaintyRTN.Transverse => Transverse!.Value;
     Speed IObjectVelocityUncertaintyRTN.Normal => Normal!.Value;
 
-    /// <summary>Validates that <paramref name="vectors"/> represents a valid <see cref="IObjectVelocityUncertaintyRTN"/>.</summary>
-    /// <param name="vectors">This <see cref="IObjectVelocityUncertaintyRTN"/> is validated.</param>
-    public static bool Validate(MutableObjectVelocityUncertaintyRTN vectors) => vectors.Epoch is not null && vectors.Radial is not null && vectors.Transverse is not null && vectors.Normal is not null;
+    /// <summary>Determines the validity of the <see cref="MutableObjectVelocityUncertaintyRTN"/> <paramref name="ephemerisEntry"/></summary>
+    /// <param name="ephemerisEntry">This <see cref="MutableObjectVelocityUncertaintyRTN"/> is validated.</param>
+    public static bool Validate(MutableObjectVelocityUncertaintyRTN ephemerisEntry) => ephemerisEntry.Epoch is not null && ephemerisEntry.Radial is not null && ephemerisEntry.Transverse is not null && ephemerisEntry.Normal is not null;
 }

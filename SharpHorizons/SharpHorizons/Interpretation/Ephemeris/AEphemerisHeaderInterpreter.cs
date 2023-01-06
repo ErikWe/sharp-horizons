@@ -141,7 +141,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     /// <param name="quantities">The <see cref="IEphemerisHeader.Quantities"/> of the <paramref name="header"/> is set to this <see cref="EphemerisQuantityTable"/>.</param>
     protected abstract THeader SetQuantities(THeader header, EphemerisQuantityTable quantities);
 
-    /// <summary>Checks that <paramref name="header"/> represents a valid <typeparamref name="THeader"/>.</summary>
+    /// <summary>Determines the validity of the <typeparamref name="THeader"/> <paramref name="header"/>.</summary>
     /// <param name="header">This <typeparamref name="THeader"/> is validated.</param>
     protected virtual bool ValidateHeader(THeader header) => true;
 

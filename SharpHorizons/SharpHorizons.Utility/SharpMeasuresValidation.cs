@@ -6,10 +6,10 @@ using SharpMeasures.Astronomy;
 using System;
 using System.Runtime.CompilerServices;
 
-/// <summary>Validates that SharpMeasures-types are compatible with Horizons.</summary>
+/// <summary>Validates that types related to SharpMeasures are compatible with Horizons.</summary>
 public static class SharpMeasuresValidation
 {
-    /// <summary>Validates that <paramref name="value"/> represents a <typeparamref name="TScalar"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <typeparamref name="TScalar"/> <paramref name="value"/> represents a value supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <typeparam name="TScalar">The type of the validated <see cref="IScalarQuantity"/>.</typeparam>
     /// <param name="value">This <typeparamref name="TScalar"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="value"/>.</param>
@@ -22,7 +22,7 @@ public static class SharpMeasuresValidation
         }
     }
 
-    /// <summary>Validates that <paramref name="coordinate"/> represents a <see cref="CylindricalCoordinate"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="CylindricalCoordinate"/> <paramref name="coordinate"/> represents a value supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="coordinate">This <see cref="CylindricalCoordinate"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="coordinate"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -40,7 +40,7 @@ public static class SharpMeasuresValidation
         }
     }
 
-    /// <summary>Validates that <paramref name="coordinate"/> represents a <see cref="GeodeticCoordinate"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="GeodeticCoordinate"/> <paramref name="coordinate"/> represents a value supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="coordinate">This <see cref="GeodeticCoordinate"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="coordinate"/>.</param>
     /// <exception cref="ArgumentException"/>

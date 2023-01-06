@@ -75,7 +75,7 @@ public readonly record struct MPCCometDesignation
         }
     }
 
-    /// <summary>Validates the <see cref="MPCCometDesignation"/> <paramref name="designation"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="MPCCometDesignation"/> <paramref name="designation"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="designation">This <see cref="MPCCometDesignation"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="designation"/>.</param>
     /// <exception cref="ArgumentException"/>

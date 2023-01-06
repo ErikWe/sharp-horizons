@@ -61,7 +61,7 @@ public readonly record struct VectorTableContent
     /// <summary>Backing field for <see cref="Uncertainties"/>. Should not be used elsewhere.</summary>
     private readonly VectorTableUncertainties uncertainties = VectorTableUncertainties.None;
 
-    /// <summary>Validates that <paramref name="quantities"/> represents a valid <see cref="VectorTableQuantities"/>, and throws an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
+    /// <summary>Validates the <see cref="VectorTableQuantities"/> <paramref name="quantities"/>, thrwoing an <see cref="InvalidEnumArgumentException"/> if invalid.</summary>
     /// <param name="quantities">This <see cref="VectorTableQuantities"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="quantities"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
@@ -73,7 +73,7 @@ public readonly record struct VectorTableContent
         }
     }
 
-    /// <summary>Validates that <paramref name="uncertainties"/> represents a valid <see cref="VectorTableUncertainties"/>, and throws an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
+    /// <summary>Validates the <see cref="VectorTableUncertainties"/> <paramref name="uncertainties"/>, throwing an <see cref="InvalidEnumArgumentException"/> if invalid.</summary>
     /// <param name="uncertainties">This <see cref="VectorTableUncertainties"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="uncertainties"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>

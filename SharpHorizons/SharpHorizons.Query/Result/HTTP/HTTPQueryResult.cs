@@ -49,7 +49,7 @@ public readonly record struct HTTPQueryResult
     /// <summary>Backing field for <see cref="Response"/>. Should not be used elsewhere.</summary>
     private readonly HttpResponseMessage responseField = null!;
 
-    /// <summary>Validates the <see cref="HTTPQueryResult"/> <paramref name="result"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="HTTPQueryResult"/> <paramref name="result"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="result">This <see cref="HTTPQueryResult"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="result"/>.</param>
     /// <exception cref="ArgumentException"/>

@@ -75,7 +75,7 @@ public readonly record struct MPCName
         }
     }
 
-    /// <summary>Validates the <see cref="MPCName"/> <paramref name="name"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="MPCName"/> <paramref name="name"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="name">This <see cref="MPCName"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="name"/>.</param>
     /// <exception cref="ArgumentException"/>

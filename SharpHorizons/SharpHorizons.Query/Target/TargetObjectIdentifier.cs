@@ -71,7 +71,7 @@ public readonly record struct TargetObjectIdentifier
         }
     }
 
-    /// <summary>Validates the <see cref="TargetObjectIdentifier"/> <paramref name="identifier"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="TargetObjectIdentifier"/> <paramref name="identifier"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="identifier">This <see cref="TargetObjectIdentifier"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="identifier"/>.</param>
     /// <exception cref="ArgumentException"/>

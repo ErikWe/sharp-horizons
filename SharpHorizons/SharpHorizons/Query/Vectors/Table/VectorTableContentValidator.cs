@@ -40,11 +40,11 @@ internal sealed class VectorTableContentValidator : IVectorTableContentValidator
     /// <summary>A <see cref="string"/> describing an <see cref="UnsupportedVectorTableContentException"/>.</summary>
     private static string UnsupportedContentExceptionMessage => $"The {nameof(VectorTableContent)} does not represent a configuration supported by Horizons. Including any {nameof(VectorTableUncertainties)} requires {nameof(VectorTableQuantities)} to be \"{VectorTableQuantities.Position}\" or \"{VectorTableQuantities.StateVectors}\".";
 
-    /// <summary>Checks whether <paramref name="uncertainties"/> represents a valid <see cref="VectorTableUncertainties"/>.</summary>
+    /// <summary>Determines the validity of the <see cref="VectorTableUncertainties"/> <paramref name="uncertainties"/>.</summary>
     /// <param name="uncertainties">This <see cref="VectorTableUncertainties"/> is validated.</param>
     private static bool CheckUncertaintiesValidity(VectorTableUncertainties uncertainties) => (uncertainties & VectorTableUncertainties.All) == uncertainties;
 
-    /// <summary>Checks whether the combination of <see cref="VectorTableQuantities"/> and <see cref="VectorTableUncertainties"/> represented by <paramref name="tableContent"/> is supported by Horizons.</summary>
+    /// <summary>Determines whether the combination of <see cref="VectorTableQuantities"/> and <see cref="VectorTableUncertainties"/> represented by <paramref name="tableContent"/> is supported by Horizons.</summary>
     /// <param name="tableContent">The combination of <see cref="VectorTableQuantities"/> and <see cref="VectorTableUncertainties"/> represented by this <see cref="VectorTableContent"/> is validated.</param>
     private static bool CheckCombinationSupport(VectorTableContent tableContent)
     {

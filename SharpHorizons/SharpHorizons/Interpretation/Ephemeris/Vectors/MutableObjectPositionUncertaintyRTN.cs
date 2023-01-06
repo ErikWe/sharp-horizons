@@ -4,7 +4,7 @@ using SharpHorizons.Ephemeris.Vectors;
 
 using SharpMeasures;
 
-/// <inheritdoc cref="IObjectPositionUncertaintyRTN"/>
+/// <summary>A mutable <see cref="IObjectPositionUncertaintyRTN"/>.</summary>
 internal sealed record class MutableObjectPositionUncertaintyRTN : IObjectPositionUncertaintyRTN
 {
     public IEpoch Epoch { get; set; } = null!;
@@ -22,7 +22,7 @@ internal sealed record class MutableObjectPositionUncertaintyRTN : IObjectPositi
     Distance IObjectPositionUncertaintyRTN.Transverse => Transverse!.Value;
     Distance IObjectPositionUncertaintyRTN.Normal => Normal!.Value;
 
-    /// <summary>Validates that <paramref name="vectors"/> represents a valid <see cref="IObjectPositionUncertaintyRTN"/>.</summary>
-    /// <param name="vectors">This <see cref="IObjectPositionUncertaintyRTN"/> is validated.</param>
-    public static bool Validate(MutableObjectPositionUncertaintyRTN vectors) => vectors.Epoch is not null && vectors.Radial is not null && vectors.Transverse is not null && vectors.Normal is not null;
+    /// <summary>Determines the validity of the <see cref="MutableObjectPositionUncertaintyRTN"/> <paramref name="ephemerisEntry"/>.</summary>
+    /// <param name="ephemerisEntry">This <see cref="MutableObjectPositionUncertaintyRTN"/> is validated.</param>
+    public static bool Validate(MutableObjectPositionUncertaintyRTN ephemerisEntry) => ephemerisEntry.Epoch is not null && ephemerisEntry.Radial is not null && ephemerisEntry.Transverse is not null && ephemerisEntry.Normal is not null;
 }

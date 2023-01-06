@@ -42,7 +42,7 @@ internal sealed class CalendarStepSizeComposer : IStepSizeComposer<ICalendarStep
         _ => throw InvalidEnumArgumentExceptionFactory.Create(unit)
     };
 
-    /// <summary>Validates the <see cref="ICalendarStepSize"/> <paramref name="stepSize"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="ICalendarStepSize"/> <paramref name="stepSize"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="stepSize">This <see cref="ICalendarStepSize"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="stepSize"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -62,7 +62,7 @@ internal sealed class CalendarStepSizeComposer : IStepSizeComposer<ICalendarStep
         }
     }
 
-    /// <summary>Validates that the <see cref="int"/> <paramref name="count"/> represents a valid count of a <see cref="ICalendarStepSize"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="int"/> <paramref name="count"/> represents a <see cref="ICalendarStepSize.Count"/> supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="count">This <see cref="int"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="count"/>.</param>
     /// <exception cref="ArgumentOutOfRangeException"/>
@@ -74,7 +74,7 @@ internal sealed class CalendarStepSizeComposer : IStepSizeComposer<ICalendarStep
         }
     }
 
-    /// <summary>Validates that the <see cref="CalendarStepSizeUnit"/> <paramref name="unit"/> represents a valid unit of a <see cref="ICalendarStepSize"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="CalendarStepSizeUnit"/> <paramref name="unit"/> represents a <see cref="ICalendarStepSize.Unit"/> supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="unit">This <see cref="CalendarStepSizeUnit"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="unit"/>.</param>
     /// <exception cref="ArgumentException"/>

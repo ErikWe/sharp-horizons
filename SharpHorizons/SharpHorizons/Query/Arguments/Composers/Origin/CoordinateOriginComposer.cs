@@ -15,7 +15,7 @@ internal sealed class CoordinateOriginComposer : IOriginComposer<ICoordinateOrig
         return new QueryArgument($"c@{obj.OriginObject.ComposeIdentifier()}");
     }
 
-    /// <summary>Validates the <see cref="ICoordinateOrigin"/> <paramref name="origin"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="ICoordinateOrigin"/> <paramref name="origin"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="origin">This <see cref="ICoordinateOrigin"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="origin"/>.</param>
     /// <exception cref="ArgumentException"/>

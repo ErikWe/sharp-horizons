@@ -4,14 +4,14 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-/// <summary>Validates that instances of <see cref="VectorTableQuantities"/> represent configurations supported by Horizons.</summary>
+/// <summary>Validates that instances of <see cref="VectorTableQuantities"/> are supported by Horizons.</summary>
 public interface IVectorTableQuantitiesValidator
 {
-    /// <summary>Checks whether <paramref name="quantities"/> represents a <see cref="VectorTableQuantities"/> supported by Horizons.</summary>
-    /// <param name="quantities">The validity of this <see cref="VectorTableQuantities"/> is checked.</param>
+    /// <summary>Determines whether the <see cref="VectorTableQuantities"/> <paramref name="quantities"/> is supported by Horizons.</summary>
+    /// <param name="quantities">This <see cref="VectorTableQuantities"/> is validated.</param>
     public abstract bool CheckSupport(VectorTableQuantities quantities);
 
-    /// <summary>Validates that <paramref name="quantities"/> represents a <see cref="VectorTableQuantities"/> supported by Horizons, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="VectorTableQuantities"/> <paramref name="quantities"/> is supported by Horizons, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="quantities">This <see cref="VectorTableQuantities"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="quantities"/>.</param>
     /// <exception cref="ArgumentException"/>

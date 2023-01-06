@@ -71,7 +71,7 @@ public readonly record struct HorizonsQueryString
         }
     }
 
-    /// <summary>Validates the <see cref="HorizonsQueryString"/> <paramref name="queryString"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="HorizonsQueryString"/> <paramref name="queryString"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="queryString">This <see cref="HorizonsQueryString"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="queryString"/>.</param>
     /// <exception cref="ArgumentException"/>

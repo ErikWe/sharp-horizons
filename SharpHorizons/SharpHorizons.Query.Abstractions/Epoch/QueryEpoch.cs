@@ -17,7 +17,7 @@ public sealed record class QueryEpoch
         get => epochField;
         init
         {
-            Validate(value);
+            ValidateEpoch(value);
 
             epochField = value;
         }
@@ -30,7 +30,7 @@ public sealed record class QueryEpoch
         get => formatField;
         init
         {
-            Validate(value);
+            ValidateEpochFormat(value);
 
             formatField = value;
         }
@@ -43,7 +43,7 @@ public sealed record class QueryEpoch
         get => calendarField;
         init
         {
-            Validate(value);
+            ValidateCalendarType(value);
 
             calendarField = value;
         }
@@ -56,7 +56,7 @@ public sealed record class QueryEpoch
         get => timeSystemField;
         init
         {
-            Validate(value);
+            ValidateTimeSystem(value);
 
             timeSystemField = value;
         }
@@ -100,31 +100,31 @@ public sealed record class QueryEpoch
     /// <summary>Backing field for <see cref="Time"/>. Should not be used elsewhere.</summary>
     private readonly Time offsetField = Time.Zero;
 
-    /// <summary>Validates the <see cref="IEpoch"/> <paramref name="epoch"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates that the <see cref="IEpoch"/> <paramref name="epoch"/> can represent the <see cref="Epoch"/>, throwing an <see cref="ArgumentNullException"/> otherwise.</summary>
     /// <param name="epoch">This <see cref="IEpoch"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="epoch"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    private static void Validate(IEpoch epoch, [CallerArgumentExpression(nameof(epoch))] string? argumentExpression = null) => ArgumentNullException.ThrowIfNull(epoch, argumentExpression);
+    private static void ValidateEpoch(IEpoch epoch, [CallerArgumentExpression(nameof(epoch))] string? argumentExpression = null) => ArgumentNullException.ThrowIfNull(epoch, argumentExpression);
 
-    /// <summary>Validates that <paramref name="format"/> represents a valid <see cref="EpochFormat"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="EpochFormat"/> <paramref name="format"/> can represent the <see cref="Format"/>, throwing an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
     /// <param name="format">This <see cref="EpochFormat"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="format"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
-    private static void Validate(EpochFormat format, [CallerArgumentExpression(nameof(format))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(format, argumentExpression);
+    private static void ValidateEpochFormat(EpochFormat format, [CallerArgumentExpression(nameof(format))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(format, argumentExpression);
 
-    /// <summary>Validates that <paramref name="calendar"/> represents a valid <see cref="CalendarType"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="CalendarType"/> <paramref name="calendar"/> can represent the <see cref="Calendar"/>, throwing an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
     /// <param name="calendar">This <see cref="CalendarType"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="calendar"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
-    private static void Validate(CalendarType calendar, [CallerArgumentExpression(nameof(calendar))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(calendar, argumentExpression);
+    private static void ValidateCalendarType(CalendarType calendar, [CallerArgumentExpression(nameof(calendar))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(calendar, argumentExpression);
 
-    /// <summary>Validates that <paramref name="timeSystem"/> represents a valid <see cref="Epoch.TimeSystem"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="Epoch.TimeSystem"/> <paramref name="timeSystem"/> can represent the <see cref="TimeSystem"/>, throwing an <see cref="InvalidEnumArgumentException"/> otherwise.</summary>
     /// <param name="timeSystem">This <see cref="Epoch.TimeSystem"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="timeSystem"/>.</param>
     /// <exception cref="InvalidEnumArgumentException"/>
-    private static void Validate(TimeSystem timeSystem, [CallerArgumentExpression(nameof(timeSystem))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(timeSystem, argumentExpression);
+    private static void ValidateTimeSystem(TimeSystem timeSystem, [CallerArgumentExpression(nameof(timeSystem))] string? argumentExpression = null) => InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(timeSystem, argumentExpression);
 
-    /// <summary>Validates that <paramref name="offset"/> represents a valid <see cref="Time"/>, and throws an <see cref="ArgumentException"/> otherwise.</summary>
+    /// <summary>Validates that the <see cref="Time"/> <paramref name="offset"/> can represent the <see cref="Offset"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="offset">This <see cref="Time"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="offset"/>.</param>
     /// <exception cref="ArgumentException"/>

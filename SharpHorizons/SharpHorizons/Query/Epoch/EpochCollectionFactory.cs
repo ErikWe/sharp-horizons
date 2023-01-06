@@ -80,7 +80,7 @@ public sealed class EpochCollectionFactory : IEpochCollectionFactory
         return Create(DefaultFormat, epochs);
     }
 
-    /// <summary>Validates the <see cref="EpochFormat"/> <paramref name="format"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="EpochFormat"/> <paramref name="format"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="format">This <see cref="EpochFormat"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="format"/>.</param>
     /// <exception cref="ArgumentException"/>

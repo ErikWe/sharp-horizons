@@ -78,7 +78,7 @@ public readonly record struct QueryResultSignature
     /// <summary>Backing field for <see cref="Version"/>. Should not be used elsewhere.</summary>
     private readonly string? versionField;
 
-    /// <summary>Validates the <see cref="QueryResultSignature"/> <paramref name="signature"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="QueryResultSignature"/> <paramref name="signature"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="signature">This <see cref="QueryResultSignature"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="signature"/>.</param>
     /// <exception cref="ArgumentException"/>

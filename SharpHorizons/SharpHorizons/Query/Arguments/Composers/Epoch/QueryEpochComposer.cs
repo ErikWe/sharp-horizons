@@ -104,7 +104,7 @@ internal class QueryEpochComposer : IQueryEpochComposer
         return new(epoch.ToJulianDay().Day - offset.Days + timeSystemOffset.Days);
     }
 
-    /// <summary>Validates the <see cref="QueryEpoch"/> <paramref name="queryEpoch"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="QueryEpoch"/> <paramref name="queryEpoch"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="queryEpoch">This <see cref="QueryEpoch"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="queryEpoch"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -130,7 +130,7 @@ internal class QueryEpochComposer : IQueryEpochComposer
         }
     }
 
-    /// <summary>Validates the <see cref="EpochFormat"/> <paramref name="format"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="EpochFormat"/> <paramref name="format"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="format">This <see cref="EpochFormat"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="format"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -142,7 +142,7 @@ internal class QueryEpochComposer : IQueryEpochComposer
         }
     }
 
-    /// <summary>Validates the <see cref="CalendarType"/> <paramref name="calendar"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="CalendarType"/> <paramref name="calendar"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="calendar">This <see cref="CalendarType"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="calendar"/>.</param>
     /// <exception cref="ArgumentException"/>
@@ -154,7 +154,7 @@ internal class QueryEpochComposer : IQueryEpochComposer
         }
     }
 
-    /// <summary>Validates the <see cref="TimeSystem"/> <paramref name="timeSystem"/>, and throws an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <summary>Validates the <see cref="TimeSystem"/> <paramref name="timeSystem"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="timeSystem">This <see cref="TimeSystem"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="timeSystem"/>.</param>
     /// <exception cref="ArgumentException"/>
