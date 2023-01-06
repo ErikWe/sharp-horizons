@@ -1,19 +1,79 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<RootNamespace>SharpHorizons.Query</RootNamespace>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>SharpHorizons.Query</RootNamespace>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="SharpMeasures.Astronomy" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Http" PrivateAssets="compile" />
+        <PackageReference Include="Microsoft.Extensions.Options" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" PrivateAssets="all" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\SharpHorizons.Ephemeris\SharpHorizons.Ephemeris.csproj" />
-		<ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
-		<ProjectReference Include="..\SharpHorizons.Identity\SharpHorizons.Identity.csproj" />
-		<ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="NodaTime" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SharpMeasures.Astronomy" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Configuration.ConfigurationManager" PrivateAssets="compile" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SharpHorizons.Ephemeris\SharpHorizons.Ephemeris.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Identity\SharpHorizons.Identity.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Query.Abstractions\SharpHorizons.Query.Abstractions.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Settings\Result\DefaultQueryResultSettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DefaultQueryResultSettings.settings</DependentUpon>
+      </Compile>
+        
+      <Compile Update="Settings\DefaultQuerySettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <DependentUpon>DefaultQuerySettings.settings</DependentUpon>
+        <AutoGen>True</AutoGen>
+      </Compile>
+        
+      <Compile Update="Settings\Parameters\DefaultParameterIdentifiers.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <DependentUpon>DefaultParameterIdentifiers.settings</DependentUpon>
+        <AutoGen>True</AutoGen>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Settings\Result\DefaultQueryResultSettings.settings">
+        <Generator>SettingsSingleFileGenerator</Generator>
+        <LastGenOutput>DefaultQueryResultSettings.Designer.cs</LastGenOutput>
+        <CustomToolNamespace>SharpHorizons.Settings.Query.Result</CustomToolNamespace>
+      </None>
+        
+      <None Update="Settings\DefaultQuerySettings.settings">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CustomToolNamespace>SharpHorizons.Settings.Query</CustomToolNamespace>
+        <LastGenOutput>DefaultQuerySettings.Designer.cs</LastGenOutput>
+        <Generator>SettingsSingleFileGenerator</Generator>
+      </None>
+        
+      <None Update="Settings\Parameters\DefaultParameterIdentifiers.settings">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CustomToolNamespace>SharpHorizons.Settings.Query.Parameters</CustomToolNamespace>
+        <LastGenOutput>DefaultParameterIdentifiers.Designer.cs</LastGenOutput>
+        <Generator>SettingsSingleFileGenerator</Generator>
+      </None>
+    </ItemGroup>
 
 </Project>

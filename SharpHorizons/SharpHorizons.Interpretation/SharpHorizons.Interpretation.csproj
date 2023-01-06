@@ -6,7 +6,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.Common" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Http" PrivateAssets="compile" />
+        <PackageReference Include="Microsoft.Extensions.Options" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NodaTime" />
     </ItemGroup>
 
     <ItemGroup>
@@ -14,8 +22,78 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" />
-        <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" PrivateAssets="compile" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharpHorizons.Interpretation.Abstractions\SharpHorizons.Interpretation.Abstractions.csproj" />
+      <ProjectReference Include="..\SharpHorizons.Interpretation.Domain\SharpHorizons.Interpretation.Domain.csproj" />
+      <ProjectReference Include="..\SharpHorizons.Query.Abstractions\SharpHorizons.Query.Abstractions.csproj" />
+      <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Settings\DefaultInterpretationSettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <DependentUpon>DefaultInterpretationSettings.settings</DependentUpon>
+        <AutoGen>True</AutoGen>
+      </Compile>
+        
+      <Compile Update="Settings\Ephemeris\DefaultEphemerisInterpretationSettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <DependentUpon>DefaultEphemerisInterpretationSettings.settings</DependentUpon>
+        <AutoGen>True</AutoGen>
+      </Compile>
+        
+      <Compile Update="Settings\Ephemeris\Origin\DefaultEphemerisOriginInterpretationSettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <DependentUpon>DefaultEphemerisOriginInterpretationSettings.settings</DependentUpon>
+        <AutoGen>True</AutoGen>
+      </Compile>
+        
+      <Compile Update="Settings\Ephemeris\Target\DefaultEphemerisTargetInterpretationSettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <DependentUpon>DefaultEphemerisTargetInterpretationSettings.settings</DependentUpon>
+        <AutoGen>True</AutoGen>
+      </Compile>
+        
+      <Compile Update="Settings\Ephemeris\Vectors\DefaultVectorsInterpretationSettings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <DependentUpon>DefaultVectorsInterpretationSettings.settings</DependentUpon>
+        <AutoGen>True</AutoGen>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Settings\DefaultInterpretationSettings.settings">
+        <CustomToolNamespace>SharpHorizons.Settings.Interpretation</CustomToolNamespace>
+        <LastGenOutput>DefaultInterpretationSettings.Designer.cs</LastGenOutput>
+        <Generator>SettingsSingleFileGenerator</Generator>
+      </None>
+        
+      <None Update="Settings\Ephemeris\DefaultEphemerisInterpretationSettings.settings">
+        <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris</CustomToolNamespace>
+        <LastGenOutput>DefaultEphemerisInterpretationSettings.Designer.cs</LastGenOutput>
+        <Generator>SettingsSingleFileGenerator</Generator>
+      </None>
+        
+      <None Update="Settings\Ephemeris\Origin\DefaultEphemerisOriginInterpretationSettings.settings">
+        <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris.Origin</CustomToolNamespace>
+        <LastGenOutput>DefaultEphemerisOriginInterpretationSettings.Designer.cs</LastGenOutput>
+        <Generator>SettingsSingleFileGenerator</Generator>
+      </None>
+        
+      <None Update="Settings\Ephemeris\Target\DefaultEphemerisTargetInterpretationSettings.settings">
+        <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris.Target</CustomToolNamespace>
+        <LastGenOutput>DefaultEphemerisTargetInterpretationSettings.Designer.cs</LastGenOutput>
+        <Generator>SettingsSingleFileGenerator</Generator>
+      </None>
+        
+      <None Update="Settings\Ephemeris\Vectors\DefaultVectorsInterpretationSettings.settings">
+        <CustomToolNamespace>SharpHorizons.Settings.Interpretation.Ephemeris.Vectors</CustomToolNamespace>
+        <LastGenOutput>DefaultVectorsInterpretationSettings.Designer.cs</LastGenOutput>
+        <Generator>SettingsSingleFileGenerator</Generator>
+      </None>
     </ItemGroup>
 
 </Project>

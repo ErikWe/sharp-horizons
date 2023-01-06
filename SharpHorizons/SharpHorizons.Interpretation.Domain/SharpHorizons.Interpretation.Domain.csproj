@@ -2,8 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <RootNamespace>SharpHorizons.Query</RootNamespace>
+        <RootNamespace>SharpHorizons.Interpretation</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="SharpMeasures.Astronomy" />
@@ -11,7 +15,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
-        <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
     </ItemGroup>
 
 </Project>

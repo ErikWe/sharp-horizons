@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
+using SharpHorizons.Extensions;
+
 using System;
 
 internal static class DependencyInjection

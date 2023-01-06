@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<RootNamespace>SharpHorizons.Query</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="SharpMeasures.Astronomy" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SharpHorizons.Ephemeris\SharpHorizons.Ephemeris.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Identity\SharpHorizons.Identity.csproj" />
+		<ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
+	</ItemGroup>
+
+</Project>

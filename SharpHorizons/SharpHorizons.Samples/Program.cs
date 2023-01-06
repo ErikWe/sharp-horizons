@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using SharpHorizons;
+using SharpHorizons.Extensions;
 using SharpHorizons.Interpretation.Ephemeris.Vectors;
 using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;

@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SharpHorizons.Interpretation\SharpHorizons.Interpretation.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Interpretation.Domain\SharpHorizons.Interpretation.Domain.csproj" />
     </ItemGroup>
 
 </Project>
