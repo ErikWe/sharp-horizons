@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Extensions;
+﻿namespace SharpHorizons.Extensions.Interpretation;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

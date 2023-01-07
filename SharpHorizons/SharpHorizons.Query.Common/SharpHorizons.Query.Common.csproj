@@ -5,12 +5,13 @@
         <RootNamespace>SharpHorizons.Query</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="SharpMeasures.Astronomy" />
-    </ItemGroup>
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <IsPublishable>false</IsPublishable>
+    </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Query.Abstractions\SharpHorizons.Query.Abstractions.csproj" />
         <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
     </ItemGroup>
 

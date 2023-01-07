@@ -15,11 +15,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
+		<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+	  <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" />
 	</ItemGroup>
 
 </Project>

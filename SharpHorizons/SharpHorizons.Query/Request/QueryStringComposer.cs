@@ -4,6 +4,7 @@ using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Parameters;
 
 using System;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -186,11 +187,15 @@ internal sealed class QueryStringComposer : IQueryStringComposer
 
             if (options.URLEncoding)
             {
-                formattedArgument = URLEncoder.Encode(formattedArgument);
+                formattedArgument = URLEncodeArgument(formattedArgument);
             }
 
             return formattedArgument;
         }
+
+        /// <summary>URL-encodes <paramref name="argument"/>.</summary>
+        /// <param name="argument">This <see cref="string"/> is URL-encoded.</param>
+        private static string URLEncodeArgument(string argument) => WebUtility.UrlEncode(argument);
     }
 
     /// <summary>Provides options for how an <see cref="IQueryParameterIdentifier"/> and associated <see cref="IQueryArgument"/> is appended to the <see cref="HorizonsQueryString"/>.</summary>

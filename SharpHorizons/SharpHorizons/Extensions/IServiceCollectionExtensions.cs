@@ -5,6 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 using NodaTime;
 
+using SharpHorizons.Extensions.Interpretation;
+using SharpHorizons.Extensions.Query;
+using SharpHorizons.Extensions.Query.Fluency;
+using SharpHorizons.Extensions.Query.HTTP;
+
 /// <summary>Extension methods for <see cref="IServiceCollection"/>.</summary>
 public static class IServiceCollectionExtensions
 {
@@ -15,6 +20,9 @@ public static class IServiceCollectionExtensions
         services.AddSharpHorizonsExternal();
 
         services.AddSharpHorizonsQuery();
+        services.AddSharpHorizonsHTTPQuery();
+        services.AddSharpHorizonsFluentQuery();
+
         services.AddSharpHorizonsInterpretation();
 
         return services;
@@ -28,6 +36,9 @@ public static class IServiceCollectionExtensions
         services.AddSharpHorizonsExternal();
 
         services.AddSharpHorizonsQuery(configuration);
+        services.AddSharpHorizonsHTTPQuery(configuration);
+        services.AddSharpHorizonsFluentQuery();
+
         services.AddSharpHorizonsInterpretation(configuration);
 
         return services;

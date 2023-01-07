@@ -5,6 +5,11 @@
 		<RootNamespace>SharpHorizons.Ephemeris</RootNamespace>
 	</PropertyGroup>
 
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <IsPublishable>true</IsPublishable>
+    </PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="NodaTime" />
 	</ItemGroup>

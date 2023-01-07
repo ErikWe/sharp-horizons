@@ -1,4 +1,4 @@
-﻿namespace SharpHorizons.Extensions;
+﻿namespace SharpHorizons.Extensions.Query;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,14 +14,10 @@ using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Parameters;
 using SharpHorizons.Query.Request;
-using SharpHorizons.Query.Request.HTTP;
 using SharpHorizons.Query.Result;
-using SharpHorizons.Query.Result.HTTP;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
-using SharpHorizons.Query.Vectors.Fluency;
 using SharpHorizons.Query.Vectors.Table;
-using SharpHorizons.Settings.Query;
 using SharpHorizons.Settings.Query.Parameters;
 using SharpHorizons.Settings.Query.Result;
 
@@ -41,8 +37,6 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<ITimeSystemOffsetProvider, ZeroTimeSystemOffsetProvider>();
 
-        services.AddSharpHorizonsHTTPQuery();
-
         services.AddSharpHorizonsTarget();
         services.AddSharpHorizonsOrigin();
         services.AddSharpHorizonsEpochSelection();
@@ -61,7 +55,6 @@ public static class IServiceCollectionExtensions
     {
         services.AddSharpHorizonsQuery();
 
-        services.Configure<QueryOptions>(configuration.GetSection(QueryOptions.Section));
         services.Configure<QueryResultOptions>(configuration.GetSection(QueryResultOptions.Section));
         services.Configure<ParameterIdentifierOptions>(configuration.GetSection(ParameterIdentifierOptions.Section));
 
@@ -72,23 +65,11 @@ public static class IServiceCollectionExtensions
     /// <param name="services">Query- and options-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsQueryOptions(this IServiceCollection services)
     {
-        services.AddOptions<QueryOptions>().Configure(QueryOptions.ApplyDefaults);
         services.AddOptions<QueryResultOptions>().Configure(QueryResultOptions.ApplyDefaults);
         services.AddOptions<ParameterIdentifierOptions>().Configure(ParameterIdentifierOptions.ApplyDefaults);
 
-        services.AddSingleton<IHorizonsHTTPAddressProvider, HorizonsHTTPAddressProvider>();
         services.AddSingleton<IQueryResultOptionsProvider, QueryResultOptionsProvider>();
         services.AddSingleton<IQueryParameterIdentifierProvider, QueryParameterIdentifierProvider>();
-
-        return services;
-    }
-
-    /// <summary>Adds HTTP-related services required by SharpHorizons to the <see cref="IServiceCollection"/> <paramref name="services"/>.</summary>
-    /// <param name="services">HTTP-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
-    private static IServiceCollection AddSharpHorizonsHTTPQuery(this IServiceCollection services)
-    {
-        services.AddSingleton<IHTTPQueryHandler, HTTPQueryHandler>();
-        services.AddSingleton<IHTTPResultExtractor, HTTPTextExtractor>();
 
         return services;
     }
@@ -105,12 +86,12 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IMPCTargetFactory, MPCTargetFactory>();
         services.AddSingleton<IMPCCometTargetFactory, MPCCometTargetFactory>();
 
-        services.AddSingleton<ITargetSiteComposer<CylindricalCoordinate>, Query.Arguments.Composers.Target.CylindricalCoordinateComposer>();
-        services.AddSingleton<ITargetSiteComposer<GeodeticCoordinate>, Query.Arguments.Composers.Target.GeodeticCoordinateComposer>();
+        services.AddSingleton<ITargetSiteComposer<CylindricalCoordinate>, SharpHorizons.Query.Arguments.Composers.Target.CylindricalCoordinateComposer>();
+        services.AddSingleton<ITargetSiteComposer<GeodeticCoordinate>, SharpHorizons.Query.Arguments.Composers.Target.GeodeticCoordinateComposer>();
 
-        services.AddSingleton<ITargetObjectComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
-        services.AddSingleton<ITargetObjectComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetObjectComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetObjectComposer<MajorObject>, SharpHorizons.Query.Arguments.Composers.Target.MajorObjectComposer>();
+        services.AddSingleton<ITargetObjectComposer<MajorObjectID>, SharpHorizons.Query.Arguments.Composers.Target.MajorObjectIDComposer>();
+        services.AddSingleton<ITargetObjectComposer<MajorObjectName>, SharpHorizons.Query.Arguments.Composers.Target.MajorObjectNameComposer>();
 
         return services;
     }
@@ -124,9 +105,9 @@ public static class IServiceCollectionExtensions
 
         services.AddSingleton<IOriginCoordinateFactory, OriginCoordinateFactory>();
 
-        services.AddSingleton<IOriginObjectComposer<MajorObject>, Query.Arguments.Composers.Origin.MajorObjectComposer>();
-        services.AddSingleton<IOriginObjectComposer<MajorObjectID>, Query.Arguments.Composers.Origin.MajorObjectIDComposer>();
-        services.AddSingleton<IOriginObjectComposer<MajorObjectName>, Query.Arguments.Composers.Origin.MajorObjectNameComposer>();
+        services.AddSingleton<IOriginObjectComposer<MajorObject>, SharpHorizons.Query.Arguments.Composers.Origin.MajorObjectComposer>();
+        services.AddSingleton<IOriginObjectComposer<MajorObjectID>, SharpHorizons.Query.Arguments.Composers.Origin.MajorObjectIDComposer>();
+        services.AddSingleton<IOriginObjectComposer<MajorObjectName>, SharpHorizons.Query.Arguments.Composers.Origin.MajorObjectNameComposer>();
 
         return services;
     }
@@ -164,10 +145,6 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IVectorTableContentValidator, VectorTableContentValidator>();
         services.AddSingleton<IVectorTableQuantitiesValidator, VectorTableQuantitiesValidator>();
 
-        services.AddSingleton<ITargetStageFactory, TargetStageFactory>();
-        services.AddSingleton<IOriginStageFactory, OriginStageFactory>();
-        services.AddSingleton<IEpochStageFactory, EpochStageFactory>();
-
         return services;
     }
 
@@ -176,13 +153,12 @@ public static class IServiceCollectionExtensions
     private static IServiceCollection AddSharpHorizonsArgumentComposers(this IServiceCollection services)
     {
         services.AddSingleton<IQueryStringComposer, QueryStringComposer>();
-        services.AddSingleton<IURIComposer, URIComposer>();
 
         services.AddSingleton<ICommandComposer<QueryCommand>, QueryCommandComposer>();
 
-        services.AddSingleton<ITargetComposer<MajorObject>, Query.Arguments.Composers.Target.MajorObjectComposer>();
-        services.AddSingleton<ITargetComposer<MajorObjectID>, Query.Arguments.Composers.Target.MajorObjectIDComposer>();
-        services.AddSingleton<ITargetComposer<MajorObjectName>, Query.Arguments.Composers.Target.MajorObjectNameComposer>();
+        services.AddSingleton<ITargetComposer<MajorObject>, SharpHorizons.Query.Arguments.Composers.Target.MajorObjectComposer>();
+        services.AddSingleton<ITargetComposer<MajorObjectID>, SharpHorizons.Query.Arguments.Composers.Target.MajorObjectIDComposer>();
+        services.AddSingleton<ITargetComposer<MajorObjectName>, SharpHorizons.Query.Arguments.Composers.Target.MajorObjectNameComposer>();
 
         services.AddSingleton<ITargetComposer<MPCObject>, MPCObjectTargetComposer>();
         services.AddSingleton<ITargetComposer<MPCProvisionalObject>, MPCProvisionalObjectTargetComposer>();
@@ -196,11 +172,11 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IOriginComposer<ICoordinateOrigin>, CoordinateOriginComposer>();
         services.AddSingleton<IOriginComposer<IObservationSiteOrigin>, ObservationSiteOriginComposer>();
 
-        services.AddSingleton<IOriginCoordinateComposer<CylindricalCoordinate>, Query.Arguments.Composers.Origin.CylindricalCoordinateComposer>();
-        services.AddSingleton<IOriginCoordinateComposer<GeodeticCoordinate>, Query.Arguments.Composers.Origin.GeodeticCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateComposer<CylindricalCoordinate>, SharpHorizons.Query.Arguments.Composers.Origin.CylindricalCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateComposer<GeodeticCoordinate>, SharpHorizons.Query.Arguments.Composers.Origin.GeodeticCoordinateComposer>();
 
-        services.AddSingleton<IOriginCoordinateTypeComposer<CylindricalCoordinate>, Query.Arguments.Composers.Origin.CylindricalCoordinateComposer>();
-        services.AddSingleton<IOriginCoordinateTypeComposer<GeodeticCoordinate>, Query.Arguments.Composers.Origin.GeodeticCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateTypeComposer<CylindricalCoordinate>, SharpHorizons.Query.Arguments.Composers.Origin.CylindricalCoordinateComposer>();
+        services.AddSingleton<IOriginCoordinateTypeComposer<GeodeticCoordinate>, SharpHorizons.Query.Arguments.Composers.Origin.GeodeticCoordinateComposer>();
 
         services.AddSingleton<IQueryEpochComposer, QueryEpochComposer>();
 

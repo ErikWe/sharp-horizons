@@ -27,8 +27,8 @@
 
     <PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <IsPackable>false</IsPackable>
-        <IsPublishable>false</IsPublishable>
+        <IsPackable>true</IsPackable>
+        <IsPublishable>true</IsPublishable>
     </PropertyGroup>
 
     <ItemGroup>

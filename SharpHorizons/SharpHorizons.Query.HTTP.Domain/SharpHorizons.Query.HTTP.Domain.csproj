@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="SharpMeasures.Astronomy" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
         <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
     </ItemGroup>

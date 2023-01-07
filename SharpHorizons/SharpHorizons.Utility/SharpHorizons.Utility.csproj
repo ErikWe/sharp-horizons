@@ -5,6 +5,11 @@
 		<RootNamespace>SharpHorizons</RootNamespace>
 	</PropertyGroup>
 
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <IsPublishable>false</IsPublishable>
+    </PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="SharpMeasures.Astronomy" />
 	</ItemGroup>

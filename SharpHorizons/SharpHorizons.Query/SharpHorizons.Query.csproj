@@ -30,6 +30,7 @@
         <ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
         <ProjectReference Include="..\SharpHorizons.Identity\SharpHorizons.Identity.csproj" />
         <ProjectReference Include="..\SharpHorizons.Query.Abstractions\SharpHorizons.Query.Abstractions.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Query.Common\SharpHorizons.Query.Common.csproj" PrivateAssets="all" />
         <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
         <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
     </ItemGroup>
@@ -39,12 +40,6 @@
         <DesignTimeSharedInput>True</DesignTimeSharedInput>
         <AutoGen>True</AutoGen>
         <DependentUpon>DefaultQueryResultSettings.settings</DependentUpon>
-      </Compile>
-        
-      <Compile Update="Settings\DefaultQuerySettings.Designer.cs">
-        <DesignTimeSharedInput>True</DesignTimeSharedInput>
-        <DependentUpon>DefaultQuerySettings.settings</DependentUpon>
-        <AutoGen>True</AutoGen>
       </Compile>
         
       <Compile Update="Settings\Parameters\DefaultParameterIdentifiers.Designer.cs">
@@ -59,13 +54,6 @@
         <Generator>SettingsSingleFileGenerator</Generator>
         <LastGenOutput>DefaultQueryResultSettings.Designer.cs</LastGenOutput>
         <CustomToolNamespace>SharpHorizons.Settings.Query.Result</CustomToolNamespace>
-      </None>
-        
-      <None Update="Settings\DefaultQuerySettings.settings">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <CustomToolNamespace>SharpHorizons.Settings.Query</CustomToolNamespace>
-        <LastGenOutput>DefaultQuerySettings.Designer.cs</LastGenOutput>
-        <Generator>SettingsSingleFileGenerator</Generator>
       </None>
         
       <None Update="Settings\Parameters\DefaultParameterIdentifiers.settings">

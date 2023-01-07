@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>SharpHorizons.Query</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SharpHorizons.Query.HTTP.Domain\SharpHorizons.Query.HTTP.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" />
+	  <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
 	</ItemGroup>
 
 </Project>
