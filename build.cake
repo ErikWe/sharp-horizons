@@ -38,6 +38,7 @@ Task("Format")
     {
         DotNetFormatSettings settings = new()
         {
+            Verbosity = DotNetVerbosity.Detailed,
             NoRestore = true,
             VerifyNoChanges = true
         };
