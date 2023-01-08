@@ -25,6 +25,6 @@ public class BuildVersion
 
         var gitVersion = context.GitVersion(gitVersionSettings);
 
-        return new(gitVersion.Informational, gitVersion.NuGetVersion, $"v{gitVersion.MajorMinorPatch}");
+        return new(gitVersion.InformationalVersion, gitVersion.NuGetVersion, $"v{gitVersion.MajorMinorPatch}");
     }
 }
