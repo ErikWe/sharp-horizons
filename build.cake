@@ -97,6 +97,7 @@ Task("Pack")
             NoRestore = true,
             NoBuild = true,
             IncludeSymbols = true,
+            SymbolPackageFormat = "snupkg",
             OutputDirectory = parameters.Paths.NuGet,
             MSBuildSettings = msBuildSettings
         };
@@ -160,14 +161,16 @@ Task("Publish-GitHub-Release")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
-        var assets = GetFiles($"{parameters.Paths.NuGet}/*");
-
-        foreach(var asset in assets)
+        GitReleaseManagerCreateSettings settings = new()
         {
-            GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, "cake-build", "cake", parameters.Version.Milestone, asset.FullPath);
-        }
+            NoLogo = true,
+            Milestone = parameters.Version.Milestone,
+            Assets = $"{parameters.Paths.NuGet}/*",
+            Debug = true,
+            NoWorkingDirectory = true
+        };
 
-        GitReleaseManagerClose(parameters.Publish.GitHubKey, "cake-build", "cake", parameters.Version.Milestone);
+        GitReleaseManagerCreate(parameters.Publish.GitHubKey, "ErikWe", "SharpHorizons", settings);
     })
     .OnError<BuildParameters>((exception, parameters) =>
     {
