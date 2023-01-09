@@ -24,4 +24,4 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       run: |
         dotnet tool restore
-        dotnet cake
+        dotnet cake --target=Publish

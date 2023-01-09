@@ -17,6 +17,8 @@ Setup<BuildParameters>((context) =>
 Task("Clean")
     .Does<BuildParameters>((context, parameters) =>
     {
+        CleanDirectory(parameters.Paths.Artifacts);
+
         DotNetCleanSettings settings = new()
         {
             Configuration = parameters.Configuration
@@ -38,7 +40,6 @@ Task("Format")
     {
         DotNetFormatSettings settings = new()
         {
-            Verbosity = DotNetVerbosity.Detailed,
             NoRestore = true,
             VerifyNoChanges = true
         };
@@ -77,10 +78,12 @@ Task("Test")
         };
 
         DotNetTest(project.FullPath, settings);
-    });
+    })
+    .DeferOnError();
 
 Task("Pack")
     .IsDependentOn("Test")
+    .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions, "Build is not running on GitHub Actions.")
     .Does<BuildParameters>((context, parameters) =>
     {
         DotNetMSBuildSettings msBuildSettings = new()
@@ -108,7 +111,7 @@ Task("Pack")
 
 Task("Publish-NuGet")
     .IsDependentOn("Pack")
-    .WithCriteria<BuildParameters>((context, parameters) => parameters.Publish.ShouldPublish)
+    .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
         DotNetNuGetPushSettings settings = new()
@@ -131,7 +134,7 @@ Task("Publish-NuGet")
 
 Task("Publish-GitHub-Packages")
     .IsDependentOn("Pack")
-    .WithCriteria<BuildParameters>((context, parameters) => parameters.Publish.ShouldPublish)
+    .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
         DotNetNuGetPushSettings settings = new()
@@ -154,7 +157,7 @@ Task("Publish-GitHub-Packages")
 
 Task("Publish-GitHub-Release")
     .IsDependentOn("Pack")
-    .WithCriteria<BuildParameters>((context, parameters) => parameters.Publish.ShouldPublish)
+    .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
         var assets = GetFiles($"{parameters.Paths.NuGet}/*");
@@ -185,12 +188,15 @@ Task("Publish-GitHub-ReleaseNotes")
         GitReleaseManagerCreate(parameters.Publish.GitHubKey, "cake-build", "cake", settings);
     });
 
-Task("Default")
+Task("Publish")
     .IsDependentOn("Publish-NuGet")
     .IsDependentOn("Publish-GitHub-Packages")
     .IsDependentOn("Publish-GitHub-Release");
 
 Task("ReleaseNotes")
   .IsDependentOn("Publish-GitHub-ReleaseNotes");
+
+Task("Default")
+    .IsDependentOn("Test");
 
 RunTarget(Argument("target", "Default"));

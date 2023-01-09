@@ -4,6 +4,8 @@
 
 public class BuildParameters
 {
+    public bool IsRunningOnGitHubActions { get; }
+
     public string Target { get; }
     public string Configuration { get; }
     public string Framework { get; } = "net7.0";
@@ -17,6 +19,8 @@ public class BuildParameters
 
     public BuildParameters(ISetupContext context)
     {
+        IsRunningOnGitHubActions = context.BuildSystem().GitHubActions.IsRunningOnGitHubActions;
+
         Target = context.TargetTask.Name;
         Configuration = context.Argument("configuration", "Release");
 
