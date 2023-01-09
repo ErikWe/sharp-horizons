@@ -4,6 +4,9 @@
 
 public class BuildParameters
 {
+    public string Owner { get; } = "ErikWe";
+    public string Repository { get; } = "sharp-horizons";
+
     public bool IsRunningOnGitHubActions { get; }
 
     public string Target { get; }

@@ -21,6 +21,7 @@ Task("Clean")
 
         DotNetCleanSettings settings = new()
         {
+            Verbosity = DotNetVerbosity.Minimal,
             Configuration = parameters.Configuration
         };
 
@@ -166,11 +167,10 @@ Task("Publish-GitHub-Release")
             NoLogo = true,
             Milestone = parameters.Version.Milestone,
             Assets = $"{parameters.Paths.NuGet}/*",
-            Debug = true,
             NoWorkingDirectory = true
         };
 
-        GitReleaseManagerCreate(parameters.Publish.GitHubKey, "ErikWe", "SharpHorizons", settings);
+        GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
     })
     .OnError<BuildParameters>((exception, parameters) =>
     {
@@ -188,7 +188,7 @@ Task("Publish-GitHub-ReleaseNotes")
             TargetCommitish = "main"
         };
 
-        GitReleaseManagerCreate(parameters.Publish.GitHubKey, "cake-build", "cake", settings);
+        GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
     });
 
 Task("Publish")
