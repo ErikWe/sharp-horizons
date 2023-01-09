@@ -4,7 +4,10 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Query.Result;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Interprets <see cref="QueryResult"/> as <see cref="MajorObject"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class MajorObjectInterpreter : IInterpreter<MajorObject>
 {
     /// <inheritdoc cref="Ephemeris.MajorObjectIDInterpreter"/>

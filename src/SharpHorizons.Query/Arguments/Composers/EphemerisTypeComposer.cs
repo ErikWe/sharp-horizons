@@ -1,6 +1,9 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IEphemerisTypeComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisTypeComposer : IEphemerisTypeComposer
 {
     IEphemerisTypeArgument IArgumentComposer<IEphemerisTypeArgument, EphemerisType>.Compose(EphemerisType obj) => new QueryArgument(obj switch

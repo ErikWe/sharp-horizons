@@ -47,20 +47,26 @@ public readonly record struct MPCCometName
         Value = value;
     }
 
-    /// <summary>Retrieves the <see cref="Value"/> represented by the <see cref="MPCCometName"/>.</summary>
+    /// <summary>Retrieves the <see cref="string"/> <see cref="Value"/> represented by the <see cref="MPCCometName"/>.</summary>
     /// <exception cref="InvalidOperationException"/>
     public override string ToString() => Value;
 
     /// <summary>Backing field for <see cref="Value"/>. Should not be used elsewhere.</summary>
     private readonly string? valueField;
 
+    /// <summary>Constructs an <see cref="MPCCometName"/>, representing the <see cref="string"/> <paramref name="value"/>.</summary>
+    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    public static MPCCometName FromString(string value) => new(value);
+
     /// <inheritdoc cref="MPCCometName"/>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    public static explicit operator MPCCometName(string value) => new(value);
+    public static explicit operator MPCCometName(string value) => FromString(value);
 
-    /// <summary>Retrieves the <see cref="Value"/> represented by <paramref name="name"/>.</summary>
+    /// <summary>Retrieves the <see cref="string"/> <see cref="Value"/> represented by <paramref name="name"/>.</summary>
     /// <param name="name"><inheritdoc cref="MPCCometName" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(MPCCometName name)

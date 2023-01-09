@@ -44,19 +44,24 @@ public readonly record struct OriginObjectIdentifier
         Value = value;
     }
 
-    /// <summary>Retrieves the <see cref="Value"/> represented by the <see cref="OriginObjectIdentifier"/>.</summary>
+    /// <summary>Retrieves the <see cref="string"/> <see cref="Value"/> represented by the <see cref="OriginObjectIdentifier"/>.</summary>
     /// <exception cref="InvalidOperationException"/>
     public override string ToString() => Value;
 
     /// <summary>Backing field for <see cref="Value"/>. Should not be used elsewhere.</summary>
     private readonly string? valueField;
 
+    /// <summary>Constructs a <see cref="OriginObjectIdentifier"/> representing the <see cref="string"/> <paramref name="value"/>.</summary>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    public static OriginObjectIdentifier FromString(string value) => new(value);
+
     /// <inheritdoc cref="OriginObjectIdentifier(string)"/>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    public static explicit operator OriginObjectIdentifier(string value) => new(value);
+    public static explicit operator OriginObjectIdentifier(string value) => FromString(value);
 
-    /// <summary>Retrieves the <see cref="Value"/> represented by <paramref name="originObject"/>.</summary>
+    /// <summary>Retrieves the <see cref="string"/> <see cref="Value"/> represented by <paramref name="originObject"/>.</summary>
     /// <param name="originObject"><inheritdoc cref="OriginObjectIdentifier" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(OriginObjectIdentifier originObject)

@@ -13,20 +13,22 @@ internal sealed record class AngularStepSize : IAngularStepSize
     public required Angle DeltaAngle { get; init; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
-    public required IStepSizeComposer<IAngularStepSize> Composer { private get; init; }
+    private IStepSizeComposer<IAngularStepSize> Composer { get; }
 
     /// <inheritdoc cref="AngularStepSize"/>
-    public AngularStepSize() { }
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public AngularStepSize(IStepSizeComposer<IAngularStepSize> composer)
+    {
+        Composer = composer;
+    }
 
     /// <inheritdoc cref="AngularStepSize"/>
     /// <param name="deltaAngle"><inheritdoc cref="DeltaAngle" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public AngularStepSize(Angle deltaAngle, IStepSizeComposer<IAngularStepSize> composer)
+    public AngularStepSize(Angle deltaAngle, IStepSizeComposer<IAngularStepSize> composer) : this(composer)
     {
         DeltaAngle = deltaAngle;
-
-        Composer = composer;
     }
 
     IStepSizeArgument IStepSize.ComposeArgument() => Composer.Compose(this);

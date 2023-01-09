@@ -2,10 +2,12 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 internal static class Datasets
 {
-    public class MajorObjectIDs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class MajorObjectIDs : IEnumerable<object?[]>
     {
         public static IEnumerable<MajorObjectID> Items => new MajorObjectID[]
         {
@@ -17,7 +19,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidMajorObjectNames : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMajorObjectNames : IEnumerable<object?[]>
     {
         public static IEnumerable<MajorObjectName> Items => new MajorObjectName[]
         {
@@ -29,7 +32,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMajorObjectNames : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMajorObjectNames : IEnumerable<object?[]>
     {
         public static IEnumerable<MajorObjectName> Items => new MajorObjectName[]
         {
@@ -40,13 +44,15 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(MajorObjectIDs.Items, ValidMajorObjectNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(MajorObjectIDs.Items, InvalidMajorObjectNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

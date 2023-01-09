@@ -7,7 +7,10 @@ using SharpHorizons.Query;
 
 using SharpMeasures;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Interprets a <see cref="Speed"/> of some <see cref="IVectorsEphemerisEntry"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class SpeedQuantityInterpreter : IObjectVelocityComponentInterpreter, IRadialSpeedInterpreter, IObjectVelocityUncertaintyACNComponentInterpreter, IObjectVelocityUncertaintyPOSComponentInterpreter, IObjectVelocityUncertaintyRTNComponentInterpreter, IObjectVelocityUncertaintyXYZComponentInterpreter
 {
     Optional<Speed> IEphemerisQuantityInterpreter<IVectorsHeader, Speed>.Interpret(string text, IVectorsHeader header)

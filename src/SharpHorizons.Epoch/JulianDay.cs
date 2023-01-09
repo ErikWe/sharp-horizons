@@ -142,6 +142,9 @@ public sealed record class JulianDay : IEpoch<JulianDay>
     /// <remarks>The behaviour is consistent with <see cref="double.ToString(string, IFormatProvider)"/>, with the <see cref="Day"/> representing the <see cref="double"/> and with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
     public string ToStringInvariant(string? format) => Day.ToString(format, CultureInfo.InvariantCulture);
 
+    /// <summary>Retrieves the <see cref="double"/> <see cref="Day"/> represented by the <see cref="JulianDay"/>.</summary>
+    public double ToDouble() => Day;
+
     /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="JulianDay"/> represents a later epoch than the <paramref name="initial"/> <see cref="JulianDay"/>.</summary>
     /// <param name="initial">The <see cref="JulianDay"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentNullException"/>
@@ -287,19 +290,25 @@ public sealed record class JulianDay : IEpoch<JulianDay>
     /// <remarks>The behaviour is consistent with <see cref="double.operator >=(double, double)"/>, with with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
     public static bool operator >=(JulianDay? lhs, JulianDay? rhs) => lhs?.Day >= rhs?.Day;
 
+    /// <summary>Constructs a <see cref="JulianDay"/>, representing the <see cref="double"/> <paramref name="day"/>.</summary>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="EpochOutOfBoundsException"/>
+    public static JulianDay FromDouble(double day) => new(day);
+
     /// <inheritdoc cref="JulianDay"/>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="EpochOutOfBoundsException"/>
-    public static explicit operator JulianDay(double day) => new(day);
+    public static explicit operator JulianDay(double day) => FromDouble(day);
 
-    /// <summary>Retrieves the <see cref="Day"/> represented by <paramref name="julianDay"/>.</summary>
-    /// <param name="julianDay">The <see cref="Day"/> represented by this <see cref="JulianDay"/> is retrieved.</param>
+    /// <summary>Retrieves the <see cref="double"/> <see cref="Day"/> represented by <paramref name="julianDay"/>.</summary>
+    /// <param name="julianDay">The <see cref="double"/> <see cref="Day"/> represented by this <see cref="JulianDay"/> is retrieved.</param>
     /// <exception cref="ArgumentNullException"/>
     public static explicit operator double(JulianDay julianDay)
     {
         ArgumentNullException.ThrowIfNull(julianDay);
 
-        return julianDay.Day;
+        return julianDay.ToDouble();
     }
 }

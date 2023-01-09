@@ -14,7 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SharpHorizons.Query.Common\SharpHorizons.Query.Common.csproj" PrivateAssets="all" />
         <ProjectReference Include="..\SharpHorizons.Query.Fluency.Abstractions\SharpHorizons.Query.Fluency.Abstractions.csproj" />
         <ProjectReference Include="..\SharpHorizons.Query\SharpHorizons.Query.csproj" />
     </ItemGroup>

@@ -6,10 +6,18 @@ using System;
 public class UnexpectedQueryResultFormatException : Exception
 {
     /// <inheritdoc cref="UnexpectedQueryResultFormatException"/>
-    public UnexpectedQueryResultFormatException(Exception? innerException = null) : base($"The result of the query was of an unexpected format.", innerException) { }
+    public UnexpectedQueryResultFormatException() : this((Exception?)null) { }
+
+    /// <inheritdoc cref="UnexpectedQueryResultFormatException"/>
+    /// <param name="message">The message that describes the <see cref="UnexpectedQueryResultFormatException"/>.</param>
+    public UnexpectedQueryResultFormatException(string? message) : this(message, null) { }
+
+    /// <inheritdoc cref="UnexpectedQueryResultFormatException"/>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="UnexpectedQueryResultFormatException"/>.</param>
+    public UnexpectedQueryResultFormatException(Exception? innerException) : this($"The result of the query was of an unexpected format.", innerException) { }
 
     /// <inheritdoc cref="UnexpectedQueryResultFormatException"/>
     /// <param name="message">The message that describes the <see cref="UnexpectedQueryResultFormatException"/>.</param>
     /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="UnexpectedQueryResultFormatException"/>.</param>
-    public UnexpectedQueryResultFormatException(string? message, Exception? innerException = null) : base(message, innerException) { }
+    public UnexpectedQueryResultFormatException(string? message, Exception? innerException) : base(message, innerException) { }
 }

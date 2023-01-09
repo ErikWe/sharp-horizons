@@ -121,6 +121,9 @@ public sealed record class Epoch : IEpoch<Epoch>
     /// <remarks>The behaviour is consistent with <see cref="Instant.ToString(string, IFormatProvider)"/>, with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
     public string ToStringInvariant(string? format) => Instant.ToString(format, CultureInfo.InvariantCulture);
 
+    /// <summary>Retrieves the <see cref="NodaTime.Instant"/> represented by the <see cref="Epoch"/>.</summary>
+    public Instant ToInstant() => Instant;
+
     /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="Epoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
     /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentException"/>
@@ -249,17 +252,21 @@ public sealed record class Epoch : IEpoch<Epoch>
     /// <remarks>The behaviour is consistent with <see cref="Instant.operator >=(Instant, Instant)"/>.</remarks>
     public static bool operator >=(Epoch? lhs, Epoch? rhs) => lhs?.Instant >= rhs?.Instant;
 
+    /// <summary>Constructs an <see cref="Epoch"/>, representing the <see cref="NodaTime.Instant"/> <paramref name="instant"/>.</summary>
+    /// <param name="instant"><inheritdoc cref="Instant" path="/summary"/></param>
+    public static Epoch FromInstant(Instant instant) => new(instant);
+
     /// <inheritdoc cref="Epoch"/>
     /// <param name="instant"><inheritdoc cref="Instant" path="/summary"/></param>
-    public static explicit operator Epoch(Instant instant) => new(instant);
+    public static explicit operator Epoch(Instant instant) => FromInstant(instant);
 
-    /// <summary>Retrieves the <see cref="Instant"/> represented by <paramref name="epoch"/>.</summary>
-    /// <param name="epoch">The <see cref="Instant"/> represented by this <see cref="Epoch"/> is retrieved.</param>
+    /// <summary>Retrieves the <see cref="NodaTime.Instant"/> represented by <paramref name="epoch"/>.</summary>
+    /// <param name="epoch">The <see cref="NodaTime.Instant"/> represented by this <see cref="Epoch"/> is retrieved.</param>
     /// <exception cref="ArgumentNullException"/>
     public static explicit operator Instant(Epoch epoch)
     {
         ArgumentNullException.ThrowIfNull(epoch);
 
-        return epoch.Instant;
+        return epoch.ToInstant();
     }
 }

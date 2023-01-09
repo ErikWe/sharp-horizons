@@ -2,10 +2,12 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 internal static class Datasets
 {
-    public class ValidObservationSiteIDStrings : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidObservationSiteIDStrings : IEnumerable<object?[]>
     {
         public static IEnumerable<string> Items => new string[]
         {
@@ -27,7 +29,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidObservationSiteIDStrings : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidObservationSiteIDStrings : IEnumerable<object?[]>
     {
         public static IEnumerable<string> Items => new string[]
         {
@@ -46,7 +49,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidObservationSiteIDInts : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidObservationSiteIDInts : IEnumerable<object?[]>
     {
         public static IEnumerable<int> Items => new int[]
         {
@@ -62,7 +66,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidObservationSiteIDInts : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidObservationSiteIDInts : IEnumerable<object?[]>
     {
         public static IEnumerable<int> Items => new int[]
         {
@@ -76,7 +81,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidObservationSiteIDs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidObservationSiteIDs : IEnumerable<object?[]>
     {
         public static IEnumerable<ObservationSiteID> Items
         {

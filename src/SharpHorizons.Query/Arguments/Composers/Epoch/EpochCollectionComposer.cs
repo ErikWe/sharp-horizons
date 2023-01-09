@@ -7,8 +7,10 @@ using SharpMeasures;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Composes <see cref="IEpochCollectionArgument"/> that describe <see cref="IEpochCollection"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EpochCollectionComposer : IEpochCollectionComposer<IEpochCollection>
 {
     /// <inheritdoc cref="IQueryEpochComposer"/>

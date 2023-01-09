@@ -2,7 +2,10 @@
 
 using Microsoft.Extensions.Configuration;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Allows options related to HTTP queries to be specified.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class HTTPQueryOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="HTTPQueryOptions"/>.</summary>

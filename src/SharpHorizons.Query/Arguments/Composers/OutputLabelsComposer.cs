@@ -1,19 +1,15 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
-using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IVectorLabelsComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class OutputLabelsComposer : IVectorLabelsComposer
 {
-    IVectorLabelsArgument IArgumentComposer<IVectorLabelsArgument, OutputLabels>.Compose(OutputLabels obj) => new QueryArgument(Compose(obj));
-
-    /// <summary>Composes a <see cref="string"/> describing <paramref name="outputLabels"/>.</summary>
-    /// <param name="outputLabels">The composed <see cref="string"/> describes this <see cref="OutputLabels"/>.</param>
-    /// <exception cref="InvalidEnumArgumentException"/>
-    private static string Compose(OutputLabels outputLabels) => outputLabels switch
+    IVectorLabelsArgument IArgumentComposer<IVectorLabelsArgument, OutputLabels>.Compose(OutputLabels obj) => new QueryArgument(obj switch
     {
         OutputLabels.Disable => "NO",
         OutputLabels.Enable => "YES",
-        _ => throw InvalidEnumArgumentExceptionFactory.Create(outputLabels)
-    };
+        _ => throw InvalidEnumArgumentExceptionFactory.Create(obj)
+    });
 }

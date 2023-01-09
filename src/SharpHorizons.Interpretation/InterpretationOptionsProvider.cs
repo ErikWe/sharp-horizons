@@ -4,7 +4,10 @@ using Microsoft.Extensions.Options;
 
 using SharpHorizons.Settings.Interpretation;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IInterpretationOptionsProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class InterpretationOptionsProvider : IInterpretationOptionsProvider
 {
     /// <inheritdoc cref="InterpretationOptions"/>

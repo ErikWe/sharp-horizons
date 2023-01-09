@@ -4,7 +4,10 @@ using Microsoft.Extensions.Options;
 
 using SharpHorizons.Settings.Interpretation.Ephemeris.Target;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="ITargetInterpretationOptionsProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class TargetInterpretationOptionsProvider : ITargetInterpretationOptionsProvider
 {
     /// <inheritdoc cref="TargetInterpretationOptions"/>

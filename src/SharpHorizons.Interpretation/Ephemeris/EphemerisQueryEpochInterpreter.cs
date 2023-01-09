@@ -8,8 +8,10 @@ using NodaTime.Text;
 using SharpHorizons.Query.Result;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IEphemerisQueryEpochInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisQueryEpochInterpreter : IEphemerisQueryEpochInterpreter
 {
     /// <summary>The <see cref="LocalDateTimePattern"/> used internally when parsing the <see cref="IEpoch"/>.</summary>

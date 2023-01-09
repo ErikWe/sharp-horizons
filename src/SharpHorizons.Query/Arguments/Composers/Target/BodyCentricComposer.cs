@@ -3,9 +3,11 @@
 using SharpHorizons.Query.Target;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="IBodyCentricTarget"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class BodyCentricComposer : ITargetComposer<IBodyCentricTarget>
 {
     ITargetArgument IArgumentComposer<ITargetArgument, IBodyCentricTarget>.Compose(IBodyCentricTarget obj)

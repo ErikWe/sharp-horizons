@@ -7,32 +7,36 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="ITimeZoneOffsetInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class TimeZoneOffsetInterpreter : ITimeZoneOffsetInterpreter
 {
     Optional<Time> IInterpreter<Time>.Interpret(QueryResult queryResult)
     {
         QueryResult.Validate(queryResult);
 
-        var firstColonIndex = queryResult.Content.IndexOf(':');
+        var firstColonIndex = queryResult.Content.IndexOf(':', StringComparison.Ordinal);
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
+        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: 4 } spaceSplit)
         {
             return new();
         }
 
         var timeZoneString = spaceSplit[3];
 
-        var startIndex = timeZoneString.IndexOf('+');
+        var startIndex = timeZoneString.IndexOf('+', StringComparison.Ordinal);
 
         if (startIndex is -1)
         {
-            startIndex = timeZoneString.IndexOf('-');
+            startIndex = timeZoneString.IndexOf('-', StringComparison.Ordinal);
 
             if (startIndex is -1)
             {

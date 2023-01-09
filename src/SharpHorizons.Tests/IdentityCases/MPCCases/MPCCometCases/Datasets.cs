@@ -4,11 +4,13 @@ using SharpHorizons.MPC;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 internal static class Datasets
 {
-    public class ValidMPCCometDesignations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMPCCometDesignations : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCCometDesignation> Items => new MPCCometDesignation[]
         {
@@ -20,7 +22,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMPCCometDesignations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCCometDesignations : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCCometDesignation> Items => new MPCCometDesignation[]
         {
@@ -31,7 +34,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidMPCCometNames : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMPCCometNames : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCCometName> Items => new MPCCometName[]
         {
@@ -43,7 +47,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMPCCometNames : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCCometNames : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCCometName> Items => new MPCCometName[]
         {
@@ -54,13 +59,15 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCCometDesignations.Items, ValidMPCCometNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator()
         {

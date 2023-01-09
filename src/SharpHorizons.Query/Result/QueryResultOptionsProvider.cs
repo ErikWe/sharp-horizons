@@ -4,7 +4,10 @@ using Microsoft.Extensions.Options;
 
 using SharpHorizons.Settings.Query.Result;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IQueryResultOptionsProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class QueryResultOptionsProvider : IQueryResultOptionsProvider
 {
     /// <inheritdoc cref="QueryResultOptions"/>

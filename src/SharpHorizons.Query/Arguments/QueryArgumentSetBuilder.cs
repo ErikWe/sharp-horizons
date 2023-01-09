@@ -14,15 +14,31 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     /// <inheritdoc cref="QueryArgumentSetBuilder"/>
     /// <param name="command"><inheritdoc cref="IQueryArgumentSet.Command" path="/summary"/></param>
+    /// <exception cref="ArgumentNullException"/>
     public QueryArgumentSetBuilder(ICommandArgument command)
     {
+        QueryArgument.Validate(command);
+
         ArgumentSet = new(command);
     }
 
     /// <summary>Constructs a <see cref="QueryArgumentSetBuilder"/>, handling incremental construction of <see cref="IQueryArgumentSet"/> - with an initial configuration <paramref name="argumentSet"/>.</summary>
     /// <param name="argumentSet">The initial configuration of the <see cref="QueryArgumentSetBuilder"/>. This instance is not modified.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
     public QueryArgumentSetBuilder(IQueryArgumentSet argumentSet)
     {
+        ArgumentNullException.ThrowIfNull(argumentSet);
+
+        try
+        {
+            QueryArgument.Validate(argumentSet.Command);
+        }
+        catch (ArgumentException e)
+        {
+            throw ArgumentExceptionFactory.InvalidState<IQueryArgumentSet>(nameof(argumentSet), e);
+        }
+
         ArgumentSet = new(argumentSet);
     }
 

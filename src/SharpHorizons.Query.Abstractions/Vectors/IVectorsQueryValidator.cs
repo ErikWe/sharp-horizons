@@ -7,6 +7,7 @@ using SharpHorizons.Query.Vectors.Table;
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <summary>Validates <see cref="IVectorsQuery"/> and The components of <see cref="IVectorsQuery"/>.</summary>
@@ -17,25 +18,25 @@ public interface IVectorsQueryValidator
     /// <param name="argumentExpression">The expression used as The argument for <paramref name="vectorsQuery"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    public abstract void Validate(IVectorsQuery vectorsQuery, [CallerArgumentExpression(nameof(vectorsQuery))] string? argumentExpression = null);
+    public abstract void Validate([NotNull] IVectorsQuery vectorsQuery, [CallerArgumentExpression(nameof(vectorsQuery))] string? argumentExpression = null);
 
     /// <summary>Validates The <see cref="ITarget"/> <paramref name="target"/>, throwing an <see cref="ArgumentNullException"/> if <see langword="null"/>.</summary>
     /// <param name="target">This <see cref="ITarget"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as The argument for <paramref name="target"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public abstract void ValidateTarget(ITarget target, [CallerArgumentExpression(nameof(target))] string? argumentExpression = null);
+    public abstract void ValidateTarget([NotNull] ITarget target, [CallerArgumentExpression(nameof(target))] string? argumentExpression = null);
 
     /// <summary>Validates The <see cref="IOrigin"/> <paramref name="origin"/>, throwing an <see cref="ArgumentNullException"/> if <see langword="null"/>.</summary>
     /// <param name="origin">This <see cref="IOrigin"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as The argument for <paramref name="origin"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public abstract void ValidateOrigin(IOrigin origin, [CallerArgumentExpression(nameof(origin))] string? argumentExpression = null);
+    public abstract void ValidateOrigin([NotNull] IOrigin origin, [CallerArgumentExpression(nameof(origin))] string? argumentExpression = null);
 
     /// <summary>Validates The <see cref="IEpochSelection"/> <paramref name="epochSelection"/>, throwing an <see cref="ArgumentNullException"/> if <see langword="null"/>.</summary>
     /// <param name="epochSelection">This <see cref="IEpochSelection"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as The argument for <paramref name="epochSelection"/>.</param>
     /// <exception cref="ArgumentNullException"/>
-    public abstract void ValidateEpochSelection(IEpochSelection epochSelection, [CallerArgumentExpression(nameof(epochSelection))] string? argumentExpression = null);
+    public abstract void ValidateEpochSelection([NotNull] IEpochSelection epochSelection, [CallerArgumentExpression(nameof(epochSelection))] string? argumentExpression = null);
 
     /// <summary>Validates that The <see cref="OutputFormat"/> <paramref name="outputFormat"/> is supported by Horizons, throwing an <see cref="ArgumentException"/> oTherwise.</summary>
     /// <param name="outputFormat">This <see cref="OutputFormat"/> is validated.</param>

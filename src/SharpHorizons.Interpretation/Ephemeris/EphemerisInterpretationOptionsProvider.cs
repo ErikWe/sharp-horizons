@@ -5,8 +5,10 @@ using Microsoft.Extensions.Options;
 using SharpHorizons.Settings.Interpretation.Ephemeris;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpretationOptionsProvider
 {
     /// <inheritdoc cref="EphemerisInterpretationOptions"/>

@@ -12,8 +12,12 @@ internal sealed record class QueryArgument : IQueryArgument, ICommandArgument, I
 
     /// <inheritdoc cref="QueryArgument"/>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
     public QueryArgument(string value)
     {
+        ArgumentExceptionUtility.ThrowIfNullOrWhiteSpace(value);
+
         Value = value;
     }
 

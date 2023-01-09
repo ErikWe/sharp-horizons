@@ -4,7 +4,11 @@ using Microsoft.CodeAnalysis;
 
 using SharpHorizons.Query.Epoch;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IEphemerisEpochInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisEpochInterpreter : IEphemerisEpochInterpreter
 {
     /// <inheritdoc cref="ITimeSystemOffsetProvider"/>
@@ -19,7 +23,7 @@ internal sealed class EphemerisEpochInterpreter : IEphemerisEpochInterpreter
 
     Optional<IEpoch> IEphemerisQuantityInterpreter<IVectorsHeader, IEpoch>.Interpret(string text, IVectorsHeader header)
     {
-        var equalsIndex = text.IndexOf('=');
+        var equalsIndex = text.IndexOf('=', StringComparison.Ordinal);
 
         var idText = equalsIndex is -1 ? text : text[..equalsIndex].Trim();
 

@@ -46,40 +46,48 @@ public readonly record struct MPCSequentialNumber
         Value = value;
     }
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to the <see cref="CultureInfo.CurrentCulture"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="int"/> <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to the <see cref="CultureInfo.CurrentCulture"/>.</summary>
     public override string ToString() => Value.ToString(CultureInfo.CurrentCulture);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="provider"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="int"/> <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="provider"/>.</summary>
     /// <param name="provider">Provides culture-specific formatting information.</param>
     public string ToString(IFormatProvider? provider) => Value.ToString(provider);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.CurrentCulture"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="int"/> <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.CurrentCulture"/>.</summary>
     /// <param name="format">Provides formatting information.</param>
     public string ToString(string? format) => Value.ToString(format, CultureInfo.CurrentCulture);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="format"/> and <paramref name="provider"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="int"/> <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="format"/> and <paramref name="provider"/>.</summary>
     /// <param name="format">Provides formatting information.</param>
     /// <param name="provider">Provides culture-specific formatting information.</param>
     public string ToString(string? format, IFormatProvider? provider) => Value.ToString(format, provider);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to the <see cref="CultureInfo.InvariantCulture"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="int"/> <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to the <see cref="CultureInfo.InvariantCulture"/>.</summary>
     public string ToStringInvariant() => Value.ToString(CultureInfo.InvariantCulture);
 
-    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.InvariantCulture"/>.</summary>
+    /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="int"/> <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>, formatted according to <paramref name="format"/> and the <see cref="CultureInfo.InvariantCulture"/>.</summary>
     /// <param name="format">Provides formatting information.</param>
     public string ToStringInvariant(string? format) => Value.ToString(format, CultureInfo.InvariantCulture);
+
+    /// <summary>Retrieves the <see cref="int"/> <see cref="Value"/> represented by the <see cref="MPCSequentialNumber"/>.</summary>
+    public int ToInt32() => Value;
 
     /// <summary>Backing field for <see cref="Value"/>. Should not be used elsewhere.</summary>
     private readonly int valueField;
 
+    /// <summary>Constructs an <see cref="MPCSequentialNumber"/>, representing the <see cref="int"/> <paramref name="value"/>.</summary>
+    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    /// <exception cref="ArgumentOutOfRangeException"/>
+    public static MPCSequentialNumber FromInt32(int value) => new(value);
+
     /// <inheritdoc cref="MPCSequentialNumber"/>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     /// <exception cref="ArgumentOutOfRangeException"/>
-    public static explicit operator MPCSequentialNumber(int value) => new(value);
+    public static explicit operator MPCSequentialNumber(int value) => FromInt32(value);
 
-    /// <summary>Retrieves the <see cref="Value"/> represented by <paramref name="sequentialNumber"/>.</summary>
+    /// <summary>Retrieves the <see cref="int"/> <see cref="Value"/> represented by <paramref name="sequentialNumber"/>.</summary>
     /// <param name="sequentialNumber"><inheritdoc cref="MPCName" path="/summary"/></param>
-    public static implicit operator int(MPCSequentialNumber sequentialNumber) => sequentialNumber.Value;
+    public static implicit operator int(MPCSequentialNumber sequentialNumber) => sequentialNumber.ToInt32();
 
     /// <summary>Validates that the <see cref="string"/>-representation of <paramref name="value"/> can represent the <see cref="Value"/>, throwing an <see cref="ArgumentOutOfRangeException"/> otherwise.</summary>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>

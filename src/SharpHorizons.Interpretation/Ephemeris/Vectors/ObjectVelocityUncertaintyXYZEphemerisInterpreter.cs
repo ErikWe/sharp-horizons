@@ -4,7 +4,10 @@ using SharpHorizons.Ephemeris;
 using SharpHorizons.Ephemeris.Vectors;
 using SharpHorizons.Query.Result;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IObjectVelocityUncertaintyXYZEphemerisInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class ObjectVelocityUncertaintyXYZEphemerisInterpreter : AEphemerisInterpreter<IObjectVelocityUncertaintyXYZ, IVectorsHeader>, IObjectVelocityUncertaintyXYZEphemerisInterpreter
 {
     /// <inheritdoc cref="ObjectVelocityUncertaintyXYZEphemerisInterpreter"/>

@@ -7,15 +7,17 @@ using SharpHorizons.Query.Result;
 using SharpHorizons.Query.Vectors.Table;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IVectorTableContentInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorTableContentInterpreter : IVectorTableContentInterpreter
 {
     Optional<VectorTableContent> IInterpreter<VectorTableContent>.Interpret(QueryResult queryResult)
     {
         QueryResult.Validate(queryResult);
 
-        var firstColonIndex = queryResult.Content.IndexOf(':');
+        var firstColonIndex = queryResult.Content.IndexOf(':', StringComparison.Ordinal);
 
         if (firstColonIndex is -1)
         {

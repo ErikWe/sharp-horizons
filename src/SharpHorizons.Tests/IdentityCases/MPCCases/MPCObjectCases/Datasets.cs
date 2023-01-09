@@ -4,11 +4,13 @@ using SharpHorizons.MPC;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 internal static class Datasets
 {
-    public class ValidMPCSequentialNumbers : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMPCSequentialNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCSequentialNumber> Items => new MPCSequentialNumber[]
         {
@@ -20,7 +22,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMPCSequentialNumbers : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCSequentialNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCSequentialNumber> Items => new MPCSequentialNumber[]
         {
@@ -31,7 +34,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidMPCNames : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMPCNames : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCName> Items => new MPCName[]
         {
@@ -43,7 +47,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMPCNames : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCNames : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCName> Items => new MPCName[]
         {
@@ -54,7 +59,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidMPCProvisionalDesignations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMPCProvisionalDesignations : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCProvisionalDesignation> Items => new MPCProvisionalDesignation[]
         {
@@ -66,7 +72,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMPCProvisionalDesignations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCProvisionalDesignations : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCProvisionalDesignation> Items => new MPCProvisionalDesignation[]
         {
@@ -77,25 +84,29 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidNumberNameCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidNumberNameCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCNames.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidNumberDesignationCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidNumberDesignationCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCProvisionalDesignations.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidNumberNameDesignationCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidNumberNameDesignationCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidMPCSequentialNumbers.Items, ValidMPCNames.Items, ValidMPCProvisionalDesignations.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidNumberNameCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidNumberNameCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator()
         {
@@ -111,7 +122,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidNumberDesignationCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidNumberDesignationCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator()
         {
@@ -127,7 +139,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidNumberNameDesignationCombinations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidNumberNameDesignationCombinations : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator()
         {

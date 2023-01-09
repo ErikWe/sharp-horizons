@@ -1,30 +1,11 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IQueryArgumentSetFactory"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class QueryArgumentSetBuilderFactory : IQueryArgumentSetFactory
 {
-    IQueryArgumentSetBuilder IQueryArgumentSetFactory.CreateBuilder(ICommandArgument command)
-    {
-        QueryArgument.Validate(command);
-
-        return new QueryArgumentSetBuilder(command);
-    }
-
-    IQueryArgumentSetBuilder IQueryArgumentSetFactory.CreateBuilder(IQueryArgumentSet argumentSet)
-    {
-        ArgumentNullException.ThrowIfNull(argumentSet);
-
-        try
-        {
-            QueryArgument.Validate(argumentSet.Command);
-        }
-        catch (ArgumentException e)
-        {
-            throw ArgumentExceptionFactory.InvalidState<IQueryArgumentSet>(nameof(argumentSet), e);
-        }
-
-        return new QueryArgumentSetBuilder(argumentSet);
-    }
+    IQueryArgumentSetBuilder IQueryArgumentSetFactory.CreateBuilder(ICommandArgument command) => new QueryArgumentSetBuilder(command);
+    IQueryArgumentSetBuilder IQueryArgumentSetFactory.CreateBuilder(IQueryArgumentSet argumentSet) => new QueryArgumentSetBuilder(argumentSet);
 }

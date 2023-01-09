@@ -6,9 +6,11 @@ using SharpMeasures;
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <summary>Composes <see cref="IStartEpochArgument"/> and <see cref="IStopEpochArgument"/> that describe <see cref="IEpochRange"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EpochRangeEpochComposer : IStartEpochComposer<IEpochRange>, IStopEpochComposer<IEpochRange>
 {
     /// <inheritdoc cref="IQueryEpochComposer"/>

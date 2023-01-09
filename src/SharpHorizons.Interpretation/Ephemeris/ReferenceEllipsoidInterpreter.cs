@@ -6,7 +6,11 @@ using SharpHorizons.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Interpretation.Ephemeris.Target;
 using SharpHorizons.Query.Result;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="ITargetReferenceEllipsoidInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class ReferenceEllipsoidInterpreter : ITargetReferenceEllipsoidInterpreter, IOriginReferenceEllipsoidInterpreter
 {
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.WestPositiveLongitude"/>
@@ -60,5 +64,5 @@ internal sealed class ReferenceEllipsoidInterpreter : ITargetReferenceEllipsoidI
 
     /// <summary>Converts <paramref name="key"/> to a format suitable for comparison.</summary>
     /// <param name="key">This <see cref="string"/> is formatted.</param>
-    private static string FormatLongitudeKey(string key) => key.Replace(" ", string.Empty).ToUpperInvariant();
+    private static string FormatLongitudeKey(string key) => key.Replace(" ", string.Empty, StringComparison.Ordinal).ToUpperInvariant();
 }

@@ -1,16 +1,19 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IEphemerisHeaderInterpretationProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisHeaderInterpretationProvider : IEphemerisHeaderInterpretationProvider
 {
-    public IEphemerisQueryEpochInterpreter QueryEpochInterpreter { get; private init; }
-    public IEphemerisStartEpochInterpreter StartEpochInterpreter { get; private init; }
-    public IEphemerisStopEpochInterpreter StopEpochInterpreter { get; private init; }
-    public IEphemerisStepSizeInterpreter StepSizeInterpreter { get; private init; }
-    public ITimeSystemInterpreter TimeSystemInterpreter { get; private init; }
-    public ITimeZoneOffsetInterpreter TimeZoneOffsetInterpreter { get; private init; }
-    public ISmallPerturbersInterpreter SmallPerturbersInterpreter { get; private init; }
-    public IReferenceSystemInterpreter ReferenceSystemInterpreter { get; private init; }
+    public IEphemerisQueryEpochInterpreter QueryEpochInterpreter { get; }
+    public IEphemerisStartEpochInterpreter StartEpochInterpreter { get; }
+    public IEphemerisStopEpochInterpreter StopEpochInterpreter { get; }
+    public IEphemerisStepSizeInterpreter StepSizeInterpreter { get; }
+    public ITimeSystemInterpreter TimeSystemInterpreter { get; }
+    public ITimeZoneOffsetInterpreter TimeZoneOffsetInterpreter { get; }
+    public ISmallPerturbersInterpreter SmallPerturbersInterpreter { get; }
+    public IReferenceSystemInterpreter ReferenceSystemInterpreter { get; }
 
     /// <inheritdoc cref="EphemerisHeaderInterpretationProvider"/>
     /// <param name="queryEpochInterpreter"><inheritdoc cref="QueryEpochInterpreter" path="/summary"/></param>

@@ -4,8 +4,11 @@ using Microsoft.Extensions.Configuration;
 
 using SharpHorizons.Query.Parameters;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Allows the <see cref="IQueryParameterIdentifier"/> to be specified.</summary>
-/// <remarks>Once specified, <see cref="IQueryParameterIdentifier"/> should be accessed through a <see cref="IQueryParameterIdentifierProvider"/>.</remarks>
+/// <remarks>Once specified, a <see cref="IQueryParameterIdentifierProvider"/> should be used to access the <see cref="IQueryParameterIdentifier"/>.</remarks>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class ParameterIdentifierOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="ParameterIdentifierOptions"/>.</summary>

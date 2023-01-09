@@ -130,6 +130,9 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// <remarks>The behaviour is consistent with <see cref="DateTimeOffset.ToString(string, IFormatProvider)"/>, with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
     public string ToStringInvariant(string? format) => DateTimeOffset.ToString(format, CultureInfo.InvariantCulture);
 
+    /// <summary>Retrieves the <see cref="System.DateTimeOffset"/> represented by the <see cref="DateTimeEpoch"/>.</summary>
+    public DateTimeOffset ToDateTimeOffset() => DateTimeOffset;
+
     /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="DateTimeEpoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
     /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentException"/>
@@ -258,17 +261,21 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// <remarks>The behaviour is consistent with <see cref="DateTimeOffset.operator >=(DateTimeOffset, DateTimeOffset)"/>.</remarks>
     public static bool operator >=(DateTimeEpoch? lhs, DateTimeEpoch? rhs) => lhs?.DateTimeOffset >= rhs?.DateTimeOffset;
 
+    /// <summary>Constructs a <see cref="DateTimeEpoch"/>, representing the <see cref="System.DateTimeOffset"/> <paramref name="instant"/>.</summary>
+    /// <param name="instant"><inheritdoc cref="DateTimeOffset" path="/summary"/></param>
+    public static DateTimeEpoch FromDateTimeOffset(DateTimeOffset instant) => new(instant);
+
     /// <inheritdoc cref="DateTimeEpoch"/>
     /// <param name="instant"><inheritdoc cref="DateTimeOffset" path="/summary"/></param>
-    public static implicit operator DateTimeEpoch(DateTimeOffset instant) => new(instant);
+    public static implicit operator DateTimeEpoch(DateTimeOffset instant) => FromDateTimeOffset(instant);
 
-    /// <summary>Retrieves the <see cref="DateTimeOffset"/> represented by <paramref name="epoch"/>.</summary>
-    /// <param name="epoch">The <see cref="DateTimeOffset"/> represented by this <see cref="Epoch"/> is retrieved.</param>
+    /// <summary>Retrieves the <see cref="System.DateTimeOffset"/> represented by <paramref name="epoch"/>.</summary>
+    /// <param name="epoch">The <see cref="System.DateTimeOffset"/> represented by this <see cref="Epoch"/> is retrieved.</param>
     /// <exception cref="ArgumentNullException"/>
     public static explicit operator DateTimeOffset(DateTimeEpoch epoch)
     {
         ArgumentNullException.ThrowIfNull(epoch);
 
-        return epoch.DateTimeOffset;
+        return epoch.ToDateTimeOffset();
     }
 }

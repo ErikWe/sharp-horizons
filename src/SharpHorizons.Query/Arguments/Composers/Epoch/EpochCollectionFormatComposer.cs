@@ -2,7 +2,10 @@
 
 using SharpHorizons.Query.Epoch;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Composes <see cref="IEpochCollectionFormatArgument"/> that describe <see cref="EpochFormat"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EpochCollectionFormatComposer : IEpochCollectionFormatComposer
 {
     IEpochCollectionFormatArgument IArgumentComposer<IEpochCollectionFormatArgument, EpochFormat>.Compose(EpochFormat obj) => new QueryArgument(obj switch

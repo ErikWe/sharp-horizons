@@ -2,23 +2,26 @@
 
 using Microsoft.Extensions.Configuration;
 
-using NodaTime;
-
+using SharpHorizons.Interpretation;
 using SharpHorizons.Query.Result;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Allows options related to the interpretation of <see cref="QueryResult"/> to be specified.</summary>
+/// <remarks>Once specified, a <see cref="IInterpretationOptionsProvider"/> should be used to access the options.</remarks>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class InterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="InterpretationOptions"/>.</summary>
     internal static string Section { get; } = "Interpretation";
 
-    /// <summary>The ID of the Horizons time zone, as defined in TZDB and <see cref="IDateTimeZoneProvider"/>.</summary>
+    /// <inheritdoc cref="IInterpretationOptionsProvider.HorizonsTimeZoneID"/>
     public string HorizonsTimeZoneID { get; set; } = null!;
 
-    /// <summary>Part of the <see cref="string"/> acting as a separator between blocks.</summary>
+    /// <inheritdoc cref="IInterpretationOptionsProvider.BlockSeparator"/>
     public string BlockSeparator { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating an unavilable value.</summary>
+    /// <inheritdoc cref="IInterpretationOptionsProvider.UnavailableText"/>
     public string UnavailableText { get; set; } = null!;
 
     /// <summary>Applies the default values to the <see cref="InterpretationOptions"/> <paramref name="options"/>.</summary>

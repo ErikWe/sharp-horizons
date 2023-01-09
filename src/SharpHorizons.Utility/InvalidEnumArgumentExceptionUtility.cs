@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 /// <summary>Provides utility related to <see cref="InvalidEnumArgumentException"/></summary>
@@ -35,8 +36,8 @@ public static class InvalidEnumArgumentExceptionUtility
 
         if (SignedTypes.Contains(underlyingType))
         {
-            var longValue = Convert.ToInt64(value);
-            var longAll = Convert.ToInt64(all);
+            var longValue = Convert.ToInt64(value, CultureInfo.InvariantCulture);
+            var longAll = Convert.ToInt64(all, CultureInfo.InvariantCulture);
 
             if ((longValue & longAll) != longValue)
             {
@@ -44,8 +45,8 @@ public static class InvalidEnumArgumentExceptionUtility
             }
         }
 
-        var ulongValue = Convert.ToUInt64(value);
-        var ulongAll = Convert.ToUInt64(all);
+        var ulongValue = Convert.ToUInt64(value, CultureInfo.InvariantCulture);
+        var ulongAll = Convert.ToUInt64(all, CultureInfo.InvariantCulture);
 
         if ((ulongValue & ulongAll) != ulongValue)
         {

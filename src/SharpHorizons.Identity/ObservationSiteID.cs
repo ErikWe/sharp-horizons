@@ -60,24 +60,34 @@ public readonly record struct ObservationSiteID
         Value = value.ToString(CultureInfo.InvariantCulture);
     }
 
-    /// <summary>Retrieves the <see cref="Value"/> represented by the <see cref="ObservationSiteID"/>.</summary>
+    /// <summary>Retrieves the <see cref="string"/> <see cref="Value"/> represented by the <see cref="ObservationSiteID"/>.</summary>
     /// <exception cref="InvalidOperationException"/>
     public override string ToString() => Value;
 
     /// <summary>Backing field for <see cref="Value"/>. Should not be used elsewhere.</summary>
     private readonly string? valueField;
 
+    /// <summary>Constructs an <see cref="ObservationSiteID"/>, representing the <see cref="string"/> <paramref name="value"/>.</summary>
+    /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    public static ObservationSiteID FromString(string value) => new(value);
+
+    /// <summary>Constructs an <see cref="ObservationSiteID"/>, representing the <see cref="string"/>-representation of the <see cref="int"/> <paramref name="value"/>.</summary>
+    /// <param name="value">The <see cref="int"/> ID of the <see cref="ObservationSite"/>. This <see cref="int"/> is formatted as a <see cref="string"/> using the <see cref="CultureInfo.InvariantCulture"/>.</param>
+    public static ObservationSiteID FromInt32(int value) => new(value);
+
     /// <inheritdoc cref="ObservationSiteID"/>
     /// <param name="value"><inheritdoc cref="Value" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    public static explicit operator ObservationSiteID(string value) => new(value);
+    public static explicit operator ObservationSiteID(string value) => FromString(value);
 
     /// <inheritdoc cref="ObservationSiteID"/>
     /// <param name="value">The <see cref="int"/> ID of the <see cref="ObservationSite"/>. This <see cref="int"/> is formatted as a <see cref="string"/> using the <see cref="CultureInfo.InvariantCulture"/>.</param>
-    public static explicit operator ObservationSiteID(int value) => new(value);
+    public static explicit operator ObservationSiteID(int value) => FromInt32(value);
 
-    /// <summary>Retrieves the <see cref="Value"/> represented by <paramref name="observationSiteID"/>.</summary>
+    /// <summary>Retrieves the <see cref="string"/> <see cref="Value"/> represented by <paramref name="observationSiteID"/>.</summary>
     /// <param name="observationSiteID"><inheritdoc cref="ObservationSiteID" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     public static explicit operator string(ObservationSiteID observationSiteID)

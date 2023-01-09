@@ -50,5 +50,5 @@ public sealed record class MajorObject
     }
 
     /// <summary>Backing field for <see cref="Name"/>. Should not be used elsewhere.</summary>
-    private readonly MajorObjectName? name = null;
+    private readonly MajorObjectName? name;
 }

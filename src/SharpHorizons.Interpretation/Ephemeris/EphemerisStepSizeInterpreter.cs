@@ -7,7 +7,11 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IEphemerisStepSizeInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisStepSizeInterpreter : IEphemerisStepSizeInterpreter
 {
     /// <inheritdoc cref="IFixedStepSizeFactory"/>
@@ -39,14 +43,14 @@ internal sealed class EphemerisStepSizeInterpreter : IEphemerisStepSizeInterpret
     {
         QueryResult.Validate(queryResult);
 
-        var firstColonIndex = queryResult.Content.IndexOf(':');
+        var firstColonIndex = queryResult.Content.IndexOf(':', StringComparison.Ordinal);
 
         if (firstColonIndex is -1)
         {
             return new();
         }
 
-        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', System.StringSplitOptions.RemoveEmptyEntries) is not { Length: >= 2 } spaceSplit)
+        if (queryResult.Content[(firstColonIndex + 1)..].Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) is not { Length: >= 2 } spaceSplit)
         {
             return new();
         }

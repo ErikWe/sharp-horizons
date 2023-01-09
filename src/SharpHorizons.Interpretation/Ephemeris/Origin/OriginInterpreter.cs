@@ -5,7 +5,10 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Result;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IOriginInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class OriginInterpreter : IOriginInterpreter
 {
     /// <inheritdoc cref="IOriginFactory"/>

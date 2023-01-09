@@ -1,9 +1,11 @@
 ﻿namespace SharpHorizons.Query.Arguments.Composers;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <summary>Composes <see cref="ICommandArgument"/> that describe <see cref="QueryCommand"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class QueryCommandComposer : ICommandComposer<QueryCommand>
 {
     ICommandArgument IArgumentComposer<ICommandArgument, QueryCommand>.Compose(QueryCommand obj)

@@ -4,9 +4,11 @@ using SharpHorizons.Query.Target;
 
 using SharpMeasures.Astronomy;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Composes <see cref="TargetSiteIdentifier"/> that describe <see cref="GeodeticCoordinate"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class GeodeticCoordinateComposer : ITargetSiteComposer<GeodeticCoordinate>
 {
     TargetSiteIdentifier ITargetSiteComposer<GeodeticCoordinate>.Compose(GeodeticCoordinate obj)

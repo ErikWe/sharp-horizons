@@ -7,8 +7,10 @@ using SharpHorizons.Interpretation.Ephemeris.Target;
 using SharpHorizons.Query.Result;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IVectorsHeaderInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<MutableVectorsHeader>, IVectorsHeaderInterpreter
 {
     /// <inheritdoc cref="VectorsHeaderInterpreter"/>

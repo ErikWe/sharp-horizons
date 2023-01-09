@@ -4,10 +4,12 @@ using SharpMeasures;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 internal static class Datasets
 {
-    public class InvalidDeltaAngles : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidDeltaAngles : IEnumerable<object?[]>
     {
         public static IEnumerable<Angle> Items => new Angle[]
         {
@@ -20,7 +22,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class OutOfRangeDeltaAngles : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class OutOfRangeDeltaAngles : IEnumerable<object?[]>
     {
         public static IEnumerable<Angle> Items => new Angle[]
         {
@@ -33,7 +36,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ValidDeltaAngles : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidDeltaAngles : IEnumerable<object?[]>
     {
         public static IEnumerable<Angle> Items => new Angle[]
         {

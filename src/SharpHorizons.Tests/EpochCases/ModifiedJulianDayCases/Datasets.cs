@@ -2,10 +2,12 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 internal static class Datasets
 {
-    public class ConvertibleModifiedJulianDayNumbers : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ConvertibleModifiedJulianDayNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<double> Items => new double[]
         {
@@ -19,7 +21,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ConvertibleIntegralAndFractionalDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ConvertibleIntegralAndFractionalDays : IEnumerable<object?[]>
     {
         public static IEnumerable<(int, float)> Items => new (int, float)[]
         {
@@ -33,7 +36,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnconvertibleModifiedJulianDayNumbers : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnconvertibleModifiedJulianDayNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<double> Items => new double[]
         {
@@ -45,7 +49,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnconvertibleIntegralAndFractionalDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnconvertibleIntegralAndFractionalDays : IEnumerable<object?[]>
     {
         public static IEnumerable<(int, float)> Items => new (int, float)[]
         {
@@ -57,7 +62,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class OutOfRangeModifiedJulianDayNumbers : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class OutOfRangeModifiedJulianDayNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<double> Items => new double[]
         {
@@ -71,7 +77,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class OutOfRangeIntegralAndFractionalDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class OutOfRangeIntegralAndFractionalDays : IEnumerable<object?[]>
     {
         public static IEnumerable<(int, float)> Items => new (int, float)[]
         {
@@ -85,7 +92,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ConvertibleModifiedJulianDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ConvertibleModifiedJulianDays : IEnumerable<object?[]>
     {
         public static IEnumerable<ModifiedJulianDay> Items
         {
@@ -102,7 +110,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnconvertibleModifiedJulianDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnconvertibleModifiedJulianDays : IEnumerable<object?[]>
     {
         public static IEnumerable<ModifiedJulianDay> Items
         {
@@ -119,31 +128,36 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class TwoConvertibleModifiedJulianDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class TwoConvertibleModifiedJulianDays : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ConvertibleModifiedJulianDays.Items, ConvertibleModifiedJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class TwoUnconvertibleModifiedJulianDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class TwoUnconvertibleModifiedJulianDays : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(UnconvertibleModifiedJulianDays.Items, UnconvertibleModifiedJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ConvertibleModifiedJulianDaysAndIEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ConvertibleModifiedJulianDaysAndIEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ConvertibleModifiedJulianDays.Items, ConvertibleJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnconvertibleModifiedJulianDaysAndConvertibleIEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnconvertibleModifiedJulianDaysAndConvertibleIEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(UnconvertibleModifiedJulianDays.Items, ConvertibleJulianDays.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ConvertibleJulianDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ConvertibleJulianDays : IEnumerable<object?[]>
     {
         public static IEnumerable<JulianDay> Items => new JulianDay[]
         {
@@ -157,7 +171,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnconvertibleJulianDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnconvertibleJulianDays : IEnumerable<object?[]>
     {
         public static IEnumerable<JulianDay> Items => new JulianDay[]
         {
@@ -168,7 +183,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ConvertibleIEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ConvertibleIEpochs : IEnumerable<object?[]>
     {
         public static IEnumerable<IEpoch> Items => new IEpoch[]
         {

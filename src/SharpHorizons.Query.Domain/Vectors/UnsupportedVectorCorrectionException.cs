@@ -6,17 +6,18 @@ using System;
 public sealed class UnsupportedVectorCorrectionException : Exception
 {
     /// <inheritdoc cref="UnsupportedVectorCorrectionException"/>
-    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="UnsupportedVectorCorrectionException"/>.</param>
-    public UnsupportedVectorCorrectionException(Exception? innerException = null) : base($"Applying the {nameof(VectorCorrection)} \"{VectorCorrection.Aberration}\" without also applying \"{VectorCorrection.LightTime}\" is not supported.", innerException) { }
+    public UnsupportedVectorCorrectionException() : this((Exception?)null) { }
 
-    /// <summary>Throws an <see cref="UnsupportedVectorCorrectionException"/> if <paramref name="correction"/> represents <see cref="VectorCorrection.Aberration"/>.</summary>
-    /// <param name="correction"><inheritdoc cref="VectorCorrection" path="/summary"/></param>
-    /// <exception cref="UnsupportedVectorCorrectionException"/>
-    public static void ThrowIfJustAberration(VectorCorrection correction)
-    {
-        if (correction is VectorCorrection.Aberration)
-        {
-            throw new UnsupportedVectorCorrectionException();
-        }
-    }
+    /// <inheritdoc cref="UnsupportedVectorCorrectionException"/>
+    /// <param name="message">The message that describes the <see cref="UnsupportedVectorCorrectionException"/>.</param>
+    public UnsupportedVectorCorrectionException(string? message) : this(message, null) { }
+
+    /// <inheritdoc cref="UnsupportedVectorCorrectionException"/>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="UnsupportedVectorCorrectionException"/>.</param>
+    public UnsupportedVectorCorrectionException(Exception? innerException) : this($"A {nameof(VectorCorrection)} represents a configuration not supported by Horizons.", innerException) { }
+
+    /// <inheritdoc cref="UnsupportedVectorCorrectionException"/>
+    /// <param name="message">The message that describes the <see cref="UnsupportedVectorCorrectionException"/>.</param>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="UnsupportedVectorCorrectionException"/>.</param>
+    public UnsupportedVectorCorrectionException(string? message, Exception? innerException) : base(message, innerException) { }
 }

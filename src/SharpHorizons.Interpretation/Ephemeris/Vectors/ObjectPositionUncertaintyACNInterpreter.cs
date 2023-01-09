@@ -6,9 +6,11 @@ using SharpHorizons.Ephemeris.Vectors;
 using SharpHorizons.Query.Result;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IObjectPositionUncertaintyACNInterpreter"/>
-internal class ObjectPositionUncertaintyACNInterpreter : AEphemerisEntryInterpreter<MutableObjectPositionUncertaintyACN, IVectorsHeader>, IObjectPositionUncertaintyACNInterpreter
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
+internal sealed class ObjectPositionUncertaintyACNInterpreter : AEphemerisEntryInterpreter<MutableObjectPositionUncertaintyACN, IVectorsHeader>, IObjectPositionUncertaintyACNInterpreter
 {
     /// <inheritdoc cref="ObjectPositionUncertaintyACNInterpreter"/>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
@@ -31,7 +33,7 @@ internal class ObjectPositionUncertaintyACNInterpreter : AEphemerisEntryInterpre
     }
 
     /// <summary>Handles the invokation of some <see cref="IEphemerisQuantityInterpreter{THeader, TInterpretation}"/> associated with some <see cref="EphemerisQuantityIdentifier"/>.</summary>
-    private class EphemerisQuantityInterpretationDelegater : IEphemerisQuantityInterpretationDelegater
+    private sealed class EphemerisQuantityInterpretationDelegater : IEphemerisQuantityInterpretationDelegater
     {
         /// <inheritdoc cref="IEphemerisEpochInterpreter"/>
         private IEphemerisEpochInterpreter EphemerisEpochInterpreter { get; }

@@ -8,9 +8,20 @@ using System;
 public sealed class EpochOutOfBoundsException : Exception
 {
     /// <inheritdoc cref="EpochOutOfBoundsException"/>
+    public EpochOutOfBoundsException() : this((Exception?)null) { }
+
+    /// <inheritdoc cref="EpochOutOfBoundsException"/>
+    /// <param name="message">The message that describes the <see cref="EpochOutOfBoundsException"/>.</param>
+    public EpochOutOfBoundsException(string? message) : this(message, null) { }
+
+    /// <inheritdoc cref="EpochOutOfBoundsException"/>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="EpochOutOfBoundsException"/>.</param>
+    public EpochOutOfBoundsException(Exception? innerException) : this($"Attempted to construct an {nameof(IEpoch)} outside of the supported boundary.", innerException) { }
+
+    /// <inheritdoc cref="EpochOutOfBoundsException"/>
     /// <param name="message">The message that describes the <see cref="EpochOutOfBoundsException"/>.</param>
     /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="EpochOutOfBoundsException"/>.</param>
-    private EpochOutOfBoundsException(string? message = null, Exception? innerException = null) : base(message, innerException) { }
+    public EpochOutOfBoundsException(string? message, Exception? innerException) : base(message, innerException) { }
 
     /// <summary>Constructs a new instance of <see cref="EpochOutOfBoundsException"/> that occurred when attempting to convert an instance of <typeparamref name="TEpoch"/> to a <see cref="JulianDay"/>.</summary>
     /// <typeparam name="TEpoch">The type of the <see cref="IEpoch"/> that the <see cref="EpochOutOfBoundsException"/> concerns.</typeparam>

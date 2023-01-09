@@ -4,9 +4,11 @@ using SharpHorizons.Query.Target;
 
 using SharpMeasures.Astronomy;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Composes <see cref="TargetSiteIdentifier"/> that describe <see cref="CylindricalCoordinate"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class CylindricalCoordinateComposer : ITargetSiteComposer<CylindricalCoordinate>
 {
     TargetSiteIdentifier ITargetSiteComposer<CylindricalCoordinate>.Compose(CylindricalCoordinate obj)

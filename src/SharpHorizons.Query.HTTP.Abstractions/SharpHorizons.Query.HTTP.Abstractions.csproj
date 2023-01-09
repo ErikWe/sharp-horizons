@@ -6,6 +6,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.CodeAnalysis.Common" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\SharpHorizons.Query.HTTP.Domain\SharpHorizons.Query.HTTP.Domain.csproj" />
     </ItemGroup>
 

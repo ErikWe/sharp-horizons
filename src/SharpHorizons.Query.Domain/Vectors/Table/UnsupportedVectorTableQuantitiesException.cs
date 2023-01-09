@@ -6,7 +6,18 @@ using System;
 public sealed class UnsupportedVectorTableQuantitiesException : Exception
 {
     /// <inheritdoc cref="UnsupportedVectorTableQuantitiesException"/>
+    public UnsupportedVectorTableQuantitiesException() : this((Exception?)null) { }
+
+    /// <inheritdoc cref="UnsupportedVectorTableQuantitiesException"/>
+    /// <param name="message">The message that describes the <see cref="UnsupportedVectorTableQuantitiesException"/>.</param>
+    public UnsupportedVectorTableQuantitiesException(string? message) : this(message, null) { }
+
+    /// <inheritdoc cref="UnsupportedVectorTableQuantitiesException"/>
+    /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="UnsupportedVectorTableQuantitiesException"/>.</param>
+    public UnsupportedVectorTableQuantitiesException(Exception? innerException) : this($"A {nameof(VectorTableQuantities)} represents a configuration not supported by Horizons.", innerException) { }
+
+    /// <inheritdoc cref="UnsupportedVectorTableQuantitiesException"/>
     /// <param name="message">The message that describes the <see cref="UnsupportedVectorTableQuantitiesException"/>.</param>
     /// <param name="innerException">The <see cref="Exception"/> that caused the current <see cref="UnsupportedVectorTableQuantitiesException"/>.</param>
-    public UnsupportedVectorTableQuantitiesException(string? message, Exception? innerException = null) : base(message, innerException) { }
+    public UnsupportedVectorTableQuantitiesException(string? message, Exception? innerException) : base(message, innerException) { }
 }

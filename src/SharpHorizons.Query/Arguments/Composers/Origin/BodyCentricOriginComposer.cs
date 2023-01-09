@@ -3,9 +3,11 @@
 using SharpHorizons.Query.Origin;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <summary>Composes <see cref="IOriginArgument"/> that describe <see cref="IBodyCentricOrigin"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class BodyCentricOriginComposer : IOriginComposer<IBodyCentricOrigin>
 {
     IOriginArgument IArgumentComposer<IOriginArgument, IBodyCentricOrigin>.Compose(IBodyCentricOrigin obj)

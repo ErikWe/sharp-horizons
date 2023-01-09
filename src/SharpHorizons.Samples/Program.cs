@@ -21,7 +21,7 @@ using SharpMeasures;
 using System;
 using System.Threading.Tasks;
 
-internal class Program
+internal sealed class Program
 {
     private static async Task Main()
     {
@@ -46,15 +46,15 @@ internal class Program
 
         var query = queryFactory.CreateBuilder(target, origin, epochSelection).SpecifyOutputFormat(OutputFormat.JSON).SpecifyTableContent(new(VectorTableQuantities.StateVectors, VectorTableUncertainties.All)).SpecifyOutputLabels(OutputLabels.Enable).Build();
         var uri = vectorsComposer.Compose(query);
-        var httpResult = httpQueryHandler.RequestAsync(uri).Result;
+        var httpResult = await httpQueryHandler.RequestAsync(uri);
         var textResult = await httpTextHandler.ExtractAsync(httpResult);
-        var header = headerInterpreter.Interpret(textResult);
-        var orbitalStateVectors = orbitalStateVectorsInterpreter.Interpret(header.Value, textResult);
+        var header = headerInterpreter.Interpret(textResult.Value);
+        var orbitalStateVectors = orbitalStateVectorsInterpreter.Interpret(header.Value, textResult.Value);
 
         Console.WriteLine(orbitalStateVectors.Count);
     }
 
-    private static void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configuration)
+    private static void ConfigureConfiguration(IConfigurationBuilder configuration)
     {
         configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
     }

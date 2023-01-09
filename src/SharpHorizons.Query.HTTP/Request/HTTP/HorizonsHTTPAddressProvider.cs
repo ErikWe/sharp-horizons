@@ -5,8 +5,10 @@ using Microsoft.Extensions.Options;
 using SharpHorizons.Settings.Query.HTTP;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IHorizonsHTTPAddressProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class HorizonsHTTPAddressProvider : IHorizonsHTTPAddressProvider
 {
     /// <summary>Provides the <see cref="Settings.Query.HTTP.HTTPQueryOptions"/></summary>

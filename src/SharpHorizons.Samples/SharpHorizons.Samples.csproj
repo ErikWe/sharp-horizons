@@ -1,25 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<OutputType>Exe</OutputType>
-		<TargetFramework>net7.0</TargetFramework>
-	</PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
 
-	<PropertyGroup>
-		<GenerateDocumentationFile>false</GenerateDocumentationFile>
-	</PropertyGroup>
+    <PropertyGroup>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" PrivateAssets="all" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" PrivateAssets="all" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
-	</ItemGroup>
+    <ItemGroup>
+        <Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" />
+    </ItemGroup>
 
 </Project>

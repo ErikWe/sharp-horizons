@@ -7,11 +7,13 @@ using SharpHorizons.Query.Epoch;
 using SharpMeasures;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
 /// <inheritdoc cref="IQueryEpochComposer"/>
-internal class QueryEpochComposer : IQueryEpochComposer
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
+internal sealed class QueryEpochComposer : IQueryEpochComposer
 {
     /// <summary>The <see cref="JulianDay"/> of the change from the Julian calendar to the Gregorian calendar in Horizons.</summary>
     private static JulianDay CalendarChangeJulianDay { get; } = new(2299160.5);

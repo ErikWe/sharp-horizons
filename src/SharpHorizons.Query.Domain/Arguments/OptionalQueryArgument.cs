@@ -23,11 +23,6 @@ public readonly record struct OptionalQueryArgument<TArgument> where TArgument :
 
         Argument = argument;
     }
-
-    /// <summary>Represents the <typeparamref name="TArgument"/> <paramref name="argument"/> in a query.</summary>
-    /// <param name="argument">The <typeparamref name="TArgument"/> in a query.</param>
-    /// <exception cref="ArgumentNullException"/>
-    public static implicit operator OptionalQueryArgument<TArgument>(TArgument argument) => new(argument);
 }
 
 /// <summary>Provides functionality related to <see cref="OptionalQueryArgument{TArgument}"/>.</summary>

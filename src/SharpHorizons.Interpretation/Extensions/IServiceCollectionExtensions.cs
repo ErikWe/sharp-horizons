@@ -16,6 +16,8 @@ using SharpHorizons.Settings.Interpretation.Ephemeris.Origin;
 using SharpHorizons.Settings.Interpretation.Ephemeris.Target;
 using SharpHorizons.Settings.Interpretation.Ephemeris.Vectors;
 
+using System;
+
 /// <summary>Hosts extension methods for <see cref="IServiceCollection"/>.</summary>
 public static class IServiceCollectionExtensions
 {
@@ -33,8 +35,11 @@ public static class IServiceCollectionExtensions
     /// <summary>Adds interpretation-related services required by SharpHorizons to the <see cref="IServiceCollection"/> <paramref name="services"/>, with configuration provided by the <see cref="IConfiguration"/> <paramref name="configuration"/>.</summary>
     /// <param name="services">Interpretation-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     /// <param name="configuration">This <see cref="IConfiguration"/> provides configuration for the added SharpHorizons services.</param>
+    /// <exception cref="ArgumentNullException"/>
     public static IServiceCollection AddSharpHorizonsInterpretation(this IServiceCollection services, IConfiguration configuration)
     {
+        ArgumentNullException.ThrowIfNull(configuration);
+
         services.AddSharpHorizonsInterpretation();
 
         services.Configure<EphemerisInterpretationOptions>(configuration.GetSection(EphemerisInterpretationOptions.Section));

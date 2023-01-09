@@ -4,7 +4,10 @@ using Microsoft.Extensions.Options;
 
 using SharpHorizons.Settings.Interpretation.Ephemeris.Vectors;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IVectorsInterpretationOptionsProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorsInterpretationOptionsProvider : IVectorsInterpretationOptionsProvider
 {
     /// <inheritdoc cref="VectorsInterpretationOptions"/>

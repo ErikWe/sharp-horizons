@@ -6,21 +6,18 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IVectorsQueryComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorsQueryComposer : IVectorsQueryComposer
 {
     /// <inheritdoc cref="IVectorsQueryArgumentComposer"/>
-    public required IVectorsQueryArgumentComposer ArgumentComposer { private get; init; }
+    private IVectorsQueryArgumentComposer ArgumentComposer { get; }
 
     /// <inheritdoc cref="IQueryStringComposer"/>
-    public required IQueryStringComposer QueryStringComposer { private get; init; }
-
-    /// <inheritdoc cref="VectorsQueryComposer"/>
-    public VectorsQueryComposer() { }
+    private IQueryStringComposer QueryStringComposer { get; }
 
     /// <inheritdoc cref="VectorsQueryComposer"/>
     /// <param name="argumentComposer"><inheritdoc cref="ArgumentComposer" path="/summary"/></param>
     /// <param name="queryStringComposer"><inheritdoc cref="QueryStringComposer" path="/summary"/></param>
-    [SetsRequiredMembers]
     public VectorsQueryComposer(IVectorsQueryArgumentComposer argumentComposer, IQueryStringComposer queryStringComposer)
     {
         ArgumentComposer = argumentComposer;

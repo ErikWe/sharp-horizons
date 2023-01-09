@@ -64,7 +64,7 @@ internal abstract class AEphemerisEntryInterpreter<TEphemerisEntry, THeader> whe
     /// <param name="line">The <see cref="string"/> from which an <typeparamref name="TEphemerisEntry"/> is interpreted.</param>
     private Optional<TEphemerisEntry> InterpretSingleLinedEntry(THeader header, string line)
     {
-        if (line.Contains(','))
+        if (line.Contains(',', StringComparison.Ordinal))
         {
             return InterpretCommaSeparatedEntry(header, line);
         }
@@ -78,16 +78,16 @@ internal abstract class AEphemerisEntryInterpreter<TEphemerisEntry, THeader> whe
         {
             EphemerisQuantityTableIndex quantityIndex = new(0, columnIndex);
 
-            if (header.Quantities.TryGetValue(quantityIndex, out var quantity) is false || quantity.CharacterLength is null)
+            if (header.Quantities.TryGetValue(quantityIndex, out var quantity) is false || quantity.Value.CharacterLength is null)
             {
                 return new();
             }
 
-            var text = line.Substring(startCharacterIndex, quantity.CharacterLength.Value).Trim();
+            var text = line.Substring(startCharacterIndex, quantity.Value.CharacterLength.Value).Trim();
 
-            ephemerisEntry = InterpretationResolver.Interpret(quantity, quantityIndex, text, header, ephemerisEntry);
+            ephemerisEntry = InterpretationResolver.Interpret(quantity.Value, quantityIndex, text, header, ephemerisEntry);
 
-            startCharacterIndex += quantity.CharacterLength.Value;
+            startCharacterIndex += quantity.Value.CharacterLength.Value;
             columnIndex += 1;
         }
 
@@ -112,7 +112,7 @@ internal abstract class AEphemerisEntryInterpreter<TEphemerisEntry, THeader> whe
                 return new();
             }
 
-            ephemerisEntry = InterpretationResolver.Interpret(quantity, quantityIndex, commaSplit[columnIndex], header, ephemerisEntry);
+            ephemerisEntry = InterpretationResolver.Interpret(quantity.Value, quantityIndex, commaSplit[columnIndex], header, ephemerisEntry);
         }
 
         return ephemerisEntry;
@@ -146,7 +146,7 @@ internal abstract class AEphemerisEntryInterpreter<TEphemerisEntry, THeader> whe
                     return new();
                 }
 
-                ephemerisEntry = InterpretationResolver.Interpret(quantity, quantityIndex, component, header, ephemerisEntry);
+                ephemerisEntry = InterpretationResolver.Interpret(quantity.Value, quantityIndex, component, header, ephemerisEntry);
 
                 columnIndex += 1;
             }

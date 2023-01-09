@@ -5,21 +5,25 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCProvisionalDesignation"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class MPCProvisionalDesignationInterpreter : IInterpreter<MPCProvisionalDesignation>
 {
     Optional<MPCProvisionalDesignation> IInterpreter<MPCProvisionalDesignation>.Interpret(QueryResult queryResult)
     {
         QueryResult.Validate(queryResult);
 
-        var startIndex = queryResult.Content.IndexOf('(') + 1;
+        var startIndex = queryResult.Content.IndexOf('(', StringComparison.Ordinal) + 1;
 
         if (startIndex is 0)
         {
             return new();
         }
 
-        var stopIndex = queryResult.Content.IndexOf(')') - 1;
+        var stopIndex = queryResult.Content.IndexOf(')', StringComparison.Ordinal) - 1;
 
         if (stopIndex is -2)
         {
@@ -28,7 +32,7 @@ internal sealed class MPCProvisionalDesignationInterpreter : IInterpreter<MPCPro
 
         var designation = queryResult.Content[startIndex..stopIndex].Trim();
 
-        if (designation.Contains(' ') is false || designation.Contains('/'))
+        if (designation.Contains(' ', StringComparison.Ordinal) is false || designation.Contains('/', StringComparison.Ordinal))
         {
             return new();
         }

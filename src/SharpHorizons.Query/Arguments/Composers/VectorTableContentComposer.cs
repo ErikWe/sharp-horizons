@@ -3,10 +3,12 @@
 using SharpHorizons.Query.Vectors.Table;
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
 /// <inheritdoc cref="IVectorTableContentComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorTableContentComposer : IVectorTableContentComposer
 {
     /// <inheritdoc cref="IVectorTableContentValidator"/>

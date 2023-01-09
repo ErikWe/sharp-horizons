@@ -4,7 +4,11 @@ using Microsoft.Extensions.Configuration;
 
 using SharpHorizons.Query.Result;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Allows options related to query results to be specified.</summary>
+/// <remarks>Once specified, a <see cref="IQueryResultOptionsProvider"/> should be used to access the options.</remarks>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class QueryResultOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="QueryResultOptions"/>.</summary>

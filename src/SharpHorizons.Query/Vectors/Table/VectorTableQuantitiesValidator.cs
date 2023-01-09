@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 
 /// <inheritdoc cref="IVectorTableQuantitiesValidator"/>
-public sealed class VectorTableQuantitiesValidator : IVectorTableQuantitiesValidator
+internal sealed class VectorTableQuantitiesValidator : IVectorTableQuantitiesValidator
 {
     /// <summary>The set of <see cref="VectorTableQuantities"/> not supported by Horizons.</summary>
     private static HashSet<VectorTableQuantities> UnsupportedQuantities { get; } = new(2)
@@ -12,10 +12,7 @@ public sealed class VectorTableQuantitiesValidator : IVectorTableQuantitiesValid
         VectorTableQuantities.Velocity | VectorTableQuantities.Distance
     };
 
-    /// <inheritdoc/>
     public bool CheckSupport(VectorTableQuantities quantities) => CheckValidity(quantities) && CheckSupportForValid(quantities);
-
-    /// <inheritdoc/>
     public void ThrowIfUnsupported(VectorTableQuantities quantities, string? argumentExpression)
     {
         if (CheckValidity(quantities) is false)
@@ -30,7 +27,7 @@ public sealed class VectorTableQuantitiesValidator : IVectorTableQuantitiesValid
     }
 
     /// <summary>A <see cref="string"/> describing an <see cref="UnsupportedVectorTableQuantitiesException"/>.</summary>
-    private static string UnsupportedQuantitiesExceptionMessage => $"The {nameof(VectorTableQuantities)} does not represent a configuration supported by Horizons. Try using \"{VectorTableQuantities.All}\".";
+    private static string UnsupportedQuantitiesExceptionMessage => $"The {nameof(VectorTableQuantities)} represents a configuration not supported by Horizons. Try using \"{VectorTableQuantities.All}\".";
 
     /// <summary>Determines the validity of the <see cref="VectorTableQuantities"/> <paramref name="quantities"/>.</summary>
     /// <param name="quantities">This <see cref="VectorTableQuantities"/> is validated.</param>

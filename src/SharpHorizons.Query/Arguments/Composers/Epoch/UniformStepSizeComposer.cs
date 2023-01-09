@@ -3,10 +3,12 @@
 using SharpHorizons.Query.Epoch;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
 /// <summary>Composes <see cref="IStepSizeArgument"/> that describe <see cref="IUniformStepSize"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class UniformStepSizeComposer : IStepSizeComposer<IUniformStepSize>
 {
     IStepSizeArgument IArgumentComposer<IStepSizeArgument, IUniformStepSize>.Compose(IUniformStepSize obj)

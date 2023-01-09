@@ -3,9 +3,11 @@
 using SharpHorizons.Query.Vectors;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <inheritdoc cref="IVectorCorrectionComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorCorrectionComposer : IVectorCorrectionComposer
 {
     IVectorCorrectionArgument IArgumentComposer<IVectorCorrectionArgument, VectorCorrection>.Compose(VectorCorrection obj)
@@ -29,7 +31,10 @@ internal sealed class VectorCorrectionComposer : IVectorCorrectionComposer
     {
         try
         {
-            UnsupportedVectorCorrectionException.ThrowIfJustAberration(correction);
+            if (correction is VectorCorrection.Aberration)
+            {
+                throw new UnsupportedVectorCorrectionException($"Applying the {nameof(VectorCorrection)} \"{VectorCorrection.Aberration}\" without also applying \"{VectorCorrection.LightTime}\" is not supported.");
+            }
         }
         catch (UnsupportedVectorCorrectionException e)
         {

@@ -7,6 +7,7 @@ using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors.Table;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <inheritdoc cref="IVectorsQueryValidator"/>
@@ -23,7 +24,7 @@ public sealed class VectorsQueryValidator : IVectorsQueryValidator
     }
 
     /// <inheritdoc/>
-    public void Validate(IVectorsQuery vectorsQuery, [CallerArgumentExpression(nameof(vectorsQuery))] string? argumentExpression = null)
+    public void Validate([NotNull] IVectorsQuery vectorsQuery, [CallerArgumentExpression(nameof(vectorsQuery))] string? argumentExpression = null)
     {
         ArgumentNullException.ThrowIfNull(vectorsQuery);
 
@@ -52,19 +53,19 @@ public sealed class VectorsQueryValidator : IVectorsQueryValidator
     }
 
     /// <inheritdoc/>
-    public void ValidateTarget(ITarget target, [CallerArgumentExpression(nameof(target))] string? argumentExpression = null)
+    public void ValidateTarget([NotNull] ITarget target, [CallerArgumentExpression(nameof(target))] string? argumentExpression = null)
     {
         ArgumentNullException.ThrowIfNull(target, argumentExpression);
     }
 
     /// <inheritdoc/>
-    public void ValidateOrigin(IOrigin origin, [CallerArgumentExpression(nameof(origin))] string? argumentExpression = null)
+    public void ValidateOrigin([NotNull] IOrigin origin, [CallerArgumentExpression(nameof(origin))] string? argumentExpression = null)
     {
         ArgumentNullException.ThrowIfNull(origin, argumentExpression);
     }
 
     /// <inheritdoc/>
-    public void ValidateEpochSelection(IEpochSelection epochSelection, [CallerArgumentExpression(nameof(epochSelection))] string? argumentExpression = null)
+    public void ValidateEpochSelection([NotNull] IEpochSelection epochSelection, [CallerArgumentExpression(nameof(epochSelection))] string? argumentExpression = null)
     {
         ArgumentNullException.ThrowIfNull(epochSelection, argumentExpression);
     }
@@ -76,7 +77,10 @@ public sealed class VectorsQueryValidator : IVectorsQueryValidator
 
         try
         {
-            UnsupportedVectorCorrectionException.ThrowIfJustAberration(correction);
+            if (correction is VectorCorrection.Aberration)
+            {
+                throw new UnsupportedVectorCorrectionException($"Applying the {nameof(VectorCorrection)} \"{VectorCorrection.Aberration}\" without also applying \"{VectorCorrection.LightTime}\" is not supported.");
+            }
         }
         catch (UnsupportedVectorCorrectionException e)
         {

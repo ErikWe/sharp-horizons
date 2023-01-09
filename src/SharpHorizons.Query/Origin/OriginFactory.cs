@@ -237,12 +237,12 @@ public sealed class OriginFactory : IOriginFactory
     }
 
     /// <inheritdoc/>
-    public IOrigin Create(IOriginObject originObject, ObservationSite observationsite)
+    public IOrigin Create(IOriginObject originObject, ObservationSite observationSite)
     {
         ArgumentNullException.ThrowIfNull(originObject);
-        ArgumentNullException.ThrowIfNull(observationsite);
+        ArgumentNullException.ThrowIfNull(observationSite);
 
-        return Create(originObject, observationsite.ID);
+        return Create(originObject, observationSite.ID);
     }
 
     /// <summary>Describes the <see cref="IOrigin"/> in a query as the center of <paramref name="originObject"/>.</summary>

@@ -1,14 +1,17 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Origin;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IEphemerisOriginHeaderInterpretationProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisOriginHeaderInterpretationProvider : IEphemerisOriginHeaderInterpretationProvider
 {
-    public IOriginInterpreter OriginInterpreter { get; private init; }
-    public IOriginGeodeticCoordinateInterpreter GeodeticCoordinateInterpreter { get; private init; }
-    public IOriginCylindricalCoordinateInterpreter CylindricalCoordinateInterpreter { get; private init; }
-    public IOriginSiteNameInterpreter SiteNameInterpreter { get; private init; }
-    public IOriginReferenceEllipsoidInterpreter ReferenceEllipsoidInterpreter { get; private init; }
-    public IOriginRadiiInterpreter RadiiInterpreter { get; private init; }
+    public IOriginInterpreter OriginInterpreter { get; }
+    public IOriginGeodeticCoordinateInterpreter GeodeticCoordinateInterpreter { get; }
+    public IOriginCylindricalCoordinateInterpreter CylindricalCoordinateInterpreter { get; }
+    public IOriginSiteNameInterpreter SiteNameInterpreter { get; }
+    public IOriginReferenceEllipsoidInterpreter ReferenceEllipsoidInterpreter { get; }
+    public IOriginRadiiInterpreter RadiiInterpreter { get; }
 
     /// <inheritdoc cref="EphemerisOriginHeaderInterpretationProvider"/>
     /// <param name="originInterpreter"><inheritdoc cref="OriginInterpreter" path="/summary"/></param>

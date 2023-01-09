@@ -2,9 +2,11 @@
 
 using SharpMeasures.Astronomy;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Composes <see cref="IOriginCoordinateArgument"/> and <see cref="IOriginCoordinateTypeArgument"/> that describe <see cref="GeodeticCoordinate"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class GeodeticCoordinateComposer : IOriginCoordinateComposer<GeodeticCoordinate>, IOriginCoordinateTypeComposer<GeodeticCoordinate>
 {
     IOriginCoordinateArgument IArgumentComposer<IOriginCoordinateArgument, GeodeticCoordinate>.Compose(GeodeticCoordinate obj)

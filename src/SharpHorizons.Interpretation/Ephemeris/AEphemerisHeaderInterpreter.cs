@@ -150,7 +150,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     /// <param name="header">The instance of <typeparamref name="THeader"/> representing the initial interpretation, on which the new instance of <typeparamref name="THeader"/> is based.</param>
     private Optional<THeader> TryInterpretFirstLine(QueryResult line, THeader header)
     {
-        if (line.Content.StartsWith(EphemerisInterpretationOptionsProvider.EphemerisDataStart) is false)
+        if (line.Content.StartsWith(EphemerisInterpretationOptionsProvider.EphemerisDataStart, StringComparison.Ordinal) is false)
         {
             return new();
         }
@@ -176,7 +176,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     /// <param name="blockSeparatorCount">The number of block separators that has been encountered.</param>
     private bool CheckExitKeyIterator(string line, ref int blockSeparatorCount)
     {
-        if (line.StartsWith(InterpretationOptionsProvider.BlockSeparator) is false)
+        if (line.StartsWith(InterpretationOptionsProvider.BlockSeparator, StringComparison.Ordinal) is false)
         {
             return false;
         }
@@ -228,7 +228,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
 
         while (linesEnumerator.MoveNext())
         {
-            if (linesEnumerator.Current.StartsWith(InterpretationOptionsProvider.BlockSeparator))
+            if (linesEnumerator.Current.StartsWith(InterpretationOptionsProvider.BlockSeparator, StringComparison.Ordinal))
             {
                 break;
             }
@@ -237,7 +237,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
 
             foreach (var component in getComponentsOfLine(linesEnumerator.Current))
             {
-                quantities[new EphemerisQuantityTableIndex(rowIndex, columnIndex)] = new EphemerisQuantityIdentifier(component.Replace("_", string.Empty).Trim(), component.Length);
+                quantities[new EphemerisQuantityTableIndex(rowIndex, columnIndex)] = new EphemerisQuantityIdentifier(component.Replace("_", string.Empty, StringComparison.Ordinal).Trim(), component.Length);
 
                 columnIndex += 1;
             }
@@ -300,7 +300,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
 
     /// <summary>Converts <paramref name="key"/> to a format suitable for comparison.</summary>
     /// <param name="key">This <see cref="string"/> is formatted.</param>
-    private static string FormatKey(string key) => key.Replace(" ", string.Empty).ToUpperInvariant();
+    private static string FormatKey(string key) => key.Replace(" ", string.Empty, StringComparison.Ordinal).ToUpperInvariant();
 
     /// <summary>Iterates the lines of <paramref name="input"/>.</summary>
     /// <param name="input">The lines of this <see cref="string"/> are iterated.</param>

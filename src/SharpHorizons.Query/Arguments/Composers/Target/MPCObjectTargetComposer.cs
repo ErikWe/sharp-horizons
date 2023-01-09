@@ -3,8 +3,10 @@
 using SharpHorizons.MPC;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCObject"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class MPCObjectTargetComposer : ITargetComposer<MPCObject>
 {
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCSequentialNumber"/>.</summary>

@@ -2,24 +2,29 @@
 
 using Microsoft.Extensions.Configuration;
 
+using SharpHorizons.Interpretation.Ephemeris.Vectors;
 using SharpHorizons.Query.Vectors;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Allows options related to the interpretation of the result of <see cref="IVectorsQuery"/> to be specified.</summary>
+/// <remarks>Once specified, a <see cref="IVectorsInterpretationOptionsProvider"/> should be used to access the options.</remarks>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorsInterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="VectorsInterpretationOptions"/>.</summary>
     internal static string Section { get; } = "Interpretation:Ephemeris:Vectors";
 
-    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.OutputUnits"/>.</summary>
+    /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.OutputUnits"/>
     public string OutputUnits { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.Vectors.VectorCorrection"/>.</summary>
+    /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.VectorCorrection"/>
     public string VectorCorrection { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.Vectors.Table.VectorTableContent"/>.</summary>
+    /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.VectorTableContent"/>
     public string VectorTableContent { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.ReferencePlane"/>.</summary>
+    /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.ReferencePlane"/>
     public string ReferencePlane { get; set; } = null!;
 
     /// <summary>Applies the default values to the <see cref="VectorsInterpretationOptions"/> <paramref name="options"/>.</summary>

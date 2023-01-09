@@ -4,10 +4,12 @@ using SharpHorizons.MPC;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 internal static class Datasets
 {
-    public class ValidMPCSequentialNumberInts : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMPCSequentialNumberInts : IEnumerable<object?[]>
     {
         public static IEnumerable<int> Items => new int[]
         {
@@ -19,7 +21,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMPCSequentialNumberInts : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCSequentialNumberInts : IEnumerable<object?[]>
     {
         public static IEnumerable<int> Items => new int[]
         {
@@ -32,7 +35,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class MPCSequentialNumbers : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class MPCSequentialNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCSequentialNumber> Items
         {

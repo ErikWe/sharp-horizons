@@ -15,8 +15,8 @@ internal sealed class EpochStage : IEpochStage
     /// <summary>The <see cref="IOrigin"/> selected for the <see cref="IVectorsQuery"/>.</summary>
     private IOrigin Origin { get; }
 
-    /// <inheritdoc cref="IVectorsQueryValidator"/>
-    private IVectorsQueryValidator VectorsQueryValidator { get; }
+    /// <inheritdoc cref="IVectorsQueryFactory"/>
+    private IVectorsQueryFactory VectorsQueryFactory { get; }
 
     /// <inheritdoc cref="IEpochRangeFactory"/>
     private IEpochRangeFactory EpochRangeFactory { get; }
@@ -27,15 +27,15 @@ internal sealed class EpochStage : IEpochStage
     /// <inheritdoc cref="EpochStage"/>
     /// <param name="target"><inheritdoc cref="Target" path="/summary"/></param>
     /// <param name="origin"><inheritdoc cref="Origin" path="/summary"/></param>
-    /// <param name="vectorsQueryValidator"><inheritdoc cref="VectorsQueryValidator" path="/summary"/></param>
+    /// <param name="vectorsQueryFactory"><inheritdoc cref="VectorsQueryFactory" path="/summary"/></param>
     /// <param name="epochRangeFactory"><inheritdoc cref="EpochRangeFactory" path="/summary"/></param>
     /// <param name="epochCollectionFactory"><inheritdoc cref="EpochCollectionFactory" path="/summary"/></param>
-    public EpochStage(ITarget target, IOrigin origin, IVectorsQueryValidator vectorsQueryValidator, IEpochRangeFactory epochRangeFactory, IEpochCollectionFactory epochCollectionFactory)
+    public EpochStage(ITarget target, IOrigin origin, IVectorsQueryFactory vectorsQueryFactory, IEpochRangeFactory epochRangeFactory, IEpochCollectionFactory epochCollectionFactory)
     {
         Target = target;
         Origin = origin;
 
-        VectorsQueryValidator = vectorsQueryValidator;
+        VectorsQueryFactory = vectorsQueryFactory;
 
         EpochRangeFactory = epochRangeFactory;
 
@@ -113,5 +113,5 @@ internal sealed class EpochStage : IEpochStage
 
     /// <summary>Uses <paramref name="epochSelection"/> as the <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>, and constructs the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="epochSelection">The <see cref="IEpochSelection"/> in the <see cref="IVectorsQuery"/>.</param>
-    private IVectorsQueryBuilder CreateVectorsQueryBuilder(IEpochSelection epochSelection) => new VectorsQueryBuilder(VectorsQueryValidator, Target, Origin, epochSelection);
+    private IVectorsQueryBuilder CreateVectorsQueryBuilder(IEpochSelection epochSelection) => VectorsQueryFactory.CreateBuilder(Target, Origin, epochSelection);
 }

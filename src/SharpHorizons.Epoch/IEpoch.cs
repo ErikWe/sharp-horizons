@@ -3,6 +3,7 @@
 using SharpMeasures;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Represents an epoch, an instant in time.</summary>
 public interface IEpoch : IComparable<IEpoch>
@@ -26,6 +27,7 @@ public interface IEpoch<TSelf> : IEpoch where TSelf : IEpoch<TSelf>
     /// <param name="julianDay">The constructed <typeparamref name="TSelf"/> represents the same epoch as this <see cref="JulianDay"/>.</param>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>
+    [SuppressMessage("Design", "CA1000: Do not declare static members on generic types", Justification = "Implementing type is not necessarily generic.")]
     public static abstract TSelf FromJulianDay(JulianDay julianDay);
 
     /// <summary>Computes the <typeparamref name="TSelf"/> representing { <see langword="this"/> + <paramref name="difference"/> }.</summary>

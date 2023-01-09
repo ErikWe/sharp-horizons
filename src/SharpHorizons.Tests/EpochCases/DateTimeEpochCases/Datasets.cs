@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 internal static class Datasets
@@ -12,7 +13,8 @@ internal static class Datasets
     private static JulianCalendar JulianCalendar { get; } = new();
     private static GregorianCalendar GregorianCalendar { get; } = new();
 
-    public class DateTimeOffsets : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class DateTimeOffsets : IEnumerable<object?[]>
     {
         public static IEnumerable<DateTimeOffset> Items => new DateTimeOffset[]
         {
@@ -28,7 +30,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class DateTimeEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class DateTimeEpochs : IEnumerable<object?[]>
     {
         public static IEnumerable<DateTimeEpoch> Items
         {
@@ -45,13 +48,15 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class TwoDateTimeEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class TwoDateTimeEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(DateTimeEpochs.Items, DateTimeEpochs.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class ConvertibleIEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ConvertibleIEpochs : IEnumerable<object?[]>
     {
         public static IEnumerable<IEpoch> Items => new IEpoch[]
         {
@@ -64,7 +69,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnconvertibleIEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnconvertibleIEpochs : IEnumerable<object?[]>
     {
         public static IEnumerable<IEpoch> Items => new IEpoch[]
         {
@@ -75,19 +81,22 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class DateTimeEpochsAndConvertibleIEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class DateTimeEpochsAndConvertibleIEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(DateTimeEpochs.Items, ConvertibleIEpochs.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class DateTimeEpochsAndUnconvertibleIEpochs : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class DateTimeEpochsAndUnconvertibleIEpochs : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(DateTimeEpochs.Items, UnconvertibleIEpochs.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnconvertibleJulianDays : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnconvertibleJulianDays : IEnumerable<object?[]>
     {
         public static IEnumerable<JulianDay> Items => new JulianDay[]
         {

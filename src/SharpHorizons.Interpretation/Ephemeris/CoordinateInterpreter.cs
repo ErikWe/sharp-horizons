@@ -10,9 +10,11 @@ using SharpMeasures;
 using SharpMeasures.Astronomy;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Interprets <see cref="QueryResult"/> as <see cref="GeodeticCoordinate"/> or <see cref="CylindricalCoordinate"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class CoordinateInterpreter : ITargetGeodeticCoordinateInterpreter, ITargetCylindricalCoordinateInterpreter, IOriginGeodeticCoordinateInterpreter, IOriginCylindricalCoordinateInterpreter
 {
     Optional<GeodeticCoordinate> IInterpreter<GeodeticCoordinate>.Interpret(QueryResult queryResult)

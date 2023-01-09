@@ -2,13 +2,16 @@
 
 using SharpHorizons.Interpretation.Ephemeris;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IVectorsHeaderInterpretationProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorsHeaderInterpretationProvider : IVectorsHeaderInterpretationProvider
 {
-    public IVectorsOutputUnitsInterpreter OutputUnitsInterpreter { get; private init; }
-    public IVectorCorrectionInterpreter CorrectionInterpreter { get; private init; }
-    public IVectorTableContentInterpreter TableContentInterpreter { get; private init; }
-    public IReferencePlaneInterpreter ReferencePlaneInterpreter { get; private init; }
+    public IVectorsOutputUnitsInterpreter OutputUnitsInterpreter { get; }
+    public IVectorCorrectionInterpreter CorrectionInterpreter { get; }
+    public IVectorTableContentInterpreter TableContentInterpreter { get; }
+    public IReferencePlaneInterpreter ReferencePlaneInterpreter { get; }
 
     /// <inheritdoc cref="VectorsHeaderInterpretationProvider"/>
     /// <param name="outputUnitsInterpreter"><inheritdoc cref="OutputUnitsInterpreter" path="/summary"/></param>

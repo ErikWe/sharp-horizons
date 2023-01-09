@@ -1,20 +1,19 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Vectors;
 
 using SharpHorizons.Query.Vectors;
-using SharpHorizons.Settings.Interpretation.Ephemeris.Vectors;
 
 /// <summary>Provides options related to the interpretation of the result of <see cref="IVectorsQuery"/>.</summary>
 public interface IVectorsInterpretationOptionsProvider
 {
-    /// <inheritdoc cref="VectorsInterpretationOptions.OutputUnits"/>
+    /// <summary>The key corresponding to the <see cref="Query.OutputUnits"/>.</summary>
     public abstract string OutputUnits { get; }
 
-    /// <inheritdoc cref="VectorsInterpretationOptions.VectorCorrection"/>
+    /// <summary>The key corresponding to the <see cref="Query.Vectors.VectorCorrection"/>.</summary>
     public abstract string VectorCorrection { get; }
 
-    /// <inheritdoc cref="VectorsInterpretationOptions.VectorTableContent"/>
+    /// <summary>The key corresponding to the <see cref="Query.Vectors.Table.VectorTableContent"/>.</summary>
     public abstract string VectorTableContent { get; }
 
-    /// <inheritdoc cref="VectorsInterpretationOptions.ReferencePlane"/>
+    /// <summary>The key corresponding to the <see cref="Query.ReferencePlane"/>.</summary>
     public abstract string ReferencePlane { get; }
 }

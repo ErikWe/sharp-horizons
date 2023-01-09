@@ -5,7 +5,11 @@ using Microsoft.CodeAnalysis;
 using SharpHorizons.MPC;
 using SharpHorizons.Query.Result;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Interprets <see cref="QueryResult"/> as <see cref="MPCCometDesignation"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class MPCCometDesignationInterpreter : IInterpreter<MPCCometDesignation>
 {
     Optional<MPCCometDesignation> IInterpreter<MPCCometDesignation>.Interpret(QueryResult queryResult)
@@ -29,7 +33,7 @@ internal sealed class MPCCometDesignationInterpreter : IInterpreter<MPCCometDesi
     /// <param name="queryResult">A <see cref="MPCCometDesignation"/> is interpreted from this <see cref="QueryResult"/>, if possible.</param>
     private static MPCCometDesignation? TryInterpretNumberedDesignation(QueryResult queryResult)
     {
-        var stopIndex = queryResult.Content.IndexOf('/');
+        var stopIndex = queryResult.Content.IndexOf('/', StringComparison.Ordinal);
 
         if (stopIndex is -1)
         {
@@ -50,14 +54,14 @@ internal sealed class MPCCometDesignationInterpreter : IInterpreter<MPCCometDesi
     /// <param name="queryResult">A <see cref="MPCCometDesignation"/> is interpreted from this <see cref="QueryResult"/>, if possible.</param>
     private static MPCCometDesignation? TryInterpretUnnumberedDesignation(QueryResult queryResult)
     {
-        var startIndex = queryResult.Content.IndexOf('(') + 1;
+        var startIndex = queryResult.Content.IndexOf('(', StringComparison.Ordinal) + 1;
 
         if (startIndex is 0)
         {
             return null;
         }
 
-        var stopIndex = queryResult.Content.IndexOf(')') - 1;
+        var stopIndex = queryResult.Content.IndexOf(')', StringComparison.Ordinal) - 1;
 
         if (stopIndex is -2)
         {
@@ -66,7 +70,7 @@ internal sealed class MPCCometDesignationInterpreter : IInterpreter<MPCCometDesi
 
         var designation = queryResult.Content[startIndex..stopIndex];
 
-        if (designation[1] is '/' is false || char.IsLetter(designation[0]) is false || designation.Contains(' ') is false)
+        if (designation[1] is '/' is false || char.IsLetter(designation[0]) is false || designation.Contains(' ', StringComparison.Ordinal) is false)
         {
             return null;
         }

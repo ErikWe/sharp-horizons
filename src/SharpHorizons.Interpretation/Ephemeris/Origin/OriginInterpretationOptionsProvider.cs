@@ -4,7 +4,10 @@ using Microsoft.Extensions.Options;
 
 using SharpHorizons.Settings.Interpretation.Ephemeris.Origin;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IOriginInterpretationOptionsProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class OriginInterpretationOptionsProvider : IOriginInterpretationOptionsProvider
 {
     /// <inheritdoc cref="OriginInterpretationOptions"/>

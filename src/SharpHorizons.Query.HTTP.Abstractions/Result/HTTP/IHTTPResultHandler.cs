@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Query.Result.HTTP;
 
+using Microsoft.CodeAnalysis;
+
 using System;
 using System.Threading.Tasks;
 
@@ -10,6 +12,5 @@ public interface IHTTPResultHandler
     /// <param name="httpResult">A <see cref="QueryResult"/> is extracted from this <see cref="HTTPQueryResult"/>.</param>
     /// <exception cref="ArgumentNullException"/>
     /// <exception cref="UnexpectedQueryResultFormatException"/>
-    /// <exception cref="UnsuccesfulHTTPRequestException"/>
-    public abstract Task<QueryResult> ExtractAsync(HTTPQueryResult httpResult);
+    public abstract Task<Optional<QueryResult>> ExtractAsync(HTTPQueryResult httpResult);
 }

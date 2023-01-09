@@ -4,9 +4,11 @@ using SharpHorizons.Query.Epoch;
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 /// <summary>Composes <see cref="IStepSizeArgument"/> that describe <see cref="ICalendarStepSize"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class CalendarStepSizeComposer : IStepSizeComposer<ICalendarStepSize>
 {
     IStepSizeArgument IArgumentComposer<IStepSizeArgument, ICalendarStepSize>.Compose(ICalendarStepSize obj)

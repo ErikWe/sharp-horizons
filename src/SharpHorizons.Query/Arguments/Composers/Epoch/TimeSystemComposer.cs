@@ -2,6 +2,10 @@
 
 using SharpHorizons.Query.Epoch;
 
+using System.Diagnostics.CodeAnalysis;
+
+/// <inheritdoc cref="ITimeSystemComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class TimeSystemComposer : ITimeSystemComposer
 {
     ITimeSystemArgument IArgumentComposer<ITimeSystemArgument, TimeSystem>.Compose(TimeSystem obj) => new QueryArgument(obj switch

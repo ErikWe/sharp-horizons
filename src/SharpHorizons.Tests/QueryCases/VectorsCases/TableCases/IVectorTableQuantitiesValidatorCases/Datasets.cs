@@ -4,10 +4,12 @@ using SharpHorizons.Query.Vectors.Table;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 internal static class Datasets
 {
-    public class SupportedVectorTableQuantities : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class SupportedVectorTableQuantities : IEnumerable<object?[]>
     {
         public static IEnumerable<VectorTableQuantities> Items => new VectorTableQuantities[]
         {
@@ -23,7 +25,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class UnsupportedVectorTableQuantities : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class UnsupportedVectorTableQuantities : IEnumerable<object?[]>
     {
         public static IEnumerable<VectorTableQuantities> Items => new VectorTableQuantities[]
         {
@@ -34,7 +37,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidVectorTableQuantities : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidVectorTableQuantities : IEnumerable<object?[]>
     {
         public static IEnumerable<VectorTableQuantities> Items => new VectorTableQuantities[]
         {

@@ -6,9 +6,11 @@ using SharpHorizons.Ephemeris.Vectors;
 using SharpHorizons.Query.Result;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IOrbitalStateVectorsInterpreter"/>
-internal class OrbitalStateVectorsInterpreter : AEphemerisEntryInterpreter<MutableOrbitalStateVectors, IVectorsHeader>, IOrbitalStateVectorsInterpreter
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
+internal sealed class OrbitalStateVectorsInterpreter : AEphemerisEntryInterpreter<MutableOrbitalStateVectors, IVectorsHeader>, IOrbitalStateVectorsInterpreter
 {
     /// <inheritdoc cref="OrbitalStateVectorsInterpreter"/>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
@@ -32,7 +34,7 @@ internal class OrbitalStateVectorsInterpreter : AEphemerisEntryInterpreter<Mutab
     }
 
     /// <summary>Handles the invokation of some <see cref="IEphemerisQuantityInterpreter{THeader, TInterpretation}"/> associated with some <see cref="EphemerisQuantityIdentifier"/>.</summary>
-    private class EphemerisQuantityInterpretationDelegater : IEphemerisQuantityInterpretationDelegater
+    private sealed class EphemerisQuantityInterpretationDelegater : IEphemerisQuantityInterpretationDelegater
     {
         /// <inheritdoc cref="IEphemerisEpochInterpreter"/>
         private IEphemerisEpochInterpreter EphemerisEpochInterpreter { get; }

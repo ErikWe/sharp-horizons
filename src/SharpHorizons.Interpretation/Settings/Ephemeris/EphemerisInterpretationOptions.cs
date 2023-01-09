@@ -3,62 +3,63 @@
 using Microsoft.Extensions.Configuration;
 
 using SharpHorizons.Ephemeris;
-using SharpHorizons.Query.Epoch;
-
-using SharpMeasures;
+using SharpHorizons.Interpretation.Ephemeris;
 
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Allows options related to the interpretation of <see cref="IEphemeris{TEntry}"/> to be specified.</summary>
+/// <remarks>Once specified, a <see cref="IEphemerisInterpretationOptionsProvider"/> should be used to access the options.</remarks>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisInterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="EphemerisInterpretationOptions"/>.</summary>
     internal static string Section { get; } = "Interpretation:Ephemeris";
 
-    /// <summary>The <see cref="string"/> indicating the start of the ephemeris data.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.EphemerisDataStart"/>
     public string EphemerisDataStart { get; set; } = null!;
 
-    /// <summary>The number of blocks used for the ephemeris data.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.EphemerisDataBlockCount"/>
     public int EphemerisDataBlockCount { get; set; }
 
-    /// <summary>The <see cref="string"/> indicating <see cref="LongitudeDefinition.WestPositive"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.WestPositiveLongitude"/>
     public string WestPositiveLongitude { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating <see cref="LongitudeDefinition.EastPositive"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.EastPositiveLongitude"/>
     public string EastPositiveLongitude { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating that the <see cref="IEpoch"/> of the first or last <see cref="IEphemerisEntry"/> represents an epoch before the common era (before year 0).</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.BoundaryEpochBCE"/>
     public string BoundaryEpochBCE { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating that the <see cref="IEpoch"/> of the first or last <see cref="IEphemerisEntry"/> represents an epoch in the common era (after year 0).</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.BoundaryEpochCE"/>
     public string BoundaryEpochCE { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="IEpoch"/> of the first <see cref="IEphemerisEntry"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.StartEpoch"/>
     public string StartEpoch { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="IEpoch"/> of the last <see cref="IEphemerisEntry"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.StopEpoch"/>
     public string StopEpoch { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.Epoch.TimeSystem"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.TimeSystem"/>
     public string TimeSystem { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="Time"/> offset to UTC.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.TimeZoneOffset"/>
     public string TimeZoneOffset { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="IStepSize"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.StepSize"/>
     public string StepSize { get; set; } = null!;
 
-    /// <summary>The keys corresponding to the inclusion of small-body perturbers.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.SmallPerturbers"/>
     public IEnumerable<string> SmallPerturbers { get; set; } = null!;
 
-    /// <summary>The key corresponding to the <see cref="SharpHorizons.Query.ReferenceSystem"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.ReferenceSystem"/>
     public string ReferenceSystem { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating the start of the <see cref="IEphemeris{TEntry}"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.StartOfEphemeris"/>
     public string StartOfEphemeris { get; set; } = null!;
 
-    /// <summary>The <see cref="string"/> indicating the end of the <see cref="IEphemeris{TEntry}"/>.</summary>
+    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.EndOfEphemeris"/>
     public string EndOfEphemeris { get; set; } = null!;
 
     /// <summary>Applies the default values to the <see cref="EphemerisInterpretationOptions"/> <paramref name="options"/>.</summary>

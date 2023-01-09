@@ -2,9 +2,11 @@
 
 using SharpMeasures.Astronomy;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Composes <see cref="IOriginCoordinateArgument"/> and <see cref="IOriginCoordinateTypeArgument"/> that describe <see cref="CylindricalCoordinate"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class CylindricalCoordinateComposer : IOriginCoordinateComposer<CylindricalCoordinate>, IOriginCoordinateTypeComposer<CylindricalCoordinate>
 {
     IOriginCoordinateArgument IArgumentComposer<IOriginCoordinateArgument, CylindricalCoordinate>.Compose(CylindricalCoordinate obj)

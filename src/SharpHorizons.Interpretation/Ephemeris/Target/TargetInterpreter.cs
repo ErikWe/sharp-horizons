@@ -7,8 +7,10 @@ using SharpHorizons.Query.Result;
 using SharpHorizons.Query.Target;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="ITargetInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class TargetInterpreter : ITargetInterpreter
 {
     /// <inheritdoc cref="ITargetFactory"/>

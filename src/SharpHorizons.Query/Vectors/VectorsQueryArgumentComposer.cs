@@ -7,49 +7,47 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IVectorsQueryArgumentComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentComposer
 {
     /// <inheritdoc cref="IQueryArgumentSetFactory"/>
-    public required IQueryArgumentSetFactory BuilderFactory { private get; init; }
+    private IQueryArgumentSetFactory BuilderFactory { get; }
 
     /// <inheritdoc cref="IOutputFormatComposer"/>
-    public required IOutputFormatComposer OutputFormatComposer { private get; init; }
+    private IOutputFormatComposer OutputFormatComposer { get; }
 
     /// <inheritdoc cref="IObjectDataInclusionComposer"/>
-    public required IObjectDataInclusionComposer ObjectDataInclusionComposer { private get; init; }
+    private IObjectDataInclusionComposer ObjectDataInclusionComposer { get; }
 
     /// <inheritdoc cref="IReferencePlaneComposer"/>
-    public required IReferencePlaneComposer ReferencePlaneComposer { private get; init; }
+    private IReferencePlaneComposer ReferencePlaneComposer { get; }
 
     /// <inheritdoc cref="IReferenceSystemComposer"/>
-    public required IReferenceSystemComposer ReferenceSystemComposer { private get; init; }
+    private IReferenceSystemComposer ReferenceSystemComposer { get; }
 
     /// <inheritdoc cref="ITimePrecisionComposer"/>
-    public required ITimePrecisionComposer TimePrecisionComposer { private get; init; }
+    private ITimePrecisionComposer TimePrecisionComposer { get; }
 
     /// <inheritdoc cref="IVectorCorrectionComposer"/>
-    public required IVectorCorrectionComposer CorrectionComposer { private get; init; }
+    private IVectorCorrectionComposer CorrectionComposer { get; }
 
     /// <inheritdoc cref="ITimeDeltaInclusionComposer"/>
-    public required ITimeDeltaInclusionComposer TimeDeltaInclusionComposer { private get; init; }
+    private ITimeDeltaInclusionComposer TimeDeltaInclusionComposer { get; }
 
     /// <inheritdoc cref="IVectorTableContentComposer"/>
-    public required IVectorTableContentComposer TableContentComposer { private get; init; }
+    private IVectorTableContentComposer TableContentComposer { get; }
 
     /// <inheritdoc cref="IOutputUnitsComposer"/>
-    public required IOutputUnitsComposer OutputUnitsComposer { private get; init; }
+    private IOutputUnitsComposer OutputUnitsComposer { get; }
 
     /// <inheritdoc cref="IVectorLabelsComposer"/>
-    public required IVectorLabelsComposer OutputLabelsComposer { private get; init; }
+    private IVectorLabelsComposer OutputLabelsComposer { get; }
 
     /// <inheritdoc cref="IValueSeparationComposer"/>
-    public required IValueSeparationComposer ValueSeparationComposer { private get; init; }
+    private IValueSeparationComposer ValueSeparationComposer { get; }
 
     /// <inheritdoc cref="IEphemerisTypeArgument"/>
-    public required IEphemerisTypeArgument EphemerisTypeArgument { private get; init; }
-
-    /// <inheritdoc cref="VectorsQueryArgumentComposer"/>
-    public VectorsQueryArgumentComposer() { }
+    private IEphemerisTypeArgument EphemerisTypeArgument { get; }
 
     /// <inheritdoc cref="VectorsQueryArgumentComposer"/>
     /// <param name="builderFactory"><inheritdoc cref="BuilderFactory" path="/summary"/></param>
@@ -65,7 +63,6 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
     /// <param name="outputUnitsComposer"><inheritdoc cref="OutputUnitsComposer" path="/summary"/></param>
     /// <param name="outputLabelsComposer"><inheritdoc cref="OutputLabelsComposer" path="/summary"/></param>
     /// <param name="valueSeparationComposer"><inheritdoc cref="ValueSeparationComposer" path="/summary"/></param>
-    [SetsRequiredMembers]
     public VectorsQueryArgumentComposer(IQueryArgumentSetFactory builderFactory, IEphemerisTypeComposer ephemerisTypeComposer, IOutputFormatComposer outputFormatComposer, IObjectDataInclusionComposer objectDataInclusionComposer, IReferencePlaneComposer referencePlaneComposer, IReferenceSystemComposer referenceSystemComposer,
         ITimePrecisionComposer timePrecisionComposer, IVectorCorrectionComposer correctionComposer, ITimeDeltaInclusionComposer timeDeltaInclusionComposer, IVectorTableContentComposer tableContentComposer, IOutputUnitsComposer outputUnitsComposer, IVectorLabelsComposer outputLabelsComposer, IValueSeparationComposer valueSeparationComposer)
     {

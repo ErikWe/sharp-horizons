@@ -10,7 +10,7 @@ using System;
 using System.Runtime.CompilerServices;
 
 /// <inheritdoc cref="IVectorsQueryBuilder"/>
-public sealed class VectorsQueryBuilder : IVectorsQueryBuilder
+internal sealed class VectorsQueryBuilder : IVectorsQueryBuilder
 {
     /// <inheritdoc cref="IVectorsQueryValidator"/>
     private IVectorsQueryValidator Validator { get; }
@@ -36,7 +36,6 @@ public sealed class VectorsQueryBuilder : IVectorsQueryBuilder
     /// <summary>Constructs a <see cref="VectorsQueryBuilder"/>, handling incremental construction of <see cref="IVectorsQuery"/> - with an initial configuration <paramref name="vectorsQuery"/>.</summary>
     /// <param name="validator"><inheritdoc cref="Validator" path="/summary"/></param>
     /// <param name="vectorsQuery">The initial configuration of the <see cref="VectorsQueryBuilder"/>. This instance is not modified.</param>
-    /// <exception cref="ArgumentException"/>
     public VectorsQueryBuilder(IVectorsQueryValidator validator, IVectorsQuery vectorsQuery)
     {
         Validator = validator;

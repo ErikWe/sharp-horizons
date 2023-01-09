@@ -8,9 +8,12 @@ using SharpHorizons.Query.Result;
 
 using SharpMeasures;
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <inheritdoc cref="ITargetRadiiInterpreter"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class RadiiInterpreter : ITargetRadiiInterpreter, IOriginRadiiInterpreter
 {
     /// <inheritdoc cref="IInterpretationOptionsProvider"/>
@@ -27,7 +30,7 @@ internal sealed class RadiiInterpreter : ITargetRadiiInterpreter, IOriginRadiiIn
     {
         QueryResult.Validate(queryResult);
 
-        if (queryResult.Content.Contains(InterpretationOptionsProvider.UnavailableText))
+        if (queryResult.Content.Contains(InterpretationOptionsProvider.UnavailableText, StringComparison.Ordinal))
         {
             return new();
         }

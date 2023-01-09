@@ -8,7 +8,10 @@ using SharpHorizons.Query;
 
 using SharpMeasures;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Interprets a <see cref="Distance"/> of some <see cref="IVectorsEphemerisEntry"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class DistanceQuantityInterpreter : IObjectPositionComponentInterpreter, IDistanceInterpreter, IObjectPositionUncertaintyACNComponentInterpreter, IObjectPositionUncertaintyPOSComponentInterpreter, IObjectPositionUncertaintyRTNComponentInterpreter, IObjectPositionUncertaintyXYZComponentInterpreter
 {
     Optional<Distance> IEphemerisQuantityInterpreter<IVectorsHeader, Distance>.Interpret(string text, IVectorsHeader header)

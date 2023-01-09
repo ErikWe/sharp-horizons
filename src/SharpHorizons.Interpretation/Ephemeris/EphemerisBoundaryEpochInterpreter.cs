@@ -11,8 +11,10 @@ using SharpHorizons.Query.Result;
 using SharpMeasures;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Interprets <see cref="QueryResult"/> as <see cref="IStartEpoch"/> or <see cref="IStopEpoch"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochInterpreter, IEphemerisStopEpochInterpreter
 {
     /// <summary>The <see cref="LocalDateTimePattern"/> used internally when parsing the <see cref="IEpoch"/>.</summary>
@@ -48,7 +50,7 @@ internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochIn
     {
         QueryResult.Validate(queryResult);
 
-        var firstColonIndex = queryResult.Content.IndexOf(':');
+        var firstColonIndex = queryResult.Content.IndexOf(':', StringComparison.Ordinal);
 
         if (firstColonIndex is -1)
         {

@@ -4,10 +4,12 @@ using SharpHorizons.MPC;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 internal static class Datasets
 {
-    public class ValidMPCProvisionalDesignations : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidMPCProvisionalDesignations : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCProvisionalDesignation> Items => new MPCProvisionalDesignation[]
         {
@@ -19,7 +21,8 @@ internal static class Datasets
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public class InvalidMPCProvisionalDesignation : IEnumerable<object?[]>
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCProvisionalDesignation : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCProvisionalDesignation> Items => new MPCProvisionalDesignation[]
         {

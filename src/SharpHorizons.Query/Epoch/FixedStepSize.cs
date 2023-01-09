@@ -13,20 +13,22 @@ internal sealed record class FixedStepSize : IFixedStepSize
     public required Time DeltaTime { get; init; }
 
     /// <summary>Used to compose a <see cref="IStepSizeArgument"/> describing <see langword="this"/>.</summary>
-    public required IStepSizeComposer<IFixedStepSize> Composer { private get; init; }
+    private IStepSizeComposer<IFixedStepSize> Composer { get; }
 
     /// <inheritdoc cref="FixedStepSize"/>
-    public FixedStepSize() { }
+    /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
+    public FixedStepSize(IStepSizeComposer<IFixedStepSize> composer)
+    {
+        Composer = composer;
+    }
 
     /// <inheritdoc cref="FixedStepSize"/>
     /// <param name="deltaTime"><inheritdoc cref="DeltaTime" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public FixedStepSize(Time deltaTime, IStepSizeComposer<IFixedStepSize> composer)
+    public FixedStepSize(Time deltaTime, IStepSizeComposer<IFixedStepSize> composer) : this(composer)
     {
         DeltaTime = deltaTime;
-
-        Composer = composer;
     }
 
     IStepSizeArgument IStepSize.ComposeArgument() => Composer.Compose(this);

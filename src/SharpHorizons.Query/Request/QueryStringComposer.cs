@@ -4,11 +4,14 @@ using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Parameters;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 
 /// <inheritdoc cref="IQueryStringComposer"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class QueryStringComposer : IQueryStringComposer
 {
     /// <inheritdoc cref="IQueryParameterIdentifierProvider"/>
@@ -141,7 +144,7 @@ internal sealed class QueryStringComposer : IQueryStringComposer
 
             var formattedArgument = FormatArgument(argument, options);
 
-            StringBuilder.Append($"{identifier.Identifier}={formattedArgument}");
+            StringBuilder.Append(CultureInfo.InvariantCulture, $"{identifier.Identifier}={formattedArgument}");
 
             if (options.AppendSeparator)
             {

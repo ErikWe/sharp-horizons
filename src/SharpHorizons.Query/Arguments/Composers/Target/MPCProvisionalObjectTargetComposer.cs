@@ -3,8 +3,10 @@
 using SharpHorizons.MPC;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalObject"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class MPCProvisionalObjectTargetComposer : ITargetComposer<MPCProvisionalObject>
 {
     /// <summary>Composes <see cref="ITargetArgument"/> that describe <see cref="MPCProvisionalDesignation"/>.</summary>

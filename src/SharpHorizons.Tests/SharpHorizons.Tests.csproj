@@ -20,7 +20,7 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" PrivateAssets="all" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="Moq" />
     </ItemGroup>
@@ -31,12 +31,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
+        <ProjectReference Include="..\SharpHorizons\SharpHorizons.csproj" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="QueryCases\VectorsCases\IVectorsQueryValidatorCases\" />
-      <Folder Include="QueryCases\VectorsCases\IVectorsQueryBuilderCases\" />
+        <Folder Include="QueryCases\VectorsCases\IVectorsQueryValidatorCases\" />
+        <Folder Include="QueryCases\VectorsCases\IVectorsQueryBuilderCases\" />
     </ItemGroup>
 
 </Project>

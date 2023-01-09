@@ -1,11 +1,15 @@
 ﻿namespace SharpHorizons.Query.Result.HTTP;
 
+using Microsoft.CodeAnalysis;
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 /// <inheritdoc cref="IHTTPResultHandler"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class HTTPTextHandler : IHTTPResultHandler
 {
     /// <summary>Configures the <see cref="JsonSerializer"/>.</summary>
@@ -21,21 +25,21 @@ internal sealed class HTTPTextHandler : IHTTPResultHandler
         QueryResultOptionsProvider = queryResultOptionsProvider;
     }
 
-    async Task<QueryResult> IHTTPResultHandler.ExtractAsync(HTTPQueryResult httpResult)
+    async Task<Optional<QueryResult>> IHTTPResultHandler.ExtractAsync(HTTPQueryResult httpResult)
     {
         if (httpResult.Response.IsSuccessStatusCode is false)
         {
-            throw new UnsuccesfulHTTPRequestException();
+            return new();
         }
 
         if (httpResult.Response.Content.Headers.ContentType?.MediaType is MediaTypeNames.Application.Json)
         {
-            return await ExtractFromJSON(httpResult);
+            return await ExtractFromJSON(httpResult).ConfigureAwait(false);
         }
 
         if (httpResult.Response.Content.Headers.ContentType?.MediaType is MediaTypeNames.Text.Plain)
         {
-            return await ExtractFromRaw(httpResult);
+            return await ExtractFromRaw(httpResult).ConfigureAwait(false);
         }
 
         throw new UnexpectedQueryResultFormatException();
@@ -50,7 +54,7 @@ internal sealed class HTTPTextHandler : IHTTPResultHandler
 
         try
         {
-            json = await JsonSerializer.DeserializeAsync<JSON.Root>(await httpResult.Response.Content.ReadAsStreamAsync(), DeserializationOptions);
+            json = await JsonSerializer.DeserializeAsync<JSON.Root>(await httpResult.Response.Content.ReadAsStreamAsync().ConfigureAwait(false), DeserializationOptions).ConfigureAwait(false);
         }
         catch (JsonException)
         {
@@ -73,7 +77,7 @@ internal sealed class HTTPTextHandler : IHTTPResultHandler
         var sourceKey = FormatKey(QueryResultOptionsProvider.RawTextSource);
         var versionKey = FormatKey(QueryResultOptionsProvider.RawTextVersion);
 
-        using var stream = await httpResult.Response.Content.ReadAsStreamAsync();
+        using var stream = await httpResult.Response.Content.ReadAsStreamAsync().ConfigureAwait(false);
         using StreamReader reader = new(stream);
 
         stream.Seek(0, SeekOrigin.Begin);
@@ -81,7 +85,7 @@ internal sealed class HTTPTextHandler : IHTTPResultHandler
         string? source = null;
         string? version = null;
 
-        while (await reader.ReadLineAsync() is string { Length: > 0 } line)
+        while (await reader.ReadLineAsync().ConfigureAwait(false) is string { Length: > 0 } line)
         {
             if (line.Split(':') is { Length: 2 } colonSplit)
             {
@@ -108,18 +112,20 @@ internal sealed class HTTPTextHandler : IHTTPResultHandler
             throw new UnexpectedQueryResultFormatException();
         }
 
-        return new(new QueryResultSignature(source, version), await reader.ReadToEndAsync());
+        var content = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+        return new(new QueryResultSignature(source, version), content);
     }
 
     /// <summary>Converts <paramref name="key"/> to a format suitable for comparison.</summary>
     /// <param name="key">This <see cref="string"/> is formatted.</param>
-    private static string FormatKey(string key) => key.Replace(" ", string.Empty).ToUpperInvariant();
+    private static string FormatKey(string key) => key.Replace(" ", string.Empty, System.StringComparison.Ordinal).ToUpperInvariant();
 
     /// <summary>Represents the JSON format of the result.</summary>
     private static class JSON
     {
         /// <summary>The JSON root of the result.</summary>
-        public class Root
+        public sealed class Root
         {
             /// <summary>The <see cref="JSON.Signature"/> of the result.</summary>
             public required QueryResultSignature Signature { get; init; }
@@ -129,7 +135,7 @@ internal sealed class HTTPTextHandler : IHTTPResultHandler
         }
 
         /// <summary>Describes the signature of the result.</summary>
-        public class Signature
+        public sealed class Signature
         {
             /// <summary>The source of the result.</summary>
             public required string Source { get; init; }

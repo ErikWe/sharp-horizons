@@ -1,13 +1,16 @@
 ﻿namespace SharpHorizons.Interpretation.Ephemeris.Target;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IEphemerisTargetHeaderInterpretationProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EphemerisTargetHeaderInterpretationProvider : IEphemerisTargetHeaderInterpretationProvider
 {
-    public ITargetInterpreter TargetInterpreter { get; private init; }
-    public ITargetGeodeticCoordinateInterpreter GeodeticCoordinateInterpreter { get; private init; }
-    public ITargetCylindricalCoordinateInterpreter CylindricalCoordinateInterpreter { get; private init; }
-    public ITargetReferenceEllipsoidInterpreter ReferenceEllipsoidInterpreter { get; private init; }
-    public ITargetRadiiInterpreter RadiiInterpreter { get; private init; }
+    public ITargetInterpreter TargetInterpreter { get; }
+    public ITargetGeodeticCoordinateInterpreter GeodeticCoordinateInterpreter { get; }
+    public ITargetCylindricalCoordinateInterpreter CylindricalCoordinateInterpreter { get; }
+    public ITargetReferenceEllipsoidInterpreter ReferenceEllipsoidInterpreter { get; }
+    public ITargetRadiiInterpreter RadiiInterpreter { get; }
 
     /// <inheritdoc cref="EphemerisTargetHeaderInterpretationProvider"/>
     /// <param name="targetInterpreter"><inheritdoc cref="TargetInterpreter" path="/summary"/></param>

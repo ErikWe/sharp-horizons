@@ -8,7 +8,10 @@ using SharpHorizons.Query;
 
 using SharpMeasures;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <summary>Interprets a <see cref="Time"/> of some <see cref="IVectorsEphemerisEntry"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class TimeQuantityInterpreter : ILightTimeInterpreter
 {
     Optional<Time> IEphemerisQuantityInterpreter<IVectorsHeader, Time>.Interpret(string text, IVectorsHeader header)

@@ -4,34 +4,112 @@ using Microsoft.Extensions.Options;
 
 using SharpHorizons.Settings.Query.Parameters;
 
+using System.Diagnostics.CodeAnalysis;
+
 /// <inheritdoc cref="IQueryParameterIdentifierProvider"/>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class QueryParameterIdentifierProvider : IQueryParameterIdentifierProvider
 {
-    public ICommandParameterIdentifier Command { get; }
-    public IEphemerisTypeParameterIdentifier EphemerisType { get; }
-    public ICalendarTypeParameterIdentifier CalendarType { get; }
-    public IEpochCollectionParameterIdentifier EpochCollection { get; }
-    public IEpochCollectionFormatParameterIdentifier EpochCollectionFormat { get; }
-    public IGenerateEphemerisParameterIdentifier GenerateEphemeris { get; }
-    public IObjectDataInclusionParameterIdentifier ObjectDataInclusion { get; }
-    public IOriginParameterIdentifier Origin { get; }
-    public IOriginCoordinateParameterIdentifier OriginCoordinate { get; }
-    public IOriginCoordinateTypeParameterIdentifier OriginCoordinateType { get; }
-    public IOutputFormatParameterIdentifier OutputFormat { get; }
-    public IOutputUnitsParameterIdentifier OutputUnits { get; }
-    public IReferencePlaneParameterIdentifier ReferencePlane { get; }
-    public IReferenceSystemParameterIdentifier ReferenceSystem { get; }
-    public IStartEpochParameterIdentifier StartEpoch { get; }
-    public IStepSizeParameterIdentifier StepSize { get; }
-    public IStopEpochParameterIdentifier StopEpoch { get; }
-    public ITimeDeltaInclusionParameterIdentifier TimeDeltaInclusion { get; }
-    public ITimePrecisionParameterIdentifier TimePrecision { get; }
-    public ITimeSystemParameterIdentifier TimeSystem { get; }
-    public ITimeZoneParameterIdentifier TimeZone { get; }
-    public IValueSeparationParameterIdentifier ValueSeparation { get; }
-    public IVectorCorrectionParameterIdentifier VectorCorrection { get; }
-    public IVectorLabelsParameterIdentifier VectorLabels { get; }
-    public IVectorTableContentParameterIdentifier VectorTableContent { get; }
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.Command"/>
+    private ICommandParameterIdentifier Command { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.EphemerisType"/>
+    private IEphemerisTypeParameterIdentifier EphemerisType { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.CalendarType"/>
+    private ICalendarTypeParameterIdentifier CalendarType { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.EpochCollection"/>
+    private IEpochCollectionParameterIdentifier EpochCollection { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.EpochCollectionFormat"/>
+    private IEpochCollectionFormatParameterIdentifier EpochCollectionFormat { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.GenerateEphemeris"/>
+    private IGenerateEphemerisParameterIdentifier GenerateEphemeris { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.ObjectDataInclusion"/>
+    private IObjectDataInclusionParameterIdentifier ObjectDataInclusion { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.Origin"/>
+    private IOriginParameterIdentifier Origin { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.OriginCoordinate"/>
+    private IOriginCoordinateParameterIdentifier OriginCoordinate { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.OriginCoordinateType"/>
+    private IOriginCoordinateTypeParameterIdentifier OriginCoordinateType { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.OutputFormat"/>
+    private IOutputFormatParameterIdentifier OutputFormat { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.OutputUnits"/>
+    private IOutputUnitsParameterIdentifier OutputUnits { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.ReferencePlane"/>
+    private IReferencePlaneParameterIdentifier ReferencePlane { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.ReferenceSystem"/>
+    private IReferenceSystemParameterIdentifier ReferenceSystem { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.StartEpoch"/>
+    private IStartEpochParameterIdentifier StartEpoch { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.StepSize"/>
+    private IStepSizeParameterIdentifier StepSize { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.StopEpoch"/>
+    private IStopEpochParameterIdentifier StopEpoch { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.TimeDeltaInclusion"/>
+    private ITimeDeltaInclusionParameterIdentifier TimeDeltaInclusion { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.TimePrecision"/>
+    private ITimePrecisionParameterIdentifier TimePrecision { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.TimeSystem"/>
+    private ITimeSystemParameterIdentifier TimeSystem { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.TimeZone"/>
+    private ITimeZoneParameterIdentifier TimeZone { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.ValueSeparation"/>
+    private IValueSeparationParameterIdentifier ValueSeparation { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.VectorCorrection"/>
+    private IVectorCorrectionParameterIdentifier VectorCorrection { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.VectorLabels"/>
+    private IVectorLabelsParameterIdentifier VectorLabels { get; }
+
+    /// <inheritdoc cref="IQueryParameterIdentifierProvider.VectorTableContent"/>
+    private IVectorTableContentParameterIdentifier VectorTableContent { get; }
+
+    ICommandParameterIdentifier IQueryParameterIdentifierProvider.Command => Command;
+    IEphemerisTypeParameterIdentifier IQueryParameterIdentifierProvider.EphemerisType => EphemerisType;
+    ICalendarTypeParameterIdentifier IQueryParameterIdentifierProvider.CalendarType => CalendarType;
+    IEpochCollectionParameterIdentifier IQueryParameterIdentifierProvider.EpochCollection => EpochCollection;
+    IEpochCollectionFormatParameterIdentifier IQueryParameterIdentifierProvider.EpochCollectionFormat => EpochCollectionFormat;
+    IGenerateEphemerisParameterIdentifier IQueryParameterIdentifierProvider.GenerateEphemeris => GenerateEphemeris;
+    IObjectDataInclusionParameterIdentifier IQueryParameterIdentifierProvider.ObjectDataInclusion => ObjectDataInclusion;
+    IOriginParameterIdentifier IQueryParameterIdentifierProvider.Origin => Origin;
+    IOriginCoordinateParameterIdentifier IQueryParameterIdentifierProvider.OriginCoordinate => OriginCoordinate;
+    IOriginCoordinateTypeParameterIdentifier IQueryParameterIdentifierProvider.OriginCoordinateType => OriginCoordinateType;
+    IOutputFormatParameterIdentifier IQueryParameterIdentifierProvider.OutputFormat => OutputFormat;
+    IOutputUnitsParameterIdentifier IQueryParameterIdentifierProvider.OutputUnits => OutputUnits;
+    IReferencePlaneParameterIdentifier IQueryParameterIdentifierProvider.ReferencePlane => ReferencePlane;
+    IReferenceSystemParameterIdentifier IQueryParameterIdentifierProvider.ReferenceSystem => ReferenceSystem;
+    IStartEpochParameterIdentifier IQueryParameterIdentifierProvider.StartEpoch => StartEpoch;
+    IStepSizeParameterIdentifier IQueryParameterIdentifierProvider.StepSize => StepSize;
+    IStopEpochParameterIdentifier IQueryParameterIdentifierProvider.StopEpoch => StopEpoch;
+    ITimeDeltaInclusionParameterIdentifier IQueryParameterIdentifierProvider.TimeDeltaInclusion => TimeDeltaInclusion;
+    ITimePrecisionParameterIdentifier IQueryParameterIdentifierProvider.TimePrecision => TimePrecision;
+    ITimeSystemParameterIdentifier IQueryParameterIdentifierProvider.TimeSystem => TimeSystem;
+    ITimeZoneParameterIdentifier IQueryParameterIdentifierProvider.TimeZone => TimeZone;
+    IValueSeparationParameterIdentifier IQueryParameterIdentifierProvider.ValueSeparation => ValueSeparation;
+    IVectorCorrectionParameterIdentifier IQueryParameterIdentifierProvider.VectorCorrection => VectorCorrection;
+    IVectorLabelsParameterIdentifier IQueryParameterIdentifierProvider.VectorLabels => VectorLabels;
+    IVectorTableContentParameterIdentifier IQueryParameterIdentifierProvider.VectorTableContent => VectorTableContent;
 
     /// <inheritdoc cref="QueryParameterIdentifierProvider"/>
     /// <param name="parameterIdentifierOptions">Provides the <see cref="ParameterIdentifierOptions"/>.</param>

@@ -3,8 +3,10 @@
 using SharpHorizons.Query.Target;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Composes <see cref="ITargetArgument"/> and <see cref="TargetObjectIdentifier"/> that describe <see cref="MajorObjectName"/>.</summary>
+[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class MajorObjectNameComposer : ITargetComposer<MajorObjectName>, ITargetObjectComposer<MajorObjectName>
 {
     ITargetArgument IArgumentComposer<ITargetArgument, MajorObjectName>.Compose(MajorObjectName obj) => new QueryArgument(Compose(obj));
