@@ -167,7 +167,7 @@ Task("Publish-GitHub-Release")
             NoLogo = true,
             Milestone = parameters.Version.Milestone,
             Assets = $"{parameters.Paths.NuGet}/*",
-            NoWorkingDirectory = true
+            Prerelease = false
         };
 
         GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
@@ -177,27 +177,10 @@ Task("Publish-GitHub-Release")
         Information("Could not publish GitHub Release.");
     });
 
-Task("Publish-GitHub-ReleaseNotes")
-    .Does<BuildParameters>((context, parameters) =>
-    {
-        GitReleaseManagerCreateSettings settings = new()
-        {
-            Milestone = parameters.Version.Milestone,
-            Name = parameters.Version.Milestone,
-            Prerelease = false,
-            TargetCommitish = "main"
-        };
-
-        GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
-    });
-
 Task("Publish")
     .IsDependentOn("Publish-NuGet")
     .IsDependentOn("Publish-GitHub-Packages")
     .IsDependentOn("Publish-GitHub-Release");
-
-Task("ReleaseNotes")
-  .IsDependentOn("Publish-GitHub-ReleaseNotes");
 
 Task("Default")
     .IsDependentOn("Test");
