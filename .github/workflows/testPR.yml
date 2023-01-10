@@ -9,7 +9,7 @@ on:
       - "hotfix/**"
 jobs:
   test:
-    name: Run tests
+    name: Test Execution
     runs-on: ubuntu-latest
     steps:
     - name: Checkout

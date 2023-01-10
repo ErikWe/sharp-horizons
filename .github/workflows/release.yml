@@ -1,4 +1,4 @@
-name: deploy
+name: release
 on:
   push:
     branches:
@@ -8,8 +8,8 @@ on:
       - "release/**"
       - "hotfix/**"
 jobs:
-  deploy:
-    name: Deploy
+  release:
+    name: GitHub Release
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -27,4 +27,4 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       run: |
         dotnet tool restore
-        dotnet cake --target=Publish
+        dotnet cake --target=Publish-GitHub-Release
