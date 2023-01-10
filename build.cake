@@ -126,7 +126,7 @@ Task("Publish-GitHub-Release")
 
         GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
     })
-    .OnError<BuildParameters>((exception, parameters) =>
+    .ReportError((exception) =>
     {
         Information("Could not publish GitHub Release.");
     });
@@ -149,7 +149,7 @@ Task("Publish-GitHub-Packages")
             DotNetNuGetPush(package, settings);
         }
     })
-    .OnError((exception) =>
+    .ReportError((exception) =>
     {
         Information("Could not publish to GitHub Packages.");
     });
@@ -172,7 +172,7 @@ Task("Publish-NuGet")
             DotNetNuGetPush(package, settings);
         }
     })
-    .OnError((exception) =>
+    .ReportError((exception) =>
     {
         Information("Could not publish to NuGet.");
     });
