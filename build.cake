@@ -122,6 +122,7 @@ Task("Publish-GitHub-Release")
 
         GitReleaseManagerCreateSettings settings = new()
         {
+            Debug = true,
             NoLogo = true,
             Milestone = string.Empty,
             Name = parameters.Version.Milestone,
