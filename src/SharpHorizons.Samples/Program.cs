@@ -51,7 +51,7 @@ internal sealed class Program
         var header = headerInterpreter.Interpret(textResult.Value);
         var orbitalStateVectors = orbitalStateVectorsInterpreter.Interpret(header.Value, textResult.Value);
 
-        Console.WriteLine(orbitalStateVectors.Count);
+        Console.WriteLine($"Ephemeris length: {orbitalStateVectors.Count}");
     }
 
     private static void ConfigureConfiguration(IConfigurationBuilder configuration)
