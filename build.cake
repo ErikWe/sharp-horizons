@@ -116,22 +116,28 @@ Task("Publish-GitHub-Release")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
-        var assets = GetFiles($"{parameters.Paths.NuGet}/*");
-
-        var assetList = string.Join(',', assets.Select(static (asset) => asset.FullPath));
-
-        GitReleaseManagerCreateSettings settings = new()
+        GitReleaseManagerCreateSettings createSettings = new()
         {
             ArgumentCustomization = (args) => args.Append("--allowEmpty"),
             Debug = true,
             NoLogo = true,
-            Milestone = string.Empty,
-            Name = parameters.Version.Milestone,
-            Assets = assetList,
-            InputFilePath = string.Empty
+            Name = parameters.Version.Milestone
         };
 
-        GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
+        GitReleaseManagerAddAssetsSettings addAssetsSettings = new()
+        {
+            Debug = true,
+            NoLogo = true
+        };
+
+        GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, createSettings);
+
+        var assets = GetFiles($"{parameters.Paths.NuGet}/*");
+
+        foreach (var asset in assets)
+        {
+            GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Milestone, asset.FullPath, addAssetsSettings);
+        }
     })
     .ReportError((exception) =>
     {
