@@ -1,14 +1,13 @@
 public class BuildVersion
 {
-    public string SemanticVersion { get; }
+    public string Release { get; }
     public string NuGet { get; }
 
     public string MajorMinorPatch { get; }
 
-    private BuildVersion(string semanticVersion, string nuget, string majorMinorPatch)
+    private BuildVersion(string release, string nuget, string majorMinorPatch)
     {
-        SemanticVersion = semanticVersion;
-
+        Release = release;
         NuGet = nuget;
 
         MajorMinorPatch = majorMinorPatch;
@@ -24,6 +23,6 @@ public class BuildVersion
 
         var gitVersion = context.GitVersion(gitVersionSettings);
 
-        return new(gitVersion.SemVer, gitVersion.NuGetVersionV2, gitVersion.MajorMinorPatch);
+        return new($"v{gitVersion.SemVer}", gitVersion.NuGetVersionV2, gitVersion.MajorMinorPatch);
     }
 }

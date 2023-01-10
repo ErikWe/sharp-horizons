@@ -1,7 +1,11 @@
+#addin "nuget:?package=Polly&version=7.2.3"
+
 #tool dotnet:?package=GitVersion.Tool&version=5.11.1
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.13.0
 
 #load "./build/BuildParameters.cake"
+
+using Polly;
 
 Setup<BuildParameters>((context) =>
 {
@@ -134,7 +138,7 @@ Task("Publish-GitHub-Release")
             ArgumentCustomization = (args) => args.Append("--allowEmpty"),
             Debug = true,
             NoLogo = true,
-            Name = parameters.Version.SemanticVersion
+            Name = parameters.Version.Release
         };
 
         GitReleaseManagerAddAssetsSettings addAssetsSettings = new()
@@ -145,6 +149,7 @@ Task("Publish-GitHub-Release")
 
         GitReleaseManagerPublishSettings publishSettings = new()
         {
+            Debug = true,
             NoLogo = true
         };
 
@@ -152,12 +157,16 @@ Task("Publish-GitHub-Release")
 
         var assets = GetFiles($"{parameters.Paths.NuGet}/*");
 
-        foreach (var asset in assets)
-        {
-            GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.SemanticVersion, asset.FullPath, addAssetsSettings);
-        }
+        var assetList = string.Join(',', assets.Select(static (asset) => asset.FullPath));
 
-        GitReleaseManagerPublish(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.SemanticVersion, publishSettings);
+        Policy
+            .Handle<Exception>()
+            .WaitAndRetry(5, (attempt) => TimeSpan.FromSeconds(attempt * 5))
+            .Execute(() => {
+                GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Release, assetList, addAssetsSettings);
+            });
+
+        GitReleaseManagerPublish(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Release, publishSettings);
     });
 
 Task("Publish-GitHub-Packages")
