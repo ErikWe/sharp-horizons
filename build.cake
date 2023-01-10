@@ -116,12 +116,16 @@ Task("Publish-GitHub-Release")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
+        var assets = GetFiles($"{parameters.Paths.NuGet}/*");
+
+        var assetList = string.Join(',', assets);
+
         GitReleaseManagerCreateSettings settings = new()
         {
             NoLogo = true,
-            Milestone = parameters.Version.Milestone,
-            Assets = $"{parameters.Paths.NuGet}/*",
-            Prerelease = false
+            Milestone = string.Empty,
+            Name = parameters.Version.Milestone,
+            Assets = assetList
         };
 
         GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
