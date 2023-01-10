@@ -1,6 +1,6 @@
-name: deploy
+name: testPR
 on:
-  push:
+  pull_request:
     branches:
       - main
       - develop
@@ -8,8 +8,8 @@ on:
       - "release/**"
       - "hotfix/**"
 jobs:
-  deploy:
-    name: Deploy
+  test:
+    name: Run tests
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -22,9 +22,6 @@ jobs:
           dotnet-version: 7.0.x 
     - name: Execute Cake
       shell : bash
-      env:
-        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        GITHUB_TOKEN: ${{ github.token }}
       run: |
         dotnet tool restore
-        dotnet cake --target=Publish
+        dotnet cake --target=Test
