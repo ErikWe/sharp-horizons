@@ -111,31 +111,28 @@ Task("Pack")
         }
     });
 
-Task("Publish-NuGet")
+Task("Publish-GitHub-Release")
     .IsDependentOn("Pack")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
-        DotNetNuGetPushSettings settings = new()
+        GitReleaseManagerCreateSettings settings = new()
         {
-            ApiKey = parameters.Publish.NuGetKey,
-            Source = parameters.Publish.NuGetSource
+            NoLogo = true,
+            Milestone = parameters.Version.Milestone,
+            Assets = $"{parameters.Paths.NuGet}/*",
+            Prerelease = false
         };
 
-        var packages = GetFiles($"{parameters.Paths.NuGet}/*.nupkg");
-
-        foreach(var package in packages)
-        {
-            DotNetNuGetPush(package, settings);
-        }
+        GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
     })
-    .OnError((exception) =>
+    .OnError<BuildParameters>((exception, parameters) =>
     {
-        Information("Could not publish to NuGet.");
+        Information("Could not publish GitHub Release.");
     });
 
 Task("Publish-GitHub-Packages")
-    .IsDependentOn("Pack")
+    .IsDependentOn("Publish-GitHub-Release")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
@@ -157,30 +154,33 @@ Task("Publish-GitHub-Packages")
         Information("Could not publish to GitHub Packages.");
     });
 
-Task("Publish-GitHub-Release")
-    .IsDependentOn("Pack")
+Task("Publish-NuGet")
+    .IsDependentOn("Publish-GitHub-Release")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnGitHubActions)
     .Does<BuildParameters>((context, parameters) =>
     {
-        GitReleaseManagerCreateSettings settings = new()
+        DotNetNuGetPushSettings settings = new()
         {
-            NoLogo = true,
-            Milestone = parameters.Version.Milestone,
-            Assets = $"{parameters.Paths.NuGet}/*",
-            Prerelease = false
+            ApiKey = parameters.Publish.NuGetKey,
+            Source = parameters.Publish.NuGetSource
         };
 
-        GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
+        var packages = GetFiles($"{parameters.Paths.NuGet}/*.nupkg");
+
+        foreach(var package in packages)
+        {
+            DotNetNuGetPush(package, settings);
+        }
     })
-    .OnError<BuildParameters>((exception, parameters) =>
+    .OnError((exception) =>
     {
-        Information("Could not publish GitHub Release.");
+        Information("Could not publish to NuGet.");
     });
 
 Task("Publish")
-    .IsDependentOn("Publish-NuGet")
+    .IsDependentOn("Publish-GitHub-Release")
     .IsDependentOn("Publish-GitHub-Packages")
-    .IsDependentOn("Publish-GitHub-Release");
+    .IsDependentOn("Publish-NuGet");
 
 Task("Default")
     .IsDependentOn("Test");
