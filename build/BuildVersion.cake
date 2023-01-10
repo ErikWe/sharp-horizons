@@ -1,18 +1,17 @@
 public class BuildVersion
 {
-    public string Informational { get; }
-
+    public string SemanticVersion { get; }
     public string NuGet { get; }
 
-    public string Milestone { get; }
+    public string MajorMinorPatch { get; }
 
-    private BuildVersion(string informational, string nuget, string milestone)
+    private BuildVersion(string semanticVersion, string nuget, string majorMinorPatch)
     {
-        Informational = informational;
+        SemanticVersion = semanticVersion;
 
         NuGet = nuget;
 
-        Milestone = milestone;
+        MajorMinorPatch = majorMinorPatch;
     }
 
     public static BuildVersion ExtractVersion(ICakeContext context)
@@ -25,6 +24,6 @@ public class BuildVersion
 
         var gitVersion = context.GitVersion(gitVersionSettings);
 
-        return new(gitVersion.InformationalVersion, gitVersion.NuGetVersion, $"v{gitVersion.MajorMinorPatch}");
+        return new(gitVersion.SemVer, gitVersion.NuGetVersionV2, gitVersion.MajorMinorPatch);
     }
 }

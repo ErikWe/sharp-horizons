@@ -32,7 +32,12 @@ Task("Restore")
     .IsDependentOn("Clean")
     .Does<BuildParameters>((context, parameters) =>
     {
-        DotNetRestore(parameters.SolutionPath);
+        DotNetRestoreSettings restoreSettings = new()
+        {
+            Verbosity = DotNetVerbosity.Minimal
+        };
+
+        DotNetRestore(parameters.SolutionPath, restoreSettings);
     });
 
 Task("Format")
@@ -52,11 +57,19 @@ Task("Build")
     .IsDependentOn("Format")
     .Does<BuildParameters>((context, parameters) =>
     {
+        DotNetMSBuildSettings buildSettings = new()
+        {
+            Version = parameters.Version.MajorMinorPatch,
+            AssemblyVersion = parameters.Version.MajorMinorPatch,
+            FileVersion = parameters.Version.MajorMinorPatch
+        };
+
         DotNetBuildSettings settings = new()
         {
             Configuration = parameters.Configuration,
             NoRestore = true,
-            NoIncremental = true
+            NoIncremental = true,
+            MSBuildSettings = buildSettings
         };
 
         DotNetBuild(parameters.SolutionPath, settings);
@@ -121,7 +134,7 @@ Task("Publish-GitHub-Release")
             ArgumentCustomization = (args) => args.Append("--allowEmpty"),
             Debug = true,
             NoLogo = true,
-            Name = parameters.Version.Milestone
+            Name = parameters.Version.SemanticVersion
         };
 
         GitReleaseManagerAddAssetsSettings addAssetsSettings = new()
@@ -141,14 +154,10 @@ Task("Publish-GitHub-Release")
 
         foreach (var asset in assets)
         {
-            GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Milestone, asset.FullPath, addAssetsSettings);
+            GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.SemanticVersion, asset.FullPath, addAssetsSettings);
         }
 
-        GitReleaseManagerPublish(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Milestone, publishSettings);
-    })
-    .ReportError((exception) =>
-    {
-        Information("Could not publish GitHub Release.");
+        GitReleaseManagerPublish(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.SemanticVersion, publishSettings);
     });
 
 Task("Publish-GitHub-Packages")
@@ -168,10 +177,6 @@ Task("Publish-GitHub-Packages")
         {
             DotNetNuGetPush(package, settings);
         }
-    })
-    .ReportError((exception) =>
-    {
-        Information("Could not publish to GitHub Packages.");
     });
 
 Task("Publish-NuGet")
@@ -191,10 +196,6 @@ Task("Publish-NuGet")
         {
             DotNetNuGetPush(package, settings);
         }
-    })
-    .ReportError((exception) =>
-    {
-        Information("Could not publish to NuGet.");
     });
 
 Task("Publish")
