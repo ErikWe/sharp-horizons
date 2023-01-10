@@ -122,11 +122,13 @@ Task("Publish-GitHub-Release")
 
         GitReleaseManagerCreateSettings settings = new()
         {
+            ArgumentCustomization = (args) => args.Append("--allowEmpty"),
             Debug = true,
             NoLogo = true,
             Milestone = string.Empty,
             Name = parameters.Version.Milestone,
-            Assets = assetList
+            Assets = assetList,
+            InputFilePath = string.Empty
         };
 
         GitReleaseManagerCreate(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, settings);
