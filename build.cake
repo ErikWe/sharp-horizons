@@ -118,7 +118,7 @@ Task("Publish-GitHub-Release")
     {
         var assets = GetFiles($"{parameters.Paths.NuGet}/*");
 
-        var assetList = string.Join(',', assets);
+        var assetList = string.Join(',', assets.Select(static (asset) => asset.FullPath));
 
         GitReleaseManagerCreateSettings settings = new()
         {
