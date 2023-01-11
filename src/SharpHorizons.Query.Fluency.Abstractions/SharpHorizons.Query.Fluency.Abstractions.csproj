@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SharpHorizons.Query.Fluency.Domain\SharpHorizons.Query.Fluency.Domain.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Query.Fluency.Core\SharpHorizons.Query.Fluency.Core.csproj" />
     </ItemGroup>
 
 </Project>
