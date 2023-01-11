@@ -1,7 +1,11 @@
+#addin "nuget:?package=Polly&version=7.2.3"
+
 #tool dotnet:?package=GitVersion.Tool&version=5.11.1
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.13.0
 
 #load "./build/BuildParameters.cake"
+
+using Polly;
 
 Setup<BuildParameters>((context) =>
 {
@@ -32,7 +36,12 @@ Task("Restore")
     .IsDependentOn("Clean")
     .Does<BuildParameters>((context, parameters) =>
     {
-        DotNetRestore(parameters.SolutionPath);
+        DotNetRestoreSettings restoreSettings = new()
+        {
+            Verbosity = DotNetVerbosity.Minimal
+        };
+
+        DotNetRestore(parameters.SolutionPath, restoreSettings);
     });
 
 Task("Format")
@@ -52,11 +61,19 @@ Task("Build")
     .IsDependentOn("Format")
     .Does<BuildParameters>((context, parameters) =>
     {
+        DotNetMSBuildSettings buildSettings = new()
+        {
+            Version = parameters.Version.MajorMinorPatch,
+            AssemblyVersion = parameters.Version.MajorMinorPatch,
+            FileVersion = parameters.Version.MajorMinorPatch
+        };
+
         DotNetBuildSettings settings = new()
         {
             Configuration = parameters.Configuration,
             NoRestore = true,
-            NoIncremental = true
+            NoIncremental = true,
+            MSBuildSettings = buildSettings
         };
 
         DotNetBuild(parameters.SolutionPath, settings);
@@ -121,7 +138,7 @@ Task("Publish-GitHub-Release")
             ArgumentCustomization = (args) => args.Append("--allowEmpty"),
             Debug = true,
             NoLogo = true,
-            Name = parameters.Version.Milestone
+            Name = parameters.Version.Release
         };
 
         GitReleaseManagerAddAssetsSettings addAssetsSettings = new()
@@ -132,6 +149,7 @@ Task("Publish-GitHub-Release")
 
         GitReleaseManagerPublishSettings publishSettings = new()
         {
+            Debug = true,
             NoLogo = true
         };
 
@@ -139,16 +157,16 @@ Task("Publish-GitHub-Release")
 
         var assets = GetFiles($"{parameters.Paths.NuGet}/*");
 
-        foreach (var asset in assets)
-        {
-            GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Milestone, asset.FullPath, addAssetsSettings);
-        }
+        var assetList = string.Join(',', assets.Select(static (asset) => asset.FullPath));
 
-        GitReleaseManagerPublish(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Milestone, publishSettings);
-    })
-    .ReportError((exception) =>
-    {
-        Information("Could not publish GitHub Release.");
+        Policy
+            .Handle<Exception>()
+            .WaitAndRetry(5, (attempt) => TimeSpan.FromSeconds(attempt * 5))
+            .Execute(() => {
+                GitReleaseManagerAddAssets(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Release, assetList, addAssetsSettings);
+            });
+
+        GitReleaseManagerPublish(parameters.Publish.GitHubKey, parameters.Owner, parameters.Repository, parameters.Version.Release, publishSettings);
     });
 
 Task("Publish-GitHub-Packages")
@@ -168,10 +186,6 @@ Task("Publish-GitHub-Packages")
         {
             DotNetNuGetPush(package, settings);
         }
-    })
-    .ReportError((exception) =>
-    {
-        Information("Could not publish to GitHub Packages.");
     });
 
 Task("Publish-NuGet")
@@ -191,10 +205,6 @@ Task("Publish-NuGet")
         {
             DotNetNuGetPush(package, settings);
         }
-    })
-    .ReportError((exception) =>
-    {
-        Information("Could not publish to NuGet.");
     });
 
 Task("Publish")

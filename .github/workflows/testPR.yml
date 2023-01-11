@@ -3,10 +3,6 @@ on:
   pull_request:
     branches:
       - main
-      - develop
-      - "feature/**"
-      - "release/**"
-      - "hotfix/**"
 jobs:
   test:
     name: Test Execution
@@ -22,6 +18,9 @@ jobs:
           dotnet-version: 7.0.x 
     - name: Execute Cake
       shell : bash
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        GITHUB_TOKEN: ${{ github.token }}
       run: |
         dotnet tool restore
         dotnet cake --target=Test

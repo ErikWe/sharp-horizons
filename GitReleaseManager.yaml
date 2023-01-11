@@ -1,4 +1,1 @@
-create:
-  include-sha-section: false
-
 default-branch: main
