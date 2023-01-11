@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>SharpHorizons.Tests.EpochCases</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <IsPackable>false</IsPackable>
+        <IsPublishable>false</IsPublishable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SharpHorizons.Epoch\SharpHorizons.Epoch.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Tests.Utility\SharpHorizons.Tests.Utility.csproj" />
+    </ItemGroup>
+
+</Project>
