@@ -6,22 +6,24 @@ using System;
 
 using Xunit;
 
-public class ValueAccess
+public class ToString
 {
     [Fact]
     public void Invalid_InvalidOperationException()
     {
-        var exception = Record.Exception(() => default(OriginObjectIdentifier).Value);
+        var exception = Record.Exception(() => default(OriginObjectIdentifier).ToString());
 
         Assert.IsType<InvalidOperationException>(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.ValidOriginObjectIdentifiers))]
-    public void Valid_NoException(OriginObjectIdentifier originObjectIdentifier)
+    public void Valid_ExactMatchValue(OriginObjectIdentifier originObjectIdentifier)
     {
-        var exception = Record.Exception(() => originObjectIdentifier.Value);
+        var expected = originObjectIdentifier.Value;
 
-        Assert.Null(exception);
+        var actual = originObjectIdentifier.ToString();
+
+        Assert.Equal(expected, actual);
     }
 }
