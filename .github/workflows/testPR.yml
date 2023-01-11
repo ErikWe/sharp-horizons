@@ -20,6 +20,7 @@ jobs:
       shell : bash
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        GITHUB_TOKEN: ${{ github.token }}
       run: |
         dotnet tool restore
         dotnet cake --target=Test
