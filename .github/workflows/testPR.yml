@@ -3,10 +3,6 @@ on:
   pull_request:
     branches:
       - main
-      - develop
-      - "feature/**"
-      - "release/**"
-      - "hotfix/**"
 jobs:
   test:
     name: Test Execution
