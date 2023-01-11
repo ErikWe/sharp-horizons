@@ -13,7 +13,7 @@ public class BuildParameters
     public string Configuration { get; }
     public string Framework { get; } = "net7.0";
 
-    public string SolutionPath { get; } = "./";
+    public string SolutionPath { get; } = "./src/";
 
     public BuildVersion Version { get; }
     public BuildPaths Paths { get; }

@@ -91,8 +91,7 @@ Task("Test")
             Framework = parameters.Framework,
             Configuration = parameters.Configuration,
             NoRestore = true,
-            NoBuild = true,
-            ArgumentCustomization = (args) => args.Append($"--logger trx;LogFileName=\"{testResultsPath}\"")
+            NoBuild = true
         };
 
         DotNetTest(project.FullPath, settings);
