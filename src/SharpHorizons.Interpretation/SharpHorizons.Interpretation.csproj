@@ -27,9 +27,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SharpHorizons.Interpretation.Abstractions\SharpHorizons.Interpretation.Abstractions.csproj" />
-      <ProjectReference Include="..\SharpHorizons.Interpretation.Domain\SharpHorizons.Interpretation.Domain.csproj" />
       <ProjectReference Include="..\SharpHorizons.Query.Abstractions\SharpHorizons.Query.Abstractions.csproj" />
-      <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>

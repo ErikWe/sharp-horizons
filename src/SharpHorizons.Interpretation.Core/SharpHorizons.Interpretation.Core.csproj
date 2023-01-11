@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SharpHorizons.Query.Domain\SharpHorizons.Query.Domain.csproj" />
+        <ProjectReference Include="..\SharpHorizons.Query.Core\SharpHorizons.Query.Core.csproj" />
         <ProjectReference Include="..\SharpHorizons.Utility\SharpHorizons.Utility.csproj" PrivateAssets="all" />
     </ItemGroup>
 
