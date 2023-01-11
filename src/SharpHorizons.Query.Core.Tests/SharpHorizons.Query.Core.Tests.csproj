@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <RootNamespace>SharpHorizons.Tests.QueryCases.CoreCases</RootNamespace>
+        <RootNamespace>SharpHorizons.Tests.QueryCases</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup>
