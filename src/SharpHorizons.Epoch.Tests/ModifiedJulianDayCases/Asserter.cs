@@ -17,6 +17,6 @@ internal static class Asserter
     public static void Approximate(int expectedIntegralDay, float expectedFractionalDay, int actualIntegralDay, float actualFractionalDay)
     {
         Assert.Equal(expectedIntegralDay, actualIntegralDay);
-        Assert.Equal(expectedFractionalDay, actualFractionalDay, Precision);
+        Assert.Equal((double)expectedFractionalDay, (double)actualFractionalDay, Precision);
     }
 }
