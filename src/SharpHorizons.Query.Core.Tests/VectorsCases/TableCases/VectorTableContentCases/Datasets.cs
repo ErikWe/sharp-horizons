@@ -72,14 +72,14 @@ internal static class Datasets
     }
 
     [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
-    public sealed class ValidCombinations : IEnumerable<object?[]>
+    public sealed class ValidTableContentTuples : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.SeparateAndWrap(DatasetWrappers.Permutate(ValidVectorTableQuantities.Items, ValidVectorTableUncertainties.Items)).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
-    public sealed class InvalidCombinations : IEnumerable<object?[]>
+    public sealed class InvalidTableContentTuples : IEnumerable<object?[]>
     {
         public IEnumerator<object?[]> GetEnumerator()
         {
@@ -92,6 +92,24 @@ internal static class Datasets
             return DatasetWrappers.SeparateAndWrap(eitherInvalid).GetEnumerator();
         }
 
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class ValidTableContents : IEnumerable<object?[]>
+    {
+        public static IEnumerable<VectorTableContent> Items
+        {
+            get
+            {
+                foreach (var (quantities, uncertainties) in DatasetWrappers.Permutate(ValidVectorTableQuantities.Items, ValidVectorTableUncertainties.Items))
+                {
+                    yield return new(quantities, uncertainties);
+                }
+            }
+        }
+
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

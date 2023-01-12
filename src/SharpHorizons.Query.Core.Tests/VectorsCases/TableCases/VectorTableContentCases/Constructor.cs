@@ -9,7 +9,7 @@ using Xunit;
 public class Constructor
 {
     [Theory]
-    [ClassData(typeof(Datasets.ValidCombinations))]
+    [ClassData(typeof(Datasets.ValidTableContentTuples))]
     public void Valid_Both_ExactMatch(VectorTableQuantities quantities, VectorTableUncertainties uncertainties)
     {
         VectorTableContent actual = new(quantities, uncertainties);
@@ -19,7 +19,7 @@ public class Constructor
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.InvalidCombinations))]
+    [ClassData(typeof(Datasets.InvalidTableContentTuples))]
     public void Invalid_Both_InvalidEnumArgumentException(VectorTableQuantities quantities, VectorTableUncertainties uncertainties)
     {
         var exception = Record.Exception(() => new VectorTableContent(quantities, uncertainties));

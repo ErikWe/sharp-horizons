@@ -9,7 +9,7 @@ using Xunit;
 public class Reinitialization
 {
     [Theory]
-    [ClassData(typeof(Datasets.ValidCombinations))]
+    [ClassData(typeof(Datasets.ValidTableContentTuples))]
     public void Reinitialization_Valid_ExactMatch(VectorTableQuantities quantities, VectorTableUncertainties uncertainties)
     {
         VectorTableContent actual = new(VectorTableQuantities.None) { Quantities = quantities, Uncertainties = uncertainties };
@@ -19,7 +19,7 @@ public class Reinitialization
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.InvalidCombinations))]
+    [ClassData(typeof(Datasets.InvalidTableContentTuples))]
     public void Reinitialization_Invalid_InvalidEnumArgumentException(VectorTableQuantities quantities, VectorTableUncertainties uncertainties)
     {
         var exception = Record.Exception(() => new VectorTableContent(VectorTableQuantities.None) { Quantities = quantities, Uncertainties = uncertainties });
