@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 internal static class Datasets
 {
     [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
-    public sealed class MajorObjectIDInts : IEnumerable<object?[]>
+    public sealed class MajorObjectIDInt32s : IEnumerable<object?[]>
     {
         public static IEnumerable<int> Items => new int[]
         {
@@ -29,7 +29,7 @@ internal static class Datasets
         {
             get
             {
-                foreach (var id in MajorObjectIDInts.Items)
+                foreach (var id in MajorObjectIDInt32s.Items)
                 {
                     yield return new(id);
                 }

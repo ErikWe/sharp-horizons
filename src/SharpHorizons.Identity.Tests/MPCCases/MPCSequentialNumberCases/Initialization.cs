@@ -9,7 +9,7 @@ using Xunit;
 public class Initialization
 {
     [Theory]
-    [ClassData(typeof(Datasets.ValidMPCSequentialNumberInts))]
+    [ClassData(typeof(Datasets.ValidMPCSequentialNumberInt32s))]
     public void Valid_ExactMatch(int number)
     {
         MPCSequentialNumber actual = new() { Value = number };
@@ -18,7 +18,7 @@ public class Initialization
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.InvalidMPCSequentialNumberInts))]
+    [ClassData(typeof(Datasets.InvalidMPCSequentialNumberInt32s))]
     public void Invalid_ArgumentOutOfRangeException(int number)
     {
         var exception = Record.Exception(() => new MPCSequentialNumber() { Value = number });

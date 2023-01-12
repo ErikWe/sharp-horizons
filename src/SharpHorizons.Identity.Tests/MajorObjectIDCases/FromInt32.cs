@@ -2,13 +2,13 @@
 
 using Xunit;
 
-public class CastFromInt
+public class FromInt32
 {
     [Theory]
-    [ClassData(typeof(Datasets.MajorObjectIDInts))]
+    [ClassData(typeof(Datasets.MajorObjectIDInt32s))]
     public void Valid_ExactMatch(int id)
     {
-        var actual = (MajorObjectID)id;
+        var actual = MajorObjectID.FromInt32(id);
 
         Assert.Equal(id, actual.Value);
     }

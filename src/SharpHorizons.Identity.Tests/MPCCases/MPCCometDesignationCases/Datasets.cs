@@ -66,4 +66,16 @@ internal static class Datasets
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
+
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCCometDesignations : IEnumerable<object?[]>
+    {
+        public static IEnumerable<MPCCometDesignation> Items => new MPCCometDesignation[]
+        {
+            default
+        };
+
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
 }

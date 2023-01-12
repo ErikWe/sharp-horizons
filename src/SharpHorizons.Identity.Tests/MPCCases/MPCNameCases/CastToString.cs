@@ -17,10 +17,11 @@ public class CastToString
         Assert.Equal(mpcName.Value, actual);
     }
 
-    [Fact]
-    public void Invalid_ArgumentException()
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidMPCNames))]
+    public void Invalid_ArgumentException(MPCName mpcName)
     {
-        var exception = Record.Exception(() => (string)default(MPCName));
+        var exception = Record.Exception(() => (string)mpcName);
 
         Assert.IsType<ArgumentException>(exception);
     }

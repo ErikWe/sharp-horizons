@@ -5,7 +5,7 @@ using Xunit;
 public class Initialization
 {
     [Theory]
-    [ClassData(typeof(Datasets.MajorObjectIDInts))]
+    [ClassData(typeof(Datasets.MajorObjectIDInt32s))]
     public void Valid_ExactMatch(int id)
     {
         MajorObjectID actual = new() { Value = id };

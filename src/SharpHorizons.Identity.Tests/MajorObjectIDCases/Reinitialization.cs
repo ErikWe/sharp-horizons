@@ -5,7 +5,7 @@ using Xunit;
 public class Reinitialization
 {
     [Theory]
-    [ClassData(typeof(Datasets.MajorObjectIDInts))]
+    [ClassData(typeof(Datasets.MajorObjectIDInt32s))]
     public void Valid_ExactMatch(int id)
     {
         var actual = InitialMajorObjectID with { Value = id };

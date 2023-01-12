@@ -6,22 +6,22 @@ using System;
 
 using Xunit;
 
-public class CastFromInt
+public class FromInt32
 {
     [Theory]
-    [ClassData(typeof(Datasets.ValidMPCSequentialNumberInts))]
+    [ClassData(typeof(Datasets.ValidMPCSequentialNumberInt32s))]
     public void Valid_ExactMatch(int number)
     {
-        var actual = (MPCSequentialNumber)number;
+        var actual = MPCSequentialNumber.FromInt32(number);
 
         Assert.Equal(number, actual.Value);
     }
 
     [Theory]
-    [ClassData(typeof(Datasets.InvalidMPCSequentialNumberInts))]
+    [ClassData(typeof(Datasets.InvalidMPCSequentialNumberInt32s))]
     public void Invalid_ArgumentOutOfRangeException(int number)
     {
-        var exception = Record.Exception(() => (MPCSequentialNumber)number);
+        var exception = Record.Exception(() => MPCSequentialNumber.FromInt32(number));
 
         Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
