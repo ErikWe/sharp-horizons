@@ -15,10 +15,11 @@ public class CastToString
         Assert.Equal(observationSiteName.Value, actual);
     }
 
-    [Fact]
-    public void Invalid_ArgumentException()
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidObservationSiteNames))]
+    public void Invalid_ArgumentException(ObservationSiteName observationSiteName)
     {
-        var exception = Record.Exception(() => (string)default(ObservationSiteName));
+        var exception = Record.Exception(() => (string)observationSiteName);
 
         Assert.IsType<ArgumentException>(exception);
     }

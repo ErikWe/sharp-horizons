@@ -4,11 +4,11 @@ using SharpHorizons.MPC;
 
 using Xunit;
 
-public class CastToInt
+public class CastToInt32
 {
     [Theory]
-    [ClassData(typeof(Datasets.MPCSequentialNumbers))]
-    public void ExactMatch(MPCSequentialNumber mpcSequentialNumber)
+    [ClassData(typeof(Datasets.ValidMPCSequentialNumbers))]
+    public void Valid_ExactMatch(MPCSequentialNumber mpcSequentialNumber)
     {
         var actual = (int)mpcSequentialNumber;
 

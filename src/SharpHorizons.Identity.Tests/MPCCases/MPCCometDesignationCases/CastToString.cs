@@ -17,10 +17,11 @@ public class CastToString
         Assert.Equal(mpcCometDesignation.Value, actual);
     }
 
-    [Fact]
-    public void Invalid_ArgumentException()
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidMPCCometDesignations))]
+    public void Invalid_ArgumentException(MPCCometDesignation mpcCometDesignation)
     {
-        var exception = Record.Exception(() => (string)default(MPCCometDesignation));
+        var exception = Record.Exception(() => (string)mpcCometDesignation);
 
         Assert.IsType<ArgumentException>(exception);
     }

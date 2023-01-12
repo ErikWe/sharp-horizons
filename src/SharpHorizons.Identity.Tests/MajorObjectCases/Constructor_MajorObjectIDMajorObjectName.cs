@@ -4,7 +4,7 @@ using System;
 
 using Xunit;
 
-public class Constructor
+public class Constructor_MajorObjectIDMajorObjectName
 {
     [Theory]
     [ClassData(typeof(Datasets.ValidCombinations))]
@@ -30,16 +30,6 @@ public class Constructor
     public void NullName_ExactMatch(MajorObjectID id)
     {
         MajorObject actual = new(id, null);
-
-        Assert.Equal(id, actual.ID);
-        Assert.Null(actual.Name);
-    }
-
-    [Theory]
-    [ClassData(typeof(Datasets.MajorObjectIDs))]
-    public void JustID_ExactMatch(MajorObjectID id)
-    {
-        MajorObject actual = new(id);
 
         Assert.Equal(id, actual.ID);
         Assert.Null(actual.Name);

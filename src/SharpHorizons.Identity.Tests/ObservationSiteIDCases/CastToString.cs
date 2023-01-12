@@ -8,17 +8,20 @@ public class CastToString
 {
     [Theory]
     [ClassData(typeof(Datasets.ValidObservationSiteIDs))]
-    public void Valid_ExactMatch(ObservationSiteID observationSiteID)
+    public void Valid_ExactMatchValue(ObservationSiteID observationSiteID)
     {
+        var expected = observationSiteID.Value;
+
         var actual = (string)observationSiteID;
 
-        Assert.Equal(observationSiteID.Value, actual);
+        Assert.Equal(expected, actual);
     }
 
-    [Fact]
-    public void Invalid_ArgumentException()
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidObservationSiteIDs))]
+    public void Invalid_ArgumentException(ObservationSiteID observationSiteID)
     {
-        var exception = Record.Exception(() => (string)default(ObservationSiteID));
+        var exception = Record.Exception(() => (string)observationSiteID);
 
         Assert.IsType<ArgumentException>(exception);
     }

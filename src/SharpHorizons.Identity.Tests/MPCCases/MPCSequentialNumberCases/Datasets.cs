@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 internal static class Datasets
 {
     [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
-    public sealed class ValidMPCSequentialNumberInts : IEnumerable<object?[]>
+    public sealed class ValidMPCSequentialNumberInt32s : IEnumerable<object?[]>
     {
         public static IEnumerable<int> Items => new int[]
         {
@@ -22,7 +22,7 @@ internal static class Datasets
     }
 
     [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
-    public sealed class InvalidMPCSequentialNumberInts : IEnumerable<object?[]>
+    public sealed class InvalidMPCSequentialNumberInt32s : IEnumerable<object?[]>
     {
         public static IEnumerable<int> Items => new int[]
         {
@@ -36,18 +36,30 @@ internal static class Datasets
     }
 
     [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
-    public sealed class MPCSequentialNumbers : IEnumerable<object?[]>
+    public sealed class ValidMPCSequentialNumbers : IEnumerable<object?[]>
     {
         public static IEnumerable<MPCSequentialNumber> Items
         {
             get
             {
-                foreach (var number in ValidMPCSequentialNumberInts.Items)
+                foreach (var number in ValidMPCSequentialNumberInt32s.Items)
                 {
                     yield return new(number);
                 }
             }
         }
+
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidMPCSequentialNumbers : IEnumerable<object?[]>
+    {
+        public static IEnumerable<MPCSequentialNumber> Items => new MPCSequentialNumber[]
+        {
+            default
+        };
 
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
