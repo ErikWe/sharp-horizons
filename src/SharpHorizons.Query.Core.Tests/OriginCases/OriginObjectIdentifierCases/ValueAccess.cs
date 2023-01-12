@@ -8,14 +8,6 @@ using Xunit;
 
 public class ValueAccess
 {
-    [Fact]
-    public void Invalid_InvalidOperationException()
-    {
-        var exception = Record.Exception(() => default(OriginObjectIdentifier).Value);
-
-        Assert.IsType<InvalidOperationException>(exception);
-    }
-
     [Theory]
     [ClassData(typeof(Datasets.ValidOriginObjectIdentifiers))]
     public void Valid_NoException(OriginObjectIdentifier originObjectIdentifier)
@@ -23,5 +15,14 @@ public class ValueAccess
         var exception = Record.Exception(() => originObjectIdentifier.Value);
 
         Assert.Null(exception);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidOriginObjectIdentifiers))]
+    public void Invalid_InvalidOperationException(OriginObjectIdentifier originObjectIdentifier)
+    {
+        var exception = Record.Exception(() => originObjectIdentifier.Value);
+
+        Assert.IsType<InvalidOperationException>(exception);
     }
 }

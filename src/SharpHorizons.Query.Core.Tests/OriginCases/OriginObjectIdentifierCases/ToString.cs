@@ -8,14 +8,6 @@ using Xunit;
 
 public class ToString
 {
-    [Fact]
-    public void Invalid_InvalidOperationException()
-    {
-        var exception = Record.Exception(() => default(OriginObjectIdentifier).ToString());
-
-        Assert.IsType<InvalidOperationException>(exception);
-    }
-
     [Theory]
     [ClassData(typeof(Datasets.ValidOriginObjectIdentifiers))]
     public void Valid_ExactMatchValue(OriginObjectIdentifier originObjectIdentifier)
@@ -25,5 +17,14 @@ public class ToString
         var actual = originObjectIdentifier.ToString();
 
         Assert.Equal(expected, actual);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.InvalidOriginObjectIdentifiers))]
+    public void Invalid_InvalidOperationException(OriginObjectIdentifier originObjectIdentifier)
+    {
+        var exception = Record.Exception(originObjectIdentifier.ToString);
+
+        Assert.IsType<InvalidOperationException>(exception);
     }
 }

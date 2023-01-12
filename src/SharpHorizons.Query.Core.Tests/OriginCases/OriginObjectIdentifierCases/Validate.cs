@@ -6,22 +6,22 @@ using System;
 
 using Xunit;
 
-public class CastToString
+public class Validate
 {
     [Theory]
     [ClassData(typeof(Datasets.ValidOriginObjectIdentifiers))]
-    public void Valid_ExactMatch(OriginObjectIdentifier originObjectIdentifier)
+    public void Valid_NoException(OriginObjectIdentifier originObjectIdentifier)
     {
-        var actual = (string)originObjectIdentifier;
+        var exception = Record.Exception(() => OriginObjectIdentifier.Validate(originObjectIdentifier));
 
-        Assert.Equal(originObjectIdentifier.Value, actual);
+        Assert.Null(exception);
     }
 
     [Theory]
     [ClassData(typeof(Datasets.InvalidOriginObjectIdentifiers))]
     public void Invalid_ArgumentException(OriginObjectIdentifier originObjectIdentifier)
     {
-        var exception = Record.Exception(() => (string)originObjectIdentifier);
+        var exception = Record.Exception(() => OriginObjectIdentifier.Validate(originObjectIdentifier));
 
         Assert.IsType<ArgumentException>(exception);
     }

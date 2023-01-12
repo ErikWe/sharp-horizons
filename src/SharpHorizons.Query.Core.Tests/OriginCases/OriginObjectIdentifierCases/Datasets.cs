@@ -52,4 +52,16 @@ internal static class Datasets
         public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
+
+    [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used as test input.")]
+    public sealed class InvalidOriginObjectIdentifiers : IEnumerable<object?[]>
+    {
+        public static IEnumerable<OriginObjectIdentifier> Items => new OriginObjectIdentifier[]
+        {
+            default
+        };
+
+        public IEnumerator<object?[]> GetEnumerator() => DatasetWrappers.Wrap(Items).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
 }
