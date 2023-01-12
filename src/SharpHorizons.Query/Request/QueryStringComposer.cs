@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Query.Request;
 
+using Microsoft.CodeAnalysis;
+
 using SharpHorizons.Query.Arguments;
 using SharpHorizons.Query.Parameters;
 
@@ -111,14 +113,14 @@ internal sealed class QueryStringComposer : IQueryStringComposer
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="argument"/>.</param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
-    private static OptionalQueryArgument<TArgument> ValidateArgument<TArgument>(OptionalQueryArgument<TArgument> argument, [CallerArgumentExpression(nameof(argument))] string? argumentExpression = null) where TArgument : IQueryArgument
+    private static Optional<TArgument> ValidateArgument<TArgument>(Optional<TArgument> argument, [CallerArgumentExpression(nameof(argument))] string? argumentExpression = null) where TArgument : IQueryArgument
     {
-        if (argument.IsProvided is false)
+        if (argument.HasValue is false)
         {
             return argument;
         }
 
-        ValidateArgument(argument.Argument, argumentExpression);
+        ValidateArgument(argument.Value, argumentExpression);
 
         return argument;
     }
@@ -158,11 +160,11 @@ internal sealed class QueryStringComposer : IQueryStringComposer
         /// <param name="identifier">The <see cref="IQueryParameterIdentifier"/>, identifying <paramref name="optionalArgument"/>.</param>
         /// <param name="optionalArgument">The optional <see cref="IQueryArgument"/>, identified by <paramref name="identifier"/>.</param>
         /// <param name="options">Provides options for how <paramref name="identifier"/> and <paramref name="optionalArgument"/> are appended to the <see cref="HorizonsQueryString"/>.</param>
-        public void AppendParameterIfProvided<TIdentifier, TArgument>(TIdentifier identifier, OptionalQueryArgument<TArgument> optionalArgument, QueryBuilderOptions options) where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument
+        public void AppendParameterIfProvided<TIdentifier, TArgument>(TIdentifier identifier, Optional<TArgument> optionalArgument, QueryBuilderOptions options) where TIdentifier : IQueryParameterIdentifier where TArgument : IQueryArgument
         {
-            if (optionalArgument.IsProvided)
+            if (optionalArgument.HasValue)
             {
-                AppendParameter(identifier, optionalArgument.Argument, options);
+                AppendParameter(identifier, optionalArgument.Value, options);
             }
         }
 

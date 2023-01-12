@@ -1,5 +1,7 @@
 ﻿namespace SharpHorizons.Query.Arguments;
 
+using Microsoft.CodeAnalysis;
+
 using System;
 using System.Runtime.CompilerServices;
 
@@ -83,17 +85,17 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
     /// <param name="argument">The value of the optional property of <see cref="ArgumentSet"/>.</param>
     /// <param name="setter">Sets some optional property of <see cref="ArgumentSet"/>.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="argument"/>.</param>
-    private IQueryArgumentSetBuilder SpecifyOptional<TArgument>(TArgument argument, Action<MutableQueryArgumentSet, OptionalQueryArgument<TArgument>> setter, [CallerArgumentExpression(nameof(argument))] string? argumentExpression = null) where TArgument : IQueryArgument
+    private IQueryArgumentSetBuilder SpecifyOptional<TArgument>(TArgument argument, Action<MutableQueryArgumentSet, Optional<TArgument>> setter, [CallerArgumentExpression(nameof(argument))] string? argumentExpression = null) where TArgument : IQueryArgument
     {
-        return Specify(argument, (argumentSet) => setter(argumentSet, OptionalQueryArgument.Construct(argument)), argumentExpression);
+        return Specify(argument, (argumentSet) => setter(argumentSet, new Optional<TArgument>(argument)), argumentExpression);
     }
 
     /// <summary>Unspecifies some optional property of <see cref="ArgumentSet"/>, and handles construction of new instances of <see cref="MutableQueryArgumentSet"/> when necessary.</summary>
     /// <typeparam name="TArgument">The type of the optional property of <see cref="ArgumentSet"/> that is unspecified.</typeparam>
     /// <param name="setter">Unsets some optional property of <see cref="ArgumentSet"/>.</param>
-    private IQueryArgumentSetBuilder UnspecifyOptional<TArgument>(Action<MutableQueryArgumentSet, OptionalQueryArgument<TArgument>> setter) where TArgument : IQueryArgument
+    private IQueryArgumentSetBuilder UnspecifyOptional<TArgument>(Action<MutableQueryArgumentSet, Optional<TArgument>> setter) where TArgument : IQueryArgument
     {
-        return Modify((argumentSet) => setter(argumentSet, OptionalQueryArgument.Empty<TArgument>()));
+        return Modify((argumentSet) => setter(argumentSet, new Optional<TArgument>()));
     }
 
     IQueryArgumentSet IQueryArgumentSetBuilder.Build()
@@ -181,30 +183,30 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
     private sealed record class MutableQueryArgumentSet : IQueryArgumentSet
     {
         public ICommandArgument Command { get; set; }
-        public OptionalQueryArgument<IEphemerisTypeArgument> EphemerisType { get; set; }
-        public OptionalQueryArgument<IGenerateEphemerisArgument> GenerateEphemeris { get; set; }
-        public OptionalQueryArgument<IOutputFormatArgument> OutputFormat { get; set; }
-        public OptionalQueryArgument<IObjectDataInclusionArgument> ObjectDataInclusion { get; set; }
-        public OptionalQueryArgument<IOriginArgument> Origin { get; set; }
-        public OptionalQueryArgument<IOriginCoordinateArgument> OriginCoordinate { get; set; }
-        public OptionalQueryArgument<IOriginCoordinateTypeArgument> OriginCoordinateType { get; set; }
-        public OptionalQueryArgument<IEpochCollectionArgument> EpochCollection { get; set; }
-        public OptionalQueryArgument<IEpochCollectionFormatArgument> EpochCollectionFormat { get; set; }
-        public OptionalQueryArgument<ICalendarTypeArgument> CalendarType { get; set; }
-        public OptionalQueryArgument<ITimeSystemArgument> TimeSystem { get; set; }
-        public OptionalQueryArgument<ITimeZoneArgument> TimeZone { get; set; }
-        public OptionalQueryArgument<IStartEpochArgument> StartEpoch { get; set; }
-        public OptionalQueryArgument<IStopEpochArgument> StopEpoch { get; set; }
-        public OptionalQueryArgument<IStepSizeArgument> StepSize { get; set; }
-        public OptionalQueryArgument<IReferencePlaneArgument> ReferencePlane { get; set; }
-        public OptionalQueryArgument<IReferenceSystemArgument> ReferenceSystem { get; set; }
-        public OptionalQueryArgument<ITimePrecisionArgument> TimePrecision { get; set; }
-        public OptionalQueryArgument<IOutputUnitsArgument> OutputUnits { get; set; }
-        public OptionalQueryArgument<IVectorCorrectionArgument> VectorCorrection { get; set; }
-        public OptionalQueryArgument<ITimeDeltaInclusionArgument> TimeDeltaInclusion { get; set; }
-        public OptionalQueryArgument<IVectorTableContentArgument> VectorTableContent { get; set; }
-        public OptionalQueryArgument<IVectorLabelsArgument> VectorLabels { get; set; }
-        public OptionalQueryArgument<IValueSeparationArgument> ValueSeparation { get; set; }
+        public Optional<IEphemerisTypeArgument> EphemerisType { get; set; }
+        public Optional<IGenerateEphemerisArgument> GenerateEphemeris { get; set; }
+        public Optional<IOutputFormatArgument> OutputFormat { get; set; }
+        public Optional<IObjectDataInclusionArgument> ObjectDataInclusion { get; set; }
+        public Optional<IOriginArgument> Origin { get; set; }
+        public Optional<IOriginCoordinateArgument> OriginCoordinate { get; set; }
+        public Optional<IOriginCoordinateTypeArgument> OriginCoordinateType { get; set; }
+        public Optional<IEpochCollectionArgument> EpochCollection { get; set; }
+        public Optional<IEpochCollectionFormatArgument> EpochCollectionFormat { get; set; }
+        public Optional<ICalendarTypeArgument> CalendarType { get; set; }
+        public Optional<ITimeSystemArgument> TimeSystem { get; set; }
+        public Optional<ITimeZoneArgument> TimeZone { get; set; }
+        public Optional<IStartEpochArgument> StartEpoch { get; set; }
+        public Optional<IStopEpochArgument> StopEpoch { get; set; }
+        public Optional<IStepSizeArgument> StepSize { get; set; }
+        public Optional<IReferencePlaneArgument> ReferencePlane { get; set; }
+        public Optional<IReferenceSystemArgument> ReferenceSystem { get; set; }
+        public Optional<ITimePrecisionArgument> TimePrecision { get; set; }
+        public Optional<IOutputUnitsArgument> OutputUnits { get; set; }
+        public Optional<IVectorCorrectionArgument> VectorCorrection { get; set; }
+        public Optional<ITimeDeltaInclusionArgument> TimeDeltaInclusion { get; set; }
+        public Optional<IVectorTableContentArgument> VectorTableContent { get; set; }
+        public Optional<IVectorLabelsArgument> VectorLabels { get; set; }
+        public Optional<IValueSeparationArgument> ValueSeparation { get; set; }
 
         /// <inheritdoc cref="MutableQueryArgumentSet"/>
         /// <param name="command"><inheritdoc cref="Command" path="/summary"/></param>
