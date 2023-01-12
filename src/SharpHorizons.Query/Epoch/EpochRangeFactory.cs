@@ -38,7 +38,7 @@ public sealed class EpochRangeFactory : IEpochRangeFactory, IFixedEpochRangeFact
     /// <inheritdoc cref="ITimeZoneComposer"/>
     private ITimeZoneComposer TimeZoneComposer { get; }
 
-    /// <inheritdoc cref="StepSizeFactory"/>
+    /// <inheritdoc cref="EpochRangeFactory"/>
     /// <param name="fixedStepSizeFactory"><inheritdoc cref="FixedStepSizeFactory" path="/summary"/></param>
     /// <param name="uniformStepSizeFactory"><inheritdoc cref="UniformStepSizeFactory" path="/summary"/></param>
     /// <param name="calendarStepSizeFactory"><inheritdoc cref="CalendarStepSizeFactory" path="/summary"/></param>
