@@ -19,9 +19,9 @@ public class Reinitialization
 
     [Theory]
     [ClassData(typeof(Datasets.InvalidOriginObjectIdentifierStrings))]
-    public void Invalid_ArgumentException(string name)
+    public void Invalid_ArgumentException(string identifier)
     {
-        var exception = Record.Exception(() => InitialOriginObjectIdentifier with { Value = name });
+        var exception = Record.Exception(() => InitialOriginObjectIdentifier with { Value = identifier });
 
         Assert.IsType<ArgumentException>(exception);
     }
