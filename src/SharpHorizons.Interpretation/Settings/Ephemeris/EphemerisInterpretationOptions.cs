@@ -15,7 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class EphemerisInterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="EphemerisInterpretationOptions"/>.</summary>
-    internal static string Section { get; } = "Interpretation:Ephemeris";
+    internal static string Section { get; } = "Ephemeris";
 
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.EphemerisDataStart"/>
     public string EphemerisDataStart { get; set; } = null!;

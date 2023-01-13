@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class ParameterIdentifierOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="ParameterIdentifierOptions"/>.</summary>
-    internal static string Section { get; } = "Query:ParameterIdentifiers";
+    internal static string Section { get; } = "ParameterIdentifiers";
 
     /// <inheritdoc cref="IQueryParameterIdentifierProvider.Command"/>
     public string Command { get; set; } = null!;

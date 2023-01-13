@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class VectorsInterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="VectorsInterpretationOptions"/>.</summary>
-    internal static string Section { get; } = "Interpretation:Ephemeris:Vectors";
+    internal static string Section { get; } = "Ephemeris:Vectors";
 
     /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.OutputUnits"/>
     public string OutputUnits { get; set; } = null!;

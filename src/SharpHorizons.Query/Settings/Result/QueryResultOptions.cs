@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class QueryResultOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="QueryResultOptions"/>.</summary>
-    internal static string Section { get; } = "Query:Result";
+    internal static string Section { get; } = "Result";
 
     /// <inheritdoc cref="IQueryResultOptionsProvider.RawTextSource"/>
     public string RawTextSource { get; set; } = null!;

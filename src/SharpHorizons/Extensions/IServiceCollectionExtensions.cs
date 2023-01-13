@@ -10,6 +10,8 @@ using SharpHorizons.Extensions.Query;
 using SharpHorizons.Extensions.Query.Fluency;
 using SharpHorizons.Extensions.Query.HTTP;
 
+using System;
+
 /// <summary>Extension methods for <see cref="IServiceCollection"/>.</summary>
 public static class IServiceCollectionExtensions
 {
@@ -31,15 +33,18 @@ public static class IServiceCollectionExtensions
     /// <summary>Adds services required by SharpHorizons to the <see cref="IServiceCollection"/> <paramref name="services"/>, with configuration provided by <paramref name="configuration"/>.</summary>
     /// <param name="services">Services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     /// <param name="configuration">Provides configuration of the SharpHorizons services.</param>
+    /// <exception cref="ArgumentNullException"/>
     public static IServiceCollection AddSharpHorizons(this IServiceCollection services, IConfiguration configuration)
     {
+        ArgumentNullException.ThrowIfNull(configuration);
+
         services.AddSharpHorizonsExternal();
 
-        services.AddSharpHorizonsQuery(configuration);
-        services.AddSharpHorizonsHTTPQuery(configuration);
+        services.AddSharpHorizonsQuery(configuration.GetSection("Query"));
+        services.AddSharpHorizonsHTTPQuery(configuration.GetSection("Query:HTTP"));
         services.AddSharpHorizonsFluentQuery();
 
-        services.AddSharpHorizonsInterpretation(configuration);
+        services.AddSharpHorizonsInterpretation(configuration.GetSection("Interpretation"));
 
         return services;
     }
