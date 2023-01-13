@@ -2,121 +2,35 @@
 
 using SharpHorizons.Query.Epoch;
 
-using SharpMeasures;
-
-using System;
-
 using Xunit;
 
 public class Create
 {
     [Fact]
-    public void NullStartEpoch_ArgumentNullException()
-    {
-        var startEpoch = GetNullEpoch();
-        var stopEpoch = GetValidStopEpoch();
-        var stepCount = GetValidStepCount();
-
-        AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepCount);
-    }
+    public void NullStartEpoch_ArgumentNullException() => Executor_Create.NullStartEpoch_ArgumentNullException(GetService());
 
     [Fact]
-    public void NullStopEpoch_ArgumentNullException()
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetNullEpoch();
-        var stepCount = GetValidStepCount();
-
-        AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepCount);
-    }
+    public void NullStopEpoch_ArgumentNullException() => Executor_Create.NullStopEpoch_ArgumentNullException(GetService());
 
     [Fact]
-    public void NullStartAndStopEpochs_ArgumentNullException()
-    {
-        var startEpoch = GetNullEpoch();
-        var stopEpoch = GetNullEpoch();
-        var stepCount = GetValidStepCount();
-
-        AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, stepCount);
-    }
+    public void NullStartAndStopEpochs_ArgumentNullException() => Executor_Create.NullStartAndStopEpochs_ArgumentNullException(GetService());
 
     [Fact]
-    public void StopEpochEarlierThanStartEpoch_ArgumentException()
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetEarlierStopEpoch();
-        var stepCount = GetValidStepCount();
-
-        AnyError_TException<ArgumentException>(startEpoch, stopEpoch, stepCount);
-    }
+    public void StopEpochEarlierThanStartEpoch_ArgumentException() => Executor_Create.StopEpochEarlierThanStartEpoch_ArgumentException(GetService());
 
     [Fact]
-    public void StopEpochSameAsStartEpoch_ArgumentException()
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = startEpoch;
-        var stepCount = GetValidStepCount();
-
-        AnyError_TException<ArgumentException>(startEpoch, stopEpoch, stepCount);
-    }
+    public void StopEpochSameAsStartEpoch_ArgumentException() => Executor_Create.StopEpochSameAsStartEpoch_ArgumentException(GetService());
 
     [Theory]
     [ClassData(typeof(Datasets.OutOfRangeStepCounts))]
-    public void OutOfRangeStepCount_ArgumentOutOfRangeException(int stepCount)
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetValidStopEpoch();
-
-        AnyError_TException<ArgumentOutOfRangeException>(startEpoch, stopEpoch, stepCount);
-    }
+    public void OutOfRangeStepCount_ArgumentOutOfRangeException(int stepCount) => Executor_Create.OutOfRangeStepCount_ArgumentOutOfRangeException(GetService(), stepCount);
 
     [Fact]
-    public void NullStartAndStopEpochsAndOutOfRangeStepCount_ArgumentOutOfRangeException()
-    {
-        var startEpoch = GetNullEpoch();
-        var stopEpoch = GetNullEpoch();
-        var stepCount = GetOutOfRangeStepCount();
-
-        AnyError_TException<ArgumentOutOfRangeException>(startEpoch, stopEpoch, stepCount);
-    }
-
-    private static void AnyError_TException<TException>(IEpoch startEpoch, IEpoch stopEpoch, int stepCount) where TException : Exception
-    {
-        var factory = GetService();
-
-        var exception = Record.Exception(() => factory.Create(startEpoch, stopEpoch, stepCount));
-
-        Assert.IsType<TException>(exception);
-    }
+    public void NullStartAndStopEpochsAndOutOfRangeStepCount_ArgumentOutOfRangeException() => Executor_Create.NullStartAndStopEpochsAndOutOfRangeStepCount_ArgumentOutOfRangeException(GetService());
 
     [Theory]
     [ClassData(typeof(Datasets.ValidStepCounts))]
-    public void Valid_ExactMatch(int stepCount)
-    {
-        var factory = GetService();
-
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetValidStopEpoch();
-
-        var actual = factory.Create(startEpoch, stopEpoch, stepCount);
-
-        Assert.Equal(startEpoch, actual.StartEpoch.Epoch);
-        Assert.Equal(stopEpoch, actual.StopEpoch.Epoch);
-
-        Assert.Equal(EpochSelectionMode.Range, actual.Selection);
-        Assert.Equal(EpochFormat.JulianDays, actual.Format);
-        Assert.Equal(CalendarType.Gregorian, actual.Calendar);
-        Assert.Equal(TimeSystem.UT, actual.TimeSystem);
-        Assert.Equal(Time.Zero, actual.Offset);
-    }
+    public void Valid_ExactMatch(int stepCount) => Executor_Create.Valid_ExactMatch(GetService(), stepCount);
 
     private static IUniformEpochRangeFactory GetService() => DependencyInjection.GetRequiredService<IUniformEpochRangeFactory>();
-
-    private static int GetOutOfRangeStepCount() => 0;
-    private static int GetValidStepCount() => 1;
-
-    private static IEpoch GetNullEpoch() => null!;
-    private static IEpoch GetValidStartEpoch() => new JulianDay(0);
-    private static IEpoch GetValidStopEpoch() => new JulianDay(1);
-    private static IEpoch GetEarlierStopEpoch() => new JulianDay(-1);
 }
