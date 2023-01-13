@@ -2,25 +2,22 @@
 
 using SharpHorizons.Query.Epoch;
 
-using SharpMeasures;
-
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Composes <see cref="IEpochCollectionArgument"/> that describe <see cref="IEpochCollection"/>.</summary>
 [SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
 internal sealed class EpochCollectionComposer : IEpochCollectionComposer<IEpochCollection>
 {
-    /// <inheritdoc cref="IQueryEpochComposer"/>
-    private IQueryEpochComposer QueryEpochComposer { get; }
+    /// <inheritdoc cref="Epoch.QueryEpochComposer"/>
+    private QueryEpochComposer QueryEpochComposer { get; }
 
     /// <inheritdoc cref="EpochCalendarComposer"/>
-    /// <param name="queryEpochComposer"><inheritdoc cref="QueryEpochComposer" path="/summary"/></param>
-    public EpochCollectionComposer(IQueryEpochComposer? queryEpochComposer = null)
+    /// <param name="timesystemOffsetProvider"><inheritdoc cref="ITimeSystemOffsetProvider" path="/summary"/></param>
+    public EpochCollectionComposer(ITimeSystemOffsetProvider? timesystemOffsetProvider = null)
     {
-        QueryEpochComposer = queryEpochComposer ?? new QueryEpochComposer();
+        QueryEpochComposer = new(timesystemOffsetProvider ?? new ZeroTimeSystemOffsetProvider());
     }
 
     IEpochCollectionArgument IArgumentComposer<IEpochCollectionArgument, IEpochCollection>.Compose(IEpochCollection obj)
@@ -46,7 +43,7 @@ internal sealed class EpochCollectionComposer : IEpochCollectionComposer<IEpochC
         {
             return ComposeComponents(epochCollection, epochCollection.GetEnumerator());
         }
-        catch (ArgumentNullException e)
+        catch (ArgumentException e)
         {
             throw ArgumentExceptionFactory.InvalidState<IEpochCollection>(nameof(epochCollection), e);
         }
@@ -80,43 +77,11 @@ internal sealed class EpochCollectionComposer : IEpochCollectionComposer<IEpochC
 
         try
         {
-            return Compose(epoch, epochCollection.Format, epochCollection.Calendar, epochCollection.TimeSystem, epochCollection.Offset);
+            return QueryEpochComposer.Compose(epoch, epochCollection.Format, epochCollection.Calendar, epochCollection.TimeSystem, epochCollection.Offset);
         }
         catch (ArgumentException e)
         {
             throw ArgumentExceptionFactory.InvalidState<IEpochCollection>(nameof(epochCollection), e);
         }
-    }
-
-    /// <summary>Composes a <see cref="string"/> describing <paramref name="epoch"/>.</summary>
-    /// <param name="epoch">The composed <see cref="string"/> describes this <see cref="IEpoch"/>.</param>
-    /// <param name="format"><inheritdoc cref="QueryEpoch.Format" path="/summary"/></param>
-    /// <param name="calendar"><inheritdoc cref="QueryEpoch.Calendar" path="/summary"/></param>
-    /// <param name="timeSystem"><inheritdoc cref="QueryEpoch.TimeSystem" path="/summary"/></param>
-    /// <param name="offset"><inheritdoc cref="QueryEpoch.Offset" path="/summary"/></param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="InvalidEnumArgumentException"/>
-    /// <exception cref="InvalidOperationException"/>
-    private string Compose(IEpoch epoch, EpochFormat format, CalendarType calendar, TimeSystem timeSystem, Time offset)
-    {
-        QueryEpoch queryEpoch = new(epoch) { Format = format, Calendar = calendar, TimeSystem = timeSystem, Offset = offset };
-
-        return Compose(queryEpoch);
-    }
-
-    /// <summary>Composes a <see cref="string"/> describing <paramref name="queryEpoch"/>.</summary>
-    /// <param name="queryEpoch">The composed <see cref="string"/> describes this <see cref="QueryEpoch"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="InvalidOperationException"/>
-    private string Compose(QueryEpoch queryEpoch)
-    {
-        var composed = QueryEpochComposer.Compose(queryEpoch);
-
-        if (string.IsNullOrEmpty(composed))
-        {
-            throw new InvalidOperationException($"The {nameof(IQueryEpochComposer)} provided an invalid {nameof(String)}.");
-        }
-
-        return composed;
     }
 }
