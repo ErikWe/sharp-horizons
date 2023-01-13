@@ -12,20 +12,22 @@ using Xunit;
 
 internal static class Executor_Create_IEnumerable
 {
-    public static void Null_ArgumentNullException(IEpochCollectionFactory factory)
+    public static void Null_ArgumentNullException(IEpochCollectionFactory factory) => Null_ArgumentNullException(factory.Create);
+    public static void Null_ArgumentNullException(Func<IEnumerable<IEpoch>, IEpochCollection> factory)
     {
         var collection = GetNullCollection();
 
-        var exception = Record.Exception(() => factory.Create(collection));
+        var exception = Record.Exception(() => factory(collection));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
 
-    public static void Valid_ExactMatch(IEpochCollectionFactory factory)
+    public static void Valid_ExactMatch(IEpochCollectionFactory factory) => Valid_ExactMatch(factory.Create);
+    public static void Valid_ExactMatch(Func<IEnumerable<IEpoch>, IEpochCollection> factory)
     {
         var collection = GetValidCollection();
 
-        var actual = factory.Create(collection);
+        var actual = factory(collection);
 
         Assert.Equal(collection.Count(), actual.Count());
 
