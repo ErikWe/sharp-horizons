@@ -43,18 +43,15 @@ internal sealed record class EpochCollection : IEpochCollection
 
     /// <inheritdoc cref="EpochCollection"/>
     /// <param name="epochs"><inheritdoc cref="Epochs" path="/summary"/></param>
-    /// <param name="format"><inheritdoc cref="Format" path="/summary"/></param>
     /// <param name="composer"><inheritdoc cref="Composer" path="/summary"/></param>
     /// <param name="formatComposer"><inheritdoc cref="FormatComposer" path="/summary"/></param>
     /// <param name="calendarComposer"><inheritdoc cref="CalendarComposer" path="/summary"/></param>
     /// <param name="timeSystemComposer"><inheritdoc cref="TimeSystemComposer" path="/summary"/></param>
     /// <param name="timeZoneComposer"><inheritdoc cref="TimeZoneComposer" path="/summary"/></param>
     [SetsRequiredMembers]
-    public EpochCollection(IEnumerable<IEpoch> epochs, EpochFormat format, IEpochCollectionComposer<IEpochCollection> composer, IEpochCollectionFormatComposer formatComposer, IEpochCalendarComposer calendarComposer, ITimeSystemComposer timeSystemComposer, ITimeZoneComposer timeZoneComposer)
+    public EpochCollection(IEnumerable<IEpoch> epochs, IEpochCollectionComposer<IEpochCollection> composer, IEpochCollectionFormatComposer formatComposer, IEpochCalendarComposer calendarComposer, ITimeSystemComposer timeSystemComposer, ITimeZoneComposer timeZoneComposer)
     {
         Epochs = epochs;
-
-        Format = format;
 
         Composer = composer;
         FormatComposer = formatComposer;
@@ -78,7 +75,7 @@ internal sealed record class EpochCollection : IEpochCollection
     {
         ArgumentNullException.ThrowIfNull(epochs);
 
-        return new EpochCollection(Epochs.Concat(epochs), Format, Composer, FormatComposer, CalendarComposer, TimeSystemComposer, TimeZoneComposer);
+        return this with { Epochs = Epochs.Concat(epochs) };
     }
 
     public IEpochCollection WithConfiguration(EpochFormat format)

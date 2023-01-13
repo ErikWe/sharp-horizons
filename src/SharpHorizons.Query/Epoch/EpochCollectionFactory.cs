@@ -6,15 +6,10 @@ using SharpHorizons.Query.Arguments.Composers.Epoch;
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 /// <summary>Handles construction of <see cref="IEpochCollection"/>.</summary>
 public sealed class EpochCollectionFactory : IEpochCollectionFactory
 {
-    /// <summary>Determines the default <see cref="EpochFormat"/>.</summary>
-    private static EpochFormat DefaultFormat { get; } = EpochFormat.JulianDays;
-
     /// <summary>Composes <see cref="IEpochCollectionArgument"/> that describe <see cref="IEpochCollection"/>.</summary>
     private IEpochCollectionComposer<IEpochCollection> Composer { get; }
 
@@ -47,29 +42,11 @@ public sealed class EpochCollectionFactory : IEpochCollectionFactory
     }
 
     /// <inheritdoc/>
-    public IEpochCollection Create(IEnumerable<IEpoch> epochs, EpochFormat format)
-    {
-        ArgumentNullException.ThrowIfNull(epochs);
-        ValidateEpochFormat(format);
-
-        return new EpochCollection(epochs, format, Composer, FormatComposer, CalendarComposer, TimeSystemComposer, TimeZoneComposer);
-    }
-
-    /// <inheritdoc/>
     public IEpochCollection Create(IEnumerable<IEpoch> epochs)
     {
         ArgumentNullException.ThrowIfNull(epochs);
 
-        return Create(epochs, DefaultFormat);
-    }
-
-    /// <inheritdoc/>
-    public IEpochCollection Create(EpochFormat format, params IEpoch[] epochs)
-    {
-        ValidateEpochFormat(format);
-        ArgumentNullException.ThrowIfNull(epochs);
-
-        return Create(epochs, format);
+        return new EpochCollection(epochs, Composer, FormatComposer, CalendarComposer, TimeSystemComposer, TimeZoneComposer);
     }
 
     /// <inheritdoc/>
@@ -77,21 +54,6 @@ public sealed class EpochCollectionFactory : IEpochCollectionFactory
     {
         ArgumentNullException.ThrowIfNull(epochs);
 
-        return Create(DefaultFormat, epochs);
-    }
-
-    /// <summary>Validates the <see cref="EpochFormat"/> <paramref name="format"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
-    /// <param name="format">This <see cref="EpochFormat"/> is validated.</param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="format"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="InvalidEnumArgumentException"/>
-    private static void ValidateEpochFormat(EpochFormat format, [CallerArgumentExpression(nameof(format))] string? argumentExpression = null)
-    {
-        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(format);
-
-        if (format is EpochFormat.Unknown)
-        {
-            throw ArgumentExceptionFactory.UnsupportedEnumValue(format, argumentExpression);
-        }
+        return Create(epochs as IEnumerable<IEpoch>);
     }
 }
