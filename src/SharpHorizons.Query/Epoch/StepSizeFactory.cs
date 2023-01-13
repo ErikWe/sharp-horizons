@@ -1,95 +1,46 @@
 ﻿namespace SharpHorizons.Query.Epoch;
 
-using SharpHorizons.Query.Arguments;
-using SharpHorizons.Query.Arguments.Composers;
-using SharpHorizons.Query.Arguments.Composers.Epoch;
-
 using SharpMeasures;
-
-using System;
 
 /// <summary>Handles construction of <see cref="IStepSize"/>.</summary>
 public sealed class StepSizeFactory : IFixedStepSizeFactory, IUniformStepSizeFactory, ICalendarStepSizeFactory, IAngularStepSizeFactory
 {
-    /// <summary>Composes <see cref="IStepSizeArgument"/> that describe <see cref="IFixedStepSize"/>.</summary>
-    private IStepSizeComposer<IFixedStepSize> FixedComposer { get; }
+    /// <inheritdoc cref="IFixedStepSizeFactory"/>
+    private IFixedStepSizeFactory FixedStepSizeFactory { get; }
 
-    /// <summary>Composes <see cref="IStepSizeArgument"/> that describe <see cref="IUniformStepSize"/>.</summary>
-    private IStepSizeComposer<IUniformStepSize> UniformComposer { get; }
+    /// <inheritdoc cref="IUniformStepSizeFactory"/>
+    private IUniformStepSizeFactory UniformStepSizeFactory { get; }
 
-    /// <summary>Composes <see cref="IStepSizeArgument"/> that describe <see cref="ICalendarStepSize"/>.</summary>
-    private IStepSizeComposer<ICalendarStepSize> CalendarComposer { get; }
+    /// <inheritdoc cref="ICalendarStepSizeFactory"/>
+    private ICalendarStepSizeFactory CalendarStepSizeFactory { get; }
 
-    /// <summary>Composes <see cref="IStepSizeArgument"/> that describe <see cref="IAngularStepSize"/>.</summary>
-    private IStepSizeComposer<IAngularStepSize> AngularComposer { get; }
+    /// <inheritdoc cref="IAngularStepSizeFactory"/>
+    private IAngularStepSizeFactory AngularStepSizeFactory { get; }
 
     /// <inheritdoc cref="StepSizeFactory"/>
-    /// <param name="fixedComposer"><inheritdoc cref="FixedComposer" path="/summary"/></param>
-    /// <param name="uniformComposer"><inheritdoc cref="UniformComposer" path="/summary"/></param>
-    /// <param name="calendarComposer"><inheritdoc cref="CalendarComposer" path="/summary"/></param>
-    /// <param name="angularComposer"><inheritdoc cref="AngularComposer" path="/summary"/></param>
-    public StepSizeFactory(IStepSizeComposer<IFixedStepSize>? fixedComposer = null, IStepSizeComposer<IUniformStepSize>? uniformComposer = null, IStepSizeComposer<ICalendarStepSize>? calendarComposer = null, IStepSizeComposer<IAngularStepSize>? angularComposer = null)
+    /// <param name="fixedStepSizeFactory"><inheritdoc cref="FixedStepSizeFactory" path="/summary"/></param>
+    /// <param name="uniformStepSizeFactory"><inheritdoc cref="UniformStepSizeFactory" path="/summary"/></param>
+    /// <param name="calendarStepSizeFactory"><inheritdoc cref="CalendarStepSizeFactory" path="/summary"/></param>
+    /// <param name="angularStepSizeFactory"><inheritdoc cref="AngularStepSizeFactory" path="/summary"/></param>
+    public StepSizeFactory(IFixedStepSizeFactory? fixedStepSizeFactory = null, IUniformStepSizeFactory? uniformStepSizeFactory = null, ICalendarStepSizeFactory? calendarStepSizeFactory = null, IAngularStepSizeFactory? angularStepSizeFactory = null)
     {
-        FixedComposer = fixedComposer ?? new FixedStepSizeComposer();
-        UniformComposer = uniformComposer ?? new UniformStepSizeComposer();
-        CalendarComposer = calendarComposer ?? new CalendarStepSizeComposer();
-        AngularComposer = angularComposer ?? new AngularStepSizeComposer();
+        FixedStepSizeFactory = fixedStepSizeFactory ?? new FixedStepSizeFactory();
+        UniformStepSizeFactory = uniformStepSizeFactory ?? new UniformStepSizeFactory();
+        CalendarStepSizeFactory = calendarStepSizeFactory ?? new CalendarStepSizeFactory();
+        AngularStepSizeFactory = angularStepSizeFactory ?? new AngularStepSizeFactory();
     }
 
     /// <inheritdoc cref="IFixedStepSizeFactory.Create(Time)"/>
-    public IFixedStepSize Fixed(Time deltaTime)
-    {
-        SharpMeasuresValidation.Validate(deltaTime);
-
-        if (deltaTime.IsNegative || deltaTime.IsZero)
-        {
-            throw new ArgumentOutOfRangeException(nameof(deltaTime), deltaTime, $"A value greater than 0 should be used to represent the delta time of a {nameof(IFixedStepSize)}.");
-        }
-
-        return new FixedStepSize(deltaTime, FixedComposer);
-    }
+    public IFixedStepSize Fixed(Time deltaTime) => FixedStepSizeFactory.Create(deltaTime);
 
     /// <inheritdoc cref="IUniformStepSizeFactory.Create(int)"/>
-    public IUniformStepSize Uniform(int stepCount)
-    {
-        if (stepCount <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(stepCount), stepCount, $"A value greater than 0 should be used to represent the step count of a {nameof(IUniformStepSize)}.");
-        }
-
-        return new UniformStepSize(stepCount, UniformComposer);
-    }
+    public IUniformStepSize Uniform(int stepCount) => UniformStepSizeFactory.Create(stepCount);
 
     /// <inheritdoc cref="ICalendarStepSizeFactory.Create(int, CalendarStepSizeUnit)"/>
-    public ICalendarStepSize Calendar(int count, CalendarStepSizeUnit unit)
-    {
-        if (count <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(count), count, $"A value greater than 0 should be used to represent the count of a {nameof(ICalendarStepSize)}.");
-        }
-
-        InvalidEnumArgumentExceptionUtility.ThrowIfUnlisted(unit);
-
-        if (unit is CalendarStepSizeUnit.Unknown)
-        {
-            throw ArgumentExceptionFactory.UnsupportedEnumValue(unit);
-        }
-
-        return new CalendarStepSize(count, unit, CalendarComposer);
-    }
+    public ICalendarStepSize Calendar(int count, CalendarStepSizeUnit unit) => CalendarStepSizeFactory.Create(count, unit);
 
     /// <inheritdoc cref="IAngularStepSizeFactory.Create(Angle)"/>
-    public IAngularStepSize Angular(Angle deltaAngle)
-    {
-        SharpMeasuresValidation.Validate(deltaAngle);
-
-        if (deltaAngle.IsNegative || deltaAngle.IsZero)
-        {
-            throw new ArgumentOutOfRangeException(nameof(deltaAngle), deltaAngle, $"A value greater than 0 should be used to represent the delta angle of a {nameof(IAngularStepSize)}.");
-        }
-
-        return new AngularStepSize(deltaAngle, AngularComposer);
-    }
+    public IAngularStepSize Angular(Angle deltaAngle) => AngularStepSizeFactory.Create(deltaAngle);
 
     IFixedStepSize IFixedStepSizeFactory.Create(Time deltaTime) => Fixed(deltaTime);
     IUniformStepSize IUniformStepSizeFactory.Create(int stepCount) => Uniform(stepCount);
