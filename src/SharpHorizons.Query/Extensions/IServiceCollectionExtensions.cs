@@ -123,16 +123,16 @@ public static class IServiceCollectionExtensions
     {
         services.AddSingleton<IEpochCollectionFactory, EpochCollectionFactory>();
 
-        services.AddSingleton<IEpochRangeFactory, EpochRangeFactory>();
-        services.AddSingleton<IFixedEpochRangeFactory, EpochRangeFactory>();
-        services.AddSingleton<IUniformEpochRangeFactory, EpochRangeFactory>();
-        services.AddSingleton<ICalendarEpochRangeFactory, EpochRangeFactory>();
-        services.AddSingleton<IAngularEpochRangeFactory, EpochRangeFactory>();
+        services.AddSingleton<IEpochRangeFactory, SimpleEpochRangeFactory>();
+        services.AddSingleton<IFixedEpochRangeFactory, FixedEpochRangeFactory>();
+        services.AddSingleton<IUniformEpochRangeFactory, UniformEpochRangeFactory>();
+        services.AddSingleton<ICalendarEpochRangeFactory, CalendarEpochRangeFactory>();
+        services.AddSingleton<IAngularEpochRangeFactory, AngularEpochRangeFactory>();
 
-        services.AddSingleton<IFixedStepSizeFactory, StepSizeFactory>();
-        services.AddSingleton<IUniformStepSizeFactory, StepSizeFactory>();
-        services.AddSingleton<ICalendarStepSizeFactory, StepSizeFactory>();
-        services.AddSingleton<IAngularStepSizeFactory, StepSizeFactory>();
+        services.AddSingleton<IFixedStepSizeFactory, FixedStepSizeFactory>();
+        services.AddSingleton<IUniformStepSizeFactory, UniformStepSizeFactory>();
+        services.AddSingleton<ICalendarStepSizeFactory, CalendarStepSizeFactory>();
+        services.AddSingleton<IAngularStepSizeFactory, AngularStepSizeFactory>();
 
         return services;
     }
