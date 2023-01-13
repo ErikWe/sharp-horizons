@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 /// <summary>Handles construction of <see cref="IEpochRange"/> using the timespan between two <see cref="IEpoch"/>, with some calendar-based <see cref="IStepSize"/>.</summary>
 /// <remarks>To construct <see cref="IEpochRange"/> using a non-variable calendar-related unit, such as days or weeks, use <see cref="IFixedEpochRangeFactory"/>.</remarks>
-public interface ICalendarEpochRangeFactory
+public interface ICalendarEpochRangeFactory : IEpochRangeFactory
 {
     /// <summary>Constructs a <see cref="IEpochRange"/> using the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/>, with a <see cref="IStepSize"/> such that each step represents <paramref name="count"/> of some calendar-based <paramref name="unit"/>.</summary>
     /// <param name="startEpoch"><inheritdoc cref="IEpochRange.StartEpoch" path="/summary"/></param>

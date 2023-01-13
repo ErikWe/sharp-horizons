@@ -91,7 +91,7 @@ public class WithEpochRange_DEpochRangeFactory
 
     private static IEpochRange GetValidEpochRange()
     {
-        var factory = DependencyInjection.GetRequiredService<IEpochRangeFactory>();
+        var factory = DependencyInjection.GetRequiredService<IUniformEpochRangeFactory>();
 
         return factory.Create(JulianDay.Epoch, new JulianDay(1), 1);
     }

@@ -5,7 +5,7 @@ using SharpMeasures;
 using System;
 
 /// <summary>Handles construction of <see cref="IEpochRange"/> using the timespan between two <see cref="IEpoch"/>, with a fixed <see cref="Time"/>-based <see cref="IStepSize"/>.</summary>
-public interface IFixedEpochRangeFactory
+public interface IFixedEpochRangeFactory : IEpochRangeFactory
 {
     /// <summary>Constructs a <see cref="IEpochRange"/> using the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/>, and a fixed <see cref="IStepSize"/> <paramref name="deltaTime"/>.</summary>
     /// <param name="startEpoch"><inheritdoc cref="IEpochRange.StartEpoch" path="/summary"/></param>

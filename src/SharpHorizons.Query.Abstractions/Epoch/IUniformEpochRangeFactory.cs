@@ -3,7 +3,7 @@
 using System;
 
 /// <summary>Handles construction of <see cref="IEpochRange"/> using the timespan between two <see cref="IEpoch"/>, with an <see cref="int"/> number of uniformly distributed steps.</summary>
-public interface IUniformEpochRangeFactory
+public interface IUniformEpochRangeFactory : IEpochRangeFactory
 {
     /// <summary>Constructs a <see cref="IEpochRange"/> using the timespan between <paramref name="startEpoch"/> and <paramref name="stopEpoch"/>, with <paramref name="stepCount"/> uniformly distributed steps.</summary>
     /// <param name="startEpoch"><inheritdoc cref="IEpochRange.StartEpoch" path="/summary"/></param>
