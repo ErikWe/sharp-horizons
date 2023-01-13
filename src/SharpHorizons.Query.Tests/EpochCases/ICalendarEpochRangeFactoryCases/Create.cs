@@ -2,165 +2,46 @@
 
 using SharpHorizons.Query.Epoch;
 
-using SharpMeasures;
-
-using System;
-using System.ComponentModel;
-
 using Xunit;
 
 public class Create
 {
     [Fact]
-    public void NullStartEpoch_ArgumentNullException()
-    {
-        var startEpoch = GetNullEpoch();
-        var stopEpoch = GetValidStopEpoch();
-        var count = GetValidCount();
-        var unit = GetValidUnit();
-
-        AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void NullStartEpoch_ArgumentNullException() => Executor_Create.NullStartEpoch_ArgumentNullException(GetService());
 
     [Fact]
-    public void NullStopEpoch_ArgumentNullException()
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetNullEpoch();
-        var count = GetValidCount();
-        var unit = GetValidUnit();
-
-        AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void NullStopEpoch_ArgumentNullException() => Executor_Create.NullStopEpoch_ArgumentNullException(GetService());
 
     [Fact]
-    public void NullStartAndStopEpochs_ArgumentNullException()
-    {
-        var startEpoch = GetNullEpoch();
-        var stopEpoch = GetNullEpoch();
-        var count = GetValidCount();
-        var unit = GetValidUnit();
-
-        AnyError_TException<ArgumentNullException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void NullStartAndStopEpochs_ArgumentNullException() => Executor_Create.NullStartAndStopEpochs_ArgumentNullException(GetService());
 
     [Fact]
-    public void StopEpochEarlierThanStartEpoch_ArgumentException()
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetEarlierStopEpoch();
-        var count = GetValidCount();
-        var unit = GetValidUnit();
-
-        AnyError_TException<ArgumentException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void StopEpochEarlierThanStartEpoch_ArgumentException() => Executor_Create.StopEpochEarlierThanStartEpoch_ArgumentException(GetService());
 
     [Fact]
-    public void StopEpochSameAsStartEpoch_ArgumentException()
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = startEpoch;
-        var count = GetValidCount();
-        var unit = GetValidUnit();
-
-        AnyError_TException<ArgumentException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void StopEpochSameAsStartEpoch_ArgumentException() => Executor_Create.StopEpochSameAsStartEpoch_ArgumentException(GetService());
 
     [Theory]
     [ClassData(typeof(Datasets.OutOfRangeCounts))]
-    public void OutOfRangeCounts_ArgumentOutOfRangeException(int count)
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetValidStopEpoch();
-        var unit = GetValidUnit();
-
-        AnyError_TException<ArgumentOutOfRangeException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void OutOfRangeCounts_ArgumentOutOfRangeException(int count) => Executor_Create.OutOfRangeCounts_ArgumentOutOfRangeException(GetService(), count);
 
     [Theory]
     [ClassData(typeof(Datasets.ForbiddenUnits))]
-    public void ForbiddenUnit_ArgumentException(CalendarStepSizeUnit unit)
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetValidStopEpoch();
-        var count = GetValidCount();
-
-        AnyError_TException<ArgumentException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void ForbiddenUnit_ArgumentException(CalendarStepSizeUnit unit) => Executor_Create.ForbiddenUnit_ArgumentException(GetService(), unit);
 
     [Theory]
     [ClassData(typeof(Datasets.InvalidUnits))]
-    public void InvalidUnit_InvalidEnumArgumentException(CalendarStepSizeUnit unit)
-    {
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetValidStopEpoch();
-        var count = GetValidCount();
-
-        AnyError_TException<InvalidEnumArgumentException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void InvalidUnit_InvalidEnumArgumentException(CalendarStepSizeUnit unit) => Executor_Create.InvalidUnit_InvalidEnumArgumentException(GetService(), unit);
 
     [Fact]
-    public void NullStartAndStopEpochsAndOutOfRangeCount_ArgumentOutOfRangeException()
-    {
-        var startEpoch = GetNullEpoch();
-        var stopEpoch = GetNullEpoch();
-        var count = GetOutOfRangeCount();
-        var unit = GetValidUnit();
-
-        AnyError_TException<ArgumentOutOfRangeException>(startEpoch, stopEpoch, count, unit);
-    }
+    public void NullStartAndStopEpochsAndOutOfRangeCount_ArgumentOutOfRangeException() => Executor_Create.NullStartAndStopEpochsAndOutOfRangeCount_ArgumentOutOfRangeException(GetService());
 
     [Fact]
-    public void NullStartAndStopEpochsAndForbiddenUnit_ArgumentException()
-    {
-        var startEpoch = GetNullEpoch();
-        var stopEpoch = GetNullEpoch();
-        var count = GetValidCount();
-        var unit = GetForbiddenUnit();
-
-        AnyError_TException<ArgumentException>(startEpoch, stopEpoch, count, unit);
-    }
-
-    private static void AnyError_TException<TException>(IEpoch startEpoch, IEpoch stopEpoch, int count, CalendarStepSizeUnit unit) where TException : Exception
-    {
-        var factory = GetService();
-
-        var exception = Record.Exception(() => factory.Create(startEpoch, stopEpoch, count, unit));
-
-        Assert.IsType<TException>(exception);
-    }
+    public void NullStartAndStopEpochsAndForbiddenUnit_ArgumentException() => Executor_Create.NullStartAndStopEpochsAndForbiddenUnit_ArgumentException(GetService());
 
     [Theory]
     [ClassData(typeof(Datasets.ValidCombinations))]
-    public void Valid_ExactMatch(int count, CalendarStepSizeUnit unit)
-    {
-        var factory = GetService();
-
-        var startEpoch = GetValidStartEpoch();
-        var stopEpoch = GetValidStopEpoch();
-
-        var actual = factory.Create(startEpoch, stopEpoch, count, unit);
-
-        Assert.Equal(startEpoch, actual.StartEpoch.Epoch);
-        Assert.Equal(stopEpoch, actual.StopEpoch.Epoch);
-
-        Assert.Equal(EpochSelectionMode.Range, actual.Selection);
-        Assert.Equal(EpochFormat.JulianDays, actual.Format);
-        Assert.Equal(CalendarType.Gregorian, actual.Calendar);
-        Assert.Equal(TimeSystem.UT, actual.TimeSystem);
-        Assert.Equal(Time.Zero, actual.Offset);
-    }
+    public void Valid_ExactMatch(int count, CalendarStepSizeUnit unit) => Executor_Create.Valid_ExactMatch(GetService(), count, unit);
 
     private static ICalendarEpochRangeFactory GetService() => DependencyInjection.GetRequiredService<ICalendarEpochRangeFactory>();
-
-    private static int GetValidCount() => 1;
-    private static int GetOutOfRangeCount() => 0;
-
-    private static CalendarStepSizeUnit GetValidUnit() => CalendarStepSizeUnit.Month;
-    private static CalendarStepSizeUnit GetForbiddenUnit() => CalendarStepSizeUnit.Unknown;
-
-    private static IEpoch GetNullEpoch() => null!;
-    private static IEpoch GetValidStartEpoch() => new JulianDay(0);
-    private static IEpoch GetValidStopEpoch() => new JulianDay(1);
-    private static IEpoch GetEarlierStopEpoch() => new JulianDay(-1);
 }
