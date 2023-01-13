@@ -7,13 +7,12 @@ using SharpHorizons.Query.Epoch;
 using SharpMeasures;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-/// <inheritdoc cref="IQueryEpochComposer"/>
-[SuppressMessage("Performance", "CA1812: Avoid uninstantiated internal classes", Justification = "Used in DI.")]
-internal sealed class QueryEpochComposer : IQueryEpochComposer
+/// <summary>Composes <see cref="string"/> that describe an <see cref="IEpoch"/> that is part of a query.</summary>
+internal sealed class QueryEpochComposer
 {
     /// <summary>The <see cref="JulianDay"/> of the change from the Julian calendar to the Gregorian calendar in Horizons.</summary>
     private static JulianDay CalendarChangeJulianDay { get; } = new(2299160.5);
@@ -23,23 +22,35 @@ internal sealed class QueryEpochComposer : IQueryEpochComposer
 
     /// <inheritdoc cref="QueryEpochComposer"/>
     /// <param name="timeSystemOffsetProvider"><inheritdoc cref="TimeSystemOffsetProvider" path="/summary"/></param>
-    public QueryEpochComposer(ITimeSystemOffsetProvider? timeSystemOffsetProvider = null)
+    public QueryEpochComposer(ITimeSystemOffsetProvider timeSystemOffsetProvider)
     {
-        TimeSystemOffsetProvider = timeSystemOffsetProvider ?? new ZeroTimeSystemOffsetProvider();
+        TimeSystemOffsetProvider = timeSystemOffsetProvider;
     }
 
-    string IQueryEpochComposer.Compose(QueryEpoch queryEpoch)
+    /// <summary>Composes a <see cref="string"/> describing <paramref name="epoch"/>, according to <paramref name="format"/>, <paramref name="calendar"/>, <paramref name="timeSystem"/>, and <paramref name="offset"/>.</summary>
+    /// <param name="epoch">The composed <see cref="string"/> describes this <see cref="IEpoch"/>.</param>
+    /// <param name="format">The <see cref="EpochFormat"/> of the <paramref name="epoch"/>.</param>
+    /// <param name="calendar">The <see cref="CalendarType"/> used to express the <paramref name="epoch"/>.</param>
+    /// <param name="timeSystem">The <see cref="TimeSystem"/> used to express the <paramref name="epoch"/>.</param>
+    /// <param name="offset">The <see cref="Time"/> offset to UTC used to express the <paramref name="epoch"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidEnumArgumentException"/>
+    public string Compose(IEpoch epoch, EpochFormat format, CalendarType calendar, TimeSystem timeSystem, Time offset)
     {
-        Validate(queryEpoch);
+        ValidateCalendar(calendar);
+        ValidateTimeSystem(timeSystem);
+        ValidateOffset(offset);
 
-        var julianDay = ExpressEpoch(queryEpoch.Epoch, queryEpoch.TimeSystem, queryEpoch.Offset);
+        var julianDay = ExpressEpoch(epoch, timeSystem, offset);
 
-        return queryEpoch.Format switch
+        return format switch
         {
-            EpochFormat.CalendarDates => ComposeAsDate(julianDay, queryEpoch.Calendar),
+            EpochFormat.CalendarDates => ComposeAsDate(julianDay, calendar),
             EpochFormat.JulianDays => ComposeAsDayNumbers(julianDay.Day),
             EpochFormat.ModifiedJulianDays => ComposeAsDayNumbers(ModifiedJulianDay.FromJulianDay(julianDay).Day),
-            _ => throw ArgumentExceptionFactory.InvalidState<QueryEpoch>(nameof(queryEpoch))
+            EpochFormat.Unknown => throw ArgumentExceptionFactory.UnsupportedEnumValue(format),
+            _ => throw InvalidEnumArgumentExceptionFactory.Create(format)
         };
     }
 
@@ -106,49 +117,11 @@ internal sealed class QueryEpochComposer : IQueryEpochComposer
         return new(epoch.ToJulianDay().Day - offset.Days + timeSystemOffset.Days);
     }
 
-    /// <summary>Validates the <see cref="QueryEpoch"/> <paramref name="queryEpoch"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
-    /// <param name="queryEpoch">This <see cref="QueryEpoch"/> is validated.</param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="queryEpoch"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    private static void Validate(QueryEpoch queryEpoch, [CallerArgumentExpression(nameof(queryEpoch))] string? argumentExpression = null)
-    {
-        ArgumentNullException.ThrowIfNull(queryEpoch, argumentExpression);
-
-        try
-        {
-            Validate(queryEpoch.Format);
-
-            if (queryEpoch.Format is EpochFormat.CalendarDates)
-            {
-                Validate(queryEpoch.Calendar);
-            }
-
-            Validate(queryEpoch.TimeSystem);
-        }
-        catch (ArgumentException e)
-        {
-            throw ArgumentExceptionFactory.InvalidState<QueryEpoch>(argumentExpression, e);
-        }
-    }
-
-    /// <summary>Validates the <see cref="EpochFormat"/> <paramref name="format"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
-    /// <param name="format">This <see cref="EpochFormat"/> is validated.</param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="format"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    private static void Validate(EpochFormat format, [CallerArgumentExpression(nameof(format))] string? argumentExpression = null)
-    {
-        if (format is EpochFormat.Unknown)
-        {
-            throw ArgumentExceptionFactory.UnsupportedEnumValue(format, argumentExpression);
-        }
-    }
-
     /// <summary>Validates the <see cref="CalendarType"/> <paramref name="calendar"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
     /// <param name="calendar">This <see cref="CalendarType"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="calendar"/>.</param>
     /// <exception cref="ArgumentException"/>
-    private static void Validate(CalendarType calendar, [CallerArgumentExpression(nameof(calendar))] string? argumentExpression = null)
+    private static void ValidateCalendar(CalendarType calendar, [CallerArgumentExpression(nameof(calendar))] string? argumentExpression = null)
     {
         if (calendar is CalendarType.Unknown)
         {
@@ -160,11 +133,20 @@ internal sealed class QueryEpochComposer : IQueryEpochComposer
     /// <param name="timeSystem">This <see cref="TimeSystem"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="timeSystem"/>.</param>
     /// <exception cref="ArgumentException"/>
-    private static void Validate(TimeSystem timeSystem, [CallerArgumentExpression(nameof(timeSystem))] string? argumentExpression = null)
+    private static void ValidateTimeSystem(TimeSystem timeSystem, [CallerArgumentExpression(nameof(timeSystem))] string? argumentExpression = null)
     {
         if (timeSystem is TimeSystem.Unknown)
         {
             throw ArgumentExceptionFactory.UnsupportedEnumValue(timeSystem, argumentExpression);
         }
+    }
+
+    /// <summary>Validates the <see cref="Time"/> <paramref name="offset"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <param name="offset">This <see cref="Time"/> is validated.</param>
+    /// <param name="argumentExpression">The expression used as the argument for <paramref name="offset"/>.</param>
+    /// <exception cref="ArgumentException"/>
+    private static void ValidateOffset(Time offset, [CallerArgumentExpression(nameof(offset))] string? argumentExpression = null)
+    {
+        SharpMeasuresValidation.Validate(offset, argumentExpression);
     }
 }

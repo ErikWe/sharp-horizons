@@ -183,8 +183,6 @@ public static class IServiceCollectionExtensions
         services.AddSingleton<IOriginCoordinateTypeComposer<CylindricalCoordinate>, SharpHorizons.Query.Arguments.Composers.Origin.CylindricalCoordinateComposer>();
         services.AddSingleton<IOriginCoordinateTypeComposer<GeodeticCoordinate>, SharpHorizons.Query.Arguments.Composers.Origin.GeodeticCoordinateComposer>();
 
-        services.AddSingleton<IQueryEpochComposer, QueryEpochComposer>();
-
         services.AddSingleton<IEpochCollectionComposer<IEpochCollection>, EpochCollectionComposer>();
         services.AddSingleton<IEpochCollectionFormatComposer, EpochCollectionFormatComposer>();
 
