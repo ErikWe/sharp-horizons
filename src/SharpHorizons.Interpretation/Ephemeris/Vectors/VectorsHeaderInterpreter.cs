@@ -14,7 +14,6 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<MutableVectorsHeader>, IVectorsHeaderInterpreter
 {
     /// <inheritdoc cref="VectorsHeaderInterpreter"/>
-    /// <param name="interpretationOptionsProvider"><inheritdoc cref="IInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="targetInterpretationOptionsProvider"><inheritdoc cref="ITargetInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="originInterpretationOptionsProvider"><inheritdoc cref="IOriginInterpretationOptionsProvider" path="/summary"/></param>
@@ -23,10 +22,10 @@ internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<Mut
     /// <param name="targetHeaderInterpretationProvider"><inheritdoc cref="IEphemerisTargetHeaderInterpretationProvider" path="/summary"/></param>
     /// <param name="originHeaderInterpretationProvider"><inheritdoc cref="IEphemerisOriginHeaderInterpretationProvider" path="/summary"/></param>
     /// <param name="vectorsInterpretationProvider"><inheritdoc cref="IVectorsHeaderInterpretationProvider" path="/summary"/></param>
-    public VectorsHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, ITargetInterpretationOptionsProvider targetInterpretationOptionsProvider, IOriginInterpretationOptionsProvider originInterpretationOptionsProvider,
+    public VectorsHeaderInterpreter(IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, ITargetInterpretationOptionsProvider targetInterpretationOptionsProvider, IOriginInterpretationOptionsProvider originInterpretationOptionsProvider,
         IVectorsInterpretationOptionsProvider vectorsInterpretationOptionsProvider, IEphemerisHeaderInterpretationProvider ephemerisHeaderInterpretationProvider, IEphemerisTargetHeaderInterpretationProvider targetHeaderInterpretationProvider,
         IEphemerisOriginHeaderInterpretationProvider originHeaderInterpretationProvider, IVectorsHeaderInterpretationProvider vectorsInterpretationProvider)
-        : base(interpretationOptionsProvider, ephemerisInterpretationOptionsProvider)
+        : base(ephemerisInterpretationOptionsProvider)
     {
         RegisterFirstLineInterpreter(ephemerisHeaderInterpretationProvider.QueryEpochInterpreter, (queryTime, header) => header.QueryEpoch = queryTime);
 

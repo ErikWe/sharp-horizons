@@ -18,9 +18,6 @@ internal sealed class InterpretationOptions
     /// <inheritdoc cref="IInterpretationOptionsProvider.HorizonsTimeZoneID"/>
     public string HorizonsTimeZoneID { get; set; } = null!;
 
-    /// <inheritdoc cref="IInterpretationOptionsProvider.BlockSeparator"/>
-    public string BlockSeparator { get; set; } = null!;
-
     /// <inheritdoc cref="IInterpretationOptionsProvider.UnavailableText"/>
     public string UnavailableText { get; set; } = null!;
 
@@ -29,7 +26,6 @@ internal sealed class InterpretationOptions
     public static void ApplyDefaults(InterpretationOptions options)
     {
         options.HorizonsTimeZoneID = DefaultInterpretationSettings.Default.HorizonsTimeZoneID;
-        options.BlockSeparator = DefaultInterpretationSettings.Default.BlockSeparator;
         options.UnavailableText = DefaultInterpretationSettings.Default.UnavailableText;
     }
 }
