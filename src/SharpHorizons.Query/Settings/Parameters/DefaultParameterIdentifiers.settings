@@ -5,9 +5,6 @@
     <Setting Name="Command" Type="System.String" Scope="Application">
       <Value Profile="(Default)">COMMAND</Value>
     </Setting>
-    <Setting Name="ElementLabels" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">ELM_LABELS</Value>
-    </Setting>
     <Setting Name="EphemerisType" Type="System.String" Scope="Application">
       <Value Profile="(Default)">EPHEM_TYPE</Value>
     </Setting>

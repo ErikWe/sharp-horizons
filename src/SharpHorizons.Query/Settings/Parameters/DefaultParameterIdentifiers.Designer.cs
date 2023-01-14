@@ -34,15 +34,6 @@ namespace SharpHorizons.Settings.Query.Parameters {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ELM_LABELS")]
-        public string ElementLabels {
-            get {
-                return ((string)(this["ElementLabels"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EPHEM_TYPE")]
         public string EphemerisType {
             get {
