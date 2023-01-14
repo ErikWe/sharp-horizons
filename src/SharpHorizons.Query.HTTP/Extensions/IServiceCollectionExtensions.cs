@@ -34,7 +34,7 @@ public static class IServiceCollectionExtensions
 
         services.AddSharpHorizonsHTTPQuery();
 
-        services.Configure<HTTPQueryOptions>(configuration.GetSection(HTTPQueryOptions.Section));
+        services.Configure<HTTPQueryOptions>(configuration);
 
         return services;
     }
