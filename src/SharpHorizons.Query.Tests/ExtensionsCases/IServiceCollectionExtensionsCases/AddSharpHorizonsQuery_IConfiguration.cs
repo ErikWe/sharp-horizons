@@ -12,6 +12,7 @@ using SharpHorizons.Query.Result;
 
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 using Xunit;
 
@@ -48,36 +49,36 @@ public class AddSharpHorizonsQuery_IConfiguration
 
         var queryResultOptions = host.Services.GetRequiredService<IQueryResultOptionsProvider>();
 
-        Assert.Equal(CustomConfiguration.RawTextSource, queryResultOptions.RawTextSource);
-        Assert.Equal(CustomConfiguration.RawTextVersion, queryResultOptions.RawTextVersion);
+        Assert.Equal(CustomConfiguration.ExpectedQueryResultProvider.RawTextSource, queryResultOptions.RawTextSource);
+        Assert.Equal(CustomConfiguration.ExpectedQueryResultProvider.RawTextVersion, queryResultOptions.RawTextVersion);
 
         var queryParameterIdentifierOptions = host.Services.GetRequiredService<IQueryParameterIdentifierProvider>();
 
-        Assert.Equal(CustomConfiguration.Command, queryParameterIdentifierOptions.Command.Identifier);
-        Assert.Equal(CustomConfiguration.EphemerisType, queryParameterIdentifierOptions.EphemerisType.Identifier);
-        Assert.Equal(CustomConfiguration.EpochCollection, queryParameterIdentifierOptions.EpochCollection.Identifier);
-        Assert.Equal(CustomConfiguration.EpochCollectionFormat, queryParameterIdentifierOptions.EpochCollectionFormat.Identifier);
-        Assert.Equal(CustomConfiguration.GenerateEphemeris, queryParameterIdentifierOptions.GenerateEphemeris.Identifier);
-        Assert.Equal(CustomConfiguration.ObjectDataInclusion, queryParameterIdentifierOptions.ObjectDataInclusion.Identifier);
-        Assert.Equal(CustomConfiguration.Origin, queryParameterIdentifierOptions.Origin.Identifier);
-        Assert.Equal(CustomConfiguration.OriginCoordinate, queryParameterIdentifierOptions.OriginCoordinate.Identifier);
-        Assert.Equal(CustomConfiguration.OriginCoordinateType, queryParameterIdentifierOptions.OriginCoordinateType.Identifier);
-        Assert.Equal(CustomConfiguration.OutputFormat, queryParameterIdentifierOptions.OutputFormat.Identifier);
-        Assert.Equal(CustomConfiguration.OutputUnits, queryParameterIdentifierOptions.OutputUnits.Identifier);
-        Assert.Equal(CustomConfiguration.ReferencePlane, queryParameterIdentifierOptions.ReferencePlane.Identifier);
-        Assert.Equal(CustomConfiguration.ReferenceSystem, queryParameterIdentifierOptions.ReferenceSystem.Identifier);
-        Assert.Equal(CustomConfiguration.StartEpoch, queryParameterIdentifierOptions.StartEpoch.Identifier);
-        Assert.Equal(CustomConfiguration.StepSize, queryParameterIdentifierOptions.StepSize.Identifier);
-        Assert.Equal(CustomConfiguration.StopEpoch, queryParameterIdentifierOptions.StopEpoch.Identifier);
-        Assert.Equal(CustomConfiguration.TimeDeltaInclusion, queryParameterIdentifierOptions.TimeDeltaInclusion.Identifier);
-        Assert.Equal(CustomConfiguration.TimePrecision, queryParameterIdentifierOptions.TimePrecision.Identifier);
-        Assert.Equal(CustomConfiguration.ValueSeparation, queryParameterIdentifierOptions.ValueSeparation.Identifier);
-        Assert.Equal(CustomConfiguration.VectorCorrection, queryParameterIdentifierOptions.VectorCorrection.Identifier);
-        Assert.Equal(CustomConfiguration.VectorLabels, queryParameterIdentifierOptions.VectorLabels.Identifier);
-        Assert.Equal(CustomConfiguration.VectorTableContent, queryParameterIdentifierOptions.VectorTableContent.Identifier);
-        Assert.Equal(CustomConfiguration.CalendarType, queryParameterIdentifierOptions.CalendarType.Identifier);
-        Assert.Equal(CustomConfiguration.TimeSystem, queryParameterIdentifierOptions.TimeSystem.Identifier);
-        Assert.Equal(CustomConfiguration.TimeZone, queryParameterIdentifierOptions.TimeZone.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.Command.Identifier, queryParameterIdentifierOptions.Command.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.EphemerisType.Identifier, queryParameterIdentifierOptions.EphemerisType.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.EpochCollection.Identifier, queryParameterIdentifierOptions.EpochCollection.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.EpochCollectionFormat.Identifier, queryParameterIdentifierOptions.EpochCollectionFormat.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.GenerateEphemeris.Identifier, queryParameterIdentifierOptions.GenerateEphemeris.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.ObjectDataInclusion.Identifier, queryParameterIdentifierOptions.ObjectDataInclusion.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.Origin.Identifier, queryParameterIdentifierOptions.Origin.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.OriginCoordinate.Identifier, queryParameterIdentifierOptions.OriginCoordinate.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.OriginCoordinateType.Identifier, queryParameterIdentifierOptions.OriginCoordinateType.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.OutputFormat.Identifier, queryParameterIdentifierOptions.OutputFormat.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.OutputUnits.Identifier, queryParameterIdentifierOptions.OutputUnits.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.ReferencePlane.Identifier, queryParameterIdentifierOptions.ReferencePlane.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.ReferenceSystem.Identifier, queryParameterIdentifierOptions.ReferenceSystem.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.StartEpoch.Identifier, queryParameterIdentifierOptions.StartEpoch.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.StepSize.Identifier, queryParameterIdentifierOptions.StepSize.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.StopEpoch.Identifier, queryParameterIdentifierOptions.StopEpoch.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.TimeDeltaInclusion.Identifier, queryParameterIdentifierOptions.TimeDeltaInclusion.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.TimePrecision.Identifier, queryParameterIdentifierOptions.TimePrecision.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.ValueSeparation.Identifier, queryParameterIdentifierOptions.ValueSeparation.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.VectorCorrection.Identifier, queryParameterIdentifierOptions.VectorCorrection.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.VectorLabels.Identifier, queryParameterIdentifierOptions.VectorLabels.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.VectorTableContent.Identifier, queryParameterIdentifierOptions.VectorTableContent.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.CalendarType.Identifier, queryParameterIdentifierOptions.CalendarType.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.TimeSystem.Identifier, queryParameterIdentifierOptions.TimeSystem.Identifier);
+        Assert.Equal(CustomConfiguration.ExpectedQueryParameterIdentifierProvider.TimeZone.Identifier, queryParameterIdentifierOptions.TimeZone.Identifier);
     }
 
     private static IServiceCollection GetServiceCollection() => new ServiceCollection();
@@ -100,78 +101,75 @@ public class AddSharpHorizonsQuery_IConfiguration
 
         return host;
 
-        static void configureConfiguration(IConfigurationBuilder configuration) => configuration.AddInMemoryCollection(keyValuePairOptions());
+        static void configureConfiguration(IConfigurationBuilder configuration) => configuration.AddInMemoryCollection(CustomConfiguration.Dictionary);
         static void configureServices(HostBuilderContext context, IServiceCollection services) => services.AddSharpHorizonsQuery(context.Configuration);
-
-        static IEnumerable<KeyValuePair<string, string?>> keyValuePairOptions()
-        {
-            foreach (var (key, value) in tupleOptions())
-            {
-                yield return new KeyValuePair<string, string?>(key, value);
-            }
-        }
-
-        static IEnumerable<(string Key, string? Value)> tupleOptions() => new (string, string?)[]
-        {
-            ("Result:RawTextSource", CustomConfiguration.RawTextSource),
-            ("Result:RawTextVersion", CustomConfiguration.RawTextVersion),
-            ("ParameterIdentifiers:Command", CustomConfiguration.Command),
-            ("ParameterIdentifiers:EphemerisType", CustomConfiguration.EphemerisType),
-            ("ParameterIdentifiers:EpochCollection", CustomConfiguration.EpochCollection),
-            ("ParameterIdentifiers:EpochCollectionFormat", CustomConfiguration.EpochCollectionFormat),
-            ("ParameterIdentifiers:GenerateEphemeris", CustomConfiguration.GenerateEphemeris),
-            ("ParameterIdentifiers:ObjectDataInclusion", CustomConfiguration.ObjectDataInclusion),
-            ("ParameterIdentifiers:Origin", CustomConfiguration.Origin),
-            ("ParameterIdentifiers:OriginCoordinate", CustomConfiguration.OriginCoordinate),
-            ("ParameterIdentifiers:OriginCoordinateType", CustomConfiguration.OriginCoordinateType),
-            ("ParameterIdentifiers:OutputFormat", CustomConfiguration.OutputFormat),
-            ("ParameterIdentifiers:OutputUnits", CustomConfiguration.OutputUnits),
-            ("ParameterIdentifiers:ReferencePlane", CustomConfiguration.ReferencePlane),
-            ("ParameterIdentifiers:ReferenceSystem", CustomConfiguration.ReferenceSystem),
-            ("ParameterIdentifiers:StartEpoch", CustomConfiguration.StartEpoch),
-            ("ParameterIdentifiers:StepSize", CustomConfiguration.StepSize),
-            ("ParameterIdentifiers:StopEpoch", CustomConfiguration.StopEpoch),
-            ("ParameterIdentifiers:TimeDeltaInclusion", CustomConfiguration.TimeDeltaInclusion),
-            ("ParameterIdentifiers:TimePrecision", CustomConfiguration.TimePrecision),
-            ("ParameterIdentifiers:ValueSeparation", CustomConfiguration.ValueSeparation),
-            ("ParameterIdentifiers:VectorCorrection", CustomConfiguration.VectorCorrection),
-            ("ParameterIdentifiers:VectorLabels", CustomConfiguration.VectorLabels),
-            ("ParameterIdentifiers:VectorTableContent", CustomConfiguration.VectorTableContent),
-            ("ParameterIdentifiers:CalendarType", CustomConfiguration.CalendarType),
-            ("ParameterIdentifiers:TimeSystem", CustomConfiguration.TimeSystem),
-            ("ParameterIdentifiers:TimeZone", CustomConfiguration.TimeZone)
-        };
     }
 
     private static class CustomConfiguration
     {
-        public static string RawTextSource => "Result-RawTextSource";
-        public static string RawTextVersion => "Result-RawTextVersion";
+        public static IReadOnlyDictionary<string, string?> Dictionary { get; }
 
-        public static string Command => "ParameterIdentifiers-Command";
-        public static string EphemerisType => "ParameterIdentifiers-EphemerisType";
-        public static string EpochCollection => "ParameterIdentifiers-EpochCollection";
-        public static string EpochCollectionFormat => "ParameterIdentifiers-EpochCollectionFormat";
-        public static string GenerateEphemeris => "ParameterIdentifiers-GenerateEphemeris";
-        public static string ObjectDataInclusion => "ParameterIdentifiers-ObjectDataInclusion";
-        public static string Origin => "ParameterIdentifiers-Origin";
-        public static string OriginCoordinate => "ParameterIdentifiers-OriginCoordinate";
-        public static string OriginCoordinateType => "ParameterIdentifiers-OriginCoordinateType";
-        public static string OutputFormat => "ParameterIdentifiers-OutputFormat";
-        public static string OutputUnits => "ParameterIdentifiers-OutputUnits";
-        public static string ReferencePlane => "ParameterIdentifiers-ReferencePlane";
-        public static string ReferenceSystem => "ParameterIdentifiers-ReferenceSystem";
-        public static string StartEpoch => "ParameterIdentifiers-StartEpoch";
-        public static string StepSize => "ParameterIdentifiers-StepSize";
-        public static string StopEpoch => "ParameterIdentifiers-StopEpoch";
-        public static string TimeDeltaInclusion => "ParameterIdentifiers-TimeDeltaInclusion";
-        public static string TimePrecision => "ParameterIdentifiers-TimePrecision";
-        public static string ValueSeparation => "ParameterIdentifiers-ValueSeparation";
-        public static string VectorCorrection => "ParameterIdentifiers-VectorCorrection";
-        public static string VectorLabels => "ParameterIdentifiers-VectorLabels";
-        public static string VectorTableContent => "ParameterIdentifiers-VectorTableContent";
-        public static string CalendarType => "ParameterIdentifiers-CalendarType";
-        public static string TimeSystem => "ParameterIdentifiers-TimeSystem";
-        public static string TimeZone => "ParameterIdentifiers-TimeZone";
+        public static IQueryResultOptionsProvider ExpectedQueryResultProvider { get; }
+        public static IQueryParameterIdentifierProvider ExpectedQueryParameterIdentifierProvider { get; }
+
+        private static (string, Expression<Func<IQueryResultOptionsProvider, string>>)[] QueryResultKeys { get; } = new (string, Expression<Func<IQueryResultOptionsProvider, string>>)[]
+        {
+            ("Result:RawTextSource", (provider) => provider.RawTextSource),
+            ("Result:RawTextVersion", (provider) => provider.RawTextVersion)
+        };
+
+        private static (string, Expression<Func<IQueryParameterIdentifierProvider, string>>)[] QueryParameterIdentifierKeys { get; } = new (string, Expression<Func<IQueryParameterIdentifierProvider, string>>)[]
+        {
+            ("ParameterIdentifiers:Command", (provider) => provider.Command.Identifier),
+            ("ParameterIdentifiers:EphemerisType", (provider) => provider.EphemerisType.Identifier),
+            ("ParameterIdentifiers:EpochCollection", (provider) => provider.EpochCollection.Identifier),
+            ("ParameterIdentifiers:EpochCollectionFormat", (provider) => provider.EpochCollectionFormat.Identifier),
+            ("ParameterIdentifiers:GenerateEphemeris", (provider) => provider.GenerateEphemeris.Identifier),
+            ("ParameterIdentifiers:ObjectDataInclusion", (provider) => provider.ObjectDataInclusion.Identifier),
+            ("ParameterIdentifiers:Origin", (provider) => provider.Origin.Identifier),
+            ("ParameterIdentifiers:OriginCoordinate", (provider) => provider.OriginCoordinate.Identifier),
+            ("ParameterIdentifiers:OriginCoordinateType", (provider) => provider.OriginCoordinateType.Identifier),
+            ("ParameterIdentifiers:OutputFormat", (provider) => provider.OutputFormat.Identifier),
+            ("ParameterIdentifiers:OutputUnits", (provider) => provider.OutputUnits.Identifier),
+            ("ParameterIdentifiers:ReferencePlane", (provider) => provider.ReferencePlane.Identifier),
+            ("ParameterIdentifiers:ReferenceSystem", (provider) => provider.ReferenceSystem.Identifier),
+            ("ParameterIdentifiers:StartEpoch", (provider) => provider.StartEpoch.Identifier),
+            ("ParameterIdentifiers:StepSize", (provider) => provider.StepSize.Identifier),
+            ("ParameterIdentifiers:StopEpoch", (provider) => provider.StopEpoch.Identifier),
+            ("ParameterIdentifiers:TimeDeltaInclusion", (provider) => provider.TimeDeltaInclusion.Identifier),
+            ("ParameterIdentifiers:TimePrecision", (provider) => provider.TimePrecision.Identifier),
+            ("ParameterIdentifiers:ValueSeparation", (provider) => provider.ValueSeparation.Identifier),
+            ("ParameterIdentifiers:VectorCorrection", (provider) => provider.VectorCorrection.Identifier),
+            ("ParameterIdentifiers:VectorLabels", (provider) => provider.VectorLabels.Identifier),
+            ("ParameterIdentifiers:VectorTableContent", (provider) => provider.VectorTableContent.Identifier),
+            ("ParameterIdentifiers:CalendarType", (provider) => provider.CalendarType.Identifier),
+            ("ParameterIdentifiers:TimeSystem", (provider) => provider.TimeSystem.Identifier),
+            ("ParameterIdentifiers:TimeZone", (provider) => provider.TimeZone.Identifier)
+        };
+
+        static CustomConfiguration()
+        {
+            Dictionary<string, string?> dictionary = new(QueryResultKeys.Length + QueryParameterIdentifierKeys.Length);
+
+            Mock<IQueryResultOptionsProvider> queryResultMock = new();
+            Mock<IQueryParameterIdentifierProvider> queryParameterIdentifierMock = new();
+
+            foreach (var (key, action) in QueryResultKeys)
+            {
+                dictionary[key] = $"CustomValue-{key}";
+                queryResultMock.SetupGet(action).Returns(key);
+            }
+
+            foreach (var (key, action) in QueryParameterIdentifierKeys)
+            {
+                dictionary[key] = $"CustomValue-{key}";
+                queryParameterIdentifierMock.SetupGet(action).Returns(key);
+            }
+
+            Dictionary = dictionary;
+
+            ExpectedQueryResultProvider = queryResultMock.Object;
+            ExpectedQueryParameterIdentifierProvider = queryParameterIdentifierMock.Object;
+        }
     }
 }
