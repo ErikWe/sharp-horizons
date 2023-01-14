@@ -156,14 +156,18 @@ public class AddSharpHorizonsQuery_IConfiguration
 
             foreach (var (key, action) in QueryResultKeys)
             {
-                dictionary[key] = $"CustomValue-{key}";
-                queryResultMock.SetupGet(action).Returns(key);
+                var result = $"CustomValue-{key}";
+
+                dictionary[key] = result;
+                queryResultMock.SetupGet(action).Returns(result);
             }
 
             foreach (var (key, action) in QueryParameterIdentifierKeys)
             {
-                dictionary[key] = $"CustomValue-{key}";
-                queryParameterIdentifierMock.SetupGet(action).Returns(key);
+                var result = $"CustomValue-{key}";
+
+                dictionary[key] = result;
+                queryParameterIdentifierMock.SetupGet(action).Returns(result);
             }
 
             Dictionary = dictionary;
