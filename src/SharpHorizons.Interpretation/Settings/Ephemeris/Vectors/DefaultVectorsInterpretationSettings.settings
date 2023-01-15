@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Settings.Interpretation.Ephemeris.Vectors" GeneratedClassName="DefaultVectorsInterpretation">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharpHorizons.Settings.Interpretation.Ephemeris.Vectors" GeneratedClassName="DefaultVectorsInterpretationSettings">
   <Profiles />
   <Settings>
     <Setting Name="OutputUnits" Type="System.String" Scope="Application">
@@ -13,6 +13,9 @@
     </Setting>
     <Setting Name="ReferencePlane" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Reference frame</Value>
+    </Setting>
+    <Setting Name="SmallPerturbers" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Small perturbers</Value>
     </Setting>
   </Settings>
 </SettingsFile>

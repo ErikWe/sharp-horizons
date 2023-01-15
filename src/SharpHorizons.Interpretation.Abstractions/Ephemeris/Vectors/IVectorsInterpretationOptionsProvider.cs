@@ -16,4 +16,7 @@ public interface IVectorsInterpretationOptionsProvider
 
     /// <summary>The key corresponding to the <see cref="Query.ReferencePlane"/>.</summary>
     public abstract string ReferencePlane { get; }
+
+    /// <summary>The key corresponding to the inclusion of small-body perturbers.</summary>
+    public abstract string SmallPerturbers { get; }
 }

@@ -30,9 +30,9 @@ internal abstract class AEphemerisEntryInterpreter<TEphemerisEntry, THeader> whe
         InterpretationResolver = interpretationResolver;
     }
 
-    /// <summary>Interprets a collection of <typeparamref name="TEphemerisEntry"/> from <paramref name="queryResult"/>.</summary>
+    /// <summary>Attempts to interpret <paramref name="queryResult"/> as an <typeparamref name="TEphemerisEntry"/>.</summary>
     /// <param name="header">The <typeparamref name="THeader"/>, representing the header of the <see cref="QueryResult"/>.</param>
-    /// <param name="queryResult">The <see cref="QueryResult"/>, containing the <typeparamref name="TEphemerisEntry"/>.</param>
+    /// <param name="queryResult">This <see cref="QueryResult"/> is interpreted as an <typeparamref name="TEphemerisEntry"/>, if possible.</param>
     protected Optional<TEphemerisEntry> Interpret(THeader header, QueryResult queryResult)
     {
         var linesEnumerator = SplitLines(queryResult.Content).GetEnumerator();

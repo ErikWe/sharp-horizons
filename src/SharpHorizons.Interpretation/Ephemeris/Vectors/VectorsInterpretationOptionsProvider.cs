@@ -24,4 +24,5 @@ internal sealed class VectorsInterpretationOptionsProvider : IVectorsInterpretat
     string IVectorsInterpretationOptionsProvider.VectorCorrection => Options.VectorCorrection;
     string IVectorsInterpretationOptionsProvider.VectorTableContent => Options.VectorTableContent;
     string IVectorsInterpretationOptionsProvider.ReferencePlane => Options.ReferencePlane;
+    string IVectorsInterpretationOptionsProvider.SmallPerturbers => Options.SmallPerturbers;
 }

@@ -21,6 +21,5 @@ internal sealed class InterpretationOptionsProvider : IInterpretationOptionsProv
     }
 
     string IInterpretationOptionsProvider.HorizonsTimeZoneID => Options.HorizonsTimeZoneID;
-    string IInterpretationOptionsProvider.BlockSeparator => Options.BlockSeparator;
     string IInterpretationOptionsProvider.UnavailableText => Options.UnavailableText;
 }

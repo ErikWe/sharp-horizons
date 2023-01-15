@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 
 using SharpHorizons.Settings.Interpretation.Ephemeris;
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
@@ -32,7 +31,6 @@ internal sealed class EphemerisInterpretationOptionsProvider : IEphemerisInterpr
     string IEphemerisInterpretationOptionsProvider.TimeSystem => Options.TimeSystem;
     string IEphemerisInterpretationOptionsProvider.TimeZoneOffset => Options.TimeZoneOffset;
     string IEphemerisInterpretationOptionsProvider.StepSize => Options.StepSize;
-    IEnumerable<string> IEphemerisInterpretationOptionsProvider.SmallPerturbers => Options.SmallPerturbers;
     string IEphemerisInterpretationOptionsProvider.ReferenceSystem => Options.ReferenceSystem;
     string IEphemerisInterpretationOptionsProvider.StartOfEphemeris => Options.StartOfEphemeris;
     string IEphemerisInterpretationOptionsProvider.EndOfEphemeris => Options.EndOfEphemeris;

@@ -13,9 +13,6 @@ using System.Text;
 /// <typeparam name="THeader">The type of the interpreted <see cref="IEphemerisHeader"/>.</typeparam>
 internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEphemerisHeader
 {
-    /// <inheritdoc cref="IInterpretationOptionsProvider"/>
-    private IInterpretationOptionsProvider InterpretationOptionsProvider { get; }
-
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider"/>
     private IEphemerisInterpretationOptionsProvider EphemerisInterpretationOptionsProvider { get; }
 
@@ -26,11 +23,9 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     private Dictionary<string, ICollection<Func<QueryResult, THeader, THeader>>> KeyInterpreters { get; } = new();
 
     /// <inheritdoc cref="AEphemerisHeaderInterpreter{THeader}"/>
-    /// <param name="interpretationOptionsProvider"><inheritdoc cref="InterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="EphemerisInterpretationOptionsProvider" path="/summary"/></param>
-    public AEphemerisHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider)
+    public AEphemerisHeaderInterpreter(IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider)
     {
-        InterpretationOptionsProvider = interpretationOptionsProvider;
         EphemerisInterpretationOptionsProvider = ephemerisInterpretationOptionsProvider;
     }
 
@@ -108,11 +103,9 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
             }
         }
 
-        var blockSeparatorCount = 0;
-
         while (linesEnumerator.MoveNext())
         {
-            if (CheckExitKeyIterator(linesEnumerator.Current, ref blockSeparatorCount))
+            if (CheckExitKeyIterator(linesEnumerator.Current))
             {
                 break;
             }
@@ -172,19 +165,8 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
     }
 
     /// <summary>Checks whether the <see cref="IEphemerisHeader"/> has been iterated.</summary>
-    /// <param name="line">A line of the <see cref="IEphemerisHeader"/>.</param>
-    /// <param name="blockSeparatorCount">The number of block separators that has been encountered.</param>
-    private bool CheckExitKeyIterator(string line, ref int blockSeparatorCount)
-    {
-        if (line.StartsWith(InterpretationOptionsProvider.BlockSeparator, StringComparison.Ordinal) is false)
-        {
-            return false;
-        }
-
-        blockSeparatorCount += 1;
-
-        return blockSeparatorCount == EphemerisInterpretationOptionsProvider.EphemerisDataBlockCount;
-    }
+    /// <param name="line">The current line of the iteration of the <see cref="IEphemerisHeader"/>.</param>
+    private bool CheckExitKeyIterator(string line) => line == EphemerisInterpretationOptionsProvider.StartOfEphemeris;
 
     /// <summary>Interprets a <paramref name="line"/> of the <see cref="IEphemerisHeader"/>, resulting in a new instance of <typeparamref name="THeader"/>, which was based on <paramref name="header"/>.</summary>
     /// <param name="line">A line of the <see cref="IEphemerisHeader"/>.</param>
@@ -220,7 +202,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
 
     /// <summary>Interprets the <see cref="EphemerisQuantityTable"/> from <paramref name="linesEnumerator"/>.</summary>
     /// <param name="linesEnumerator">Used to iterate the lines of the <see cref="IEphemerisHeader"/>.</param>
-    private EphemerisQuantityTable InterpretEphemerisQuantities(IEnumerator<string> linesEnumerator)
+    private static EphemerisQuantityTable InterpretEphemerisQuantities(IEnumerator<string> linesEnumerator)
     {
         Dictionary<EphemerisQuantityTableIndex, EphemerisQuantityIdentifier> quantities = new();
 
@@ -228,7 +210,7 @@ internal abstract class AEphemerisHeaderInterpreter<THeader> where THeader : IEp
 
         while (linesEnumerator.MoveNext())
         {
-            if (linesEnumerator.Current.StartsWith(InterpretationOptionsProvider.BlockSeparator, StringComparison.Ordinal))
+            if (linesEnumerator.Current[0] is '*')
             {
                 break;
             }

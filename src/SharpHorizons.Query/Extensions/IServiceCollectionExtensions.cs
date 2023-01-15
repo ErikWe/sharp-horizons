@@ -53,6 +53,7 @@ public static class IServiceCollectionExtensions
     /// <summary>Adds query-related services required by SharpHorizons to the <see cref="IServiceCollection"/> <paramref name="services"/>, with configuration provided by the <see cref="IConfiguration"/> <paramref name="configuration"/>.</summary>
     /// <param name="services">Query-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     /// <param name="configuration">This <see cref="IConfiguration"/> provides configuration for the added SharpHorizons services.</param>
+    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     public static IServiceCollection AddSharpHorizonsQuery(this IServiceCollection services, IConfiguration configuration)
     {

@@ -40,14 +40,5 @@ namespace SharpHorizons.Settings.Interpretation {
                 return ((string)(this["UnavailableText"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("*****")]
-        public string BlockSeparator {
-            get {
-                return ((string)(this["BlockSeparator"]));
-            }
-        }
     }
 }

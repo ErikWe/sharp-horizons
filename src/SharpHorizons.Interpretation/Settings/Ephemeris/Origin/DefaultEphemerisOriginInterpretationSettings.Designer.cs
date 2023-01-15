@@ -52,7 +52,7 @@ namespace SharpHorizons.Settings.Interpretation.Ephemeris.Origin {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("(used defined site below)")]
+        [global::System.Configuration.DefaultSettingValueAttribute("(user defined site below)")]
         public string CustomSite {
             get {
                 return ((string)(this["CustomSite"]));

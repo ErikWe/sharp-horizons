@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class OriginInterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="OriginInterpretationOptions"/>.</summary>
-    internal static string Section { get; } = "Interpretation:Ephemeris:Origin";
+    internal static string Section { get; } = "Origin";
 
     /// <inheritdoc cref="IOriginInterpretationOptionsProvider.BodyName"/>
     public string BodyName { get; set; } = null!;

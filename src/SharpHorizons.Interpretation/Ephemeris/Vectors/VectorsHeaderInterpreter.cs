@@ -14,7 +14,6 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<MutableVectorsHeader>, IVectorsHeaderInterpreter
 {
     /// <inheritdoc cref="VectorsHeaderInterpreter"/>
-    /// <param name="interpretationOptionsProvider"><inheritdoc cref="IInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="ephemerisInterpretationOptionsProvider"><inheritdoc cref="IEphemerisInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="targetInterpretationOptionsProvider"><inheritdoc cref="ITargetInterpretationOptionsProvider" path="/summary"/></param>
     /// <param name="originInterpretationOptionsProvider"><inheritdoc cref="IOriginInterpretationOptionsProvider" path="/summary"/></param>
@@ -23,10 +22,10 @@ internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<Mut
     /// <param name="targetHeaderInterpretationProvider"><inheritdoc cref="IEphemerisTargetHeaderInterpretationProvider" path="/summary"/></param>
     /// <param name="originHeaderInterpretationProvider"><inheritdoc cref="IEphemerisOriginHeaderInterpretationProvider" path="/summary"/></param>
     /// <param name="vectorsInterpretationProvider"><inheritdoc cref="IVectorsHeaderInterpretationProvider" path="/summary"/></param>
-    public VectorsHeaderInterpreter(IInterpretationOptionsProvider interpretationOptionsProvider, IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, ITargetInterpretationOptionsProvider targetInterpretationOptionsProvider, IOriginInterpretationOptionsProvider originInterpretationOptionsProvider,
+    public VectorsHeaderInterpreter(IEphemerisInterpretationOptionsProvider ephemerisInterpretationOptionsProvider, ITargetInterpretationOptionsProvider targetInterpretationOptionsProvider, IOriginInterpretationOptionsProvider originInterpretationOptionsProvider,
         IVectorsInterpretationOptionsProvider vectorsInterpretationOptionsProvider, IEphemerisHeaderInterpretationProvider ephemerisHeaderInterpretationProvider, IEphemerisTargetHeaderInterpretationProvider targetHeaderInterpretationProvider,
         IEphemerisOriginHeaderInterpretationProvider originHeaderInterpretationProvider, IVectorsHeaderInterpretationProvider vectorsInterpretationProvider)
-        : base(interpretationOptionsProvider, ephemerisInterpretationOptionsProvider)
+        : base(ephemerisInterpretationOptionsProvider)
     {
         RegisterFirstLineInterpreter(ephemerisHeaderInterpretationProvider.QueryEpochInterpreter, (queryTime, header) => header.QueryEpoch = queryTime);
 
@@ -48,13 +47,10 @@ internal sealed class VectorsHeaderInterpreter : AEphemerisHeaderInterpreter<Mut
         RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.TimeZoneOffsetInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (timeZoneOffset, header) => header.TimeZoneOffset = timeZoneOffset);
         RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.TimeSystemInterpreter, ephemerisInterpretationOptionsProvider.StartEpoch, (timeSystem, header) => header.TimeSystem = timeSystem);
         RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.StepSizeInterpreter, ephemerisInterpretationOptionsProvider.StepSize, (stepSize, header) => header.StepSize = stepSize);
-
-        foreach (var smallPerturbersKey in ephemerisInterpretationOptionsProvider.SmallPerturbers)
-        {
-            RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.SmallPerturbersInterpreter, smallPerturbersKey, (smallPerturbers, header) => header.SmallPerturbers = smallPerturbers);
-        }
-
         RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.ReferenceSystemInterpreter, ephemerisInterpretationOptionsProvider.ReferenceSystem, (referenceSystem, header) => header.ReferenceSystem = referenceSystem);
+
+        RegisterKeyInterpreter(ephemerisHeaderInterpretationProvider.SmallPerturbersInterpreter, vectorsInterpretationOptionsProvider.SmallPerturbers, (smallPerturbers, header) => header.SmallPerturbers = smallPerturbers);
+
         RegisterKeyInterpreter(vectorsInterpretationProvider.ReferencePlaneInterpreter, vectorsInterpretationOptionsProvider.ReferencePlane, (referencePlane, header) => header.ReferencePlane = referencePlane);
 
         RegisterKeyInterpreter(vectorsInterpretationProvider.OutputUnitsInterpreter, vectorsInterpretationOptionsProvider.OutputUnits, (outputUnits, header) => header.OutputUnits = outputUnits);

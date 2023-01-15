@@ -12,14 +12,14 @@ public static class IServiceCollectionExtensions
     /// <param name="services">Fluent query-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     public static IServiceCollection AddSharpHorizonsFluentQuery(this IServiceCollection services)
     {
-        services.AddSharpHorizonsVectorsQuery();
+        services.AddSharpHorizonsFluentVectorsQuery();
 
         return services;
     }
 
     /// <summary>Adds fluent <see cref="IVectorsQuery"/>-related services required by SharpHorizons to the <see cref="IServiceCollection"/> <paramref name="services"/>.</summary>
     /// <param name="services">Fluent <see cref="IVectorsQuery"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
-    private static IServiceCollection AddSharpHorizonsVectorsQuery(this IServiceCollection services)
+    private static IServiceCollection AddSharpHorizonsFluentVectorsQuery(this IServiceCollection services)
     {
         services.AddSingleton<ITargetStageFactory, TargetStageFactory>();
         services.AddSingleton<IOriginStageFactory, OriginStageFactory>();

@@ -5,8 +5,6 @@ using SharpHorizons.Query.Epoch;
 
 using SharpMeasures;
 
-using System.Collections.Generic;
-
 /// <summary>Provides options related to the interpretation of <see cref="IEphemeris{TEntry}"/></summary>
 public interface IEphemerisInterpretationOptionsProvider
 {
@@ -42,9 +40,6 @@ public interface IEphemerisInterpretationOptionsProvider
 
     /// <summary>The key corresponding to the <see cref="IStepSize"/>.</summary>
     public abstract string StepSize { get; }
-
-    /// <summary>The keys corresponding to the inclusion of small-body perturbers.</summary>
-    public abstract IEnumerable<string> SmallPerturbers { get; }
 
     /// <summary>The key corresponding to the <see cref="Query.ReferenceSystem"/>.</summary>
     public abstract string ReferenceSystem { get; }

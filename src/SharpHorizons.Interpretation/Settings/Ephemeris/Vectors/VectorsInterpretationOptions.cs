@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class VectorsInterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="VectorsInterpretationOptions"/>.</summary>
-    internal static string Section { get; } = "Interpretation:Ephemeris:Vectors";
+    internal static string Section { get; } = "Vectors";
 
     /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.OutputUnits"/>
     public string OutputUnits { get; set; } = null!;
@@ -27,6 +27,9 @@ internal sealed class VectorsInterpretationOptions
     /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.ReferencePlane"/>
     public string ReferencePlane { get; set; } = null!;
 
+    /// <inheritdoc cref="IVectorsInterpretationOptionsProvider.SmallPerturbers"/>
+    public string SmallPerturbers { get; set; } = null!;
+
     /// <summary>Applies the default values to the <see cref="VectorsInterpretationOptions"/> <paramref name="options"/>.</summary>
     /// <param name="options">The default values are applied to this <see cref="VectorsInterpretationOptions"/>.</param>
     public static void ApplyDefaults(VectorsInterpretationOptions options)
@@ -35,5 +38,6 @@ internal sealed class VectorsInterpretationOptions
         options.VectorCorrection = DefaultVectorsInterpretationSettings.Default.VectorCorrection;
         options.VectorTableContent = DefaultVectorsInterpretationSettings.Default.VectorTableContent;
         options.ReferencePlane = DefaultVectorsInterpretationSettings.Default.ReferencePlane;
+        options.SmallPerturbers = DefaultVectorsInterpretationSettings.Default.SmallPerturbers;
     }
 }
