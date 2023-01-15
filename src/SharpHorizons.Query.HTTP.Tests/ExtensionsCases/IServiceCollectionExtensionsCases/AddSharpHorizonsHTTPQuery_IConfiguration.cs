@@ -48,7 +48,7 @@ public class AddSharpHorizonsHTTPQuery_IConfiguration
 
         var httpAddressProvider = host.Services.GetRequiredService<IHorizonsHTTPAddressProvider>();
 
-        Assert.Equal(CustomConfiguration.ExpectedHorizonsHTTPAddressProvider.HTTPAddress, httpAddressProvider.HTTPAddress);
+        Assert.Equal(CustomConfiguration.ExpectedHorizonsHTTPAddress.HTTPAddress, httpAddressProvider.HTTPAddress);
     }
 
     private static IServiceCollection GetServiceCollection() => new ServiceCollection();
@@ -58,7 +58,8 @@ public class AddSharpHorizonsHTTPQuery_IConfiguration
         var mock = new Mock<IConfiguration>();
         var sectionMock = new Mock<IConfigurationSection>();
 
-        mock.Setup((obj) => obj.GetSection(It.IsAny<string>())).Returns(sectionMock.Object);
+        mock.Setup(static (configuration) => configuration.GetSection(It.IsAny<string>())).Returns(sectionMock.Object);
+        sectionMock.Setup(static (section) => section.GetSection(It.IsAny<string>())).Returns(sectionMock.Object);
 
         return mock.Object;
     }
@@ -79,7 +80,7 @@ public class AddSharpHorizonsHTTPQuery_IConfiguration
     {
         public static IReadOnlyDictionary<string, string?> Dictionary { get; }
 
-        public static IHorizonsHTTPAddressProvider ExpectedHorizonsHTTPAddressProvider { get; }
+        public static IHorizonsHTTPAddressProvider ExpectedHorizonsHTTPAddress { get; }
 
         private static (string, Expression<Func<IHorizonsHTTPAddressProvider, Uri>>)[] HorizonsHTTPAddressProviderKeys { get; } = new (string, Expression<Func<IHorizonsHTTPAddressProvider, Uri>>)[]
         {
@@ -90,19 +91,19 @@ public class AddSharpHorizonsHTTPQuery_IConfiguration
         {
             Dictionary<string, string?> dictionary = new(HorizonsHTTPAddressProviderKeys.Length);
 
-            Mock<IHorizonsHTTPAddressProvider> horizonsHTTPAddressProviderMock = new();
+            Mock<IHorizonsHTTPAddressProvider> horizonsHTTPAddressMock = new();
 
             foreach (var (key, action) in HorizonsHTTPAddressProviderKeys)
             {
                 var result = $"https://www.random.org/?{key}";
 
                 dictionary[key] = result;
-                horizonsHTTPAddressProviderMock.SetupGet(action).Returns(new Uri(result));
+                horizonsHTTPAddressMock.SetupGet(action).Returns(new Uri(result));
             }
 
             Dictionary = dictionary;
 
-            ExpectedHorizonsHTTPAddressProvider = horizonsHTTPAddressProviderMock.Object;
+            ExpectedHorizonsHTTPAddress = horizonsHTTPAddressMock.Object;
         }
     }
 }

@@ -58,7 +58,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Query.Fluency
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Query.Core.Tests", "SharpHorizons.Query.Core.Tests\SharpHorizons.Query.Core.Tests.csproj", "{6198B5E6-8928-4334-941C-61B7BBB139DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHorizons.Query.HTTP.Tests", "SharpHorizons.Query.HTTP.Tests\SharpHorizons.Query.HTTP.Tests.csproj", "{F6D09902-C380-4CC7-912E-E3066511E226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpHorizons.Query.HTTP.Tests", "SharpHorizons.Query.HTTP.Tests\SharpHorizons.Query.HTTP.Tests.csproj", "{F6D09902-C380-4CC7-912E-E3066511E226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpHorizons.Interpretation.Tests", "SharpHorizons.Interpretation.Tests\SharpHorizons.Interpretation.Tests.csproj", "{3AEB6DC3-5644-4F8F-8391-64B414CC6A94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -166,6 +168,10 @@ Global
 		{F6D09902-C380-4CC7-912E-E3066511E226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6D09902-C380-4CC7-912E-E3066511E226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6D09902-C380-4CC7-912E-E3066511E226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AEB6DC3-5644-4F8F-8391-64B414CC6A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AEB6DC3-5644-4F8F-8391-64B414CC6A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AEB6DC3-5644-4F8F-8391-64B414CC6A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AEB6DC3-5644-4F8F-8391-64B414CC6A94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
