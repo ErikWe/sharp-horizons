@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 internal sealed class TargetInterpretationOptions
 {
     /// <summary>The identifier of the <see cref="IConfigurationSection"/> associated with <see cref="TargetInterpretationOptions"/>.</summary>
-    internal static string Section { get; } = "Ephemeris:Target";
+    internal static string Section { get; } = "Target";
 
     /// <inheritdoc cref="ITargetInterpretationOptionsProvider.BodyName"/>
     public string BodyName { get; set; } = null!;

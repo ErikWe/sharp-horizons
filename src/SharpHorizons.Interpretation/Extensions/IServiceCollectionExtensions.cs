@@ -42,10 +42,14 @@ public static class IServiceCollectionExtensions
 
         services.AddSharpHorizonsInterpretation();
 
-        services.Configure<EphemerisInterpretationOptions>(configuration.GetSection(EphemerisInterpretationOptions.Section));
-        services.Configure<TargetInterpretationOptions>(configuration.GetSection(TargetInterpretationOptions.Section));
-        services.Configure<OriginInterpretationOptions>(configuration.GetSection(OriginInterpretationOptions.Section));
-        services.Configure<VectorsInterpretationOptions>(configuration.GetSection(VectorsInterpretationOptions.Section));
+        services.Configure<InterpretationOptions>(configuration);
+
+        var ephemerisSection = configuration.GetSection(EphemerisInterpretationOptions.Section);
+
+        services.Configure<EphemerisInterpretationOptions>(ephemerisSection);
+        services.Configure<TargetInterpretationOptions>(ephemerisSection.GetSection(TargetInterpretationOptions.Section));
+        services.Configure<OriginInterpretationOptions>(ephemerisSection.GetSection(OriginInterpretationOptions.Section));
+        services.Configure<VectorsInterpretationOptions>(ephemerisSection.GetSection(VectorsInterpretationOptions.Section));
 
         return services;
     }
