@@ -9,8 +9,8 @@ public interface IOriginStage
 {
     /// <summary>Uses a <see cref="IOriginFactory"/> to select the <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="originFactory">This <see cref="IOriginFactory"/> is used to select the <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>.</param>
-    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
     public delegate IOrigin DOriginFactory(IOriginFactory originFactory);
 
     /// <summary>Uses <paramref name="origin"/> as the <see cref="IOrigin"/> in the <see cref="IVectorsQuery"/>, and proceeds to the <see cref="IEpochStage"/>.</summary>

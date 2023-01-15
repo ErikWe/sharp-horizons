@@ -23,9 +23,17 @@ public class WithEpochCollection_DEpochCollectionFactory
     }
 
     [Fact]
-    public void ExceptionThrowingDelegate_ArgumentException()
+    public void InvalidOperationExceptionThrowingDelegate_ArgumentException()
     {
-        var epochCollectionFactoryDelegate = GetExceptionThrowingDelegate();
+        var epochCollectionFactoryDelegate = GetInvalidOperationExceptionThrowingDelegate();
+
+        AnyError_TException<ArgumentException>(epochCollectionFactoryDelegate);
+    }
+
+    [Fact]
+    public void NullReturningDelegate_ArgumentException()
+    {
+        var epochCollectionFactoryDelegate = GetNullReturningDelegate();
 
         AnyError_TException<ArgumentException>(epochCollectionFactoryDelegate);
     }
@@ -97,5 +105,6 @@ public class WithEpochCollection_DEpochCollectionFactory
     }
 
     private static IEpochStage.DEpochCollectionFactory GetNullDelegate() => null!;
-    private static IEpochStage.DEpochCollectionFactory GetExceptionThrowingDelegate() => (factory) => throw new Exception();
+    private static IEpochStage.DEpochCollectionFactory GetInvalidOperationExceptionThrowingDelegate() => (factory) => throw new InvalidOperationException();
+    private static IEpochStage.DEpochCollectionFactory GetNullReturningDelegate() => (factory) => null!;
 }

@@ -18,9 +18,17 @@ public class WithOrigin_DOriginFactory
     }
 
     [Fact]
-    public void ExceptionThrowingDelegate_ArgumentException()
+    public void InvalidOperationExceptionThrowingDelegate_ArgumentException()
     {
-        var originFactoryDelegate = GetExceptionThrowingDelegate();
+        var originFactoryDelegate = GetInvalidOperationExceptionThrowingDelegate();
+
+        AnyError_TException<ArgumentException>(originFactoryDelegate);
+    }
+
+    [Fact]
+    public void NullReturningDelegate_ArgumentException()
+    {
+        var originFactoryDelegate = GetNullReturningDelegate();
 
         AnyError_TException<ArgumentException>(originFactoryDelegate);
     }
@@ -56,6 +64,7 @@ public class WithOrigin_DOriginFactory
     }
 
     private static IOriginStage.DOriginFactory GetNullDelegate() => null!;
-    private static IOriginStage.DOriginFactory GetExceptionThrowingDelegate() => (factory) => throw new Exception();
+    private static IOriginStage.DOriginFactory GetInvalidOperationExceptionThrowingDelegate() => (factory) => throw new InvalidOperationException();
+    private static IOriginStage.DOriginFactory GetNullReturningDelegate() => (factory) => null!;
     private static IOriginStage.DOriginFactory GetValidDelegate() => (factory) => factory.Create(new MajorObjectID(399));
 }

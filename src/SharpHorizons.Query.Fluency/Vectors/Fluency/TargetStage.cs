@@ -41,7 +41,7 @@ internal sealed class TargetStage : ITargetStage
         }
         catch (ArgumentNullException e)
         {
-            throw new ArgumentException($"The {nameof(ITargetStage.DTargetFactory)} produced a null {nameof(ITarget)}.", nameof(targetFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(ITargetStage.DTargetFactory)} produced a null {nameof(ITarget)}.", nameof(targetFactoryDelegate), e);
         }
     }
 
@@ -54,9 +54,9 @@ internal sealed class TargetStage : ITargetStage
         {
             return targetFactoryDelegate(TargetFactory);
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
-            throw new ArgumentException($"The {nameof(ITargetStage.DTargetFactory)} encountered an error while producing a {nameof(ITarget)}.", nameof(targetFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(ITargetStage.DTargetFactory)} encountered an error while producing a {nameof(ITarget)}.", nameof(targetFactoryDelegate), e);
         }
     }
 

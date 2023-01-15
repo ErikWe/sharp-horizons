@@ -17,9 +17,17 @@ public class WithTarget_DTargetFactory
     }
 
     [Fact]
-    public void ExceptionThrowingDelegate_ArgumentException()
+    public void InvalidOperationExceptionThrowingDelegate_ArgumentException()
     {
-        var targetFactoryDelegate = GetExceptionThrowingDelegate();
+        var targetFactoryDelegate = GetInvalidOperationExceptionThrowingDelegate();
+
+        AnyError_TException<ArgumentException>(targetFactoryDelegate);
+    }
+
+    [Fact]
+    public void NullReturningDelegate_ArgumentException()
+    {
+        var targetFactoryDelegate = GetNullReturningDelegate();
 
         AnyError_TException<ArgumentException>(targetFactoryDelegate);
     }
@@ -48,6 +56,7 @@ public class WithTarget_DTargetFactory
     private static ITargetStage GetTargetStage() => DependencyInjection.GetRequiredService<ITargetStageFactory>().Create();
 
     private static ITargetStage.DTargetFactory GetNullDelegate() => null!;
-    private static ITargetStage.DTargetFactory GetExceptionThrowingDelegate() => (factory) => throw new Exception();
+    private static ITargetStage.DTargetFactory GetInvalidOperationExceptionThrowingDelegate() => (factory) => throw new InvalidOperationException();
+    private static ITargetStage.DTargetFactory GetNullReturningDelegate() => (factory) => null!;
     private static ITargetStage.DTargetFactory GetValidDelegate() => (factory) => factory.Create(new MajorObjectID(301));
 }
