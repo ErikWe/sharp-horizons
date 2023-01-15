@@ -11,8 +11,7 @@ using System.ComponentModel;
 /// <summary>Handles incremental construction of <see cref="IVectorsQuery"/>.</summary>
 public interface IVectorsQueryBuilder
 {
-    /// <summary>Constructs the <see cref="IVectorsQuery"/>.</summary>
-    /// <remarks>Repeated invokation of <see cref="Build"/> will result in separate instances of <see cref="IVectorsQuery"/>.</remarks>
+    /// <summary>Constructs the <see cref="IVectorsQuery"/>, and allows the <see cref="IVectorsQueryBuilder"/> to be used to build another <see cref="IVectorsQuery"/>.</summary>
     /// <exception cref="InvalidOperationException"/>
     public abstract IVectorsQuery Build();
 
