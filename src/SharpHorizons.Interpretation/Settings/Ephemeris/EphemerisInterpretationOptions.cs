@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using SharpHorizons.Ephemeris;
 using SharpHorizons.Interpretation.Ephemeris;
 
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 
 /// <summary>Allows options related to the interpretation of <see cref="IEphemeris{TEntry}"/> to be specified.</summary>
@@ -50,9 +48,6 @@ internal sealed class EphemerisInterpretationOptions
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.StepSize"/>
     public string StepSize { get; set; } = null!;
 
-    /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.SmallPerturbers"/>
-    public IEnumerable<string> SmallPerturbers { get; set; } = null!;
-
     /// <inheritdoc cref="IEphemerisInterpretationOptionsProvider.ReferenceSystem"/>
     public string ReferenceSystem { get; set; } = null!;
 
@@ -81,24 +76,9 @@ internal sealed class EphemerisInterpretationOptions
         options.TimeZoneOffset = DefaultEphemerisInterpretationSettings.Default.TimeZoneOffset;
         options.StepSize = DefaultEphemerisInterpretationSettings.Default.StepSize;
 
-        options.SmallPerturbers = WrapStringCollection(DefaultEphemerisInterpretationSettings.Default.SmallPerturbers);
-
         options.ReferenceSystem = DefaultEphemerisInterpretationSettings.Default.ReferenceSystem;
 
         options.StartOfEphemeris = DefaultEphemerisInterpretationSettings.Default.StartOfEphemeris;
         options.EndOfEphemeris = DefaultEphemerisInterpretationSettings.Default.EndOfEphemeris;
-    }
-
-    /// <summary>Wraps a <see cref="StringCollection"/>, <paramref name="collection"/>, as an <see cref="IEnumerable{T}"/> of <see cref="string"/>.</summary>
-    /// <param name="collection">This <see cref="StringCollection"/> is wrapped as an <see cref="IEnumerable{T}"/> of <see cref="string"/>.</param>
-    private static IEnumerable<string> WrapStringCollection(StringCollection collection)
-    {
-        foreach (var item in collection)
-        {
-            if (item is not null)
-            {
-                yield return item;
-            }
-        }
     }
 }

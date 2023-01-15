@@ -58,5 +58,14 @@ namespace SharpHorizons.Settings.Interpretation.Ephemeris.Vectors {
                 return ((string)(this["ReferencePlane"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Small perturbers")]
+        public string SmallPerturbers {
+            get {
+                return ((string)(this["SmallPerturbers"]));
+            }
+        }
     }
 }
