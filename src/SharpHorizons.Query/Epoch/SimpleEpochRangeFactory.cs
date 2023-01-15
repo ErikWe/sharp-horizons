@@ -7,7 +7,7 @@ using SharpHorizons.Query.Arguments.Composers.Epoch;
 using System;
 
 /// <inheritdoc cref="IEpochRangeFactory"/>
-public sealed class SimpleEpochRangeFactory : IEpochRangeFactory
+internal sealed class SimpleEpochRangeFactory : IEpochRangeFactory
 {
     /// <summary>Composes <see cref="IStartEpochArgument"/> that describe <see cref="IEpoch"/>.</summary>
     private IStartEpochComposer<IEpochRange> StartEpochComposer { get; }
