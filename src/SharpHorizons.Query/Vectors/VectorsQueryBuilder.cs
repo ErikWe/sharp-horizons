@@ -76,6 +76,8 @@ internal sealed class VectorsQueryBuilder : IVectorsQueryBuilder
     /// <inheritdoc/>
     public IVectorsQuery Build()
     {
+        ConstructNewInstanceIfNecessary();
+
         BuildWasPreviousCommand = true;
 
         return VectorsQuery;
