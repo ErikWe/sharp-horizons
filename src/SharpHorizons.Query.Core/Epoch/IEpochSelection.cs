@@ -11,7 +11,7 @@ using System.ComponentModel;
 public interface IEpochSelection
 {
     /// <inheritdoc cref="EpochSelectionMode"/>
-    public abstract EpochSelectionMode Selection { get; }
+    public abstract EpochSelectionMode SelectionMode { get; }
 
     /// <inheritdoc cref="EpochFormat"/>
     public abstract EpochFormat Format { get; }
@@ -23,39 +23,39 @@ public interface IEpochSelection
     public abstract TimeSystem TimeSystem { get; }
 
     /// <summary>The UTC offset of the timezone in which the <see cref="IEpoch"/> are expressed in a query.</summary>
-    public abstract Time Offset { get; }
+    public abstract Time UTCOffset { get; }
 
-    /// <summary>Constructs a new <see cref="IEpochSelection"/> with an updated <see cref="Format"/>.</summary>
+    /// <summary>Constructs a new <see cref="IEpochSelection"/> with modified <see cref="Format"/>.</summary>
     /// <param name="format"><inheritdoc cref="Format" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
-    public abstract IEpochSelection WithConfiguration(EpochFormat format);
+    public abstract IEpochSelection WithFormat(EpochFormat format);
 
-    /// <summary>Constructs a new <see cref="IEpochSelection"/> with an updated <see cref="Calendar"/>.</summary>
+    /// <summary>Constructs a new <see cref="IEpochSelection"/> with modified <see cref="Calendar"/>.</summary>
     /// <param name="calendar"><inheritdoc cref="Calendar" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
-    public abstract IEpochSelection WithConfiguration(CalendarType calendar);
+    public abstract IEpochSelection WithCalendar(CalendarType calendar);
 
-    /// <summary>Constructs a new <see cref="IEpochSelection"/> with an updated <see cref="TimeSystem"/>.</summary>
+    /// <summary>Constructs a new <see cref="IEpochSelection"/> with modified <see cref="TimeSystem"/>.</summary>
     /// <param name="timeSystem"><inheritdoc cref="TimeSystem" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
-    public abstract IEpochSelection WithConfiguration(TimeSystem timeSystem);
+    public abstract IEpochSelection WithTimeSystem(TimeSystem timeSystem);
 
-    /// <summary>Constructs a new <see cref="IEpochSelection"/> with an updated <see cref="Offset"/>.</summary>
-    /// <param name="offset"><inheritdoc cref="Offset" path="/summary"/></param>
+    /// <summary>Constructs a new <see cref="IEpochSelection"/> with modified <see cref="UTCOffset"/>.</summary>
+    /// <param name="utcOffset"><inheritdoc cref="UTCOffset" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
-    public abstract IEpochSelection WithConfiguration(Time offset);
+    public abstract IEpochSelection WithUTCOffset(Time utcOffset);
 
-    /// <summary>Constructs a new <see cref="IEpochSelection"/> with the new configuration. Properties that correspond to a <see langword="null"/> parameter are not modified.</summary>
+    /// <summary>Constructs a new <see cref="IEpochSelection"/> with the new configuration. Properties that correspond to a <see langword="null"/> argument are not modified.</summary>
     /// <param name="format"><inheritdoc cref="Format" path="/summary"/></param>
     /// <param name="calendar"><inheritdoc cref="Calendar" path="/summary"/></param>
     /// <param name="timeSystem"><inheritdoc cref="TimeSystem" path="/summary"/></param>
-    /// <param name="offset"><inheritdoc cref="Offset" path="/summary"/></param>
+    /// <param name="utcOffset"><inheritdoc cref="UTCOffset" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="InvalidEnumArgumentException"/>
-    public abstract IEpochSelection WithConfiguration(EpochFormat? format = null, CalendarType? calendar = null, TimeSystem? timeSystem = null, Time? offset = null);
+    public abstract IEpochSelection WithConfiguration(EpochFormat? format = null, CalendarType? calendar = null, TimeSystem? timeSystem = null, Time? utcOffset = null);
 
     /// <summary>Composes a <see cref="IEpochCollectionArgument"/> describing the selected <see cref="IEpoch"/>, if the <see cref="IEpoch"/> are selected according to <see cref="EpochSelectionMode.Collection"/>.</summary>
     /// <exception cref="UnsupportedEpochSelectionModeException"/>
@@ -76,11 +76,11 @@ public interface IEpochSelection
 
     /// <summary>Composes a <see cref="IStartEpochArgument"/> describing the start <see cref="IStartEpoch"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
     /// <exception cref="UnsupportedEpochSelectionModeException"/>
-    public abstract IStartEpochArgument ComposeStartTimeArgument();
+    public abstract IStartEpochArgument ComposeStartEpochArgument();
 
     /// <summary>Composes a <see cref="IStopEpochArgument"/> describing the stop <see cref="IStopEpoch"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
     /// <exception cref="UnsupportedEpochSelectionModeException"/>
-    public abstract IStopEpochArgument ComposeStopTimeArgument();
+    public abstract IStopEpochArgument ComposeStopEpochArgument();
 
     /// <summary>Composes a <see cref="IStepSizeArgument"/> describing the <see cref="IStepSize"/>, if the <see cref="IEpoch"/> are selected according to a <see cref="EpochSelectionMode.Range"/>.</summary>
     /// <exception cref="UnsupportedEpochSelectionModeException"/>
