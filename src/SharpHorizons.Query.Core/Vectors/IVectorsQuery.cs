@@ -9,8 +9,10 @@ using SharpHorizons.Query.Vectors.Table;
 
 using SharpMeasures;
 
+using System;
+
 /// <summary>Describes a query for an <see cref="IEphemeris{TEntry}"/> of <see cref="IOrbitalStateVectors"/>-related properties, such as <see cref="Position3"/> and <see cref="Velocity3"/>, of a <see cref="ITarget"/> relative to an <see cref="IOrigin"/>.</summary>
-public interface IVectorsQuery
+public interface IVectorsQuery : IEquatable<IVectorsQuery>
 {
     /// <summary>The <see cref="ITarget"/>, which the resulting <see cref="IEphemeris{TEntry}"/> describes.</summary>
     public abstract ITarget Target { get; }
