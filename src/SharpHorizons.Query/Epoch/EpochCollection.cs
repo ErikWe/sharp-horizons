@@ -21,7 +21,7 @@ internal sealed record class EpochCollection : IEpochCollection
     public EpochFormat Format { get; init; } = EpochFormat.JulianDays;
     public CalendarType Calendar { get; init; } = CalendarType.Gregorian;
     public TimeSystem TimeSystem { get; init; } = TimeSystem.UT;
-    public Time Offset { get; init; } = Time.Zero;
+    public Time UTCOffset { get; init; } = Time.Zero;
 
     /// <summary>Used to compose <see cref="IEpochCollectionArgument"/> that describe <see langword="this"/>.</summary>
     public required IEpochCollectionComposer<IEpochCollection> Composer { private get; init; }
@@ -35,7 +35,7 @@ internal sealed record class EpochCollection : IEpochCollection
     /// <summary>Used to compose <see cref="ITimeSystemArgument"/> that describe <see cref="TimeSystem"/>.</summary>
     public required ITimeSystemComposer TimeSystemComposer { private get; init; }
 
-    /// <summary>Used to compose <see cref="ITimeZoneArgument"/> that describe <see cref="Offset"/>.</summary>
+    /// <summary>Used to compose <see cref="ITimeZoneArgument"/> that describe <see cref="UTCOffset"/>.</summary>
     public required ITimeZoneComposer TimeZoneComposer { private get; init; }
 
     /// <inheritdoc cref="EpochCollection"/>
@@ -60,15 +60,15 @@ internal sealed record class EpochCollection : IEpochCollection
         TimeZoneComposer = timeZoneComposer;
     }
 
-    EpochSelectionMode IEpochSelection.Selection => EpochSelectionMode.Collection;
+    EpochSelectionMode IEpochSelection.SelectionMode => EpochSelectionMode.Collection;
 
     IEpochCollectionArgument IEpochSelection.ComposeCollectionArgument() => Composer.Compose(this);
     IEpochCollectionFormatArgument IEpochSelection.ComposeCollectionFormatArgument() => FormatComposer.Compose(Format);
     ICalendarTypeArgument IEpochSelection.ComposeEpochCalendarArgument() => CalendarComposer.Compose(Calendar);
     ITimeSystemArgument IEpochSelection.ComposeTimeSystemArgument() => TimeSystemComposer.Compose(TimeSystem);
-    ITimeZoneArgument IEpochSelection.ComposeTimeZoneArgument() => TimeZoneComposer.Compose(Offset);
-    IStartEpochArgument IEpochSelection.ComposeStartTimeArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
-    IStopEpochArgument IEpochSelection.ComposeStopTimeArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
+    ITimeZoneArgument IEpochSelection.ComposeTimeZoneArgument() => TimeZoneComposer.Compose(UTCOffset);
+    IStartEpochArgument IEpochSelection.ComposeStartEpochArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
+    IStopEpochArgument IEpochSelection.ComposeStopEpochArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
     IStepSizeArgument IEpochSelection.ComposeStepSizeArgument() => throw UnsupportedEpochSelectionModeException.EpochSelectionNotRange();
 
     public IEpochCollection Concat(IEnumerable<IEpoch> epochs)
@@ -78,35 +78,35 @@ internal sealed record class EpochCollection : IEpochCollection
         return this with { Epochs = Epochs.Concat(epochs) };
     }
 
-    public IEpochCollection WithConfiguration(EpochFormat format)
+    public IEpochCollection WithFormat(EpochFormat format)
     {
         ValidateEpochFormat(format);
 
         return this with { Format = format };
     }
 
-    public IEpochCollection WithConfiguration(CalendarType calendar)
+    public IEpochCollection WithCalendar(CalendarType calendar)
     {
         ValidateCalendarType(calendar);
 
         return this with { Calendar = calendar };
     }
 
-    public IEpochCollection WithConfiguration(TimeSystem timeSystem)
+    public IEpochCollection WithTimeSystem(TimeSystem timeSystem)
     {
         ValidateTimeSystem(timeSystem);
 
         return this with { TimeSystem = timeSystem };
     }
 
-    public IEpochCollection WithConfiguration(Time offset)
+    public IEpochCollection WithUTCOffset(Time utcOffset)
     {
-        ValidateOffset(offset);
+        ValidateUTCOffset(utcOffset);
 
-        return this with { Offset = offset };
+        return this with { UTCOffset = utcOffset };
     }
 
-    public IEpochCollection WithConfiguration(EpochFormat? format, CalendarType? calendar, TimeSystem? timeSystem, Time? offset)
+    public IEpochCollection WithConfiguration(EpochFormat? format, CalendarType? calendar, TimeSystem? timeSystem, Time? utcOffset)
     {
         if (format is not null)
         {
@@ -123,9 +123,9 @@ internal sealed record class EpochCollection : IEpochCollection
             ValidateTimeSystem(timeSystem.Value);
         }
 
-        if (offset is not null)
+        if (utcOffset is not null)
         {
-            ValidateOffset(offset.Value);
+            ValidateUTCOffset(utcOffset.Value);
         }
 
         return this with
@@ -133,15 +133,15 @@ internal sealed record class EpochCollection : IEpochCollection
             Format = format ?? Format,
             Calendar = calendar ?? Calendar,
             TimeSystem = timeSystem ?? TimeSystem,
-            Offset = offset ?? Offset
+            UTCOffset = utcOffset ?? UTCOffset
         };
     }
 
-    IEpochSelection IEpochSelection.WithConfiguration(EpochFormat format) => WithConfiguration(format);
-    IEpochSelection IEpochSelection.WithConfiguration(CalendarType calendar) => WithConfiguration(calendar);
-    IEpochSelection IEpochSelection.WithConfiguration(TimeSystem timeSystem) => WithConfiguration(timeSystem);
-    IEpochSelection IEpochSelection.WithConfiguration(Time offset) => WithConfiguration(offset);
-    IEpochSelection IEpochSelection.WithConfiguration(EpochFormat? format, CalendarType? calendar, TimeSystem? timeSystem, Time? offset) => WithConfiguration(format, calendar, timeSystem, offset);
+    IEpochSelection IEpochSelection.WithFormat(EpochFormat format) => WithFormat(format);
+    IEpochSelection IEpochSelection.WithCalendar(CalendarType calendar) => WithCalendar(calendar);
+    IEpochSelection IEpochSelection.WithTimeSystem(TimeSystem timeSystem) => WithTimeSystem(timeSystem);
+    IEpochSelection IEpochSelection.WithUTCOffset(Time utcOffset) => WithUTCOffset(utcOffset);
+    IEpochSelection IEpochSelection.WithConfiguration(EpochFormat? format, CalendarType? calendar, TimeSystem? timeSystem, Time? utcOffset) => WithConfiguration(format, calendar, timeSystem, utcOffset);
 
     public IEnumerator<IEpoch> GetEnumerator() => Epochs.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -189,12 +189,12 @@ internal sealed record class EpochCollection : IEpochCollection
         }
     }
 
-    /// <summary>Validates the <see cref="Time"/> <paramref name="offset"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
-    /// <param name="offset">This <see cref="Time"/> is validated.</param>
-    /// <param name="argumentExpression">The expression used as the argument for <paramref name="offset"/>.</param>
+    /// <summary>Validates the <see cref="Time"/> <paramref name="utcOffset"/>, throwing an <see cref="ArgumentException"/> if invalid.</summary>
+    /// <param name="utcOffset">This <see cref="Time"/> is validated.</param>
+    /// <param name="argumentExpression">The expression used as the argument for <paramref name="utcOffset"/>.</param>
     /// <exception cref="ArgumentException"/>
-    private static void ValidateOffset(Time offset, [CallerArgumentExpression(nameof(offset))] string? argumentExpression = null)
+    private static void ValidateUTCOffset(Time utcOffset, [CallerArgumentExpression(nameof(utcOffset))] string? argumentExpression = null)
     {
-        SharpMeasuresValidation.Validate(offset, argumentExpression);
+        SharpMeasuresValidation.Validate(utcOffset, argumentExpression);
     }
 }

@@ -77,7 +77,7 @@ internal sealed class EpochCollectionComposer : IEpochCollectionComposer<IEpochC
 
         try
         {
-            return QueryEpochComposer.Compose(epoch, epochCollection.Format, epochCollection.Calendar, epochCollection.TimeSystem, epochCollection.Offset);
+            return QueryEpochComposer.Compose(epoch, epochCollection.Format, epochCollection.Calendar, epochCollection.TimeSystem, epochCollection.UTCOffset);
         }
         catch (ArgumentException e)
         {

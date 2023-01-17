@@ -101,16 +101,16 @@ internal sealed class VectorsQueryArgumentComposer : IVectorsQueryArgumentCompos
             builder.SpecifyOriginCoordinateType(query.Origin.ComposeCoordinateTypeArgument());
         }
 
-        if (query.EpochSelection.Selection is Epoch.EpochSelectionMode.Collection)
+        if (query.EpochSelection.SelectionMode is Epoch.EpochSelectionMode.Collection)
         {
             builder.SpecifyEpochCollection(query.EpochSelection.ComposeCollectionArgument());
             builder.SpecifyEpochCollectionFormat(query.EpochSelection.ComposeCollectionFormatArgument());
         }
 
-        if (query.EpochSelection.Selection is Epoch.EpochSelectionMode.Range)
+        if (query.EpochSelection.SelectionMode is Epoch.EpochSelectionMode.Range)
         {
-            builder.SpecifyStartEpoch(query.EpochSelection.ComposeStartTimeArgument());
-            builder.SpecifyStopEpoch(query.EpochSelection.ComposeStopTimeArgument());
+            builder.SpecifyStartEpoch(query.EpochSelection.ComposeStartEpochArgument());
+            builder.SpecifyStopEpoch(query.EpochSelection.ComposeStopEpochArgument());
             builder.SpecifyStepSize(query.EpochSelection.ComposeStepSizeArgument());
         }
 

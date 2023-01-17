@@ -5,6 +5,7 @@ using SharpHorizons.Query.Origin;
 using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors.Table;
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc cref="IVectorsQuery"/>
@@ -40,5 +41,17 @@ internal sealed record class VectorsQuery : IVectorsQuery
         Origin = origin;
 
         EpochSelection = epochSelection;
+    }
+
+    bool IEquatable<IVectorsQuery>.Equals(IVectorsQuery? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        return Target.Equals(other.Target) && Origin.Equals(other.Origin) && EpochSelection.Equals(other.EpochSelection) && OutputFormat == other.OutputFormat && ObjectDataInclusion == other.ObjectDataInclusion
+            && ReferencePlane == other.ReferencePlane && ReferenceSystem == other.ReferenceSystem && OutputUnits == other.OutputUnits && TableContent.Equals(other.TableContent) && Correction == other.Correction
+            && TimePrecision == other.TimePrecision && ValueSeparation == other.ValueSeparation && OutputLabels == other.OutputLabels && TimeDeltaInclusion == other.TimeDeltaInclusion;
     }
 }
