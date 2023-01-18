@@ -121,7 +121,7 @@ internal sealed class EphemerisBoundaryEpochInterpreter : IEphemerisStartEpochIn
 
         var zonedDateTime = dateParse.Value.InZoneStrictly(timeZone);
 
-        var offset = TimeSystemOffsetProvider.Offset(new Epoch(zonedDateTime), timeSystem, TimeSystem.UT);
+        var offset = TimeSystemOffsetProvider.Offset(new Epoch(zonedDateTime), timeSystem, TimeSystem.UniversalTime);
 
         var adjustedZonedDateTime = zonedDateTime.PlusMilliseconds((int)offset.Milliseconds);
 

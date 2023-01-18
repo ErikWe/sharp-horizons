@@ -53,6 +53,6 @@ public interface IVectorsQuery : IEquatable<IVectorsQuery>
     /// <summary>Determines whether the individual values in the result of the query are labelled.</summary>
     public abstract OutputLabels OutputLabels { get; }
 
-    /// <summary>Determines whether the <see cref="Time"/> difference between <see cref="TimeSystem.TDB"/> and <see cref="TimeSystem.UT"/> is included in the result of the query.</summary>
+    /// <summary>Determines whether the <see cref="Time"/> difference between <see cref="TimeSystem.BarycentricDynamicalTime"/> and <see cref="TimeSystem.UniversalTime"/> is included in the result of the query.</summary>
     public abstract TimeDeltaInclusion TimeDeltaInclusion { get; }
 }

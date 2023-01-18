@@ -11,9 +11,9 @@ internal sealed class TimeSystemComposer : ITimeSystemComposer
     ITimeSystemArgument IArgumentComposer<ITimeSystemArgument, TimeSystem>.Compose(TimeSystem obj) => new QueryArgument(obj switch
     {
         TimeSystem.Unknown => throw ArgumentExceptionFactory.UnsupportedEnumValue(obj),
-        TimeSystem.UT => "UT",
-        TimeSystem.TT => "TT",
-        TimeSystem.TDB => "TDB",
+        TimeSystem.UniversalTime => "UT",
+        TimeSystem.TerrestialTime => "TT",
+        TimeSystem.BarycentricDynamicalTime => "TDB",
         _ => throw InvalidEnumArgumentExceptionFactory.Create(obj)
     });
 }

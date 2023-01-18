@@ -33,17 +33,17 @@ internal sealed class TimeSystemInterpreter : ITimeSystemInterpreter
 
         if (timeSystemString.StartsWith("UT", StringComparison.Ordinal))
         {
-            return TimeSystem.UT;
+            return TimeSystem.UniversalTime;
         }
 
         if (timeSystemString.StartsWith("TT", StringComparison.Ordinal))
         {
-            return TimeSystem.TT;
+            return TimeSystem.TerrestialTime;
         }
 
         if (timeSystemString.StartsWith("TDB", StringComparison.Ordinal))
         {
-            return TimeSystem.TDB;
+            return TimeSystem.BarycentricDynamicalTime;
         }
 
         return new();
