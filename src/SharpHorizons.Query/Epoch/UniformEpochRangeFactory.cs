@@ -2,6 +2,8 @@
 
 using SharpHorizons;
 
+using SharpMeasures;
+
 /// <inheritdoc cref="IUniformEpochRangeFactory"/>
 internal sealed class UniformEpochRangeFactory : IUniformEpochRangeFactory
 {
@@ -31,4 +33,9 @@ internal sealed class UniformEpochRangeFactory : IUniformEpochRangeFactory
 
         return Create(startEpoch, stopEpoch, stepSize);
     }
+
+    IEpochRangeFactory IEpochRangeFactory.WithFormat(EpochFormat format) => EpochRangeFactory.WithFormat(format);
+    IEpochRangeFactory IEpochRangeFactory.WithCalendar(CalendarType calendar) => EpochRangeFactory.WithCalendar(calendar);
+    IEpochRangeFactory IEpochRangeFactory.WithTimeSystem(TimeSystem timeSystem) => EpochRangeFactory.WithTimeSystem(timeSystem);
+    IEpochRangeFactory IEpochRangeFactory.WithUTCOffset(Time utcOffset) => EpochRangeFactory.WithUTCOffset(utcOffset);
 }
