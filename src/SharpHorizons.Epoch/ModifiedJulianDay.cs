@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Represents an <see cref="IEpoch"/>, an instant in time, expressed as a modified Julian day - the fractional number of days since { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }.</summary>
-public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
+public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>, IComparable<ModifiedJulianDay>
 {
     /// <summary>The <see cref="ModifiedJulianDay"/> representing { 00:00:00 UTC, November 17th, 1858 CE, Gregorian Calendar }, or the <see cref="Day"/> { 0 }.</summary>
     public static ModifiedJulianDay Epoch { get; } = new(0);
@@ -175,7 +175,7 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
         }
         catch (EpochOutOfBoundsException e)
         {
-            throw ArgumentExceptionFactory.InternalException<IEpoch>(nameof(other), e);
+            throw new ArgumentException($"As the provided {nameof(IEpoch)} could not be converted to a {nameof(JulianDay)}, the comparison could not be performed.", nameof(other), e);
         }
     }
 
@@ -214,9 +214,6 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     /// <remarks>The behaviour is consistent with <see cref="double.ToString(string, IFormatProvider)"/>, with the <see cref="Day"/> representing the <see cref="double"/> and with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
     public string ToStringInvariant(string? format) => Day.ToString(format, CultureInfo.InvariantCulture);
 
-    /// <summary>Retrieves the <see cref="double"/> <see cref="Day"/> represented by the <see cref="ModifiedJulianDay"/>.</summary>
-    public double ToDouble() => Day;
-
     /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="ModifiedJulianDay"/> represents a later epoch than the <paramref name="initial"/> <see cref="ModifiedJulianDay"/>.</summary>
     /// <param name="initial">The <see cref="ModifiedJulianDay"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentNullException"/>
@@ -246,7 +243,7 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
         }
         catch (EpochOutOfBoundsException e)
         {
-            throw ArgumentExceptionFactory.InternalException<ModifiedJulianDay>(nameof(initial), e);
+            throw new ArgumentException($"As the provided {nameof(IEpoch)} could not be converted to a {nameof(JulianDay)}, the {nameof(Time)} difference could not be computed.", nameof(initial), e);
         }
     }
 
@@ -382,16 +379,19 @@ public sealed record class ModifiedJulianDay : IEpoch<ModifiedJulianDay>
     /// <summary>Constructs a <see cref="ModifiedJulianDay"/>, representing the <see cref="double"/> <paramref name="day"/>.</summary>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
-    /// <exception cref="EpochOutOfBoundsException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public static ModifiedJulianDay FromDouble(double day) => new(day);
+
+    /// <summary>Retrieves the <see cref="double"/> <see cref="Day"/> represented by the <see cref="ModifiedJulianDay"/>.</summary>
+    public double ToDouble() => Day;
 
     /// <inheritdoc cref="ModifiedJulianDay"/>
     /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
-    /// <exception cref="EpochOutOfBoundsException"/>
+    /// <exception cref="ArgumentOutOfRangeException"/>
     public static explicit operator ModifiedJulianDay(double day) => FromDouble(day);
 
-    /// <summary>Retrieves the <see cref="double"/> <see cref="Day"/> represented by <paramref name="modifiedJulianDay"/>.</summary>
+    /// <summary>Retrieves the <see cref="double"/> <see cref="Day"/> represented by the <see cref="ModifiedJulianDay"/> <paramref name="modifiedJulianDay"/>.</summary>
     /// <param name="modifiedJulianDay">The <see cref="Day"/> represented by this <see cref="ModifiedJulianDay"/> is retrieved.</param>
     /// <exception cref="ArgumentNullException"/>
     public static explicit operator double(ModifiedJulianDay modifiedJulianDay)
