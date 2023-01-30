@@ -231,6 +231,18 @@ public sealed record class JulianDay : IEpoch<JulianDay>
         return final.Difference(initial);
     }
 
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if the <paramref name="final"/> <see cref="JulianDay"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
+    /// <param name="final">The <see cref="JulianDay"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentException"/>
+    /// <exception cref="ArgumentNullException"/>
+    public static Time operator -(JulianDay final, IEpoch initial)
+    {
+        ArgumentNullException.ThrowIfNull(final);
+
+        return final.Difference(initial);
+    }
+
     /// <summary>Computes the <see cref="JulianDay"/> representing { <paramref name="initial"/> + <paramref name="difference"/> }.</summary>
     /// <param name="initial">The <see cref="JulianDay"/> representing the initial epoch.</param>
     /// <param name="difference">The <see cref="Time"/> between the <paramref name="initial"/> <see cref="JulianDay"/> and the resulting <see cref="JulianDay"/>.</param>
