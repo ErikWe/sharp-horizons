@@ -118,6 +118,12 @@ public sealed record class JulianDay : IEpoch<JulianDay>
         }
     }
 
+    /// <inheritdoc/>
+    public bool Equals(JulianDay? other) => Day.Equals(other?.Day);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => Day.GetHashCode();
+
     /// <summary>Retrieves a <see cref="string"/>-representation of the <see cref="Day"/> represented by the <see cref="JulianDay"/>, formatted according to the <see cref="CultureInfo.CurrentCulture"/>.</summary>
     /// <remarks>The behaviour is consistent with <see cref="double.ToString()"/>, with the <see cref="Day"/> representing the <see cref="double"/>.</remarks>
     public override string ToString() => Day.ToString(CultureInfo.CurrentCulture);
