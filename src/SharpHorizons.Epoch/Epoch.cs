@@ -121,8 +121,15 @@ public sealed record class Epoch : IEpoch<Epoch>
     /// <remarks>The behaviour is consistent with <see cref="Instant.ToString(string, IFormatProvider)"/>, with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
     public string ToStringInvariant(string? format) => Instant.ToString(format, CultureInfo.InvariantCulture);
 
-    /// <summary>Retrieves the <see cref="NodaTime.Instant"/> represented by the <see cref="Epoch"/>.</summary>
-    public Instant ToInstant() => Instant;
+    /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="Epoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="Epoch"/>.</summary>
+    /// <param name="initial">The <see cref="Epoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public Time Difference(Epoch initial)
+    {
+        ArgumentNullException.ThrowIfNull(initial);
+
+        return Instant.Subtract(Instant, initial.Instant).TotalSeconds * Time.OneSecond;
+    }
 
     /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="Epoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
     /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
@@ -131,6 +138,11 @@ public sealed record class Epoch : IEpoch<Epoch>
     public Time Difference(IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(initial);
+
+        if (initial is Epoch initialEpoch)
+        {
+            return Difference(initialEpoch);
+        }
 
         return ToJulianDay().Difference(initial);
     }
