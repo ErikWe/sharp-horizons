@@ -8,15 +8,15 @@ using System;
 using System.Globalization;
 
 /// <summary>Represents an <see cref="IEpoch"/>, expressed as a <see cref="System.DateTimeOffset"/>.</summary>
-public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
+public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>, IComparable<DateTimeEpoch>
 {
     /// <summary>The <see cref="System.DateTimeOffset"/> represented by the <see cref="DateTimeEpoch"/>.</summary>
     public DateTimeOffset DateTimeOffset { get; }
 
-    /// <summary>The <see cref="System.DateTime"/> represented by the <see cref="DateTimeEpoch"/> - ignoring the <see cref="Offset"/>.</summary>
+    /// <summary>The <see cref="System.DateTime"/> represented by the <see cref="DateTimeEpoch"/> - ignoring any <see cref="Offset"/>.</summary>
     public DateTime DateTime => DateTimeOffset.DateTime;
 
-    /// <summary>The <see cref="TimeSpan"/> offset to UTC of the <see cref="System.DateTimeOffset"/>.</summary>
+    /// <summary>The <see cref="TimeSpan"/> offset to UTC of the <see cref="DateTime"/>.</summary>
     public TimeSpan Offset => DateTimeOffset.Offset;
 
     /// <inheritdoc cref="DateTimeEpoch"/>
@@ -293,9 +293,12 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// <param name="instant"><inheritdoc cref="DateTimeOffset" path="/summary"/></param>
     public static DateTimeEpoch FromDateTimeOffset(DateTimeOffset instant) => new(instant);
 
+    /// <summary>Retrieves the <see cref="System.DateTimeOffset"/> represented by the <see cref="DateTimeEpoch"/>.</summary>
+    public DateTimeOffset ToDateTimeOffset() => DateTimeOffset;
+
     /// <inheritdoc cref="DateTimeEpoch"/>
     /// <param name="instant"><inheritdoc cref="DateTimeOffset" path="/summary"/></param>
-    public static implicit operator DateTimeEpoch(DateTimeOffset instant) => FromDateTimeOffset(instant);
+    public static explicit operator DateTimeEpoch(DateTimeOffset instant) => FromDateTimeOffset(instant);
 
     /// <summary>Retrieves the <see cref="System.DateTimeOffset"/> represented by <paramref name="epoch"/>.</summary>
     /// <param name="epoch">The <see cref="System.DateTimeOffset"/> represented by this <see cref="Epoch"/> is retrieved.</param>
