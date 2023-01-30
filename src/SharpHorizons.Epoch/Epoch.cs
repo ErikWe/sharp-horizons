@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Represents an <see cref="IEpoch"/>, expressed as an <see cref="NodaTime.Instant"/>.</summary>
-public sealed record class Epoch : IEpoch<Epoch>
+public sealed record class Epoch : IEpoch<Epoch>, IComparable<Epoch>
 {
     /// <summary>The <see cref="NodaTime.Instant"/> represented by the <see cref="Epoch"/>.</summary>
     public required Instant Instant { get; init; }
@@ -159,7 +159,7 @@ public sealed record class Epoch : IEpoch<Epoch>
         {
             return new(Instant + Duration.FromDays(difference.Days));
         }
-        catch (ArgumentOutOfRangeException e)
+        catch (Exception e) when (e is ArgumentOutOfRangeException or OverflowException)
         {
             throw EpochOutOfBoundsException.FromAddition<Epoch>(difference, e);
         }
@@ -188,6 +188,17 @@ public sealed record class Epoch : IEpoch<Epoch>
     /// <param name="initial">The <see cref="Epoch"/> representing the initial epoch.</param>
     /// <exception cref="ArgumentNullException"/>
     public static Time operator -(Epoch final, Epoch initial)
+    {
+        ArgumentNullException.ThrowIfNull(final);
+
+        return final.Difference(initial);
+    }
+
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if the <paramref name="final"/> <see cref="Epoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
+    /// <param name="final">The <see cref="Epoch"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public static Time operator -(Epoch final, IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(final);
 
@@ -268,9 +279,20 @@ public sealed record class Epoch : IEpoch<Epoch>
     /// <param name="instant"><inheritdoc cref="Instant" path="/summary"/></param>
     public static Epoch FromInstant(Instant instant) => new(instant);
 
+    /// <summary>Constructs an <see cref="Epoch"/>, representing the <see cref="NodaTime.Instant"/> equivalent to the <see cref="ZonedDateTime"/> <paramref name="zonedDateTime"/>.</summary>
+    /// <param name="zonedDateTime">Describes the <see cref="NodaTime.Instant"/> represented by the <see cref="Epoch"/>, in some <see cref="DateTimeZone"/>.</param>
+    public static Epoch FromZonedDateTime(ZonedDateTime zonedDateTime) => new(zonedDateTime);
+
+    /// <summary>Retrieves the <see cref="NodaTime.Instant"/> represented by the <see cref="Epoch"/>.</summary>
+    public Instant ToInstant() => Instant;
+
     /// <inheritdoc cref="Epoch"/>
     /// <param name="instant"><inheritdoc cref="Instant" path="/summary"/></param>
     public static explicit operator Epoch(Instant instant) => FromInstant(instant);
+
+    /// <inheritdoc cref="Epoch"/>
+    /// <param name="zonedDateTime">Describes the <see cref="NodaTime.Instant"/> represented by the <see cref="Epoch"/>, in some <see cref="DateTimeZone"/>.</param>
+    public static explicit operator Epoch(ZonedDateTime zonedDateTime) => FromZonedDateTime(zonedDateTime);
 
     /// <summary>Retrieves the <see cref="NodaTime.Instant"/> represented by <paramref name="epoch"/>.</summary>
     /// <param name="epoch">The <see cref="NodaTime.Instant"/> represented by this <see cref="Epoch"/> is retrieved.</param>
