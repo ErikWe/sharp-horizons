@@ -208,6 +208,17 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
         return final.Difference(initial);
     }
 
+    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if the <paramref name="final"/> <see cref="DateTimeEpoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
+    /// <param name="final">The <see cref="DateTimeEpoch"/> representing the final epoch.</param>
+    /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public static Time operator -(DateTimeEpoch final, IEpoch initial)
+    {
+        ArgumentNullException.ThrowIfNull(final);
+
+        return final.Difference(initial);
+    }
+
     /// <summary>Computes the <see cref="DateTimeEpoch"/> representing { <paramref name="initial"/> + <paramref name="difference"/> }.</summary>
     /// <param name="initial">The <see cref="DateTimeEpoch"/> representing the initial epoch.</param>
     /// <param name="difference">The <see cref="Time"/> between the <paramref name="initial"/> <see cref="DateTimeEpoch"/> and the resulting <see cref="DateTimeEpoch"/>.</param>
