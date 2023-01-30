@@ -68,7 +68,12 @@ public sealed record class JulianDay : IEpoch<JulianDay>
     }
 
     JulianDay IEpoch.ToJulianDay() => this;
-    static JulianDay IEpoch<JulianDay>.FromJulianDay(JulianDay julianDay) => julianDay;
+    static JulianDay IEpoch<JulianDay>.FromJulianDay(JulianDay julianDay)
+    {
+        ArgumentNullException.ThrowIfNull(julianDay);
+
+        return julianDay;
+    }
 
     /// <summary>Compares the <see cref="JulianDay"/> <see langword="this"/> and <paramref name="other"/>, resulting in:
     /// <list type="bullet">
