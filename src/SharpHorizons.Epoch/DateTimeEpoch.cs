@@ -5,14 +5,13 @@ using NodaTime;
 using SharpMeasures;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 /// <summary>Represents an <see cref="IEpoch"/>, expressed as a <see cref="System.DateTimeOffset"/>.</summary>
 public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
 {
     /// <summary>The <see cref="System.DateTimeOffset"/> represented by the <see cref="DateTimeEpoch"/>.</summary>
-    public required DateTimeOffset DateTimeOffset { get; init; }
+    public DateTimeOffset DateTimeOffset { get; }
 
     /// <summary>The <see cref="System.DateTime"/> represented by the <see cref="DateTimeEpoch"/> - ignoring the <see cref="Offset"/>.</summary>
     public DateTime DateTime => DateTimeOffset.DateTime;
@@ -21,11 +20,7 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     public TimeSpan Offset => DateTimeOffset.Offset;
 
     /// <inheritdoc cref="DateTimeEpoch"/>
-    public DateTimeEpoch() { }
-
-    /// <inheritdoc cref="DateTimeEpoch"/>
     /// <param name="instant"><inheritdoc cref="DateTimeOffset" path="/summary"/></param>
-    [SetsRequiredMembers]
     public DateTimeEpoch(DateTimeOffset instant)
     {
         DateTimeOffset = instant;
@@ -36,8 +31,18 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// <param name="offset"><inheritdoc cref="Offset" path="/summary"/></param>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentOutOfRangeException"/>
-    [SetsRequiredMembers]
-    public DateTimeEpoch(DateTime dateTime, TimeSpan offset) : this(new DateTimeOffset(dateTime, offset)) { }
+    public DateTimeEpoch(DateTime dateTime, TimeSpan offset)
+    {
+        DateTimeOffset = new(dateTime, offset);
+    }
+
+    /// <inheritdoc cref="DateTimeEpoch"/>
+    /// <param name="dateTime"><inheritdoc cref="DateTime" path="/summary"/></param>
+    /// <exception cref="ArgumentOutOfRangeException"/>
+    public DateTimeEpoch(DateTime dateTime)
+    {
+        DateTimeOffset = new(dateTime);
+    }
 
     /// <summary>Converts the <see cref="DateTimeEpoch"/> to an instance of <see cref="JulianDay"/> representing the same epoch.</summary>
     public JulianDay ToJulianDay() => new Epoch(Instant.FromDateTimeOffset(DateTimeOffset)).ToJulianDay();
