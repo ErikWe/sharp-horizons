@@ -135,8 +135,15 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     /// <remarks>The behaviour is consistent with <see cref="DateTimeOffset.ToString(string, IFormatProvider)"/>, with the <see cref="CultureInfo.InvariantCulture"/> as the <see cref="IFormatProvider"/>.</remarks>
     public string ToStringInvariant(string? format) => DateTimeOffset.ToString(format, CultureInfo.InvariantCulture);
 
-    /// <summary>Retrieves the <see cref="System.DateTimeOffset"/> represented by the <see cref="DateTimeEpoch"/>.</summary>
-    public DateTimeOffset ToDateTimeOffset() => DateTimeOffset;
+    /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="DateTimeEpoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="DateTimeEpoch"/>.</summary>
+    /// <param name="initial">The <see cref="DateTimeEpoch"/> representing the initial epoch.</param>
+    /// <exception cref="ArgumentNullException"/>
+    public Time Difference(DateTimeEpoch initial)
+    {
+        ArgumentNullException.ThrowIfNull(initial);
+
+        return DateTimeOffset.Subtract(initial.DateTimeOffset).TotalSeconds * Time.OneSecond;
+    }
 
     /// <summary>Computes the <see cref="Time"/> difference { <see langword="this"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if <see langword="this"/> <see cref="DateTimeEpoch"/> represents a later epoch than the <paramref name="initial"/> <see cref="IEpoch"/>.</summary>
     /// <param name="initial">The <see cref="IEpoch"/> representing the initial epoch.</param>
@@ -145,6 +152,11 @@ public sealed record class DateTimeEpoch : IEpoch<DateTimeEpoch>
     public Time Difference(IEpoch initial)
     {
         ArgumentNullException.ThrowIfNull(initial);
+
+        if (initial is DateTimeEpoch initialDateTimeEpoch)
+        {
+            return Difference(initialDateTimeEpoch);
+        }
 
         return ToJulianDay().Difference(initial);
     }
