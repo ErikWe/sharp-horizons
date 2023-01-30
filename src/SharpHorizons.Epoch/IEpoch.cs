@@ -21,7 +21,7 @@ public interface IEpoch : IComparable<IEpoch>
 
 /// <inheritdoc cref="IEpoch"/>
 /// <typeparam name="TSelf">The self-type.</typeparam>
-public interface IEpoch<TSelf> : IEpoch where TSelf : IEpoch<TSelf>
+public interface IEpoch<out TSelf> : IEpoch where TSelf : IEpoch<TSelf>
 {
     /// <summary>Constructs an instance of <typeparamref name="TSelf"/>, representing the same epoch as <paramref name="julianDay"/>.</summary>
     /// <param name="julianDay">The constructed <typeparamref name="TSelf"/> represents the same epoch as this <see cref="JulianDay"/>.</param>
@@ -41,26 +41,4 @@ public interface IEpoch<TSelf> : IEpoch where TSelf : IEpoch<TSelf>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="EpochOutOfBoundsException"/>
     public abstract TSelf Subtract(Time difference);
-
-    /// <summary>Computes the <typeparamref name="TSelf"/> representing { <paramref name="initial"/> + <paramref name="difference"/> }.</summary>
-    /// <param name="initial">The <typeparamref name="TSelf"/> representing the initial epoch.</param>
-    /// <param name="difference">The <see cref="Time"/> between the <paramref name="initial"/> <typeparamref name="TSelf"/> and the resulting <typeparamref name="TSelf"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="EpochOutOfBoundsException"/>
-    public static abstract TSelf operator +(TSelf initial, Time difference);
-
-    /// <summary>Computes the <typeparamref name="TSelf"/> representing { <paramref name="initial"/> - <paramref name="difference"/> }.</summary>
-    /// <param name="initial">The <typeparamref name="TSelf"/> representing the initial epoch.</param>
-    /// <param name="difference">The <see cref="Time"/> between the <paramref name="initial"/> <typeparamref name="TSelf"/> and the resulting <typeparamref name="TSelf"/>.</param>
-    /// <exception cref="ArgumentException"/>
-    /// <exception cref="ArgumentNullException"/>
-    /// <exception cref="EpochOutOfBoundsException"/>
-    public static abstract TSelf operator -(TSelf initial, Time difference);
-
-    /// <summary>Computes the <see cref="Time"/> difference { <paramref name="final"/> - <paramref name="initial"/> }. The resulting <see cref="Time"/> is positive if the <paramref name="final"/> <typeparamref name="TSelf"/> represents a later epoch than the <paramref name="initial"/> <typeparamref name="TSelf"/>.</summary>
-    /// <param name="final">The <typeparamref name="TSelf"/> representing the final epoch.</param>
-    /// <param name="initial">The <typeparamref name="TSelf"/> representing the initial epoch.</param>
-    /// <exception cref="ArgumentNullException"/>
-    public static abstract Time operator -(TSelf final, TSelf initial);
 }
