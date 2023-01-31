@@ -9,8 +9,10 @@ using SharpHorizons.Query.Vectors.Table;
 
 using SharpMeasures;
 
+using System;
+
 /// <summary>Describes a query for an <see cref="IEphemeris{TEntry}"/> of <see cref="IOrbitalStateVectors"/>-related properties, such as <see cref="Position3"/> and <see cref="Velocity3"/>, of a <see cref="ITarget"/> relative to an <see cref="IOrigin"/>.</summary>
-public interface IVectorsQuery
+public interface IVectorsQuery : IEquatable<IVectorsQuery>
 {
     /// <summary>The <see cref="ITarget"/>, which the resulting <see cref="IEphemeris{TEntry}"/> describes.</summary>
     public abstract ITarget Target { get; }
@@ -51,6 +53,6 @@ public interface IVectorsQuery
     /// <summary>Determines whether the individual values in the result of the query are labelled.</summary>
     public abstract OutputLabels OutputLabels { get; }
 
-    /// <summary>Determines whether the <see cref="Time"/> difference between <see cref="TimeSystem.TDB"/> and <see cref="TimeSystem.UT"/> is included in the result of the query.</summary>
+    /// <summary>Determines whether the <see cref="Time"/> difference between <see cref="TimeSystem.BarycentricDynamicalTime"/> and <see cref="TimeSystem.UniversalTime"/> is included in the result of the query.</summary>
     public abstract TimeDeltaInclusion TimeDeltaInclusion { get; }
 }

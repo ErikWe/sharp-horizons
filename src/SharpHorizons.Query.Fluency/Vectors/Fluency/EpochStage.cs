@@ -61,7 +61,7 @@ internal sealed class EpochStage : IEpochStage
         }
         catch (ArgumentNullException e)
         {
-            throw new ArgumentException($"The {nameof(IEpochStage.DEpochRangeFactory)} produced a null {nameof(IEpochSelection)}.", nameof(epochRangeFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(IEpochStage.DEpochRangeFactory)} produced a null {nameof(IEpochSelection)}.", nameof(epochRangeFactoryDelegate), e);
         }
     }
 
@@ -77,7 +77,7 @@ internal sealed class EpochStage : IEpochStage
         }
         catch (ArgumentNullException e)
         {
-            throw new ArgumentException($"The {nameof(IEpochStage.DEpochCollectionFactory)} produced a null {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(IEpochStage.DEpochCollectionFactory)} produced a null {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
         }
     }
 
@@ -90,9 +90,9 @@ internal sealed class EpochStage : IEpochStage
         {
             return epochCollectionFactoryDelegate(EpochRangeFactory);
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
-            throw new ArgumentException($"The {nameof(IEpochStage.DEpochRangeFactory)} encountered an error while producing an {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(IEpochStage.DEpochRangeFactory)} encountered an error while producing an {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
         }
     }
 
@@ -105,9 +105,9 @@ internal sealed class EpochStage : IEpochStage
         {
             return epochCollectionFactoryDelegate(EpochCollectionFactory);
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
-            throw new ArgumentException($"The {nameof(IEpochStage.DEpochCollectionFactory)} encountered an error while producing an {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(IEpochStage.DEpochCollectionFactory)} encountered an error while producing an {nameof(IEpochSelection)}.", nameof(epochCollectionFactoryDelegate), e);
         }
     }
 

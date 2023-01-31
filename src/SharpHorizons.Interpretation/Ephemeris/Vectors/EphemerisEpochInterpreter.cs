@@ -34,7 +34,7 @@ internal sealed class EphemerisEpochInterpreter : IEphemerisEpochInterpreter
 
         JulianDay julianDay = new(julianDayNumber);
 
-        var timeSystemOffset = TimeSystemOffsetProvider.Offset(julianDay, header.TimeSystem, TimeSystem.UT);
+        var timeSystemOffset = TimeSystemOffsetProvider.Offset(julianDay, header.TimeSystem, TimeSystem.UniversalTime);
 
         return julianDay + timeSystemOffset;
     }

@@ -48,7 +48,7 @@ internal sealed class OriginStage : IOriginStage
         }
         catch (ArgumentNullException e)
         {
-            throw new ArgumentException($"The {nameof(IOriginStage.DOriginFactory)} produced a null {nameof(IOrigin)}.", nameof(originFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(IOriginStage.DOriginFactory)} produced a null {nameof(IOrigin)}.", nameof(originFactoryDelegate), e);
         }
     }
 
@@ -61,9 +61,9 @@ internal sealed class OriginStage : IOriginStage
         {
             return originFactoryDelegate(OriginFactory);
         }
-        catch (Exception e)
+        catch (InvalidOperationException e)
         {
-            throw new ArgumentException($"The {nameof(IOriginStage.DOriginFactory)} encountered an error while producing an {nameof(IOrigin)}.", nameof(originFactoryDelegate), e);
+            throw new ArgumentException($"The provided {nameof(IOriginStage.DOriginFactory)} encountered an error while producing an {nameof(IOrigin)}.", nameof(originFactoryDelegate), e);
         }
     }
 

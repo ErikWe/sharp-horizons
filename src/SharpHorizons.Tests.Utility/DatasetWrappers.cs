@@ -42,39 +42,4 @@ public static class DatasetWrappers
             }
         }
     }
-
-    public static IEnumerable<(T1, T2)> Permutate<T1, T2>(IEnumerable<T1> firstItems, IEnumerable<T2> secondItems)
-    {
-        var firstEnumerator = firstItems.GetEnumerator();
-
-        while (firstEnumerator.MoveNext())
-        {
-            var secondEnumerator = secondItems.GetEnumerator();
-
-            while (secondEnumerator.MoveNext())
-            {
-                yield return (firstEnumerator.Current, secondEnumerator.Current);
-            }
-        }
-    }
-
-    public static IEnumerable<(T1, T2, T3)> Permutate<T1, T2, T3>(IEnumerable<T1> firstItems, IEnumerable<T2> secondItems, IEnumerable<T3> thirdItems)
-    {
-        var firstEnumerator = firstItems.GetEnumerator();
-
-        while (firstEnumerator.MoveNext())
-        {
-            var secondEnumerator = secondItems.GetEnumerator();
-
-            while (secondEnumerator.MoveNext())
-            {
-                var thirdEnumerator = thirdItems.GetEnumerator();
-
-                while (thirdEnumerator.MoveNext())
-                {
-                    yield return (firstEnumerator.Current, secondEnumerator.Current, thirdEnumerator.Current);
-                }
-            }
-        }
-    }
 }

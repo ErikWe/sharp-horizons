@@ -103,7 +103,7 @@ internal sealed class QueryEpochComposer
     /// <param name="offset">The <see cref="Time"/> offset from <paramref name="timeSystem"/> of the new <see cref="IEpoch"/>.</param>
     private JulianDay ExpressEpoch(IEpoch epoch, TimeSystem timeSystem, Time offset)
     {
-        var timeSystemOffset = TimeSystemOffsetProvider.Offset(epoch, TimeSystem.UT, timeSystem);
+        var timeSystemOffset = TimeSystemOffsetProvider.Offset(epoch, TimeSystem.UniversalTime, timeSystem);
 
         try
         {

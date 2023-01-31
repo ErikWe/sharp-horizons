@@ -122,13 +122,13 @@ public static class IServiceCollectionExtensions
     /// <param name="services"><see cref="IEpochSelection"/>-related services required by SharpHorizons are added to this <see cref="IServiceCollection"/>.</param>
     private static IServiceCollection AddSharpHorizonsEpochSelection(this IServiceCollection services)
     {
-        services.AddSingleton<IEpochCollectionFactory, EpochCollectionFactory>();
+        services.AddTransient<IEpochCollectionFactory, EpochCollectionFactory>();
 
-        services.AddSingleton<IEpochRangeFactory, SimpleEpochRangeFactory>();
-        services.AddSingleton<IFixedEpochRangeFactory, FixedEpochRangeFactory>();
-        services.AddSingleton<IUniformEpochRangeFactory, UniformEpochRangeFactory>();
-        services.AddSingleton<ICalendarEpochRangeFactory, CalendarEpochRangeFactory>();
-        services.AddSingleton<IAngularEpochRangeFactory, AngularEpochRangeFactory>();
+        services.AddTransient<IEpochRangeFactory, SimpleEpochRangeFactory>();
+        services.AddTransient<IFixedEpochRangeFactory, FixedEpochRangeFactory>();
+        services.AddTransient<IUniformEpochRangeFactory, UniformEpochRangeFactory>();
+        services.AddTransient<ICalendarEpochRangeFactory, CalendarEpochRangeFactory>();
+        services.AddTransient<IAngularEpochRangeFactory, AngularEpochRangeFactory>();
 
         services.AddSingleton<IFixedStepSizeFactory, FixedStepSizeFactory>();
         services.AddSingleton<IUniformStepSizeFactory, UniformStepSizeFactory>();

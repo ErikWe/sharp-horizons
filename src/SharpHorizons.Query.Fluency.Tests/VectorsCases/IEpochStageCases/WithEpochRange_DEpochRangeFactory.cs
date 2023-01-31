@@ -23,9 +23,17 @@ public class WithEpochRange_DEpochRangeFactory
     }
 
     [Fact]
-    public void ExceptionThrowingDelegate_ArgumentException()
+    public void InvalidOperationExceptionThrowingDelegate_ArgumentException()
     {
-        var epochRangeFactoryDelegate = GetExceptionThrowingDelegate();
+        var epochRangeFactoryDelegate = GetInvalidOperationExceptionThrowingDelegate();
+
+        AnyError_TException<ArgumentException>(epochRangeFactoryDelegate);
+    }
+
+    [Fact]
+    public void NullReturningDelegate_ArgumentException()
+    {
+        var epochRangeFactoryDelegate = GetNullReturningDelegate();
 
         AnyError_TException<ArgumentException>(epochRangeFactoryDelegate);
     }
@@ -97,5 +105,6 @@ public class WithEpochRange_DEpochRangeFactory
     }
 
     private static IEpochStage.DEpochRangeFactory GetNullDelegate() => null!;
-    private static IEpochStage.DEpochRangeFactory GetExceptionThrowingDelegate() => (factory) => throw new Exception();
+    private static IEpochStage.DEpochRangeFactory GetInvalidOperationExceptionThrowingDelegate() => (factory) => throw new InvalidOperationException();
+    private static IEpochStage.DEpochRangeFactory GetNullReturningDelegate() => (factory) => null!;
 }

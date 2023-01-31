@@ -6,30 +6,53 @@ using Xunit;
 
 public class Initialization
 {
-    [Theory]
-    [ClassData(typeof(Datasets.ConvertibleIntegralAndFractionalDays))]
-    [ClassData(typeof(Datasets.UnconvertibleIntegralAndFractionalDays))]
-    public void Valid_ExactMatch(int integralDay, float fractionalDay)
-    {
-        ModifiedJulianDay actual = new() { IntegralDay = integralDay, FractionalDay = fractionalDay };
-
-        Asserter.Exact(integralDay, fractionalDay, actual.IntegralDay, actual.FractionalDay);
-    }
-
-    [Fact]
-    public void NaN_ArgumentException()
-    {
-        var exception = Record.Exception(() => new ModifiedJulianDay() { IntegralDay = 0, FractionalDay = float.NaN });
-
-        Assert.IsType<ArgumentException>(exception);
-    }
+    private static ModifiedJulianDay Target(int integralDay, float fractionalDay) => new() { IntegralDay = integralDay, FractionalDay = fractionalDay };
+    private static ModifiedJulianDay Target(int integralDay) => new() { IntegralDay = integralDay };
 
     [Theory]
-    [ClassData(typeof(Datasets.OutOfRangeIntegralAndFractionalDays))]
-    public void OutOfRange_ArgumentOutOfRangeException(int integralDay, float fractionalDay)
-    {
-        var exception = Record.Exception(() => new ModifiedJulianDay() { IntegralDay = integralDay, FractionalDay = fractionalDay });
+    [ClassData(typeof(Datasets.ConvertibleModifiedJulianDayIntegralDayInt32_InvalidModifiedJulianDayFractionalDayFloat))]
+    [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayIntegralDayInt32_InvalidModifiedJulianDayFractionalDayFloat))]
+    public void ValidIntegralDayAndInvalidFractionalDay_ArgumentException(int integralDay, float fractionalDay) => AnyError_TException<ArgumentException>(integralDay, fractionalDay);
 
-        Assert.IsType<ArgumentOutOfRangeException>(exception);
+    [Theory]
+    [ClassData(typeof(Datasets.ConvertibleModifiedJulianDayIntegralDayInt32_OutOfRangeModifiedJulianDayFractionalDayFloat))]
+    [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayIntegralDayInt32_OutOfRangeModifiedJulianDayFractionalDayFloat))]
+    public void ValidIntegralDayAndOutOfRangeFractionalDay_ArgumentOutOfRangeException(int integralDay, float fractionalDay) => AnyError_TException<ArgumentOutOfRangeException>(integralDay, fractionalDay);
+
+    [Theory]
+    [ClassData(typeof(Datasets.ConvertibleModifiedJulianDayIntegralDayInt32_ValidModifiedJulianDayFractionalDayFloat))]
+    [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayIntegralDayInt32_ValidModifiedJulianDayFractionalDayFloat))]
+    public void Valid_ExactMatchIntegralDay(int integralDay, float fractionalDay)
+    {
+        var actual = Target(integralDay, fractionalDay);
+
+        Assert.Equal(integralDay, actual.IntegralDay);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.ConvertibleModifiedJulianDayIntegralDayInt32_ValidModifiedJulianDayFractionalDayFloat))]
+    [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayIntegralDayInt32_ValidModifiedJulianDayFractionalDayFloat))]
+    public void Valid_ExactMatchFractionalDay(int integralDay, float fractionalDay)
+    {
+        var actual = Target(integralDay, fractionalDay);
+
+        Assert.Equal(fractionalDay, actual.FractionalDay);
+    }
+
+    [Theory]
+    [ClassData(typeof(Datasets.ConvertibleModifiedJulianDayIntegralDayInt32))]
+    [ClassData(typeof(Datasets.UnconvertibleModifiedJulianDayIntegralDayInt32))]
+    public void JustIntegralDay_ZeroFractionalDay(int integralDay)
+    {
+        var actual = Target(integralDay);
+
+        Assert.Equal(0, actual.FractionalDay);
+    }
+
+    private static void AnyError_TException<TException>(int integralDay, float fractionalDay) where TException : Exception
+    {
+        var exception = Record.Exception(() => Target(integralDay, fractionalDay));
+
+        Assert.IsType<TException>(exception);
     }
 }

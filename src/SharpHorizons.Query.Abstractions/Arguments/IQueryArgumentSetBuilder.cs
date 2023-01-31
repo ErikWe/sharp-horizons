@@ -168,13 +168,13 @@ public interface IQueryArgumentSetBuilder
 
     /// <summary>Specifies the <see cref="IQueryArgumentSet.ReferencePlane"/> of the <see cref="IQueryArgumentSet"/> under construction.</summary>
     /// <param name="referencePlane">The <see cref="IQueryArgumentSet.ReferencePlane"/> of the <see cref="IQueryArgumentSet"/> under construction.</param>
-    /// <remarks>To unspecify the <see cref="IQueryArgumentSet.ReferencePlane"/>, use <see cref="UnspecifyRwferencePlane"/>.</remarks>
+    /// <remarks>To unspecify the <see cref="IQueryArgumentSet.ReferencePlane"/>, use <see cref="UnspecifyReferencePlane"/>.</remarks>
     /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     public abstract IQueryArgumentSetBuilder SpecifyReferencePlane(IReferencePlaneArgument referencePlane);
 
     /// <summary>Unspecifies the <see cref="IQueryArgumentSet.ReferencePlane"/> of the <see cref="IQueryArgumentSet"/> under construction.</summary>
-    public abstract IQueryArgumentSetBuilder UnspecifyRwferencePlane();
+    public abstract IQueryArgumentSetBuilder UnspecifyReferencePlane();
 
     /// <summary>Specifies the <see cref="IQueryArgumentSet.ReferenceSystem"/> of the <see cref="IQueryArgumentSet"/> under construction.</summary>
     /// <param name="referenceSystem">The <see cref="IQueryArgumentSet.ReferenceSystem"/> of the <see cref="IQueryArgumentSet"/> under construction.</param>

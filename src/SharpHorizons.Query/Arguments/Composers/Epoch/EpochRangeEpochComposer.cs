@@ -43,7 +43,7 @@ internal sealed class EpochRangeEpochComposer : IStartEpochComposer<IEpochRange>
     {
         try
         {
-            return QueryEpochComposer.Compose(epoch, epochRange.Format, epochRange.Calendar, epochRange.TimeSystem, epochRange.Offset);
+            return QueryEpochComposer.Compose(epoch, epochRange.Format, epochRange.Calendar, epochRange.TimeSystem, epochRange.UTCOffset);
         }
         catch (ArgumentException e)
         {

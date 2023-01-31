@@ -46,7 +46,7 @@ public sealed class VectorsQueryValidator : IVectorsQueryValidator
             ValidateOutputLabels(vectorsQuery.OutputLabels);
             ValidateTimeDeltaInclusion(vectorsQuery.TimeDeltaInclusion);
         }
-        catch (Exception e)
+        catch (ArgumentException e)
         {
             throw ArgumentExceptionFactory.InvalidState<IVectorsQuery>(argumentExpression, e);
         }

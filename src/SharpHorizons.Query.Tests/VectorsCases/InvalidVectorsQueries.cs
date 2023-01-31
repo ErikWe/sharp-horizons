@@ -1,7 +1,5 @@
 ﻿namespace SharpHorizons.Tests.QueryCases.VectorsCases;
 
-using Moq;
-
 using SharpHorizons.Query;
 using SharpHorizons.Query.Epoch;
 using SharpHorizons.Query.Origin;
@@ -9,17 +7,13 @@ using SharpHorizons.Query.Target;
 using SharpHorizons.Query.Vectors;
 using SharpHorizons.Query.Vectors.Table;
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 public class InvalidVectorsQueries : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
-        yield return new object[] { new SloppyVectorsQuery() };
-
         yield return new object[] { GetValidVectorsQuery() with { Target = GetNullTarget() } };
         yield return new object[] { GetValidVectorsQuery() with { Origin = GetNullOrigin() } };
         yield return new object[] { GetValidVectorsQuery() with { EpochSelection = GetNullEpochSelection() } };
@@ -41,30 +35,6 @@ public class InvalidVectorsQueries : IEnumerable<object[]>
         yield return new object[] { GetValidVectorsQuery() with { ValueSeparation = GetForbiddenValueSeparation() } };
         yield return new object[] { GetValidVectorsQuery() with { OutputLabels = GetInvalidOutputLabels() } };
         yield return new object[] { GetValidVectorsQuery() with { TimeDeltaInclusion = GetInvalidTimeDeltaInclusion() } };
-
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.Target) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.Origin) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.EpochSelection) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.OutputFormat) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.ObjectDataInclusion) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.ReferencePlane) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.ReferenceSystem) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.OutputUnits) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.TableContent) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.Correction) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.TimePrecision) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.ValueSeparation) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.OutputLabels) };
-        yield return new object[] { MockException((vectorsQuery) => vectorsQuery.TimeDeltaInclusion) };
-    }
-
-    private static IVectorsQuery MockException<T>(Expression<Func<SloppyVectorsQuery, T>> expression)
-    {
-        var mock = new Mock<SloppyVectorsQuery>();
-
-        mock.Setup(expression).Throws(new Exception());
-
-        return mock.Object;
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

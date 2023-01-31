@@ -9,8 +9,8 @@ public interface ITargetStage
 {
     /// <summary>Uses a <see cref="ITargetFactory"/> to select the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</summary>
     /// <param name="targetFactory">This <see cref="ITargetFactory"/> is used to select the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>.</param>
-    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
+    /// <exception cref="InvalidOperationException"/>
     public delegate ITarget DTargetFactory(ITargetFactory targetFactory);
 
     /// <summary>Selects <paramref name="target"/> as the <see cref="ITarget"/> in the <see cref="IVectorsQuery"/>, and proceeds to the <see cref="IOriginStage"/>.</summary>

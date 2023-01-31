@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-/// <summary>Describes the integral and fractional part of a <see cref="JulianDay"/>-related <typeparamref name="TEpoch"/>.</summary>
+/// <summary>Describes the integral and fractional part of some <see cref="JulianDay"/>-related type <typeparamref name="TEpoch"/>.</summary>
 /// <typeparam name="TEpoch">The type that the <see cref="JulianDayRepresentation{TEpoch}"/> describes.</typeparam>
 internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : IEpoch<TEpoch>
 {
@@ -17,7 +17,9 @@ internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : I
     {
         ValidateFractionalDay(fractionalDay);
 
-        return new(((long)integralDay << 32) | BitConverter.SingleToUInt32Bits(fractionalDay));
+        var combinedRepresentation = ComputeCombinedRepresentation(integralDay, fractionalDay);
+
+        return new(combinedRepresentation);
     }
 
     /// <summary>Constructs the <see cref="JulianDayRepresentation{TEpoch}"/> approximately describing <paramref name="day"/>.</summary>
@@ -26,13 +28,8 @@ internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : I
     {
         ValidateDay(day);
 
-        var integralDay = (int)Math.Floor(day);
-        var fractionalDay = (float)(day % 1);
-
-        if (fractionalDay < 0)
-        {
-            fractionalDay += 1;
-        }
+        var integralDay = ComputeIntegralDay(day);
+        var fractionalDay = ComputeFractionalDay(day);
 
         return Construct(integralDay, fractionalDay);
     }
@@ -41,7 +38,7 @@ internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : I
     private static long FractionalDayBitMask { get; } = ((long)1 << 32) - 1;
 
     /// <summary>The bit mask for accessing the <see cref="IntegralDay"/> from <see cref="IntegralAndFractionalDay"/>.</summary>
-    private static long IntegralDayBitMask { get; } = FractionalDayBitMask ^ -1;
+    private static long IntegralDayBitMask { get; } = ~FractionalDayBitMask;
 
     /// <summary>The combined <see cref="IntegralDay"/> and <see cref="FractionalDay"/>.</summary>
     private long IntegralAndFractionalDay { get; init; }
@@ -77,6 +74,29 @@ internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : I
         return new((IntegralAndFractionalDay & IntegralDayBitMask) | BitConverter.SingleToUInt32Bits(fractionalDay));
     }
 
+    /// <summary>Computes the <see cref="long"/> <see cref="IntegralAndFractionalDay"/>.</summary>
+    /// <param name="integralDay"><inheritdoc cref="IntegralDay" path="/summary"/></param>
+    /// <param name="fractionalDay"><inheritdoc cref="FractionalDay" path="/summary"/></param>
+    private static long ComputeCombinedRepresentation(int integralDay, float fractionalDay) => ((long)integralDay << 32) | BitConverter.SingleToUInt32Bits(fractionalDay);
+
+    /// <summary>Computes the <see cref="int"/> <see cref="IntegralDay"/>.</summary>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    private static int ComputeIntegralDay(double day) => (int)Math.Floor(day);
+
+    /// <summary>Computes the <see cref="float"/> <see cref="FractionalDay"/>.</summary>
+    /// <param name="day"><inheritdoc cref="Day" path="/summary"/></param>
+    private static float ComputeFractionalDay(double day)
+    {
+        var fractionalDay = (float)(day % 1);
+
+        if (fractionalDay < 0)
+        {
+            fractionalDay += 1;
+        }
+
+        return fractionalDay;
+    }
+
     /// <summary>Validates that the <see cref="float"/> <paramref name="fractionalDay"/> can represent the <see cref="FractionalDay"/>, throwing an <see cref="ArgumentException"/> otherwise.</summary>
     /// <param name="fractionalDay">This <see cref="float"/> is validated.</param>
     /// <param name="argumentExpression">The expression used as the argument for <paramref name="fractionalDay"/>.</param>
@@ -86,7 +106,7 @@ internal readonly record struct JulianDayRepresentation<TEpoch> where TEpoch : I
     {
         if (float.IsNaN(fractionalDay))
         {
-            throw new ArgumentException($"{double.NaN} cannot be used to represent the fractional day of a {typeof(TEpoch).Name}");
+            throw new ArgumentException($"{double.NaN} cannot be used to represent the fractional day of a {typeof(TEpoch).Name}", nameof(fractionalDay));
         }
 
         if (float.IsInfinity(fractionalDay) || fractionalDay is < 0 or >= 1)

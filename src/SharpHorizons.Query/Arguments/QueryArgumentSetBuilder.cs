@@ -16,6 +16,7 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
 
     /// <inheritdoc cref="QueryArgumentSetBuilder"/>
     /// <param name="command"><inheritdoc cref="IQueryArgumentSet.Command" path="/summary"/></param>
+    /// <exception cref="ArgumentException"/>
     /// <exception cref="ArgumentNullException"/>
     public QueryArgumentSetBuilder(ICommandArgument command)
     {
@@ -153,7 +154,7 @@ internal sealed class QueryArgumentSetBuilder : IQueryArgumentSetBuilder
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.UnspecifyStepSize() => UnspecifyOptional<IStepSizeArgument>((argumentSet, stepSize) => argumentSet.StepSize = stepSize);
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.SpecifyReferencePlane(IReferencePlaneArgument referencePlane) => SpecifyOptional(referencePlane, static (argumentSet, referencePlane) => argumentSet.ReferencePlane = referencePlane);
-    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.UnspecifyRwferencePlane() => UnspecifyOptional<IReferencePlaneArgument>((argumentSet, referencePlane) => argumentSet.ReferencePlane = referencePlane);
+    IQueryArgumentSetBuilder IQueryArgumentSetBuilder.UnspecifyReferencePlane() => UnspecifyOptional<IReferencePlaneArgument>((argumentSet, referencePlane) => argumentSet.ReferencePlane = referencePlane);
 
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.SpecifyReferenceSystem(IReferenceSystemArgument referenceSystem) => SpecifyOptional(referenceSystem, static (argumentSet, referenceSystem) => argumentSet.ReferenceSystem = referenceSystem);
     IQueryArgumentSetBuilder IQueryArgumentSetBuilder.UnspecifyReferenceSystem() => UnspecifyOptional<IReferenceSystemArgument>((argumentSet, referenceSystem) => argumentSet.ReferenceSystem = referenceSystem);
